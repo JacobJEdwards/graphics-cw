@@ -15,18 +15,6 @@
 #include "Texture.h"
 #include "shaders/Shader.h"
 
-struct Buffer {
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
-};
-
-struct BufferData {
-    std::vector<Vertex::Data> vertices;
-    std::vector<GLuint> indices;
-    std::vector<Texture::Data> textures;
-};
-
 class Mesh {
 public:
     Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices, std::vector<Texture::Data> textures) : vertices(std::move(vertices)), indices(std::move(indices)), textures(std::move(textures)) {

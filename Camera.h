@@ -11,9 +11,11 @@
 
 #include <GL/glew.h>
 
+#include <iostream>
+
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
-const float SPEED = 5.0f;
+const float SPEED = 3.0f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 
@@ -23,7 +25,8 @@ public:
         FORWARD,
         BACKWARD,
         LEFT,
-        RIGHT
+        RIGHT,
+        NONE
     };
 
     glm::vec3 position;
@@ -61,19 +64,44 @@ public:
     }
 
     void processKeyboard(Direction direction, float deltaTime) {
-        float velocity = movementSpeed * deltaTime;
-        if (direction == Direction::FORWARD) {
-            position += front * velocity;
+        float curAcceleration = acceleration * deltaTime;
+
+        auto targetVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+
+        switch (direction) {
+            case Direction::FORWARD:
+                targetVelocity += front;
+                break;
+            case Direction::BACKWARD:
+                targetVelocity -= front;
+                break;
+            case Direction::LEFT:
+                targetVelocity -= right;
+                break;
+            case Direction::RIGHT:
+                targetVelocity += right;
+                break;
+            case Direction::NONE:
+                break;
         }
-        if (direction == Direction::BACKWARD) {
-            position -= front * velocity;
+
+        glm::vec3 newVelocity = velocity + targetVelocity * curAcceleration;
+
+        if (glm::length(newVelocity) > maxSpeed) {
+            newVelocity = glm::normalize(newVelocity) * maxSpeed;
         }
-        if (direction == Direction::LEFT) {
-            position -= right * velocity;
-        }
-        if (direction == Direction::RIGHT) {
-            position += right * velocity;
-        }
+
+        velocity = glm::mix(velocity, newVelocity, 0.9f);
+
+        //velocity += targetVelocity * curAcceleration;
+
+        std::cout << "Velocity: " << glm::length(velocity) << std::endl;
+
+        glm::vec3 newPos = position + velocity * deltaTime;
+        position = glm::mix(position, newPos, 0.9f);
+
+        velocity *= 0.9999f;
+
         if (fps) {
             position.y = yPosition;
         }
@@ -115,6 +143,11 @@ public:
 private:
     bool fps = false;
     float yPosition = 0.0f;
+
+    float acceleration = 5.0f;
+    float maxSpeed = 10000.0f;
+
+    glm::vec3 velocity = glm::vec3(0.0f, 0.0f, 0.0f);
 
     void updateCameraVectors() {
         glm::vec3 newFront;

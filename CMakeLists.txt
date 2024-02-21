@@ -20,7 +20,8 @@ add_executable(CW main.cpp
         Camera.cpp
         Vertex.h
         Mesh.h
-        Vertex.cpp)
+        Vertex.cpp
+        Mesh.cpp)
 
 # Link libraries
 target_link_libraries(CW PRIVATE OpenGL::GL GLEW::GLEW glfw glm::glm assimp::assimp)
