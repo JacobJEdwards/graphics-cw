@@ -1,0 +1,5 @@
+
+K	cpp:S5414"*Don't mix public and private data members.(Ü‰Ùôùÿÿÿÿ8¸Ø¿ÁÜ1
+„	cpp:S3624"âExplicitly define or delete the missing copy constructor and copy assignment operator so that they will not be implicitly provided. Additionally, you may consider defining the move assignment operator and the move constructor.(Ü‰Ùôùÿÿÿÿ8ØØ¿ÁÜ1
+j	cpp:S4963"IRemove this class' destructor so that the class follows the rule of Zero.(Ü‰Ùôùÿÿÿÿ8­«¢ÁÜ1
+T	cpp:S5945Ó"2Use "std::string" instead of a C-style char array.(«Ã–ãüÿÿÿÿ8À¨´ÁÜ1

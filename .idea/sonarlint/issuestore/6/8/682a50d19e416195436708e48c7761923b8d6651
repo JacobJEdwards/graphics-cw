@@ -1,0 +1,27 @@
+
+A	cpp:S1481“"unused variable 'cubePositions'(½©œ½ûÿÿÿÿ8¸Ó”ŞÜ1
+=	cpp:S5421"!Global variables should be const.(ÿ‡ß·8ÄôÛÜ1
+=	cpp:S5421"!Global variables should be const.(Õ³æ™8ÅôÛÜ1
+=	cpp:S5421"!Global variables should be const.(½ˆêË8ÅôÛÜ1
+B	cpp:S5421"!Global variables should be const.(ãŸ›œıÿÿÿÿ8·÷ôÛÜ1
+=	cpp:S5421"!Global variables should be const.(õí³Î8ÅôÛÜ1
+B	cpp:S5421"!Global variables should be const.(‘ÊÖıÿÿÿÿ8ÆôÛÜ1
+B	cpp:S5421"!Global variables should be const.(‰Âï‰úÿÿÿÿ8ÆôÛÜ1
+=	cpp:S5421 "!Global variables should be const.(ÌÙëÈ8œÈŞÜ1
+M	cpp:S1659¢"0Define each identifier in a dedicated statement.(í Òø8ŸÈŞÜ1
+^	cpp:S5945="=Use "std::array" or "std::vector" instead of a C-style array.(®¶êûÿÿÿÿ8¡ÈŞÜ1
+_	cpp:S5945“"=Use "std::array" or "std::vector" instead of a C-style array.(½©œ½ûÿÿÿÿ8¦ÈŞÜ1
+Y	cpp:S1172"7Remove the unused parameter "error" or make it unnamed.(Ã«‡üÿÿÿÿ8—ô“ŞÜ1
+X	cpp:S1172“"6Remove the unused parameter "code" or make it unnamed.(„›Æ€ûÿÿÿÿ8›ô“ŞÜ1
+W	cpp:S1172“"5Remove the unused parameter "mod" or make it unnamed.(„›Æ€ûÿÿÿÿ8›ô“ŞÜ1
+U	cpp:S1172°"8Remove the unused parameter "window" or make it unnamed.(Ì…åš8¢ô“ŞÜ1
+†cpp:S995°"jMake the type of this parameter a pointer-to-const. The current type of "window" is "struct GLFWwindow *".(Ì…åš8¢ô“ŞÜ1
+`	cpp:S5271µ">function 'cleanup' could be declared with attribute 'noreturn'(°Õ¸ıÿÿÿÿ8£ô“ŞÜ1
+Z	cpp:S1172µ"8Remove the unused parameter "window" or make it unnamed.(°Õ¸ıÿÿÿÿ8¤ô“ŞÜ1
+‹cpp:S995µ"jMake the type of this parameter a pointer-to-const. The current type of "window" is "struct GLFWwindow *".(°Õ¸ıÿÿÿÿ8¤ô“ŞÜ1
+U	cpp:S1172º"8Remove the unused parameter "window" or make it unnamed.(§ö£æ8§ô“ŞÜ1
+†cpp:S995º"jMake the type of this parameter a pointer-to-const. The current type of "window" is "struct GLFWwindow *".(§ö£æ8§ô“ŞÜ1
+Z	cpp:S1172Î"8Remove the unused parameter "window" or make it unnamed.(âÏŞúÿÿÿÿ8©ô“ŞÜ1
+[	cpp:S1172Î"9Remove the unused parameter "xoffset" or make it unnamed.(âÏŞúÿÿÿÿ8©ô“ŞÜ1
+‹cpp:S995Î"jMake the type of this parameter a pointer-to-const. The current type of "window" is "struct GLFWwindow *".(âÏŞúÿÿÿÿ8ªô“ŞÜ1
+:cpp:S125ã"Remove the commented out code.(‹İ¥„8ıõ“ŞÜ1
