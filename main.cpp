@@ -8,6 +8,7 @@
 
 #include "Graphics/Shader.h"
 #include "Game/Camera.h"
+#include "Graphics/Texture.h"
 
 constexpr unsigned int SCR_WIDTH = 800;
 constexpr unsigned int SCR_HEIGHT = 600;
@@ -21,7 +22,7 @@ float lastY = SCR_HEIGHT / 2.0F;
 float deltaTime = 0.0F;
 float lastFrame = 0.0F;
 
-glm::mat4 projection = glm::perspective(glm::radians(camera.zoom),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
+glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
 
 glm::vec3 lightPos(1.2F, 1.0F, 2.0F);
 
@@ -62,47 +63,48 @@ auto main() -> int {
 
 
     GLfloat vertices[] = {
-        -0.5f, -0.5f, -0.5f, 0.0F, 0.0F, -1.0F,
-        0.5f, -0.5f, -0.5f, 0.0F, 0.0F, -1.0F,
-        0.5f, 0.5f, -0.5f, 0.0F, 0.0F, -1.0F,
-        0.5f, 0.5f, -0.5f, 0.0F, 0.0F, -1.0F,
-        -0.5f, 0.5f, -0.5f, 0.0F, 0.0F, -1.0F,
-        -0.5f, -0.5f, -0.5f, 0.0F, 0.0F, -1.0F,
+        // positions          // normals           // texture coords
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
-        -0.5f, -0.5f, 0.5f, 0.0F, 0.0F, 1.0F,
-        0.5f, -0.5f, 0.5f, 0.0F, 0.0F, 1.0F,
-        0.5f, 0.5f, 0.5f, 0.0F, 0.0F, 1.0F,
-        0.5f, 0.5f, 0.5f, 0.0F, 0.0F, 1.0F,
-        -0.5f, 0.5f, 0.5f, 0.0F, 0.0F, 1.0F,
-        -0.5f, -0.5f, 0.5f, 0.0F, 0.0F, 1.0F,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
 
-        -0.5f, 0.5f, 0.5f, -1.0F, 0.0F, 0.0F,
-        -0.5f, 0.5f, -0.5f, -1.0F, 0.0F, 0.0F,
-        -0.5f, -0.5f, -0.5f, -1.0F, 0.0F, 0.0F,
-        -0.5f, -0.5f, -0.5f, -1.0F, 0.0F, 0.0F,
-        -0.5f, -0.5f, 0.5f, -1.0F, 0.0F, 0.0F,
-        -0.5f, 0.5f, 0.5f, -1.0F, 0.0F, 0.0F,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-        0.5f, 0.5f, 0.5f, 1.0F, 0.0F, 0.0F,
-        0.5f, 0.5f, -0.5f, 1.0F, 0.0F, 0.0F,
-        0.5f, -0.5f, -0.5f, 1.0F, 0.0F, 0.0F,
-        0.5f, -0.5f, -0.5f, 1.0F, 0.0F, 0.0F,
-        0.5f, -0.5f, 0.5f, 1.0F, 0.0F, 0.0F,
-        0.5f, 0.5f, 0.5f, 1.0F, 0.0F, 0.0F,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-        -0.5f, -0.5f, -0.5f, 0.0F, -1.0F, 0.0F,
-        0.5f, -0.5f, -0.5f, 0.0F, -1.0F, 0.0F,
-        0.5f, -0.5f, 0.5f, 0.0F, -1.0F, 0.0F,
-        0.5f, -0.5f, 0.5f, 0.0F, -1.0F, 0.0F,
-        -0.5f, -0.5f, 0.5f, 0.0F, -1.0F, 0.0F,
-        -0.5f, -0.5f, -0.5f, 0.0F, -1.0F, 0.0F,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
 
-        -0.5f, 0.5f, -0.5f, 0.0F, 1.0F, 0.0F,
-        0.5f, 0.5f, -0.5f, 0.0F, 1.0F, 0.0F,
-        0.5f, 0.5f, 0.5f, 0.0F, 1.0F, 0.0F,
-        0.5f, 0.5f, 0.5f, 0.0F, 1.0F, 0.0F,
-        -0.5f, 0.5f, 0.5f, 0.0F, 1.0F, 0.0F,
-        -0.5f, 0.5f, -0.5f, 0.0F, 1.0F, 0.0F
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
     };
 
     // world space positions of our cubes
@@ -130,12 +132,14 @@ auto main() -> int {
 
     glBindVertexArray(cubeVAO);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), reinterpret_cast<void*>(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     GLuint lightCubeVAO;
     glGenVertexArrays(1, &lightCubeVAO);
@@ -143,60 +147,75 @@ auto main() -> int {
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
 
-    projection = glm::perspective(glm::radians(camera.zoom), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
+    projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
+
+    Texture::Loader loader;
+    loader.load("../Assets/container2.png", "", false);
+    const GLuint diffuseMap = loader.getTexture();
+
+    loader.load("../Assets/container2_specular.png", "", false);
+    const GLuint specularMap = loader.getTexture();
+
+    shader.use();
+    shader.setInt("material.diffuse", 0);
+    shader.setInt("material.specular", 1);
+
 
     while (glfwWindowShouldClose(window) == 0) {
-        auto currentFrame = static_cast<float>(glfwGetTime());
+        const auto currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0F);
+        glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         processInput(window);
 
         shader.use();
+        shader.setVec3("light.position", camera.getPosition());
+        shader.setVec3("light.direction", camera.getFront());
+        shader.setFloat("light.cutOff", glm::cos(glm::radians(12.5F)));
+        shader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5F)));
+        shader.setVec3("viewPos", camera.getPosition());
 
-        lightPos.x = 1.0F + sin(glfwGetTime()) * 2.0F;
-        lightPos.y = sin(glfwGetTime() / 2.0F) * 1.0F;
-        lightPos.z = cos(glfwGetTime()) * 2.0F;
-
-        glm::vec3 lightColor;
-        lightColor.x = sin(glfwGetTime() * 2.0F);
-        lightColor.y = sin(glfwGetTime() * 0.7F);
-        lightColor.z = sin(glfwGetTime() * 1.3F);
-
-        shader.setVec3("light.position", lightPos);
-        shader.setVec3("viewPos", camera.position);
-
-        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5F); // decrease the influence
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2F); // low influence
-
-        shader.setVec3("light.ambient", ambientColor);
-        shader.setVec3("light.diffuse", diffuseColor);
+        shader.setVec3("light.ambient", 0.2F, 0.2F, 0.2F);
+        shader.setVec3("light.diffuse", 0.5F, 0.5F, 0.5F);
         shader.setVec3("light.specular", 1.0F, 1.0F, 1.0F);
+        shader.setFloat("light.constant", 1.0F);
+        shader.setFloat("light.linear", 0.09F);
+        shader.setFloat("light.quadratic", 0.032F);
 
-        shader.setVec3("material.specular", 0.5F, 0.5F, 0.5F);
         shader.setFloat("material.shininess", 32.0F);
-        shader.setVec3("material.ambient", 1.0F, 0.5F, 0.31F);
-        shader.setVec3("material.diffuse", 1.0F, 0.5F, 0.31F);
-
 
         shader.setMat4("projection", projection);
+        shader.setMat4("model", glm::mat4(1.0F));
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, diffuseMap);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, specularMap);
+
         // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 
         auto view = camera.getViewMatrix();
         shader.setMat4("view", view);
 
-        auto model = glm::mat4(1.0F);
-        shader.setMat4("model", model);
 
+        glm::mat4 model;
         glBindVertexArray(cubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        for (unsigned int i = 0; i < 10 ; i++) {
+            model = glm::mat4(1.0F);
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 20.0F * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0F, 0.3F, 0.5F));
+            shader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
         lightingShader.use();
         lightingShader.setMat4("projection", projection);
@@ -326,7 +345,7 @@ void processInput(GLFWwindow *window) {
 
 void reshape(GLFWwindow * /*window*/, const int width, const int height) // Resize the OpenGL window
 {
-    projection = glm::perspective(glm::radians(camera.zoom),  static_cast<float>(width) /  static_cast<float>(height), 0.1F, 100.0F);
+    projection = glm::perspective(glm::radians(camera.getZoom()),  static_cast<float>(width) /  static_cast<float>(height), 0.1F, 100.0F);
     glViewport(0, 0, width, height); // set Viewport dimensions
 }
 

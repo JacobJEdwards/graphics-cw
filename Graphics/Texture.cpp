@@ -45,7 +45,7 @@ namespace Texture {
             int height;
             int nrChannels;
 
-            unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrChannels, 0);
+            unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
             if (data != nullptr) {
                 GLint format;
 
