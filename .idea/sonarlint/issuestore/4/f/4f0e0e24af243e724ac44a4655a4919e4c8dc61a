@@ -1,7 +1,0 @@
-
-;	cpp:S1103"&Remove the misleading "//" characters.(“ñçš
-N	cpp:S5028õ"8Replace this macro by "const", "constexpr" or an "enum".(Éâã£
-Icpp:S954"4Move this #include directive to the top of the file.(¦Á‹‰
-<	cpp:S3642÷"&Replace this "enum" with "enum class".(³ê“ó
-Q	cpp:S5416‚";"using" should be preferred to "typedef" for type aliasing.(Œº¶ê
-V	cpp:S5416ƒ";"using" should be preferred to "typedef" for type aliasing.(ÑÓØ‰ûÿÿÿÿ

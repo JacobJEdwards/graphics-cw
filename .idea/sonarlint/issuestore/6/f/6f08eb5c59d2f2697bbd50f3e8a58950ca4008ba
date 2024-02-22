@@ -1,6 +1,0 @@
-
-F	cpp:S5414"*Don't mix public and private data members.(Ïú¾è8ÑŞçÜ1
-‚	cpp:S3230."aDo not assign data members in a constructor. Initialize member "front" in an initialization list.(Ñœ¤©ıÿÿÿÿ8Ú§ÔçÜ1
-‚	cpp:S32306"aDo not assign data members in a constructor. Initialize member "front" in an initialization list.(Ñœ¤©ıÿÿÿÿ8Ü§ÔçÜ1
-bcpp:S1075"GThis function has 8 parameters, which is greater than the 7 authorized.(İ¹¨¨8İ§ÔçÜ1
->cpp:S125`"Remove the commented out code.(ª¶ıüÿÿÿÿ8Á¦èÜ1
