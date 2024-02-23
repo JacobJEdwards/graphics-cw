@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <GL/glew.h>
+#include <iostream>
 
 #include "Vertex.h"
 #include "Texture.h"
@@ -22,6 +23,8 @@ void Mesh::draw(const Shader &shader) const {
     GLuint specularNr = 1;
     GLuint normalNr = 1;
     GLuint heightNr = 1;
+    GLuint ambientOcclusionNr = 1;
+    GLuint emissiveNr = 1;
 
     for (GLuint i = 0; i < textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i);
@@ -31,25 +34,35 @@ void Mesh::draw(const Shader &shader) const {
 
         switch (name) {
             case Texture::Type::DIFFUSE:
-                diffuseNr++;
                 number = std::to_string(diffuseNr);
+                diffuseNr++;
                 break;
             case Texture::Type::SPECULAR:
-                specularNr++;
                 number = std::to_string(specularNr);
+                specularNr++;
                 break;
             case Texture::Type::NORMAL:
-                normalNr++;
                 number = std::to_string(normalNr);
+                normalNr++;
                 break;
             case Texture::Type::HEIGHT:
-                heightNr++;
                 number = std::to_string(heightNr);
+                heightNr++;
                 break;
+            case Texture::Type::AMBIENT_OCCLUSION:
+                number = std::to_string(ambientOcclusionNr);
+                ambientOcclusionNr++;
+                break;
+            case Texture::Type::EMISSIVE:
+                number = std::to_string(emissiveNr);
+                emissiveNr++;
+                break;
+            default:
+                throw std::runtime_error("Unknown texture type");
         }
 
-        shader.setFloat(("material.texture_" + toString(name) + number), static_cast<float>(i));
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
+        shader.setInt(("texture_" + toString(name) + number), static_cast<GLint>(i));
     }
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, nullptr);

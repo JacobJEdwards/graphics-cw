@@ -11,75 +11,90 @@
 #include <iostream>
 
 namespace Texture {
-        void Loader::setWrapS(const GLint value) {
-            wrapS = value;
-        }
+        namespace Loader {
+            void setFlip(const bool value) {
+                stbi_set_flip_vertically_on_load(static_cast<int>(value));
+            }
 
-        void Loader::setWrapT(const GLint value) {
-            wrapT = value;
-        }
+            auto load(const std::string &path, const std::string &directory, const bool  gamma, const GLint wrapS, const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint {
+                return load(directory + '/' + path, gamma, wrapS, wrapT, minFilter, magFilter);
+            }
 
-        void Loader::setMinFilter(const GLint value) {
-            minFilter = value;
-        }
+            auto load(const std::string &path, const bool  /*gamma*/, const GLint wrapS, const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint{
+                GLuint texture;
+                glGenTextures(1, &texture);
 
-        void Loader::setMagFilter(const GLint value) {
-            magFilter = value;
-        }
+                int width;
+                int height;
+                int nrChannels;
 
-        auto Loader::getTexture() const -> GLuint {
-            return texture;
-        }
+                unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+                if (data != nullptr) {
+                    const GLint format = getFormat(nrChannels);
 
-        void Loader::setFlip(const bool value) {
-            stbi_set_flip_vertically_on_load(static_cast<int>(value));
-        }
+                    glBindTexture(GL_TEXTURE_2D, texture);
+                    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                    glGenerateMipmap(GL_TEXTURE_2D);
 
-        void Loader::load(const std::string &path, const std::string &directory, bool gamma) {
-            auto filename = std::string(path);
-            filename = directory + '/' + filename;
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+                } else {
+                    const char *failureReason = stbi_failure_reason();
+                    std::cerr << "Failed to load texture: " << failureReason << std::endl;
+                }
 
-            glGenTextures(1, &texture);
+                stbi_image_free(data);
 
-            int width;
-            int height;
-            int nrChannels;
+                return texture;
+            }
 
-            unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-            if (data != nullptr) {
-                GLint format;
+            auto loadCubemap(const std::vector<std::string> &faces) -> GLuint {
+                GLuint texture;
+                glGenTextures(1, &texture);
+                glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
 
+                int width;
+                int height;
+                int nrChannels;
+
+                for (unsigned int i = 0; i < faces.size(); i++) {
+                    stbi_uc *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+                    if (data != nullptr) {
+                        const GLint format = getFormat(nrChannels);
+
+                        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                    } else {
+                        const char *failureReason = stbi_failure_reason();
+                        std::cerr << "Failed to load texture: " << failureReason << std::endl;
+                    }
+
+                    stbi_image_free(data);
+                }
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+                return texture;
+            }
+
+            auto getFormat(const int nrChannels) -> GLint {
                 switch (nrChannels) {
                     case 1:
-                        format = GL_RED;
-                        break;
+                        return GL_RED;
                     case 2:
-                        format = GL_RG;
-                        break;
+                        return GL_RG;
                     case 3:
-                        format = GL_RGB;
-                        break;
+                        return GL_RGB;
                     case 4:
-                        format = GL_RGBA;
-                        break;
+                        return GL_RGBA;
                     default:
                         throw std::runtime_error("Error loading texture");
                 }
-
-                glBindTexture(GL_TEXTURE_2D, texture);
-                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                glGenerateMipmap(GL_TEXTURE_2D);
-
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-            } else {
-                const char *failureReason = stbi_failure_reason();
-                std::cerr << "Failed to load texture: " << failureReason << std::endl;
             }
-
-            stbi_image_free(data);
         }
 
     auto toString(const Type type) -> std::string {
@@ -103,14 +118,6 @@ namespace Texture {
 
     void unbind() {
         glBindTexture(GL_TEXTURE_2D, 0);
-    }
-
-    auto create(const std::string &path, const Type type) -> Data {
-        Loader loader;
-
-        loader.load(path, path, false);
-        const GLuint textureId = loader.getTexture();
-        return {textureId, type, path};
     }
 
     void del(const Data &texture) {

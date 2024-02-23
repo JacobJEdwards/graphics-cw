@@ -9,26 +9,13 @@
 #include <string>
 
 namespace Texture {
-    class Loader {
-        GLuint texture = 0;
-        GLint wrapS = GL_REPEAT;
-        GLint wrapT = GL_REPEAT;
-        GLint minFilter = GL_LINEAR;
-        GLint magFilter = GL_LINEAR;
+    namespace Loader {
+        auto load(const std::string &path, bool gamma, GLint wrapS = GL_REPEAT, GLint wrapT = GL_REPEAT, GLint minFilter = GL_LINEAR_MIPMAP_LINEAR, GLint magFilter = GL_LINEAR) -> GLuint;
+        auto load(const std::string &path, const std::string &directory, bool gamma, GLint wrapS = GL_REPEAT, GLint wrapT = GL_REPEAT, GLint minFilter = GL_LINEAR_MIPMAP_LINEAR, GLint magFilter = GL_LINEAR) -> GLuint;
+        auto loadCubemap(const std::vector<std::string> &faces) -> GLuint;
+        auto getFormat(int nrChannels) -> GLint;
 
-    public:
-        Loader() = default;
-
-        void setWrapS(GLint value);
-        void setWrapT(GLint value);
-        void setMinFilter(GLint value);
-        void setMagFilter(GLint value);
-
-        auto getTexture() const -> GLuint;
-
-        void load(const std::string &path, const std::string &directory, bool gamma);
-
-        static void setFlip(bool value);
+        void setFlip(bool value);
     };
 
 
@@ -36,7 +23,10 @@ namespace Texture {
         DIFFUSE,
         SPECULAR,
         NORMAL,
-        HEIGHT
+        HEIGHT,
+        CUBEMAP,
+        AMBIENT_OCCLUSION,
+        EMISSIVE,
     };
 
     auto toString(Type type) -> std::string;
@@ -51,8 +41,6 @@ namespace Texture {
     void bind(const Data &texture);
 
     void unbind();
-
-    auto create(const std::string &path, Type type) -> Data;
 
     void del(const Data &texture);
 }

@@ -25,10 +25,8 @@ public:
     void draw(const Shader &shader) const;
 
 private:
-    Texture::Loader loader;
-
     std::vector<Texture::Data> textures_loaded;
-    std::vector<MeshPtr> meshes;
+    std::vector<Mesh> meshes;
     std::string directory;
     bool gammaCorrection;
 
