@@ -48,6 +48,11 @@ void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 
 void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
 
+auto setupSkybox(const Shader &shader) -> GLuint;
+
+auto getSkyboxTexture() -> GLuint;
+
+void drawSkybox(const Shader &shader, GLuint VAO, GLuint texture);
 
 auto main() -> int {
     setupGLFW();
@@ -57,9 +62,106 @@ auto main() -> int {
     glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     glEnable(GL_DEPTH_TEST);
 
-    const Shader skyboxShader("../Assets/shaders/skybox.vert", "../Assets/skybox.frag");
-    const Shader ourShader("../Assets/shaders/backpack.vert", "../Assets/backpack.frag");
+    const Shader skyboxShader("../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
+    const Shader ourShader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
 
+    const GLuint skyboxVAO = setupSkybox(skyboxShader);
+    const GLuint skyboxTexture = getSkyboxTexture();
+
+
+    Texture::Loader::setFlip(true);
+    //const Model ourModel("../Assets/backpack/backpack.obj");
+
+    const Model newModel("../Assets/objects/backpack/backpack.obj");
+
+    projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
+
+
+    while (glfwWindowShouldClose(window) == 0) {
+        const auto currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        processInput(window);
+
+        // don't forget to enable shader before setting uniforms
+        ourShader.use();
+
+        // view/projection transformations
+        glm::mat4 view = camera.getViewMatrix();
+        ourShader.setMat4("projection", projection);
+        ourShader.setMat4("view", view);
+
+        // render the loaded model
+        auto model = glm::mat4(1.0f);
+        model = translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+        ourShader.setMat4("model", model);
+        newModel.draw(ourShader);
+
+        drawSkybox(skyboxShader, skyboxVAO, skyboxVAO);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    cleanup(window);
+    return 0;
+}
+
+void setupGLFW() {
+    if (glfwInit() == 0) {
+        std::cerr << "Failed to initialize GLFW" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+}
+
+auto createWindow(const int width, const int height, const char *title) -> GLFWwindow * {
+    GLFWwindow *window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+
+    if (window == nullptr) {
+        std::cerr << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+    // glfwSetKeyCallback(window, keyCallback);
+    glfwSetFramebufferSizeCallback(window, reshape);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window, mouseCallback);
+    glfwSetScrollCallback(window, scrollCallback);
+    glfwSetErrorCallback(errorCallback);
+
+    glfwMakeContextCurrent(window);
+    return window;
+}
+
+void drawSkybox(const Shader &shader, const GLuint VAO, const GLuint texture) {
+        glDepthFunc(GL_LEQUAL);
+        shader.use();
+        auto view = glm::mat4(glm::mat3(camera.getViewMatrix()));
+        shader.setMat4("view", view);
+        shader.setMat4("projection", projection);
+
+        glBindVertexArray(VAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthFunc(GL_LESS);
+
+}
+
+auto setupSkybox(const Shader &shader) -> GLuint {
     constexpr GLfloat skyboxVertices[] = {
         // positions
         -1.0f,  1.0f, -1.0f,
@@ -105,17 +207,6 @@ auto main() -> int {
          1.0f, -1.0f,  1.0f
     };
 
-
-
-    const std::vector<std::string> skyboxFaces {
-        "../Assets/textures/skybox/right.jpg",
-        "../Assets/textures/skybox/left.jpg",
-        "../Assets/textures/skybox/top.jpg",
-        "../Assets/textures/skybox/bottom.jpg",
-        "../Assets/textures/skybox/front.jpg",
-        "../Assets/textures/skybox/back.jpg",
-    };
-
     GLuint skyboxVAO;
     GLuint skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -126,96 +217,25 @@ auto main() -> int {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
+    shader.use();
+    shader.setInt("skybox", 0);
 
-    const GLuint skyboxTexture = Texture::Loader::loadCubemap(skyboxFaces);
-    skyboxShader.use();
-    skyboxShader.setInt("skybox", 0);
-
-    Texture::Loader::setFlip(true);
-    //const Model ourModel("../Assets/backpack/backpack.obj");
-
-    const Model newModel("../Assets/objects/backpack/backpack.obj");
-
-    projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
-
-    while (glfwWindowShouldClose(window) == 0) {
-        const auto currentFrame = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-
-        glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        processInput(window);
-
-        // don't forget to enable shader before setting uniforms
-        ourShader.use();
-
-        // view/projection transformations
-        glm::mat4 view = camera.getViewMatrix();
-        ourShader.setMat4("projection", projection);
-        ourShader.setMat4("view", view);
-
-        // render the loaded model
-        auto model = glm::mat4(1.0f);
-        model = translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-        ourShader.setMat4("model", model);
-        newModel.draw(ourShader);
-
-        glDepthFunc(GL_LEQUAL);
-        skyboxShader.use();
-        view = glm::mat4(glm::mat3(camera.getViewMatrix()));
-        skyboxShader.setMat4("view", view);
-        skyboxShader.setMat4("projection", projection);
-
-        glBindVertexArray(skyboxVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthFunc(GL_LESS);
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    cleanup(window);
-    return 0;
+    return skyboxVAO;
 }
 
-void setupGLFW() {
-    if (glfwInit() == 0) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+auto getSkyboxTexture() -> GLuint {
+    const std::vector<std::string> skyboxFaces {
+        "../Assets/textures/skybox/right.jpg",
+        "../Assets/textures/skybox/left.jpg",
+        "../Assets/textures/skybox/top.jpg",
+        "../Assets/textures/skybox/bottom.jpg",
+        "../Assets/textures/skybox/front.jpg",
+        "../Assets/textures/skybox/back.jpg",
+    };
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+    return Texture::Loader::loadCubemap(skyboxFaces);
 }
 
-auto createWindow(const int width, const int height, const char *title) -> GLFWwindow * {
-    GLFWwindow *window = glfwCreateWindow(width, height, title, nullptr, nullptr);
-
-    if (window == nullptr) {
-        std::cerr << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        exit(EXIT_FAILURE);
-    }
-
-    // glfwSetKeyCallback(window, keyCallback);
-    glfwSetFramebufferSizeCallback(window, reshape);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetCursorPosCallback(window, mouseCallback);
-    glfwSetScrollCallback(window, scrollCallback);
-    glfwSetErrorCallback(errorCallback);
-
-    glfwMakeContextCurrent(window);
-    return window;
-}
 
 void setupGLEW() {
     glewExperimental = GL_TRUE;
