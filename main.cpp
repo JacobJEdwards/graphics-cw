@@ -57,8 +57,8 @@ auto main() -> int {
     glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     glEnable(GL_DEPTH_TEST);
 
-    const Shader skyboxShader("../Assets/skybox.vert", "../Assets/skybox.frag");
-    const Shader ourShader("../Assets/backpack.vert", "../Assets/backpack.frag");
+    const Shader skyboxShader("../Assets/shaders/skybox.vert", "../Assets/skybox.frag");
+    const Shader ourShader("../Assets/shaders/backpack.vert", "../Assets/backpack.frag");
 
     constexpr GLfloat skyboxVertices[] = {
         // positions
@@ -108,12 +108,12 @@ auto main() -> int {
 
 
     const std::vector<std::string> skyboxFaces {
-        "../Assets/skybox/right.jpg",
-        "../Assets/skybox/left.jpg",
-        "../Assets/skybox/top.jpg",
-        "../Assets/skybox/bottom.jpg",
-        "../Assets/skybox/front.jpg",
-        "../Assets/skybox/back.jpg",
+        "../Assets/textures/skybox/right.jpg",
+        "../Assets/textures/skybox/left.jpg",
+        "../Assets/textures/skybox/top.jpg",
+        "../Assets/textures/skybox/bottom.jpg",
+        "../Assets/textures/skybox/front.jpg",
+        "../Assets/textures/skybox/back.jpg",
     };
 
     GLuint skyboxVAO;
@@ -131,10 +131,10 @@ auto main() -> int {
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
 
-    Texture::Loader::setFlip(false);
+    Texture::Loader::setFlip(true);
     //const Model ourModel("../Assets/backpack/backpack.obj");
 
-    const Model newModel("../Assets/helecopter/chopper.obj");
+    const Model newModel("../Assets/objects/backpack/backpack.obj");
 
     projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
 
