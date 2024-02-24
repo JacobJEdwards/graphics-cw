@@ -50,6 +50,42 @@ namespace Texture {
                 return texture;
             }
 
+            auto loadCubemap(const std::string &path) -> GLuint {
+                GLuint texture;
+                glGenTextures(1, &texture);
+                glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+
+                int width;
+                int height;
+                int nrChannels;
+
+                stbi_uc *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+
+                if (data != nullptr) {
+                    const GLint format = getFormat(nrChannels);
+
+                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                } else {
+                    const char *failureReason = stbi_failure_reason();
+                    std::cerr << "Failed to load texture: " << failureReason << std::endl;
+                }
+
+                stbi_image_free(data);
+
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+                return texture;
+            }
+
             auto loadCubemap(const std::vector<std::string> &faces) -> GLuint {
                 GLuint texture;
                 glGenTextures(1, &texture);

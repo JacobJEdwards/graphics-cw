@@ -57,7 +57,7 @@ void Camera::processKeyboard(const Direction direction, const float deltaTime) {
 
     velocity = glm::mix(velocity, newVelocity, smoothing);
 
-    //velocity += targetVelocity * curAcceleration;
+    // velocity += targetVelocity * curAcceleration;
 
 
     const glm::vec3 newPos = position + velocity * deltaTime;

@@ -10,6 +10,7 @@
 #include "Game/Camera.h"
 #include "Graphics/Texture.h"
 #include "Graphics/Model.h"
+#include "Graphics/Skybox.h"
 
 constexpr unsigned int SCR_WIDTH = 800;
 constexpr unsigned int SCR_HEIGHT = 600;
@@ -48,12 +49,6 @@ void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 
 void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
 
-auto setupSkybox(const Shader &shader) -> GLuint;
-
-auto getSkyboxTexture() -> GLuint;
-
-void drawSkybox(const Shader &shader, GLuint VAO, GLuint texture);
-
 auto main() -> int {
     setupGLFW();
     GLFWwindow *window = createWindow(SCR_WIDTH, SCR_HEIGHT, "Coursework");
@@ -62,20 +57,33 @@ auto main() -> int {
     glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     glEnable(GL_DEPTH_TEST);
 
-    const Shader skyboxShader("../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
-    const Shader ourShader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
+    const Shader ourShader("./Assets/shaders/backpack.vert", "./Assets/shaders/backpack.frag");
 
-    const GLuint skyboxVAO = setupSkybox(skyboxShader);
-    const GLuint skyboxTexture = getSkyboxTexture();
+    const std::vector<std::string> skyboxFaces {
+        "./Assets/textures/Lycksele3/posx.jpg",
+        "./Assets/textures/Lycksele3/negx.jpg",
+        "./Assets/textures/Lycksele3/posy.jpg",
+        "./Assets/textures/Lycksele3/negy.jpg",
+        "./Assets/textures/Lycksele3/posz.jpg",
+        "./Assets/textures/Lycksele3/negz.jpg"
 
+    };
 
-    Texture::Loader::setFlip(true);
-    //const Model ourModel("../Assets/backpack/backpack.obj");
+    Skybox skybox(skyboxFaces);
 
-    const Model newModel("../Assets/objects/backpack/backpack.obj");
+    Texture::Loader::setFlip(false);
+
+    const Model newModel("./Assets/objects/helecopter/chopper.obj");
 
     projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
 
+    ourShader.use();
+    ourShader.setMat4("projection", projection);
+    ourShader.setVec3("light.position", lightPos);
+    ourShader.setVec3("viewPos", camera.getPosition());
+    ourShader.setVec3("light.ambient", 0.2F, 0.2F, 0.2F);
+    ourShader.setVec3("light.diffuse", 0.5F, 0.5F, 0.5F);
+    ourShader.setVec3("light.specular", 1.0F, 1.0F, 1.0F);
 
     while (glfwWindowShouldClose(window) == 0) {
         const auto currentFrame = static_cast<float>(glfwGetTime());
@@ -87,22 +95,21 @@ auto main() -> int {
 
         processInput(window);
 
-        // don't forget to enable shader before setting uniforms
         ourShader.use();
 
         // view/projection transformations
         glm::mat4 view = camera.getViewMatrix();
-        ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
         // render the loaded model
-        auto model = glm::mat4(1.0f);
-        model = translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+        auto model = glm::mat4(1.0F);
+        model = translate(model, glm::vec3(0.0F, 0.0F, 0.0F)); // translate it down so it's at the center of the scene
+        model = scale(model, glm::vec3(1.0F, 1.0F, 1.0F));	// it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
         newModel.draw(ourShader);
 
-        drawSkybox(skyboxShader, skyboxVAO, skyboxVAO);
+        view = glm::mat4(glm::mat3(camera.getViewMatrix()));
+        skybox.draw(projection, view);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -144,98 +151,6 @@ auto createWindow(const int width, const int height, const char *title) -> GLFWw
     glfwMakeContextCurrent(window);
     return window;
 }
-
-void drawSkybox(const Shader &shader, const GLuint VAO, const GLuint texture) {
-        glDepthFunc(GL_LEQUAL);
-        shader.use();
-        auto view = glm::mat4(glm::mat3(camera.getViewMatrix()));
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
-
-        glBindVertexArray(VAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthFunc(GL_LESS);
-
-}
-
-auto setupSkybox(const Shader &shader) -> GLuint {
-    constexpr GLfloat skyboxVertices[] = {
-        // positions
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-        -1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f
-    };
-
-    GLuint skyboxVAO;
-    GLuint skyboxVBO;
-    glGenVertexArrays(1, &skyboxVAO);
-    glGenBuffers(1, &skyboxVBO);
-    glBindVertexArray(skyboxVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-
-    shader.use();
-    shader.setInt("skybox", 0);
-
-    return skyboxVAO;
-}
-
-auto getSkyboxTexture() -> GLuint {
-    const std::vector<std::string> skyboxFaces {
-        "../Assets/textures/skybox/right.jpg",
-        "../Assets/textures/skybox/left.jpg",
-        "../Assets/textures/skybox/top.jpg",
-        "../Assets/textures/skybox/bottom.jpg",
-        "../Assets/textures/skybox/front.jpg",
-        "../Assets/textures/skybox/back.jpg",
-    };
-
-    return Texture::Loader::loadCubemap(skyboxFaces);
-}
-
 
 void setupGLEW() {
     glewExperimental = GL_TRUE;

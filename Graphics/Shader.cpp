@@ -117,7 +117,7 @@ void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const {
 }
 
 
-void Shader::checkCompileErrors(const GLuint shader, const std::string &type) {
+void Shader::checkCompileErrors(const GLuint shader, const std::string &type) const {
     GLint success;
     std::array<GLchar, BUFFER_SIZE> infoLog{};
 
@@ -125,6 +125,7 @@ void Shader::checkCompileErrors(const GLuint shader, const std::string &type) {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (success == 0) {
             glGetShaderInfoLog(shader, BUFFER_SIZE, nullptr, infoLog.data());
+            std::cerr << vertexPath << " " << fragmentPath << " " << geometryPath << " " << tessControlPath << " " << tessEvalPath << std::endl;
             throw std::runtime_error(
                 "Shader compilation error of type: " + type + "\n" + std::string(infoLog.data()));
         }
@@ -132,6 +133,7 @@ void Shader::checkCompileErrors(const GLuint shader, const std::string &type) {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (success == 0) {
             glGetProgramInfoLog(shader, BUFFER_SIZE, nullptr, infoLog.data());
+            std::cerr << vertexPath << " " << fragmentPath << " " << geometryPath << " " << tessControlPath << " " << tessEvalPath << std::endl;
             throw std::runtime_error("Program linking error of type: " + type + "\n" + std::string(infoLog.data()));
         }
     }
@@ -140,9 +142,7 @@ void Shader::checkCompileErrors(const GLuint shader, const std::string &type) {
 void Shader::deleteProgram() const {
     if (ID != 0) {
         glDeleteProgram(ID);
-        const GLenum error = glGetError();
-
-        if (error != GL_NO_ERROR) {
+        if (const GLuint error = glGetError(); error != GL_NO_ERROR) {
             std::cerr << "OpenGL error after deleting program: " << error << std::endl;
         }
     }

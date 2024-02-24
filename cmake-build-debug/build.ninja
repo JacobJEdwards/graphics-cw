@@ -105,6 +105,13 @@ build CMakeFiles/CW.dir/Utils/AssimpGLMHelpers.cpp.o: CXX_COMPILER__CW_unscanned
   OBJECT_DIR = CMakeFiles/CW.dir
   OBJECT_FILE_DIR = CMakeFiles/CW.dir/Utils
 
+build CMakeFiles/CW.dir/Graphics/Skybox.cpp.o: CXX_COMPILER__CW_unscanned_Debug /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/Skybox.cpp || cmake_object_order_depends_target_CW
+  DEP_FILE = CMakeFiles/CW.dir/Graphics/Skybox.cpp.o.d
+  FLAGS = -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -fcolor-diagnostics -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks
+  INCLUDES = -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/CW.dir
+  OBJECT_FILE_DIR = CMakeFiles/CW.dir/Graphics
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CW
@@ -113,7 +120,7 @@ build CMakeFiles/CW.dir/Utils/AssimpGLMHelpers.cpp.o: CXX_COMPILER__CW_unscanned
 #############################################
 # Link the executable CW
 
-build CW: CXX_EXECUTABLE_LINKER__CW_Debug CMakeFiles/CW.dir/main.cpp.o CMakeFiles/CW.dir/Graphics/Shader.cpp.o CMakeFiles/CW.dir/Graphics/Texture.cpp.o CMakeFiles/CW.dir/Game/Camera.cpp.o CMakeFiles/CW.dir/Graphics/Vertex.cpp.o CMakeFiles/CW.dir/Graphics/Mesh.cpp.o CMakeFiles/CW.dir/Graphics/Model.cpp.o CMakeFiles/CW.dir/Utils/AssimpGLMHelpers.cpp.o | /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework /usr/local/lib/libGLEW.2.2.0.dylib /usr/local/lib/libglfw.3.3.dylib /usr/local/lib/libglm.dylib /usr/local/lib/libassimp.5.3.0.dylib /usr/local/lib/libzlibstatic.a
+build CW: CXX_EXECUTABLE_LINKER__CW_Debug CMakeFiles/CW.dir/main.cpp.o CMakeFiles/CW.dir/Graphics/Shader.cpp.o CMakeFiles/CW.dir/Graphics/Texture.cpp.o CMakeFiles/CW.dir/Game/Camera.cpp.o CMakeFiles/CW.dir/Graphics/Vertex.cpp.o CMakeFiles/CW.dir/Graphics/Mesh.cpp.o CMakeFiles/CW.dir/Graphics/Model.cpp.o CMakeFiles/CW.dir/Utils/AssimpGLMHelpers.cpp.o CMakeFiles/CW.dir/Graphics/Skybox.cpp.o | /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework /usr/local/lib/libGLEW.2.2.0.dylib /usr/local/lib/libglfw.3.3.dylib /usr/local/lib/libglm.dylib /usr/local/lib/libassimp.5.3.0.dylib /usr/local/lib/libzlibstatic.a
   FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk
   LINK_FLAGS = -L/usr/local/Cellar/llvm/17.0.6_1/lib
   LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  -framework OpenGL  /usr/local/lib/libGLEW.2.2.0.dylib  /usr/local/lib/libglfw.3.3.dylib  /usr/local/lib/libglm.dylib  /usr/local/lib/libassimp.5.3.0.dylib  -framework OpenGL  /usr/local/lib/libzlibstatic.a

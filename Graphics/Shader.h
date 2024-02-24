@@ -70,7 +70,7 @@ private:
 
     static constexpr int BUFFER_SIZE = 1024;
 
-    static void checkCompileErrors(GLuint shader, const std::string &type);
+    void checkCompileErrors(GLuint shader, const std::string &type) const;
 
     void deleteProgram() const;
 

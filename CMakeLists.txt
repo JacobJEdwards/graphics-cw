@@ -26,7 +26,9 @@ add_executable(CW main.cpp
         Graphics/Model.cpp
         Graphics/Model.cpp
         Utils/AssimpGLMHelpers.h
-        Utils/AssimpGLMHelpers.cpp)
+        Utils/AssimpGLMHelpers.cpp
+        Graphics/Skybox.h
+        Graphics/Skybox.cpp)
 
 # Link libraries
 target_link_libraries(CW PRIVATE OpenGL::GL GLEW::GLEW glfw glm::glm assimp::assimp)

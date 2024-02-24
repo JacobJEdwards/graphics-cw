@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <sstream>
-#include <map>
+#include <unordered_map>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -25,8 +25,8 @@ public:
     void draw(const Shader &shader) const;
 
 private:
-    std::vector<Texture::Data> textures_loaded;
-    std::vector<Mesh> meshes;
+    std::unordered_map<std::string, Texture::Data> textures_loaded;
+    std::vector<std::unique_ptr<Mesh>> meshes;
     std::string directory;
     bool gammaCorrection;
 

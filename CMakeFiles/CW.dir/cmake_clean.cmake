@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Graphics/Model.cpp.o.d"
   "CMakeFiles/CW.dir/Graphics/Shader.cpp.o"
   "CMakeFiles/CW.dir/Graphics/Shader.cpp.o.d"
+  "CMakeFiles/CW.dir/Graphics/Skybox.cpp.o"
+  "CMakeFiles/CW.dir/Graphics/Skybox.cpp.o.d"
   "CMakeFiles/CW.dir/Graphics/Texture.cpp.o"
   "CMakeFiles/CW.dir/Graphics/Texture.cpp.o.d"
   "CMakeFiles/CW.dir/Graphics/Vertex.cpp.o"

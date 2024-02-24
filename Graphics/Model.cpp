@@ -3,6 +3,7 @@
 //
 
 #include "Model.h"
+#include <memory>
 #include <vector>
 #include <fstream>
 #include <sstream>
@@ -32,7 +33,7 @@ Model::Model(const std::string &path, const bool gamma) : gammaCorrection(gamma)
 
 void Model::draw(const Shader &shader) const {
     for (const auto &mesh: meshes) {
-        mesh.draw(shader);
+        mesh->draw(shader);
     }
 }
 
@@ -60,7 +61,7 @@ void Model::processNode(const aiNode *const node, const aiScene *scene) {
 
         for (unsigned int i = 0; i < currentNode->mNumMeshes; ++i) {
             aiMesh *mesh = scene->mMeshes[currentNode->mMeshes[i]];
-            meshes.push_back(processMesh(mesh, scene));
+            meshes.push_back(std::make_unique<Mesh>(processMesh(mesh, scene)));
         }
 
         for (unsigned int i = 0; i < currentNode->mNumChildren; i++) {
@@ -113,7 +114,6 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     std::vector<Texture::Data> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE,
                                                                   Texture::Type::DIFFUSE);
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-    /*
     // 2. specular maps
     std::vector<Texture::Data> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR,
                                                                    Texture::Type::SPECULAR);
@@ -134,39 +134,33 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     std::vector<Texture::Data> emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE,
                                                                    Texture::Type::EMISSIVE);
     textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
-    */
     return {vertices, indices, textures};
 }
 
 auto Model::loadMaterialTextures(const aiMaterial *const mat, const aiTextureType type,
                                  const Texture::Type texType) -> std::vector<Texture::Data> {
     std::vector<Texture::Data> textures;
+
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
         aiString str;
         mat->GetTexture(type, i, &str);
 
-        bool skip = false;
+        std::string path(str.C_Str());
 
-        for (auto &tex: textures_loaded) {
-            if (std::strcmp(tex.path.data(), str.C_Str()) == 0) {
-                textures.push_back(tex);
-                skip = true;
-                break;
-            }
-        }
-
-        if (skip) {
-            break;
+        auto loaded = textures_loaded.find(path);
+        if (loaded != textures_loaded.end()) {
+            textures.push_back(loaded->second);
+            continue;
         }
 
         Texture::Data texture{
-            Texture::Loader::load(str.C_Str(), directory, gammaCorrection),
+            Texture::Loader::load(path, directory, gammaCorrection),
             texType,
             str.C_Str()
         };
 
         textures.push_back(texture);
-        textures_loaded.push_back(texture);
+        textures_loaded[path] = texture;
     }
 
     return textures;

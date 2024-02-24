@@ -12,6 +12,7 @@ namespace Texture {
     namespace Loader {
         auto load(const std::string &path, bool gamma, GLint wrapS = GL_REPEAT, GLint wrapT = GL_REPEAT, GLint minFilter = GL_LINEAR_MIPMAP_LINEAR, GLint magFilter = GL_LINEAR) -> GLuint;
         auto load(const std::string &path, const std::string &directory, bool gamma, GLint wrapS = GL_REPEAT, GLint wrapT = GL_REPEAT, GLint minFilter = GL_LINEAR_MIPMAP_LINEAR, GLint magFilter = GL_LINEAR) -> GLuint;
+        auto loadCubemap(const std::string &path) -> GLuint;
         auto loadCubemap(const std::vector<std::string> &faces) -> GLuint;
         auto getFormat(int nrChannels) -> GLint;
 
