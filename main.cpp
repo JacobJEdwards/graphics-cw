@@ -11,6 +11,7 @@
 #include "Graphics/Texture.h"
 #include "Graphics/Model.h"
 #include "Graphics/Skybox.h"
+#include "Graphics/Terrain.h"
 
 constexpr unsigned int SCR_WIDTH = 800;
 constexpr unsigned int SCR_HEIGHT = 600;
@@ -57,23 +58,23 @@ auto main() -> int {
     glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     glEnable(GL_DEPTH_TEST);
 
-    const Shader ourShader("./Assets/shaders/backpack.vert", "./Assets/shaders/backpack.frag");
+    const Shader ourShader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
 
     const std::vector<std::string> skyboxFaces {
-        "./Assets/textures/Lycksele3/posx.jpg",
-        "./Assets/textures/Lycksele3/negx.jpg",
-        "./Assets/textures/Lycksele3/posy.jpg",
-        "./Assets/textures/Lycksele3/negy.jpg",
-        "./Assets/textures/Lycksele3/posz.jpg",
-        "./Assets/textures/Lycksele3/negz.jpg"
-
+        "../Assets/textures/skybox/front.jpg",
+        "../Assets/textures/skybox/back.jpg",
+        "../Assets/textures/skybox/top.jpg",
+        "../Assets/textures/skybox/bottom.jpg",
+        "../Assets/textures/skybox/right.jpg",
+        "../Assets/textures/skybox/left.jpg"
     };
 
     Skybox skybox(skyboxFaces);
 
     Texture::Loader::setFlip(false);
 
-    const Model newModel("./Assets/objects/helecopter/chopper.obj");
+    const Model newModel("../Assets/objects/helecopter/chopper.obj");
+    const Terrain terrain;
 
     projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
 
@@ -90,23 +91,27 @@ auto main() -> int {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
+        glClearColor(0.1F, 0.3F, 0.9F, 1.0F);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         processInput(window);
 
         ourShader.use();
 
+
         // view/projection transformations
         glm::mat4 view = camera.getViewMatrix();
         ourShader.setMat4("view", view);
+        
 
-        // render the loaded model
         auto model = glm::mat4(1.0F);
         model = translate(model, glm::vec3(0.0F, 0.0F, 0.0F)); // translate it down so it's at the center of the scene
         model = scale(model, glm::vec3(1.0F, 1.0F, 1.0F));	// it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
         newModel.draw(ourShader);
+        
+        terrain.draw(view, projection, camera.getPosition());
+
 
         view = glm::mat4(glm::mat3(camera.getViewMatrix()));
         skybox.draw(projection, view);

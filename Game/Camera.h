@@ -21,6 +21,14 @@ public:
         NONE
     };
 
+    enum class Mode {
+        FPS,
+        FREE,
+        ORBIT,
+        LOOKAT,
+        FIXED
+    };
+
     explicit Camera(glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3 worldUp = glm::vec3(0.0F, 1.0F, 0.0F),
                     float yaw = YAW, float pitch = PITCH, float damping = DAMPING, float smoothing = SMOOTHING,
                     float acceleration = ACCELERATION, float maxspeed = MAXSPEED);
@@ -68,6 +76,8 @@ private:
     static constexpr float MAXPITCH = 89.0F;
     static constexpr float MINPITCH = -89.0F;
 
+    Mode mode = Mode::FREE;
+
     glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
     glm::vec3 up{};
     glm::vec3 right{};
@@ -89,7 +99,6 @@ private:
 
     glm::vec3 velocity = glm::vec3(0.0F, 0.0F, 0.0F);
 
-    bool fps = false;
     float yPosition = 0.0F;
     bool downwards = false;
 

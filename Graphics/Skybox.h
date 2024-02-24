@@ -96,7 +96,7 @@ private:
         1.0F, -1.0F, 1.0F
     };
 
-    Shader shader = Shader("./Assets/shaders/skybox.vert", "./Assets/shaders/skybox.frag");
+    Shader shader = Shader("../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
 
     void init() {
         glGenVertexArrays(1, &VAO);

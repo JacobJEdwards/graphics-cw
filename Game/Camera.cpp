@@ -24,11 +24,11 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 }
 
 [[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
-    return glm::lookAt(position, position + front, up);
+    return lookAt(position, position + front, up);
 }
 
 void Camera::processKeyboard(const Direction direction, const float deltaTime) {
-    const float curAcceleration = acceleration * deltaTime;
+    const float curAcceleration = acceleration * deltaTime * 10.0F;
 
     auto targetVelocity = glm::vec3(0.0F);
 
@@ -65,7 +65,7 @@ void Camera::processKeyboard(const Direction direction, const float deltaTime) {
 
     velocity *= damping;
 
-    if (fps) {
+    if (mode == Mode::FPS) {
         position.y = yPosition;
 
         downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
@@ -106,11 +106,11 @@ void Camera::processMouseScroll(const float yOffset) {
 }
 
 void Camera::setFPS(const bool value) {
-    fps = value;
+    mode = value ? Mode::FPS : Mode::FREE;
 }
 
 [[nodiscard]] auto Camera::isFPS() const -> bool {
-    return fps;
+    return mode == Mode::FPS;
 }
 
 [[nodiscard]] auto Camera::getZoom() const -> float {
