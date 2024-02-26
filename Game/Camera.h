@@ -59,12 +59,15 @@ public:
 
     [[nodiscard]] auto getWorldUp() const -> glm::vec3;
 
+    void setPosition(const glm::vec3 &position);
+
 private:
     static constexpr float YAW = -90.0F;
     static constexpr float PITCH = 0.0F;
     static constexpr float SPEED = 3.0F;
     static constexpr float SENSITIVITY = 0.1F;
     static constexpr float ZOOM = 45.0F;
+
     static constexpr float DAMPING = 0.99F;
     static constexpr float SMOOTHING = 0.9F;
     static constexpr float ACCELERATION = 5.0F;
@@ -99,7 +102,7 @@ private:
 
     glm::vec3 velocity = glm::vec3(0.0F, 0.0F, 0.0F);
 
-    float yPosition = 0.0F;
+    float yPosition = 2.0F;
     bool downwards = false;
 
     void updateCameraVectors();

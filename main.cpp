@@ -11,7 +11,9 @@
 #include "Graphics/Texture.h"
 #include "Graphics/Model.h"
 #include "Graphics/Skybox.h"
-#include "Graphics/Terrain.h"
+#include "Graphics/ProceduralTerrain.h"
+#include "Graphics/InfinitePlane.h"
+
 
 constexpr unsigned int SCR_WIDTH = 800;
 constexpr unsigned int SCR_HEIGHT = 600;
@@ -76,7 +78,11 @@ auto main() -> int {
     const Model newModel("../Assets/objects/helecopter/chopper.obj");
     const Terrain terrain;
 
-    projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
+    camera.setPosition(glm::vec3(terrain.getOriginX(), 20.0F, terrain.getOriginY()));
+
+    // projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
+    projection = glm::perspective(glm::radians(camera.getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, (float)terrain.getChunkWidth() * (terrain.getRenderDistance() - 1.2f));
+
 
     ourShader.use();
     ourShader.setMat4("projection", projection);
@@ -85,6 +91,14 @@ auto main() -> int {
     ourShader.setVec3("light.ambient", 0.2F, 0.2F, 0.2F);
     ourShader.setVec3("light.diffuse", 0.5F, 0.5F, 0.5F);
     ourShader.setVec3("light.specular", 1.0F, 1.0F, 1.0F);
+
+        // need to move this to origin
+        // need to move this to origin and then back a tiny bit
+        auto model = glm::mat4(1.0F);
+        glm::vec3 newPosition = camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F); // Adjust the values as needed
+        glm::mat4 helicopterModel = glm::translate(model, newPosition) * glm::scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
+
+        ourShader.setMat4("model", helicopterModel);
 
     while (glfwWindowShouldClose(window) == 0) {
         const auto currentFrame = static_cast<float>(glfwGetTime());
@@ -98,20 +112,15 @@ auto main() -> int {
 
         ourShader.use();
 
-
         // view/projection transformations
         glm::mat4 view = camera.getViewMatrix();
         ourShader.setMat4("view", view);
-        
 
-        auto model = glm::mat4(1.0F);
-        model = translate(model, glm::vec3(0.0F, 0.0F, 0.0F)); // translate it down so it's at the center of the scene
-        model = scale(model, glm::vec3(1.0F, 1.0F, 1.0F));	// it's a bit too big for our scene, so scale it down
-        ourShader.setMat4("model", model);
+
+
         newModel.draw(ourShader);
-        
-        terrain.draw(view, projection, camera.getPosition());
 
+        terrain.draw(view, projection, camera.getPosition());
 
         view = glm::mat4(glm::mat3(camera.getViewMatrix()));
         skybox.draw(projection, view);
@@ -165,7 +174,7 @@ void setupGLEW() {
     }
 }
 
-void errorCallback(int error, const char *description) {
+void errorCallback(const int error, const char *description) {
     std::cerr << "Error: " << error << description << std::endl;
 }
 

@@ -52,16 +52,16 @@ void Camera::processKeyboard(const Direction direction, const float deltaTime) {
     glm::vec3 newVelocity = velocity + targetVelocity * curAcceleration;
 
     if (length(newVelocity) > maxSpeed) {
-        newVelocity = glm::normalize(newVelocity) * maxSpeed;
+        newVelocity = normalize(newVelocity) * maxSpeed;
     }
 
-    velocity = glm::mix(velocity, newVelocity, smoothing);
+    velocity = mix(velocity, newVelocity, smoothing);
 
     // velocity += targetVelocity * curAcceleration;
 
 
     const glm::vec3 newPos = position + velocity * deltaTime;
-    position = glm::mix(position, newPos, smoothing);
+    position = mix(position, newPos, smoothing);
 
     velocity *= damping;
 
@@ -137,13 +137,19 @@ void Camera::setFPS(const bool value) {
     return worldUp;
 }
 
+void Camera::setPosition(const glm::vec3 & position) {
+    this->position = position;
+    updateCameraVectors();
+}
+
 void Camera::updateCameraVectors() {
     glm::vec3 newFront;
+
     newFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     newFront.y = sin(glm::radians(pitch));
     newFront.z = sin(glm::radians(yaw) * cos(glm::radians(pitch)));
 
     front = normalize(newFront);
-    right = normalize(glm::cross(front, worldUp));
-    up = normalize(glm::cross(right, front));
+    right = normalize(cross(front, worldUp));
+    up = normalize(cross(right, front));
 }

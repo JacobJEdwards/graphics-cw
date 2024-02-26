@@ -29,8 +29,11 @@ add_executable(CW main.cpp
         Utils/AssimpGLMHelpers.cpp
         Graphics/Skybox.h
         Graphics/Skybox.cpp
-        Graphics/Terrain.h
-        Graphics/Perlin.h)
+        Graphics/ProceduralTerrain.h
+        Graphics/Perlin.h
+        Graphics/ProceduralTerrain.cpp
+        Graphics/InfinitePlane.h
+        Graphics/InfinitePlane.h)
 
 # Link libraries
 target_link_libraries(CW PRIVATE OpenGL::GL GLEW::GLEW glfw glm::glm assimp::assimp)
