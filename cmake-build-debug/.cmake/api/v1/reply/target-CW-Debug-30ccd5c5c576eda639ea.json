@@ -36,7 +36,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 39,
+				"line" : 40,
 				"parent" : 0
 			},
 			{
@@ -68,7 +68,7 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 42,
+				"line" : 43,
 				"parent" : 0
 			}
 		]
@@ -219,7 +219,8 @@
 				16,
 				18,
 				19,
-				21
+				21,
+				22
 			]
 		}
 	],
@@ -343,6 +344,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "Graphics/InfinitePlane.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Graphics/Sun.h",
 			"sourceGroupIndex" : 1
 		}
 	],

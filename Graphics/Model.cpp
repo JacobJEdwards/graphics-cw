@@ -8,7 +8,6 @@
 #include <fstream>
 #include <sstream>
 #include <stack>
-#include <iostream>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -40,13 +39,15 @@ void Model::draw(const Shader &shader) const {
 void Model::loadModel(const std::string &path) {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(
-        path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+        path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_GenBoundingBoxes);
 
     if ((scene == nullptr) || ((scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) != 0U) || (scene->mRootNode == nullptr)) {
         throw std::runtime_error(importer.GetErrorString());
     }
 
     directory = path.substr(0, path.find_last_of('/'));
+
+    this->boundingBox = scene->mMeshes[0]->mAABB;
 
     processNode(scene->mRootNode, scene);
 }

@@ -21,6 +21,7 @@ class Model {
     using MeshPtr = std::unique_ptr<Mesh>;
 
 public:
+    aiAABB boundingBox;
     explicit Model(const std::string &path, bool gamma = false);
     void draw(const Shader &shader) const;
 

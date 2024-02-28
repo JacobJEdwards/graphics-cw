@@ -67,10 +67,13 @@ void Camera::processKeyboard(const Direction direction, const float deltaTime) {
 
     if (mode == Mode::FPS) {
         position.y = yPosition;
+        if (direction == Direction::NONE) {
+            velocity *= 0.9F;
+        }
 
         downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
 
-        if (yPosition > 0.05) {
+        if (yPosition > 0.03) {
             downwards = true;
         }
 

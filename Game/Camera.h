@@ -102,7 +102,7 @@ private:
 
     glm::vec3 velocity = glm::vec3(0.0F, 0.0F, 0.0F);
 
-    float yPosition = 2.0F;
+    float yPosition = 0.0F;
     bool downwards = false;
 
     void updateCameraVectors();

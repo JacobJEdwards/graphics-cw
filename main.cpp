@@ -13,6 +13,7 @@
 #include "Graphics/Skybox.h"
 #include "Graphics/ProceduralTerrain.h"
 #include "Graphics/InfinitePlane.h"
+#include "Graphics/Sun.h"
 
 
 constexpr unsigned int SCR_WIDTH = 800;
@@ -63,42 +64,48 @@ auto main() -> int {
     const Shader ourShader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
 
     const std::vector<std::string> skyboxFaces {
-        "../Assets/textures/skybox/front.jpg",
-        "../Assets/textures/skybox/back.jpg",
+        "../Assets/textures/skybox/right.jpg",
+        "../Assets/textures/skybox/left.jpg",
         "../Assets/textures/skybox/top.jpg",
         "../Assets/textures/skybox/bottom.jpg",
-        "../Assets/textures/skybox/right.jpg",
-        "../Assets/textures/skybox/left.jpg"
+        "../Assets/textures/skybox/front.jpg",
+        "../Assets/textures/skybox/back.jpg",
     };
 
     Skybox skybox(skyboxFaces);
+    Sun sun;
 
     Texture::Loader::setFlip(false);
 
     const Model newModel("../Assets/objects/helecopter/chopper.obj");
-    const Terrain terrain;
+    const InfinitePlane terrain;
 
-    camera.setPosition(glm::vec3(terrain.getOriginX(), 20.0F, terrain.getOriginY()));
+    //camera.setPosition(glm::vec3(terrain.getOriginX(), 20.0F, terrain.getOriginY()));
 
-    // projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
-    projection = glm::perspective(glm::radians(camera.getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, (float)terrain.getChunkWidth() * (terrain.getRenderDistance() - 1.2f));
+    projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 200.0F);
+   // projection = glm::perspective(glm::radians(camera.getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, (float)terrain.getChunkWidth() * (terrain.getRenderDistance() - 1.2F));
 
 
     ourShader.use();
     ourShader.setMat4("projection", projection);
-    ourShader.setVec3("light.position", lightPos);
-    ourShader.setVec3("viewPos", camera.getPosition());
-    ourShader.setVec3("light.ambient", 0.2F, 0.2F, 0.2F);
+    ourShader.setVec3("light.ambient", 0.5F, 0.5F, 0.5F);
     ourShader.setVec3("light.diffuse", 0.5F, 0.5F, 0.5F);
     ourShader.setVec3("light.specular", 1.0F, 1.0F, 1.0F);
+    // material properties
+    ourShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    ourShader.setFloat("material.shininess", 64.0f);
+
+
+    auto model = glm::mat4(1.0F);
+    glm::vec3 newPosition = camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F); // Adjust the values as needed
+    glm::mat4 helicopterModel = glm::translate(model, newPosition) * glm::scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
+
+    ourShader.setMat4("model", helicopterModel);
+
+    sun.setPosition(camera.getPosition());
 
         // need to move this to origin
         // need to move this to origin and then back a tiny bit
-        auto model = glm::mat4(1.0F);
-        glm::vec3 newPosition = camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F); // Adjust the values as needed
-        glm::mat4 helicopterModel = glm::translate(model, newPosition) * glm::scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
-
-        ourShader.setMat4("model", helicopterModel);
 
     while (glfwWindowShouldClose(window) == 0) {
         const auto currentFrame = static_cast<float>(glfwGetTime());
@@ -112,18 +119,21 @@ auto main() -> int {
 
         ourShader.use();
 
+        ourShader.setVec3("light.position", glm::vec3(sun.getPosition(), 1.0F));
         // view/projection transformations
         glm::mat4 view = camera.getViewMatrix();
         ourShader.setMat4("view", view);
-
-
-
+        ourShader.setVec3("viewPos", camera.getPosition());
         newModel.draw(ourShader);
 
-        terrain.draw(view, projection, camera.getPosition());
+        terrain.draw(view, projection, glm::vec3(sun.getPosition(), 1.0F), camera.getPosition());
+        // terrain.draw(view, projection);
 
         view = glm::mat4(glm::mat3(camera.getViewMatrix()));
-        skybox.draw(projection, view);
+        sun.update(deltaTime);
+        skybox.draw(projection, view, sun.getPosition().y);
+        sun.draw(view, projection);
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -139,8 +149,8 @@ void setupGLFW() {
         exit(EXIT_FAILURE);
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
@@ -161,6 +171,7 @@ auto createWindow(const int width, const int height, const char *title) -> GLFWw
     glfwSetCursorPosCallback(window, mouseCallback);
     glfwSetScrollCallback(window, scrollCallback);
     glfwSetErrorCallback(errorCallback);
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
     glfwMakeContextCurrent(window);
     return window;
