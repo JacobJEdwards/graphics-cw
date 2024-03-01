@@ -13,15 +13,5 @@ D
 Graphics/Texture.cpp,2/7/2740c65b7dbf9e284997d8c85dceb26b7e3d0c90
 B
 Graphics/Texture.h,8/5/85b633ae4e650728dc35395ed9129142dfe19e3f
->
-CMakeCache.txt,2/8/28fb2eadedc699fa5fd1317744ce9f9f09e6bfd3
 ?
 Game/Camera.cpp,6/0/6012aebfb4e5d5b2e2f3b681a8ed1ffa0e57368d
-D
-Assets/lighting.vert,4/f/4f3da8d23be4361a67029b2ea088ee6f0d9db04e
-A
-Assets/basic.vert,a/1/a16b0715fb2232e054850abf1d1178c06064780c
-D
-Assets/lighting.frag,e/b/ebb4d171933f4276796552e6c798c98f82e0197e
-A
-Assets/basic.frag,d/a/dacb9b56ce934c3de801f17613fff9d2371bc42f
