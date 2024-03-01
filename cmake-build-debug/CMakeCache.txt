@@ -240,6 +240,9 @@ OPENGL_gl_LIBRARY:FILEPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.s
 //GLU library for OS X (usually same as OpenGL library)
 OPENGL_glu_LIBRARY:FILEPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework
 
+//Path to a library.
+SOIL2_LIB:FILEPATH=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/lib/macosx/libsoil2.dylib
+
 //The directory containing a CMake configuration file for assimp.
 assimp_DIR:PATH=/usr/local/lib/cmake/assimp-5.3
 

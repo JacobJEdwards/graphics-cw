@@ -9,6 +9,9 @@ find_package(glm CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 find_package(assimp REQUIRED)
 
+find_library(SOIL2_LIB libsoil2 REQUIRED PATHS ./external/SOIL2/lib/macosx)
+include_directories(./external/SOIL2/src)
+
 # Add executable
 add_executable(CW main.cpp
         Graphics/Shader.h
@@ -37,7 +40,7 @@ add_executable(CW main.cpp
         Graphics/Sun.h)
 
 # Link libraries
-target_link_libraries(CW PRIVATE OpenGL::GL GLEW::GLEW glfw glm::glm assimp::assimp)
+target_link_libraries(CW PRIVATE OpenGL::GL GLEW::GLEW glfw glm::glm assimp::assimp ${SOIL2_LIB})
 
 # Set C++ standard
 set_target_properties(CW PROPERTIES CXX_STANDARD 20)

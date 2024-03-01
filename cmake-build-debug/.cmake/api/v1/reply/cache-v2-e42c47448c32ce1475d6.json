@@ -1270,6 +1270,18 @@
 			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework"
 		},
 		{
+			"name" : "SOIL2_LIB",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a library."
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/lib/macosx/libsoil2.dylib"
+		},
+		{
 			"name" : "assimp_DIR",
 			"properties" : 
 			[

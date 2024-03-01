@@ -9,6 +9,7 @@
 
 #include <string>
 #include <iostream>
+#include <SOIL2/SOIL2.h>
 
 namespace Texture {
         namespace Loader {
@@ -21,100 +22,36 @@ namespace Texture {
             }
 
             auto load(const std::string &path, const bool  /*gamma*/, const GLint wrapS, const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint{
-                GLuint texture;
-                glGenTextures(1, &texture);
+                GLuint texture = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
-                int width;
-                int height;
-                int nrChannels;
-
-                unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-                if (data != nullptr) {
-                    const GLint format = getFormat(nrChannels);
-
-                    glBindTexture(GL_TEXTURE_2D, texture);
-                    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                    glGenerateMipmap(GL_TEXTURE_2D);
-
-                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
-                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
-                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-                } else {
-                    const char *failureReason = stbi_failure_reason();
-                    std::cerr << "Failed to load texture: " << failureReason << std::endl;
+                if (texture == 0) {
+                    std::cerr << "Failed to load texture: " << SOIL_last_result() << std::endl;
+                    throw std::runtime_error("Failed to load texture");
                 }
-
-                stbi_image_free(data);
 
                 return texture;
             }
 
             auto loadCubemap(const std::string &path) -> GLuint {
-                GLuint texture;
-                glGenTextures(1, &texture);
-                glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+                GLuint texture = SOIL_load_OGL_single_cubemap(path.c_str(), SOIL_DDS_CUBEMAP_FACE_ORDER, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
-                int width;
-                int height;
-                int nrChannels;
-
-                stbi_uc *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-
-                if (data != nullptr) {
-                    const GLint format = getFormat(nrChannels);
-
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                } else {
-                    const char *failureReason = stbi_failure_reason();
-                    std::cerr << "Failed to load texture: " << failureReason << std::endl;
+                if (texture == 0) {
+                    std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
+                    throw std::runtime_error("Failed to load cubemap");
                 }
-
-                stbi_image_free(data);
-
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
                 return texture;
             }
 
             auto loadCubemap(const std::vector<std::string> &faces) -> GLuint {
-                GLuint texture;
-                glGenTextures(1, &texture);
-                glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+                GLuint texture = SOIL_load_OGL_cubemap(faces[0].c_str(), faces[1].c_str(), faces[2].c_str(), faces[3].c_str(), faces[4].c_str(), faces[5].c_str(), SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 
-                int width;
-                int height;
-                int nrChannels;
-
-                for (unsigned int i = 0; i < faces.size(); i++) {
-                    stbi_uc *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
-                    if (data != nullptr) {
-                        const GLint format = getFormat(nrChannels);
-
-                        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                    } else {
-                        const char *failureReason = stbi_failure_reason();
-                        std::cerr << "Failed to load texture: " << failureReason << std::endl;
-                    }
-
-                    stbi_image_free(data);
+                if (texture == 0) {
+                    std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
+                    throw std::runtime_error("Failed to load cubemap");
                 }
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-                return texture;
+               return texture;
             }
 
             auto getFormat(const int nrChannels) -> GLint {

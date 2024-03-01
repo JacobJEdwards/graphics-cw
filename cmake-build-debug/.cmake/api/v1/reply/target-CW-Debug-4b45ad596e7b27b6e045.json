@@ -14,7 +14,8 @@
 			"target_link_libraries",
 			"set_target_properties",
 			"include",
-			"find_package"
+			"find_package",
+			"include_directories"
 		],
 		"files" : 
 		[
@@ -30,13 +31,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 13,
+				"line" : 16,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 40,
+				"line" : 43,
 				"parent" : 0
 			},
 			{
@@ -66,9 +67,15 @@
 				"parent" : 6
 			},
 			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			},
+			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 43,
+				"line" : 46,
 				"parent" : 0
 			}
 		]
@@ -93,6 +100,10 @@
 			"includes" : 
 			[
 				{
+					"backtrace" : 8,
+					"path" : "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/./external/SOIL2/src"
+				},
+				{
 					"backtrace" : 2,
 					"isSystem" : true,
 					"path" : "/usr/local/include"
@@ -103,7 +114,7 @@
 			{
 				"backtraces" : 
 				[
-					8
+					9
 				],
 				"standard" : "20"
 			},
@@ -140,7 +151,7 @@
 				"role" : "frameworkPath"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/usr/local/lib",
+				"fragment" : "-Wl,-rpath,/usr/local/lib -Wl,-rpath,/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/lib/macosx",
 				"role" : "libraries"
 			},
 			{
@@ -165,6 +176,11 @@
 			{
 				"backtrace" : 2,
 				"fragment" : "/usr/local/lib/libassimp.5.3.0.dylib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/lib/macosx/libsoil2.dylib",
 				"role" : "libraries"
 			},
 			{
