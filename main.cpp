@@ -6,6 +6,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "external/imgui/imgui.h"
+#include "external/imgui/imgui_impl_glfw.h"
+#include "external/imgui/imgui_impl_opengl3.h"
+
 #include "Graphics/Shader.h"
 #include "Game/Camera.h"
 #include "Graphics/Texture.h"
@@ -14,6 +18,7 @@
 #include "Graphics/ProceduralTerrain.h"
 #include "Graphics/InfinitePlane.h"
 #include "Graphics/Sun.h"
+
 
 
 constexpr unsigned int SCR_WIDTH = 800;
@@ -108,12 +113,20 @@ auto main() -> int {
         // need to move this to origin and then back a tiny bit
 
     while (glfwWindowShouldClose(window) == 0) {
+        glfwPollEvents();
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow();
+
         const auto currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         glClearColor(0.1F, 0.3F, 0.9F, 1.0F);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
         processInput(window);
 
@@ -135,8 +148,9 @@ auto main() -> int {
         sun.draw(view, projection);
 
 
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
-        glfwPollEvents();
     }
 
     cleanup(window);
@@ -174,6 +188,22 @@ auto createWindow(const int width, const int height, const char *title) -> GLFWw
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
     glfwMakeContextCurrent(window);
+
+    // imgui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    (void) io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;        // Enable Gamepad Controls
+
+    ImGui::StyleColorsDark();
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+
+    ImGui_ImplOpenGL3_Init("#version 410");
+
+
     return window;
 }
 
@@ -253,7 +283,12 @@ void reshape(GLFWwindow * /*window*/, const int width, const int height) // Resi
     glViewport(0, 0, width, height); // set Viewport dimensions
 }
 
-void cleanup(GLFWwindow * /*window*/) {
+void cleanup(GLFWwindow * window) {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+    glfwDestroyWindow(window);
     glfwTerminate();
     exit(EXIT_SUCCESS);
 }

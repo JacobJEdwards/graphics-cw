@@ -12,63 +12,85 @@
 #include <SOIL2/SOIL2.h>
 
 namespace Texture {
-        namespace Loader {
-            void setFlip(const bool value) {
-                stbi_set_flip_vertically_on_load(static_cast<int>(value));
+    namespace Loader {
+
+        void setFlip(const bool value) {
+            stbi_set_flip_vertically_on_load(static_cast<int>(value));
+        }
+
+        auto load(const std::string &path, const std::string &directory, const bool gamma, const GLint wrapS,
+                  const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint {
+            return load(directory + '/' + path, gamma, wrapS, wrapT, minFilter, magFilter);
+        }
+
+        auto load(const std::string &path, const bool /*gamma*/, const GLint wrapS, const GLint wrapT,
+                  const GLint minFilter, const GLint magFilter) -> GLuint {
+            GLuint texture = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
+                                                   SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
+                                                   SOIL_FLAG_COMPRESS_TO_DXT);
+
+            if (texture == 0) {
+                std::cerr << "Failed to load texture: " << SOIL_last_result() << std::endl;
+                throw std::runtime_error("Failed to load texture");
             }
 
-            auto load(const std::string &path, const std::string &directory, const bool  gamma, const GLint wrapS, const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint {
-                return load(directory + '/' + path, gamma, wrapS, wrapT, minFilter, magFilter);
+            return texture;
+        }
+
+        auto loadCubemap(const std::string &path) -> GLuint {
+            GLuint texture = SOIL_load_OGL_single_cubemap(path.c_str(), SOIL_DDS_CUBEMAP_FACE_ORDER, SOIL_LOAD_AUTO,
+                                                          SOIL_CREATE_NEW_ID,
+                                                          SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
+                                                          SOIL_FLAG_COMPRESS_TO_DXT);
+
+            if (texture == 0) {
+                std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
+                throw std::runtime_error("Failed to load cubemap");
             }
 
-            auto load(const std::string &path, const bool  /*gamma*/, const GLint wrapS, const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint{
-                GLuint texture = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+            return texture;
+        }
 
-                if (texture == 0) {
-                    std::cerr << "Failed to load texture: " << SOIL_last_result() << std::endl;
-                    throw std::runtime_error("Failed to load texture");
-                }
+        auto loadCubemap(const std::vector<std::string> &faces) -> GLuint {
+            if (faces.size() != CUBE_MAP_FACES) {
+                throw std::runtime_error("Invalid number of faces for cubemap");
+            }
+            // convert to array and call other function
+            return loadCubemap(std::array<std::string, CUBE_MAP_FACES>{faces[0], faces[1], faces[2], faces[3], faces[4], faces[5]});
+           }
 
-                return texture;
+
+        auto loadCubemap(const std::array<std::string, CUBE_MAP_FACES> &faces) -> GLuint {
+            if (faces.size() != CUBE_MAP_FACES) {
+                throw std::runtime_error("Invalid number of faces for cubemap");
+            }
+            GLuint texture = SOIL_load_OGL_cubemap(faces[0].c_str(), faces[1].c_str(), faces[2].c_str(),
+                                                   faces[3].c_str(), faces[4].c_str(), faces[5].c_str(), SOIL_LOAD_RGB,
+                                                   SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+
+            if (texture == 0) {
+                std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
+                throw std::runtime_error("Failed to load cubemap");
             }
 
-            auto loadCubemap(const std::string &path) -> GLuint {
-                GLuint texture = SOIL_load_OGL_single_cubemap(path.c_str(), SOIL_DDS_CUBEMAP_FACE_ORDER, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+            return texture;
+        }
 
-                if (texture == 0) {
-                    std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
-                    throw std::runtime_error("Failed to load cubemap");
-                }
-
-                return texture;
-            }
-
-            auto loadCubemap(const std::vector<std::string> &faces) -> GLuint {
-                GLuint texture = SOIL_load_OGL_cubemap(faces[0].c_str(), faces[1].c_str(), faces[2].c_str(), faces[3].c_str(), faces[4].c_str(), faces[5].c_str(), SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-
-                if (texture == 0) {
-                    std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
-                    throw std::runtime_error("Failed to load cubemap");
-                }
-
-               return texture;
-            }
-
-            auto getFormat(const int nrChannels) -> GLint {
-                switch (nrChannels) {
-                    case 1:
-                        return GL_RED;
-                    case 2:
-                        return GL_RG;
-                    case 3:
-                        return GL_RGB;
-                    case 4:
-                        return GL_RGBA;
-                    default:
-                        throw std::runtime_error("Error loading texture");
-                }
+        auto getFormat(const int nrChannels) -> GLint {
+            switch (nrChannels) {
+                case 1:
+                    return GL_RED;
+                case 2:
+                    return GL_RG;
+                case 3:
+                    return GL_RGB;
+                case 4:
+                    return GL_RGBA;
+                default:
+                    throw std::runtime_error("Error loading texture");
             }
         }
+    }
 
     auto toString(const Type type) -> std::string {
         switch (type) {
