@@ -9,6 +9,7 @@
 #include <glm/glm.hpp>
 
 #include <string>
+#include <filesystem>
 
 class Shader {
 public:
@@ -35,46 +36,34 @@ public:
 
     [[nodiscard]] auto getProgramID() const -> GLuint;
 
-    void setBool(const std::string &name, GLboolean value) const;
-
-    void setInt(const std::string &name, GLint value) const;
-
-    void setFloat(const std::string &name, GLfloat value) const;
-
-    void setVec2(const std::string &name, const glm::vec2 &value) const;
-
-    void setVec2(const std::string &name, float x, float y) const;
-
-    void setVec3(const std::string &name, const glm::vec3 &value) const;
-
-    void setVec3(const std::string &name, float x, float y, float z) const;
-
-    void setVec4(const std::string &name, const glm::vec4 &value) const;
-
-    void setVec4(const std::string &name, float x, float y, float z, float w) const;
-
-    void setMat2(const std::string &name, const glm::mat2 &mat) const;
-
-    void setMat3(const std::string &name, const glm::mat3 &mat) const;
-
-    void setMat4(const std::string &name, const glm::mat4 &mat) const;
+    template<typename T>
+    void setUniform(const std::string &name, T value) const;
 
 private:
-    std::string vertexPath;
-    std::string fragmentPath;
-    std::string geometryPath;
-    std::string tessControlPath;
-    std::string tessEvalPath;
+    std::filesystem::path vertexPath;
+    std::filesystem::path fragmentPath;
+    std::filesystem::path geometryPath;
+    std::filesystem::path tessControlPath;
+    std::filesystem::path tessEvalPath;
+
+    std::string vertexCode;
+    std::string fragmentCode;
+    std::string geometryCode;
+    std::string tessControlCode;
+    std::string tessEvalCode;
 
     GLuint ID = 0;
 
     static constexpr int BUFFER_SIZE = 1024;
 
-    void checkCompileErrors(GLuint shader, const std::string &type) const;
+    static void checkCompileErrors(GLuint shader, bool isProgram);
 
     void deleteProgram() const;
 
     void load();
+
+    static auto readShaderFile(const std::filesystem::path &path) -> std::string;
+    static auto compileShader(const std::string &shaderCode, GLenum shaderType) -> GLuint;
 };
 
 #endif //CW_SHADER_H

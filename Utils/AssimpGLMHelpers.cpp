@@ -33,7 +33,7 @@ auto AssimpGLMHelpers::getGLMMatrix4x4(const aiMatrix4x4 &from) -> glm::mat4 {
     return mat4;
 }
 
-auto AssimpGLMHelpers::getGlMVec(const aiVector3D &from) -> glm::vec3 {
+auto AssimpGLMHelpers::getGLMVec(const aiVector3D &from) -> glm::vec3 {
     return {from.x, from.y, from.z};
 }
 

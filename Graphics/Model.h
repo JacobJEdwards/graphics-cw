@@ -16,16 +16,22 @@
 #include "Texture.h"
 #include "Shader.h"
 
+struct BoundingBox {
+    glm::vec3 min;
+    glm::vec3 max;
+};
 
 class Model {
     using MeshPtr = std::unique_ptr<Mesh>;
 
 public:
-    aiAABB boundingBox;
     explicit Model(const std::string &path, bool gamma = false);
-    void draw(const Shader &shader) const;
+    void draw(const Shader *shader) const;
 
 private:
+    BoundingBox boundingBox{ glm::vec3(0.0F), glm::vec3(0.0F) };
+
+
     std::unordered_map<std::string, Texture::Data> textures_loaded;
     std::vector<std::unique_ptr<Mesh>> meshes;
     std::string directory;

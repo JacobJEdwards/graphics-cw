@@ -20,11 +20,14 @@
 #include "Graphics/Sun.h"
 
 
+Shader *ourShader;
 
-constexpr unsigned int SCR_WIDTH = 800;
-constexpr unsigned int SCR_HEIGHT = 600;
+constexpr unsigned int SCR_WIDTH = 1200;
+constexpr unsigned int SCR_HEIGHT = 900;
 
 Camera camera(glm::vec3(0.0F, 0.0F, 3.0F));
+bool useMouse = false;
+bool updateSun = true;
 
 bool firstMouse = true;
 float lastX = SCR_WIDTH / 2.0F;
@@ -34,8 +37,6 @@ float deltaTime = 0.0F;
 float lastFrame = 0.0F;
 
 glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()),static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), 0.1F, 100.0F);
-
-glm::vec3 lightPos(1.2F, 1.0F, 2.0F);
 
 // function prototypes
 void errorCallback(int error, const char *description);
@@ -66,7 +67,6 @@ auto main() -> int {
     glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     glEnable(GL_DEPTH_TEST);
 
-    const Shader ourShader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
 
     const std::vector<std::string> skyboxFaces {
         "../Assets/textures/skybox/right.jpg",
@@ -80,10 +80,15 @@ auto main() -> int {
     Skybox skybox(skyboxFaces);
     Sun sun;
 
+
+    Texture::Loader::setFlip(false);
+    const Model newModel("../Assets/objects/helecopter/chopper.obj");
+    Texture::Loader::setFlip(true);
+    const Model model2("../Assets/objects/backpack/backpack.obj");
     Texture::Loader::setFlip(false);
 
-    const Model newModel("../Assets/objects/helecopter/chopper.obj");
     const InfinitePlane terrain;
+    ourShader = new Shader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
 
     //camera.setPosition(glm::vec3(terrain.getOriginX(), 20.0F, terrain.getOriginY()));
 
@@ -91,21 +96,26 @@ auto main() -> int {
    // projection = glm::perspective(glm::radians(camera.getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, (float)terrain.getChunkWidth() * (terrain.getRenderDistance() - 1.2F));
 
 
-    ourShader.use();
-    ourShader.setMat4("projection", projection);
-    ourShader.setVec3("light.ambient", 0.5F, 0.5F, 0.5F);
-    ourShader.setVec3("light.diffuse", 0.5F, 0.5F, 0.5F);
-    ourShader.setVec3("light.specular", 1.0F, 1.0F, 1.0F);
+    ourShader->use();
+    ourShader->setUniform("projection", projection);
+    ourShader->setUniform("light.ambient", glm::vec3(0.5F, 0.5F, 0.5F));
+    ourShader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+    ourShader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
     // material properties
-    ourShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-    ourShader.setFloat("material.shininess", 64.0f);
+    ourShader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
+    ourShader->setUniform("material.shininess", 64.0F);
 
 
     auto model = glm::mat4(1.0F);
-    glm::vec3 newPosition = camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F); // Adjust the values as needed
-    glm::mat4 helicopterModel = glm::translate(model, newPosition) * glm::scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
+    glm::vec3 newPosition = camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F);
+    glm::mat4 helicopterModel = translate(model, newPosition) * scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
 
-    ourShader.setMat4("model", helicopterModel);
+    ourShader->setUniform("model", helicopterModel);
+
+    model = glm::mat4(1.0F);
+    newPosition = camera.getPosition() + glm::vec3(5.0F, -0.15F, 0.45F);
+    glm::mat4 backpackModel = translate(model, newPosition) * scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
+
 
     sun.setPosition(camera.getPosition());
 
@@ -130,20 +140,27 @@ auto main() -> int {
 
         processInput(window);
 
-        ourShader.use();
+        ourShader->use();
 
-        ourShader.setVec3("light.position", glm::vec3(sun.getPosition(), 1.0F));
+        ourShader->setUniform("light.position", glm::vec3(sun.getPosition(), 1.0F));
         // view/projection transformations
         glm::mat4 view = camera.getViewMatrix();
-        ourShader.setMat4("view", view);
-        ourShader.setVec3("viewPos", camera.getPosition());
+        ourShader->setUniform("view", view);
+        ourShader->setUniform("viewPos", camera.getPosition());
+        ourShader->setUniform("model", helicopterModel);
         newModel.draw(ourShader);
 
+        ourShader->setUniform("model", backpackModel);
+        model2.draw(ourShader);
+
+
         terrain.draw(view, projection, glm::vec3(sun.getPosition(), 1.0F), camera.getPosition());
-        // terrain.draw(view, projection);
+        //terrain.draw(view, projection);
 
         view = glm::mat4(glm::mat3(camera.getViewMatrix()));
+        if (updateSun) {
         sun.update(deltaTime);
+        }
         skybox.draw(projection, view, sun.getPosition().y);
         sun.draw(view, projection);
 
@@ -240,14 +257,37 @@ void keyCallback(GLFWwindow *window, const int key, const int  /*code*/, const i
     if (key == GLFW_KEY_F && action == GLFW_PRESS) {
         camera.setFPS(!camera.isFPS());
     }
+
 }
 
+// move keys keys into function
+// could store array of key presses, flip to 1 if pressed 0 otherwise
+// then do update stuff based on that
+// might be better in a callback or something
+// prototype:
+
+/** def input(glEnum(?) key, std::function<void()> callback, keyAction = GLFW_PRESS); */
+
+// might be cleaner, however need to change moved thing, unless keep camera controls separate
+// if in class namespace or something can keep window as global save on fuzz
 void processInput(GLFWwindow *window) {
     bool moved = false;
+
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        moved = true;
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
+        if (useMouse) {
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+        }
+
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        useMouse = true;
+      }
+
+
+    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        useMouse = false;
     }
+
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         moved = true;
@@ -275,6 +315,11 @@ void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
         camera.setFPS(!camera.isFPS());
     }
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        updateSun = !updateSun;
+    }
+
 }
 
 void reshape(GLFWwindow * /*window*/, const int width, const int height) // Resize the OpenGL window

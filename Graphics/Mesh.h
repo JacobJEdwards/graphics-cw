@@ -16,7 +16,7 @@ class Mesh {
 public:
     Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices, std::vector<Texture::Data> textures);
 
-    void draw(const Shader &shader) const;
+    void draw(const Shader *shader) const;
 
 private:
     GLuint VAO = 0;

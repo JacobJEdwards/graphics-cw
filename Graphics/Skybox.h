@@ -29,13 +29,13 @@ public:
         loadTextures();
     }
 
-    void draw(const glm::mat4 &projection, const glm::mat4 &view, float y) const {
+    void draw(const glm::mat4 &projection, const glm::mat4 &view, const GLfloat y) const {
         glDepthFunc(GL_LEQUAL);
-        shader.use();
+        shader->use();
 
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
-        shader.setFloat("intensity", y);
+        shader->setUniform("view", view);
+        shader->setUniform("projection", projection);
+        shader->setUniform("intensity", y);
 
         glBindVertexArray(VAO);
         glActiveTexture(GL_TEXTURE0);
@@ -97,7 +97,7 @@ private:
         1.0F, -1.0F, 1.0F
     };
 
-    Shader shader = Shader("../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
+    Shader *shader = new Shader("../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
 
     void init() {
         glGenVertexArrays(1, &VAO);
@@ -108,8 +108,8 @@ private:
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-        shader.use();
-        shader.setInt("skybox", 0);
+        shader->use();
+        shader->setUniform("skybox", 0);
     }
 
     void loadTextures() {

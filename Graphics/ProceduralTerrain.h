@@ -14,7 +14,6 @@
 #include "Shader.h"
 #include "Model.h"
 #include "Perlin.h"
-#include "stb_image.h"
 
 constexpr int CHUNK_RENDER_DISTANCE = 3;
 constexpr int X_MAP_CHUNKS = 10;
@@ -49,19 +48,19 @@ public:
         }
 
         shader.use();
-        shader.setBool("isFlat", 1U);
-        shader.setVec3("light.ambient", 0.2F, 0.2F, 0.2F);
-        shader.setVec3("light.diffuse", 0.5F, 0.5F, 0.5F);
-        shader.setVec3("light.specular", 1.0F, 1.0F, 1.0F);
-        shader.setVec3("light.direction", -0.2F, -0.1F, -0.3F);
+        shader.setUniform("isFlat", 1U);
+        shader.setUniform("light.ambient", glm::vec3(0.2F, 0.2F, 0.2F));
+        shader.setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+        shader.setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+        shader.setUniform("light.direction", glm::vec3(-0.2F, -0.1F, -0.3F));
     }
 
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection, const glm::vec3 &viewPos) const {
         shader.use();
-        shader.setMat4("u_view", view);
-        shader.setMat4("u_projection", projection);
-        shader.setVec3("u_viewPos", viewPos);
+        shader.setUniform("u_view", view);
+        shader.setUniform("u_projection", projection);
+        shader.setUniform("u_viewPos", viewPos);
         // Measures number of map chunks away from origin map chunk the camera is
         const int gridPosX = static_cast<int>((viewPos.x - originX) / chunkWidth + xMapChunks / 2);
         const int gridPosY = static_cast<int>((viewPos.z - originY) / chunkHeight + yMapChunks / 2);
@@ -77,7 +76,7 @@ public:
                     model = translate(model, glm::vec3(-chunkWidth / 2.0F + (chunkWidth - 1) * x, -2.0F,
                                                        -chunkHeight / 2.0F + (chunkHeight - 1.0F) * y));
 
-                    shader.setMat4("u_model", model);
+                    shader.setUniform("u_model", model);
 
                     // Terrain chunk
                     glBindVertexArray(mapChunks[x + y * xMapChunks]);

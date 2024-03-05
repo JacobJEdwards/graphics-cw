@@ -18,20 +18,20 @@ public:
     void draw(const glm::mat4 & view, const glm::mat4 & projection, const glm::vec3& lightPos, const glm::vec3 &viewPos ) const {
         glBindVertexArray(VAO);
         shader.use();
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
-        shader.setVec3("light.position", lightPos);
-        shader.setVec3("viewPos", viewPos);
+        shader.setUniform("view", view);
+        shader.setUniform("projection", projection);
+        shader.setUniform("light.position", lightPos);
+        shader.setUniform("viewPos", viewPos);
         auto model = glm::mat4(1.0F);
         // move model down by 2.0F
         model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));
-        shader.setMat4("model", model);
+        shader.setUniform("model", model);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
 
     }
 private:
-    static constexpr float SIZE = 1000.0F; // Adjust size as needed
+    static constexpr float SIZE = 1000.0F;
 
     static constexpr std::array<GLfloat, 20> vertices = {
         -SIZE, 0.0F, -SIZE, 0.0F, 0.0F,
@@ -68,9 +68,9 @@ private:
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
         glEnableVertexAttribArray(1);
         shader.use();
-        shader.setVec3("light.ambient", 0.5F, 0.5F, 0.5F);
-        shader.setVec3("light.diffuse", 0.5F, 0.5F, 0.5F);
-        shader.setVec3("light.specular", 1.0F, 1.0F, 1.0F);
+        shader.setUniform("light.ambient", glm::vec3(0.5F, 0.5F, 0.5F));
+        shader.setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+        shader.setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
     }
 };
 

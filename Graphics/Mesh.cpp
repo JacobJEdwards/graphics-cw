@@ -18,7 +18,7 @@ Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
     setupMesh();
 }
 
-void Mesh::draw(const Shader &shader) const {
+void Mesh::draw(const Shader *shader) const {
     GLuint diffuseNr = 1;
     GLuint specularNr = 1;
     GLuint normalNr = 1;
@@ -62,7 +62,7 @@ void Mesh::draw(const Shader &shader) const {
         }
 
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
-        shader.setInt(("material.texture_" + toString(name) + number), static_cast<GLint>(i));
+        shader->setUniform(("material.texture_" + toString(name) + number), static_cast<GLint>(i));
     }
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, nullptr);

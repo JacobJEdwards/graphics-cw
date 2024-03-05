@@ -4,30 +4,25 @@
 
 #include "Texture.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 #include <string>
 #include <iostream>
 #include <SOIL2/SOIL2.h>
+#include <filesystem>
 
 namespace Texture {
     namespace Loader {
+        unsigned int flipImage = 0;
 
-        void setFlip(const bool value) {
-            stbi_set_flip_vertically_on_load(static_cast<int>(value));
-        }
-
-        auto load(const std::string &path, const std::string &directory, const bool gamma, const GLint wrapS,
+        auto load(const std::string &filename, const std::filesystem::path &directory, const bool gamma, const GLint wrapS,
                   const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint {
-            return load(directory + '/' + path, gamma, wrapS, wrapT, minFilter, magFilter);
+            return load(directory / filename, gamma, wrapS, wrapT, minFilter, magFilter);
         }
 
-        auto load(const std::string &path, const bool /*gamma*/, const GLint wrapS, const GLint wrapT,
+        auto load(const std::filesystem::path &path, const bool /*gamma*/, const GLint wrapS, const GLint wrapT,
                   const GLint minFilter, const GLint magFilter) -> GLuint {
             GLuint texture = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
                                                    SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
-                                                   SOIL_FLAG_COMPRESS_TO_DXT);
+                                                   SOIL_FLAG_COMPRESS_TO_DXT | flipImage);
 
             if (texture == 0) {
                 std::cerr << "Failed to load texture: " << SOIL_last_result() << std::endl;
@@ -37,7 +32,7 @@ namespace Texture {
             return texture;
         }
 
-        auto loadCubemap(const std::string &path) -> GLuint {
+        auto loadCubemap(const std::filesystem::path &path) -> GLuint {
             GLuint texture = SOIL_load_OGL_single_cubemap(path.c_str(), SOIL_DDS_CUBEMAP_FACE_ORDER, SOIL_LOAD_AUTO,
                                                           SOIL_CREATE_NEW_ID,
                                                           SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
@@ -74,6 +69,14 @@ namespace Texture {
             }
 
             return texture;
+        }
+
+        void setFlip(bool flip) {
+            if (flip) {
+                flipImage = SOIL_FLAG_INVERT_Y;
+              } else {
+                flipImage = 0;
+                }
         }
 
         auto getFormat(const int nrChannels) -> GLint {

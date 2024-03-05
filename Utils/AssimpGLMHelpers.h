@@ -14,7 +14,7 @@
 class AssimpGLMHelpers {
 public:
     static auto getGLMMatrix4x4(const aiMatrix4x4& from) -> glm::mat4;
-    static auto getGlMVec(const aiVector3D& from) -> glm::vec3;
+    static auto getGLMVec(const aiVector3D& from) -> glm::vec3;
     static auto getGLMQuat(const aiQuaternion& from) -> glm::quat;
 };
 

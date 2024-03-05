@@ -30,7 +30,7 @@ Model::Model(const std::string &path, const bool gamma) : gammaCorrection(gamma)
     loadModel(path);
 }
 
-void Model::draw(const Shader &shader) const {
+void Model::draw(const Shader *shader) const {
     for (const auto &mesh: meshes) {
         mesh->draw(shader);
     }
@@ -47,7 +47,8 @@ void Model::loadModel(const std::string &path) {
 
     directory = path.substr(0, path.find_last_of('/'));
 
-    this->boundingBox = scene->mMeshes[0]->mAABB;
+    this->boundingBox.min = AssimpGLMHelpers::getGLMVec(scene->mMeshes[0]->mAABB.mMin);
+    this->boundingBox.max = AssimpGLMHelpers::getGLMVec(scene->mMeshes[0]->mAABB.mMax);
 
     processNode(scene->mRootNode, scene);
 }
@@ -79,22 +80,24 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex::Data vertex{};
 
-        vertex.position = AssimpGLMHelpers::getGlMVec(mesh->mVertices[i]);
+        vertex.position = AssimpGLMHelpers::getGLMVec(mesh->mVertices[i]);
 
         if (mesh->HasNormals()) {
-            vertex.normal = AssimpGLMHelpers::getGlMVec(mesh->mNormals[i]);
+            vertex.normal = AssimpGLMHelpers::getGLMVec(mesh->mNormals[i]);
         }
-        if (mesh->mTextureCoords[0] != nullptr) // does the mesh contain texture coordinates?
+        if (mesh->HasTextureCoords(0)) // does the mesh contain texture coordinates?
         {
             // a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't
             // use models where a vertex can have multiple texture coordinates so we always take the first set (0).
-            glm::vec3 vec = AssimpGLMHelpers::getGlMVec(mesh->mTextureCoords[0][i]);
+            glm::vec3 vec = AssimpGLMHelpers::getGLMVec(mesh->mTextureCoords[0][i]);
             vertex.texCoords = glm::vec2(vec.x, vec.y);
 
-            // tangent
-            vertex.tangent = AssimpGLMHelpers::getGlMVec(mesh->mTangents[i]);
-            // bitangent
-            vertex.bitangent = AssimpGLMHelpers::getGlMVec(mesh->mBitangents[i]);
+            if (mesh->HasTangentsAndBitangents()) {
+                // tangent
+                vertex.tangent = AssimpGLMHelpers::getGLMVec(mesh->mTangents[i]);
+                // bitangent
+                vertex.bitangent = AssimpGLMHelpers::getGLMVec(mesh->mBitangents[i]);
+            }
         } else {
             vertex.texCoords = glm::vec2(0.0F, 0.0F);
         }

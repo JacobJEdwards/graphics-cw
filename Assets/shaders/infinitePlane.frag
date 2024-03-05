@@ -35,7 +35,6 @@ vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 s
 
 
 in vec3 FragPos;
-in vec2 TexCoords;
 in vec3 Normal;
 
 out vec4 FragColor;
@@ -52,8 +51,8 @@ void main() {
     // lighting
     vec3 lightDir = normalize(light.position - FragPos);
     vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, Normal, light.diffuse, vec3(color), 32.0);
-    // FragColor = vec4(result, 1.0);
+    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, Normal, light.diffuse, vec3(color), 128.0);
+    // FragColor = vec4(color, 1.0);
 
     FragColor = vec4(vec3(color), 1.0);
 }

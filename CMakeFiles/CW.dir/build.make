@@ -195,6 +195,132 @@ CMakeFiles/CW.dir/Graphics/Skybox.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Graphics/Skybox.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/Skybox.cpp -o CMakeFiles/CW.dir/Graphics/Skybox.cpp.s
 
+CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o: Graphics/ProceduralTerrain.cpp
+CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o -MF CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o.d -o CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/ProceduralTerrain.cpp
+
+CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/ProceduralTerrain.cpp > CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.i
+
+CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/ProceduralTerrain.cpp -o CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.s
+
+CMakeFiles/CW.dir/Graphics/Sun.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Graphics/Sun.cpp.o: Graphics/Sun.cpp
+CMakeFiles/CW.dir/Graphics/Sun.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/CW.dir/Graphics/Sun.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Graphics/Sun.cpp.o -MF CMakeFiles/CW.dir/Graphics/Sun.cpp.o.d -o CMakeFiles/CW.dir/Graphics/Sun.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/Sun.cpp
+
+CMakeFiles/CW.dir/Graphics/Sun.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Graphics/Sun.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/Sun.cpp > CMakeFiles/CW.dir/Graphics/Sun.cpp.i
+
+CMakeFiles/CW.dir/Graphics/Sun.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Graphics/Sun.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Graphics/Sun.cpp -o CMakeFiles/CW.dir/Graphics/Sun.cpp.s
+
+CMakeFiles/CW.dir/external/imgui/imgui.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/external/imgui/imgui.cpp.o: external/imgui/imgui.cpp
+CMakeFiles/CW.dir/external/imgui/imgui.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp
+
+CMakeFiles/CW.dir/external/imgui/imgui.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp > CMakeFiles/CW.dir/external/imgui/imgui.cpp.i
+
+CMakeFiles/CW.dir/external/imgui/imgui.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp -o CMakeFiles/CW.dir/external/imgui/imgui.cpp.s
+
+CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o: external/imgui/imgui_widgets.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp
+
+CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp > CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.i
+
+CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.s
+
+CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o: external/imgui/imgui_demo.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp
+
+CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp > CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.i
+
+CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.s
+
+CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o: external/imgui/imgui_draw.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp
+
+CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp > CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.i
+
+CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.s
+
+CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o: external/imgui/imgui_tables.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp
+
+CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp > CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.i
+
+CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.s
+
+CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o: external/imgui/imgui_impl_glfw.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp
+
+CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp > CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.i
+
+CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.s
+
+CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o: external/imgui/imgui_impl_opengl3.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp
+
+CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp > CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.i
+
+CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.s
+
 # Object files for target CW
 CW_OBJECTS = \
 "CMakeFiles/CW.dir/main.cpp.o" \
@@ -205,7 +331,16 @@ CW_OBJECTS = \
 "CMakeFiles/CW.dir/Graphics/Mesh.cpp.o" \
 "CMakeFiles/CW.dir/Graphics/Model.cpp.o" \
 "CMakeFiles/CW.dir/Utils/AssimpGLMHelpers.cpp.o" \
-"CMakeFiles/CW.dir/Graphics/Skybox.cpp.o"
+"CMakeFiles/CW.dir/Graphics/Skybox.cpp.o" \
+"CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o" \
+"CMakeFiles/CW.dir/Graphics/Sun.cpp.o" \
+"CMakeFiles/CW.dir/external/imgui/imgui.cpp.o" \
+"CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o" \
+"CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o" \
+"CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o" \
+"CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o" \
+"CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o" \
+"CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o"
 
 # External object files for target CW
 CW_EXTERNAL_OBJECTS =
@@ -219,15 +354,25 @@ CW: CMakeFiles/CW.dir/Graphics/Mesh.cpp.o
 CW: CMakeFiles/CW.dir/Graphics/Model.cpp.o
 CW: CMakeFiles/CW.dir/Utils/AssimpGLMHelpers.cpp.o
 CW: CMakeFiles/CW.dir/Graphics/Skybox.cpp.o
+CW: CMakeFiles/CW.dir/Graphics/ProceduralTerrain.cpp.o
+CW: CMakeFiles/CW.dir/Graphics/Sun.cpp.o
+CW: CMakeFiles/CW.dir/external/imgui/imgui.cpp.o
+CW: CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o
+CW: CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o
+CW: CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o
+CW: CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o
+CW: CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o
+CW: CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o
 CW: CMakeFiles/CW.dir/build.make
 CW: /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework
 CW: /usr/local/lib/libGLEW.2.2.0.dylib
 CW: /usr/local/lib/libglfw.3.3.dylib
 CW: /usr/local/lib/libglm.dylib
 CW: /usr/local/lib/libassimp.5.3.0.dylib
+CW: external/SOIL2/lib/macosx/libsoil2.dylib
 CW: /usr/local/lib/libzlibstatic.a
 CW: CMakeFiles/CW.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable CW"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable CW"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CW.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

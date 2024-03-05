@@ -11,6 +11,23 @@
 
 #include <GL/glew.h>
 
+constexpr float YAW = -90.0F;
+constexpr float PITCH = 0.0F;
+constexpr float SPEED = 3.0F;
+constexpr float SENSITIVITY = 0.1F;
+constexpr float ZOOM = 45.0F;
+
+constexpr float DAMPING = 0.99F;
+constexpr float SMOOTHING = 0.9F;
+constexpr float ACCELERATION = 5.0F;
+constexpr float MAXSPEED = 10000.0F;
+
+constexpr float MAXZOOM = 45.0F;
+constexpr float MINZOOM = 1.0F;
+
+constexpr float MAXPITCH = 89.0F;
+constexpr float MINPITCH = -89.0F;
+
 class Camera {
 public:
     enum class Direction {
@@ -25,7 +42,6 @@ public:
         FPS,
         FREE,
         ORBIT,
-        LOOKAT,
         FIXED
     };
 
@@ -62,22 +78,6 @@ public:
     void setPosition(const glm::vec3 &position);
 
 private:
-    static constexpr float YAW = -90.0F;
-    static constexpr float PITCH = 0.0F;
-    static constexpr float SPEED = 3.0F;
-    static constexpr float SENSITIVITY = 0.1F;
-    static constexpr float ZOOM = 45.0F;
-
-    static constexpr float DAMPING = 0.99F;
-    static constexpr float SMOOTHING = 0.9F;
-    static constexpr float ACCELERATION = 5.0F;
-    static constexpr float MAXSPEED = 10000.0F;
-
-    static constexpr float MAXZOOM = 45.0F;
-    static constexpr float MINZOOM = 1.0F;
-
-    static constexpr float MAXPITCH = 89.0F;
-    static constexpr float MINPITCH = -89.0F;
 
     Mode mode = Mode::FREE;
 

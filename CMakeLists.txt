@@ -9,14 +9,13 @@ find_package(glm CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 find_package(assimp REQUIRED)
 
-find_library(SOIL2_LIB libsoil2 REQUIRED PATHS external/SOIL2/lib/macosx)
+find_library(SOIL2_LIB soil2 REQUIRED PATHS external/SOIL2/lib/macosx)
 include_directories(external/SOIL2/src)
 
 # Add executable
 add_executable(CW main.cpp
         Graphics/Shader.h
         Graphics/Shader.cpp
-        Graphics/stb_image.h
         Graphics/Texture.h
         Graphics/Texture.cpp
         Game/Camera.h
@@ -26,7 +25,6 @@ add_executable(CW main.cpp
         Graphics/Vertex.cpp
         Graphics/Mesh.cpp
         Graphics/Model.h
-        Graphics/Model.cpp
         Graphics/Model.cpp
         Utils/AssimpGLMHelpers.h
         Utils/AssimpGLMHelpers.cpp
@@ -56,6 +54,11 @@ add_executable(CW main.cpp
         external/imgui/imgui_impl_opengl3.h
         external/imgui/imgui_impl_opengl3_loader.h
         external/imgui/imgui_impl_osx.h
+        Engine/Engine.h
+        Engine/include/View.h
+        Engine/include/utils/Buffer.h
+        Graphics/Model.cpp
+        Graphics/Shader.cpp
 )
 
 # Link libraries
@@ -64,7 +67,9 @@ target_link_libraries(CW PRIVATE OpenGL::GL GLEW::GLEW glfw glm::glm assimp::ass
 # Set C++ standard
 set_target_properties(CW PROPERTIES CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 
 

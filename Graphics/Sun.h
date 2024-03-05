@@ -26,25 +26,25 @@ public:
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const {
         // glBindVertexArray(VAO);
         glDepthFunc(GL_LEQUAL);
-        shader.use();
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
+        shader->use();
+        shader->setUniform("view", view);
+        shader->setUniform("projection", projection);
         auto model = glm::mat4(1.0F);
         model = glm::translate(model, glm::vec3(position, -10.0F));
         model = glm::scale(model, glm::vec3(scale));
-        shader.setMat4("model", model);
+        shader->setUniform("model", model);
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         // glBindVertexArray(0);
         sun.draw(shader);
         glDepthFunc(GL_LESS);
     }
 
-    void setPosition(const glm::vec2 &position) {
-        Sun::position = position;
+    void setPosition(const glm::vec2 &pos) {
+        Sun::position = pos;
     }
 
-    void setScale(const float scale) {
-        Sun::scale = scale;
+    void setScale(const float newScale) {
+        Sun::scale = newScale;
     }
 
     [[nodiscard]] auto getPosition() const -> glm::vec2 {
@@ -52,7 +52,7 @@ public:
     }
 
 private:
-    Shader shader{"../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag"};
+    Shader *shader = new Shader("../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
     Model sun{"../Assets/objects/sun/sun.obj"};
     GLuint VAO = 0;
     GLuint VBO = 0;
