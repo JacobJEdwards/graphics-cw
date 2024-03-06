@@ -98,7 +98,7 @@ auto main() -> int {
 
     ourShader->use();
     ourShader->setUniform("projection", projection);
-    ourShader->setUniform("light.ambient", glm::vec3(0.5F, 0.5F, 0.5F));
+    ourShader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
     ourShader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
     ourShader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
     // material properties
@@ -163,7 +163,6 @@ auto main() -> int {
         }
         skybox.draw(projection, view, sun.getPosition().y);
         sun.draw(view, projection);
-
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -24,8 +24,22 @@ using Handle = std::function<void()>;
 namespace Engine {
     static View view;
 
-    bool init() {
+    bool init();
 
+    bool window(std::string title, int width, int height);
+
+    void quit();
+
+    template <typename F, typename... Args>
+    void loop(F&& f, Args&&... args) {
+        while (!view.shouldClose() {
+            view.clearTarget(glm::vec3(0.0f, 0.0f, 0.0f));
+            view.render();
+
+            f(std::forward<Args>(args)...);
+            view.swapBuffers();
+            view.pollEvents();
+        }
     }
 }
 
