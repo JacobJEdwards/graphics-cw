@@ -3,14 +3,16 @@
 //
 
 #include "Mesh.h"
+
+#include <stdexcept>
+#include <cstddef>
+#include <utility>
+#include "utils/Vertex.h"
+#include "graphics/Texture.h"
+#include "utils/Shader.h"
 #include <vector>
 #include <string>
 #include <GL/glew.h>
-#include <iostream>
-
-#include "Vertex.h"
-#include "Texture.h"
-#include "Shader.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
            std::vector<Texture::Data> textures) : vertices(std::move(vertices)), indices(std::move(indices)),

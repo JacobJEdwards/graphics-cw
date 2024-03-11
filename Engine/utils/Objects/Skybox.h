@@ -6,27 +6,22 @@
 #define SKYBOX_H
 
 #include <GL/glew.h>
+#include <array>
 #include <cstddef>
-#include <glm/glm.hpp>
-#include <iostream>
-#include <vector>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <string>
 
-#include "Shader.h"
-#include "Texture.h"
+#include "utils/Shader.h"
+#include "graphics/Texture.h"
 
 constexpr unsigned int NUM_VERTEX = 36;
+constexpr unsigned int NUM_FACES = 6;
 
 class Skybox {
 public:
-    explicit Skybox(std::vector<std::string> faces) : faces(std::move(faces)) {
+    explicit Skybox(const std::array<std::string, NUM_FACES> &faces)  {
         init();
-        loadTextures();
-    }
-
-    explicit Skybox(std::string path) : path(std::move(path)) {
-        init();
-        loadTextures();
+        loadTextures(faces);
     }
 
     void draw(const glm::mat4 &projection, const glm::mat4 &view, const GLfloat y) const {
@@ -49,8 +44,6 @@ private:
     GLuint texture = 0;
     GLuint VAO = 0;
     GLuint VBO = 0;
-    std::vector<std::string> faces;
-    std::string path;
 
     static constexpr std::array<GLfloat, static_cast<size_t>(NUM_VERTEX * 3)> vertices = {
         // positions
@@ -112,11 +105,7 @@ private:
         shader->setUniform("skybox", 0);
     }
 
-    void loadTextures() {
-        if (!path.empty()) {
-            texture = Texture::Loader::loadCubemap(path);
-            return;
-        }
+    void loadTextures(const std::array<std::string, NUM_FACES> &faces) {
         texture = Texture::Loader::loadCubemap(faces);
     }
 };

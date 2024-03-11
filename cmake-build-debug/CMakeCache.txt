@@ -222,6 +222,9 @@ CW_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 CW_SOURCE_DIR:STATIC=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework
 
+//The directory containing a CMake configuration file for Freetype.
+Freetype_DIR:PATH=Freetype_DIR-NOTFOUND
+
 //The directory containing a CMake configuration file for GLEW.
 GLEW_DIR:PATH=/usr/local/lib/cmake/glew
 
@@ -245,6 +248,9 @@ SOIL2_LIB:FILEPATH=/Users/jacobedwards/University/Year2/Semester2/Graphics/cours
 
 //The directory containing a CMake configuration file for assimp.
 assimp_DIR:PATH=/usr/local/lib/cmake/assimp-5.3
+
+//The directory containing a CMake configuration file for freetype.
+freetype_DIR:PATH=freetype_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/local/lib/cmake/glfw3

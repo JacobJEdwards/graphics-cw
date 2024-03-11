@@ -3,6 +3,7 @@
 //
 
 #include "Model.h"
+
 #include <memory>
 #include <vector>
 #include <fstream>
@@ -19,11 +20,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "Mesh.h"
-#include "Texture.h"
-#include "Vertex.h"
-#include "Shader.h"
-#include "../Utils/AssimpGLMHelpers.h"
+#include "graphics/Mesh.h"
+#include "helpers/AssimpGLMHelpers.h"
 
 
 Model::Model(const std::string &path, const bool gamma) : gammaCorrection(gamma) {

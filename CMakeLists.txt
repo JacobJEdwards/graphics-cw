@@ -10,55 +10,30 @@ find_package(assimp CONFIG REQUIRED)
 find_package(assimp REQUIRED)
 
 find_library(SOIL2_LIB soil2 REQUIRED PATHS external/SOIL2/lib/macosx)
-include_directories(external/SOIL2/src)
+include_directories(external/SOIL2/src external Engine)
 
 # Add executable
 add_executable(CW main.cpp
-        Graphics/Shader.h
-        Graphics/Shader.cpp
-        Graphics/Texture.h
-        Graphics/Texture.cpp
-        Game/Camera.h
-        Game/Camera.cpp
-        Graphics/Vertex.h
-        Graphics/Mesh.h
-        Graphics/Vertex.cpp
-        Graphics/Mesh.cpp
-        Graphics/Model.h
-        Graphics/Model.cpp
-        Utils/AssimpGLMHelpers.h
-        Utils/AssimpGLMHelpers.cpp
-        Graphics/Skybox.h
-        Graphics/Skybox.cpp
-        Graphics/ProceduralTerrain.h
-        Graphics/Perlin.h
-        Graphics/ProceduralTerrain.cpp
-        Graphics/InfinitePlane.h
-        Graphics/InfinitePlane.h
-        Graphics/Sun.h
-        Graphics/Sun.cpp
+        Engine/utils/Shader.cpp
+        Engine/graphics/Texture.cpp
+        Engine/utils/Camera.cpp
+        Engine/utils/Vertex.cpp
+        Engine/graphics/Mesh.cpp
+        Engine/graphics/Model.cpp
+        Engine/helpers/AssimpGLMHelpers.cpp
+        Engine/utils/Objects/Skybox.cpp
+        Engine/utils/Objects/ProceduralTerrain.cpp
+        Engine/utils/Objects/Sun.cpp
         external/imgui/imgui.cpp
-        external/imgui/imgui.h
-        external/imgui/imgui_internal.h
         external/imgui/imgui_widgets.cpp
         external/imgui/imgui_demo.cpp
         external/imgui/imgui_draw.cpp
         external/imgui/imgui_tables.cpp
-        external/imgui/imconfig.h
-        external/imgui/imstb_rectpack.h
-        external/imgui/imstb_textedit.h
-        external/imgui/imstb_truetype.h
         external/imgui/imgui_impl_glfw.cpp
-        external/imgui/imgui_impl_glfw.h
         external/imgui/imgui_impl_opengl3.cpp
-        external/imgui/imgui_impl_opengl3.h
-        external/imgui/imgui_impl_opengl3_loader.h
-        external/imgui/imgui_impl_osx.h
-        Engine/Engine.h
-        Engine/include/View.h
-        Engine/include/utils/Buffer.h
-        Graphics/Model.cpp
-        Graphics/Shader.cpp
+        Engine/App.cpp
+        Engine/View.cpp
+        Engine/graphics/Color.cpp
 )
 
 # Link libraries
@@ -70,6 +45,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 
 

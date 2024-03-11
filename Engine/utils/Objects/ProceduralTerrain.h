@@ -11,9 +11,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Shader.h"
-#include "Model.h"
-#include "Perlin.h"
+#include "../Shader.h"
+#include "../../graphics/Model.h"
+#include "../../helpers/Perlin.h"
 
 constexpr int CHUNK_RENDER_DISTANCE = 3;
 constexpr int X_MAP_CHUNKS = 10;

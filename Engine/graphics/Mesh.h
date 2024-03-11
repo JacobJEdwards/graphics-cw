@@ -8,9 +8,9 @@
 #include <vector>
 #include <GL/glew.h>
 
-#include "Vertex.h"
-#include "Texture.h"
-#include "Shader.h"
+#include "utils/Vertex.h"
+#include "graphics/Texture.h"
+#include "utils/Shader.h"
 
 class Mesh {
 public:

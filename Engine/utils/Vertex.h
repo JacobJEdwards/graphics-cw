@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#include "Texture.h"
+#include "graphics/Texture.h"
 
 namespace Vertex {
     struct Data {

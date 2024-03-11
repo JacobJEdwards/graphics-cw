@@ -13,8 +13,8 @@
 #include <assimp/scene.h>
 
 #include "Mesh.h"
-#include "Texture.h"
-#include "Shader.h"
+#include "./Texture.h"
+#include "../utils/Shader.h"
 
 struct BoundingBox {
     glm::vec3 min;

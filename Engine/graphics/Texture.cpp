@@ -4,23 +4,28 @@
 
 #include "Texture.h"
 
+#include <stdexcept>
 #include <string>
+#include <array>
+#include <GL/glew.h>
 #include <iostream>
-#include <SOIL2/SOIL2.h>
+#include "SOIL2/SOIL2.h"
 #include <filesystem>
+#include <vector>
 
 namespace Texture {
     namespace Loader {
         unsigned int flipImage = 0;
 
-        auto load(const std::string &filename, const std::filesystem::path &directory, const bool gamma, const GLint wrapS,
+        auto load(const std::string &filename, const std::filesystem::path &directory, const bool gamma,
+                  const GLint wrapS,
                   const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint {
             return load(directory / filename, gamma, wrapS, wrapT, minFilter, magFilter);
         }
 
         auto load(const std::filesystem::path &path, const bool /*gamma*/, const GLint wrapS, const GLint wrapT,
                   const GLint minFilter, const GLint magFilter) -> GLuint {
-            GLuint texture = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
+            const GLuint texture = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
                                                    SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
                                                    SOIL_FLAG_COMPRESS_TO_DXT | flipImage);
 
@@ -33,7 +38,7 @@ namespace Texture {
         }
 
         auto loadCubemap(const std::filesystem::path &path) -> GLuint {
-            GLuint texture = SOIL_load_OGL_single_cubemap(path.c_str(), SOIL_DDS_CUBEMAP_FACE_ORDER, SOIL_LOAD_AUTO,
+            const GLuint texture = SOIL_load_OGL_single_cubemap(path.c_str(), SOIL_DDS_CUBEMAP_FACE_ORDER, SOIL_LOAD_AUTO,
                                                           SOIL_CREATE_NEW_ID,
                                                           SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
                                                           SOIL_FLAG_COMPRESS_TO_DXT);
@@ -51,15 +56,17 @@ namespace Texture {
                 throw std::runtime_error("Invalid number of faces for cubemap");
             }
             // convert to array and call other function
-            return loadCubemap(std::array<std::string, CUBE_MAP_FACES>{faces[0], faces[1], faces[2], faces[3], faces[4], faces[5]});
-           }
+            return loadCubemap(std::array {
+                faces[0], faces[1], faces[2], faces[3], faces[4], faces[5]
+            });
+        }
 
 
         auto loadCubemap(const std::array<std::string, CUBE_MAP_FACES> &faces) -> GLuint {
             if (faces.size() != CUBE_MAP_FACES) {
                 throw std::runtime_error("Invalid number of faces for cubemap");
             }
-            GLuint texture = SOIL_load_OGL_cubemap(faces[0].c_str(), faces[1].c_str(), faces[2].c_str(),
+            const GLuint texture = SOIL_load_OGL_cubemap(faces[0].c_str(), faces[1].c_str(), faces[2].c_str(),
                                                    faces[3].c_str(), faces[4].c_str(), faces[5].c_str(), SOIL_LOAD_RGB,
                                                    SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 
@@ -71,12 +78,12 @@ namespace Texture {
             return texture;
         }
 
-        void setFlip(bool flip) {
+        void setFlip(const bool flip) {
             if (flip) {
                 flipImage = SOIL_FLAG_INVERT_Y;
-              } else {
+            } else {
                 flipImage = 0;
-                }
+            }
         }
 
         auto getFormat(const int nrChannels) -> GLint {

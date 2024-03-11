@@ -7,7 +7,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "Shader.h"
+#include "../Shader.h"
 
 class InfinitePlane {
 public:
