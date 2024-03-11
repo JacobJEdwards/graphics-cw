@@ -1,4 +1,3 @@
-#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float3x3.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 
@@ -13,28 +12,36 @@
 #include "imgui/imgui.h"
 
 #include "App.h"
-#include "Config.h"
 #include "utils/Camera.h"
 
 #include "graphics/Color.h"
 #include "graphics/Model.h"
 #include "graphics/Texture.h"
 #include "utils/Objects/InfinitePlane.h"
-#include "utils/Objects/ProceduralTerrain.h"
 #include "utils/Objects/Skybox.h"
 #include "utils/Objects/Sun.h"
 #include "utils/Shader.h"
 
-Shader* ourShader;
+Shader *ourShader;
 
 bool useMouse = false;
-bool updateSun = true;
 
 void processInput();
-void scrollCallback(double xOffset, double yOffset);
 
-auto main() -> int
-{
+int getModeInt() {
+    switch(App::camera.getMode()) {
+        case Camera::Mode::ORBIT:
+            return 0;
+        case Camera::Mode::FREE:
+            return 1;
+        case Camera::Mode::FPS:
+            return 2;
+        default:
+            return -1;
+    }
+}
+
+auto main() -> int {
     App::window("Coursework", App::DEFAULT_WIDTH, App::DEFAULT_HEIGHT);
     App::init();
 
@@ -42,13 +49,15 @@ auto main() -> int
     App::view.setMouse([&] {
         App::camera.processMouseMovement(App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
     });
-    App::view.setScroll(scrollCallback);
+    App::view.setScroll([&] {
+        App::camera.processMouseScroll(App::view.getScrollY());
+    });
     App::view.setResize([&] {
         glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()), static_cast<GLsizei>(App::view.getHeight()));
         App::calculateProjection();
     });
 
-    bool showMenu = true;
+    bool showMenu = false;
 
     App::view.setMenu([&] {
         glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -65,7 +74,7 @@ auto main() -> int
         }
     });
 
-    const std::array<std::string, 6> skyboxFaces {
+    const std::array<std::string, 6> skyboxFaces{
         "../Assets/textures/skybox/right.jpg",
         "../Assets/textures/skybox/left.jpg",
         "../Assets/textures/skybox/top.jpg",
@@ -83,12 +92,11 @@ auto main() -> int
     const Model model2("../Assets/objects/backpack/backpack.obj");
     Texture::Loader::setFlip(false);
 
+    App::camera.setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
+    App::camera.setMode(Camera::Mode::ORBIT);
+
     const InfinitePlane terrain;
     ourShader = new Shader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
-
-    // App::camera.setPosition(glm::vec3(terrain.getOriginX(), 20.0F, terrain.getOriginY()));
-
-    // projection = glm::perspective(glm::radians(App::camera.getZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, (float)terrain.getChunkWidth() * (terrain.getRenderDistance() - 1.2F));
 
     ourShader->use();
     ourShader->setUniform("projection", App::projection);
@@ -101,7 +109,8 @@ auto main() -> int
 
     auto model = glm::mat4(1.0F);
     glm::vec3 newPosition = App::camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F);
-    const glm::mat4 helicopterModel = translate(model, newPosition) * scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
+    const glm::mat4 helicopterModel = translate(model, newPosition) * scale(
+                                          glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
 
     ourShader->setUniform("model", helicopterModel);
 
@@ -128,21 +137,39 @@ auto main() -> int
         model2.draw(ourShader);
 
         terrain.draw(view, App::projection, glm::vec3(sun.getPosition(), 1.0F), App::camera.getPosition());
-        // terrain.draw(view, projection);
 
         view = glm::mat4(glm::mat3(App::camera.getViewMatrix()));
         skybox.draw(App::projection, view, sun.getPosition().y);
         sun.draw(view, App::projection);
-        if (updateSun) {
-            sun.update(App::view.getDeltaTime());
+    });
+
+    int checked = getModeInt();
+    App::view.setInterface([&]() {
+        ImGui::Begin("Camera Mode");
+        ImGui::RadioButton("Orbit", &checked, 0);
+        ImGui::RadioButton("Free", &checked, 1);
+        ImGui::RadioButton("FPS", &checked, 2);
+        ImGui::End();
+
+        switch (checked) {
+            case 0:
+                App::camera.setMode(Camera::Mode::ORBIT);
+                break;
+            case 1:
+                App::camera.setMode(Camera::Mode::FREE);
+                break;
+            case 2:
+                App::camera.setMode(Camera::Mode::FPS);
+                break;
+            default:
+                break;
         }
     });
 
-    App::view.setInterface([&]() {
-        ImGui::ShowDemoWindow();
+    App::loop([&] {
+        sun.update(App::view.getDeltaTime());
+        App::camera.circleOrbit(App::view.getDeltaTime());
     });
-
-    App::loop();
     App::quit();
 }
 
@@ -156,8 +183,7 @@ auto main() -> int
 
 // might be cleaner, however need to change moved thing, unless keep App::camera controls separate
 // if in class namespace or something can keep window as global save on fuzz
-void processInput()
-{
+void processInput() {
     bool moved = false;
 
     if (glfwGetKey(App::view.getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -199,15 +225,22 @@ void processInput()
     }
 
     if (glfwGetKey(App::view.getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
-        App::camera.setFPS(!App::camera.isFPS());
+        switch (App::camera.getMode()) {
+            case Camera::Mode::ORBIT:
+                App::camera.setMode(Camera::Mode::FREE);
+                break;
+            case Camera::Mode::FREE:
+                App::camera.setMode(Camera::Mode::FPS);
+                break;
+            case Camera::Mode::FPS:
+                App::camera.setMode(Camera::Mode::ORBIT);
+                break;
+            default:
+                break;
+        }
     }
 
     if (glfwGetKey(App::view.getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
-        updateSun = !updateSun;
+        App::paused = !App::paused;
     }
-}
-
-void scrollCallback(double /*xoffset*/, double yOffset)
-{
-    App::camera.processMouseScroll(static_cast<float>(yOffset));
 }

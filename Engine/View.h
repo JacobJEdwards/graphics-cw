@@ -19,12 +19,11 @@
 
 class View {
     using Handle = std::function<void()>;
-    using ScrollHandle = std::function<void(double, double)>;
     using ErrorHandle = std::function<void(int, const char *)>;
 public:
     View() = default;
 
-    auto init(const std::string& title, unsigned int width, unsigned int height) -> bool;
+    auto init(const std::string& title, int width, int height) -> bool;
     void quit();
     void render();
 
@@ -33,7 +32,7 @@ public:
     void setKey(Handle handle);
     void setPipeline(Handle handle);
     void setMouse(Handle handle);
-    void setScroll(ScrollHandle handle);
+    void setScroll(Handle handle);
     void setResize(Handle handle);
     void setError(ErrorHandle handle);
 
@@ -52,6 +51,9 @@ public:
     [[nodiscard]] auto getMouseOffsetX() const -> float { return xOffset; }
     [[nodiscard]] auto getMouseOffsetY() const -> float { return yOffset; }
 
+    [[nodiscard]] auto getScrollX() const -> float { return scrollX; }
+    [[nodiscard]] auto getScrollY() const -> float { return scrollY; }
+
     [[nodiscard]] auto shouldShowInterface() const -> bool { return showInterface; }
 
     void setShowInterface(bool show) { showInterface = show; }
@@ -68,9 +70,10 @@ public:
     }
 
 private:
-    GLFWwindow *window{};
-    unsigned int WIDTH{};
-    unsigned int HEIGHT{};
+    GLFWwindow *window = nullptr;
+
+    unsigned int WIDTH = 0;
+    unsigned int HEIGHT = 0;
     std::string title;
 
     ImGuiIO io;
@@ -95,7 +98,7 @@ private:
     Handle mouse = []() {};
     Handle pipeline = []() {};
 
-    ScrollHandle scroll = [](double, double) {};
+    Handle scroll = []() {};
 
     ErrorHandle error = [](int err, const char* description) {
         std::cerr << "Error: " << err << " - " << description << std::endl;

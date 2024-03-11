@@ -3,11 +3,16 @@
 //
 #include "App.h"
 
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 void setupGLFW();
 
 View App::view;
 Camera App::camera;
 glm::mat4 App::projection = glm::mat4(1.0F);
+bool App::paused = false;
 
 bool App::init() {
     setupGLFW();
@@ -30,17 +35,6 @@ bool App::window(const std::string& title, unsigned int width, unsigned int heig
     return true;
 }
 
-template<typename F, typename... Args>
-void App::loop(F&& func, Args&&... args) {
-    while (!view.shouldClose()) {
-        view.pollEvents();
-        func(std::forward<Args>(args)...);
-        view.render();
-        view.swapBuffers();
-    }
-}
-
-template<>
 void App::loop() {
     while (!view.shouldClose()) {
         view.pollEvents();
@@ -55,7 +49,7 @@ void App::quit() {
 
 
 void App::calculateProjection() {
-     projection =  glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(view.getWidth()) / static_cast<float>(view.getHeight()), 0.1F, 100.0F);
+     projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(view.getWidth()) / static_cast<float>(view.getHeight()), 0.1F, 100.0F);
 }
 
 void setupGLFW() {

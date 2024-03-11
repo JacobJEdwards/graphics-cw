@@ -20,6 +20,8 @@ namespace App {
     extern Camera camera;
     extern glm::mat4 projection;
 
+    extern bool paused;
+
     constexpr static unsigned int DEFAULT_WIDTH = 1200;
     constexpr static unsigned int DEFAULT_HEIGHT = 900;
 
@@ -33,7 +35,16 @@ namespace App {
     void calculateProjection();
 
     template<typename F, typename... Args>
-    void App::loop(F &&func, Args &&... args);
+    void loop(F &&func, Args &&... args) {
+        while (!view.shouldClose()) {
+            view.pollEvents();
+            if (!paused) {
+                func(std::forward<Args>(args)...);
+            }
+            view.render();
+            view.swapBuffers();
+        }
+    }
 
     void loop();
 }

@@ -63,7 +63,7 @@ void View::setCallbacks() {
 }
 
 
-auto View::init(const std::string& title, unsigned int width, unsigned int height) -> bool {
+auto View::init(const std::string& title, int width, int height) -> bool {
     this->window = createWindow(title, width, height);
     this->WIDTH = width;
     this->HEIGHT = height;
@@ -88,6 +88,8 @@ auto View::init(const std::string& title, unsigned int width, unsigned int heigh
     io = ImGui::GetIO();
 
     (void) io;
+
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 410");
@@ -147,7 +149,10 @@ void View::keyLoop() {
 }
 
 void View::scrollCallback(GLFWwindow * /*window*/, double xoffset, double yoffset) {
-    (scroll)(xoffset, yoffset);
+    scrollX = static_cast<float>(xoffset);
+    scrollY = static_cast<float>(yoffset);
+
+    (scroll)();
 }
 
 void View::errorCallback(const int err, const char *description) {
@@ -219,7 +224,7 @@ void View::setMouse(Handle handle) {
     mouse = std::move(handle);
 }
 
-void View::setScroll(ScrollHandle handle) {
+void View::setScroll(Handle handle) {
     scroll = std::move(handle);
 }
 

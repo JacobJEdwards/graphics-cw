@@ -3,6 +3,15 @@
 //
 
 #include "Camera.h"
+#include <cmath>
+
+#include <algorithm>
+#include <glm/common.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/geometric.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/trigonometric.hpp>
 
 
 Camera::Camera(glm::vec3 position, glm::vec3 worldUp, float yaw, float pitch, float damping, float smoothing,
@@ -24,8 +33,26 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 }
 
 [[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
-    return lookAt(position, position + front, up);
+switch (mode) {
+    case Mode::ORBIT:
+        return lookAt(position, orbitTarget, worldUp);
+    default:
+        return lookAt(position, position + front, up);
+    }
 }
+
+/*
+[[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
+    const glm::vec3 pos = orbitTarget - front * orbitRadius;
+    switch (mode) {
+        case Mode::ORBIT:
+            return lookAt(pos, orbitTarget, up);
+        default:
+            return lookAt(position, position + front, up);
+    }
+}
+
+ */
 
 void Camera::processKeyboard(const Direction direction, const float deltaTime) {
     const float curAcceleration = acceleration * deltaTime * 10.0F;
@@ -35,9 +62,16 @@ void Camera::processKeyboard(const Direction direction, const float deltaTime) {
     switch (direction) {
         case Direction::FORWARD:
             targetVelocity += front;
+            if (mode == Mode::ORBIT) {
+                orbitTarget += glm::vec3(0.0F, 0.1F, 0.0F);
+            }
             break;
         case Direction::BACKWARD:
             targetVelocity -= front;
+            if (mode == Mode::ORBIT) {
+                orbitTarget += glm::vec3(0.0F, -0.1F, 0.0F);
+                orbitTarget.y = std::max(orbitTarget.y, 0.0F);
+            }
             break;
         case Direction::LEFT:
             targetVelocity -= right;
@@ -55,31 +89,56 @@ void Camera::processKeyboard(const Direction direction, const float deltaTime) {
         newVelocity = normalize(newVelocity) * maxSpeed;
     }
 
+
     velocity = mix(velocity, newVelocity, smoothing);
 
-    // velocity += targetVelocity * curAcceleration;
+    updatePosition(deltaTime);
+
+    if (mode == Mode::FPS) {
+        applyFPSModeEffects();
+    }
+}
 
 
-    const glm::vec3 newPos = position + velocity * deltaTime;
+void Camera::updatePosition(const float deltaTime) {
+    glm::vec3 newPos = position + velocity * deltaTime;
+
+    if (mode == Mode::ORBIT) {
+        adjustOrbitPosition(newPos);
+    }
+
     position = mix(position, newPos, smoothing);
 
     velocity *= damping;
+}
 
-    if (mode == Mode::FPS) {
-        position.y = yPosition;
-        if (direction == Direction::NONE) {
-            velocity *= 0.9F;
-        }
+void Camera::adjustOrbitPosition(glm::vec3 &newPos) {
+    const glm::vec3 dirToTarget = orbitTarget - newPos;
+    newPos = orbitTarget - normalize(dirToTarget) * orbitRadius;
+}
 
-        downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
+void Camera::circleOrbit(const float deltaTime) {
+    if (!(mode == Mode::ORBIT)) {
+        return;
+    }
 
-        if (yPosition > 0.03) {
-            downwards = true;
-        }
+    orbitAngle += deltaTime * orbitSpeed;
+    updateOrbitPosition();
+}
 
-        if (yPosition < 0.0) {
-            downwards = false;
-        }
+void Camera::applyFPSModeEffects() {
+    position.y = yPosition;
+
+    downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
+
+    velocity *= damping;
+
+    if (yPosition > 0.03) {
+        downwards = true;
+    }
+
+    if (yPosition < 0.0) {
+        downwards = false;
     }
 }
 
@@ -91,29 +150,40 @@ void Camera::processMouseMovement(float xOffset, float yOffset, const GLboolean 
     pitch += yOffset;
 
     if (constrainPitch != 0U) {
-        if (pitch > MAXPITCH) {
-            pitch = MAXPITCH;
-        }
-        if (pitch < MINPITCH) {
-            pitch = MINPITCH;
-        }
+        pitch = std::min(pitch, MAXPITCH);
+        pitch = std::max(pitch, MINPITCH);
     }
 
     updateCameraVectors();
+
+    if (mode == Mode::ORBIT) {
+        orbitAngle += xOffset * orbitSpeed * 0.1F;
+        orbitHeight += yOffset * orbitSpeed * 0.1F;
+        orbitHeight = std::max(orbitHeight, yPosition);
+        orbitHeight = std::min(orbitHeight, 10.0F);
+        updateOrbitPosition();
+    }
 }
 
 void Camera::processMouseScroll(const float yOffset) {
     zoom -= yOffset;
-    if (zoom < MINZOOM) { zoom = MINZOOM; }
-    if (zoom > MAXZOOM) { zoom = MAXZOOM; }
+    zoom = std::max(zoom, MINZOOM);
+    zoom = std::min(zoom, MAXZOOM);
 }
 
-void Camera::setFPS(const bool value) {
-    mode = value ? Mode::FPS : Mode::FREE;
+void Camera::setMode(const Mode value) {
+    mode = value;
 }
 
-[[nodiscard]] auto Camera::isFPS() const -> bool {
-    return mode == Mode::FPS;
+void Camera::setOrbit(const glm::vec3 target, const float radius, const float angle, const float speed) {
+    orbitTarget = target;
+    orbitRadius = radius;
+    orbitAngle = angle;
+    orbitSpeed = speed;
+}
+
+[[nodiscard]] auto Camera::getMode() const -> Mode {
+    return mode;
 }
 
 [[nodiscard]] auto Camera::getZoom() const -> float {
@@ -146,6 +216,7 @@ void Camera::setPosition(const glm::vec3 & position) {
 }
 
 void Camera::updateCameraVectors() {
+
     glm::vec3 newFront;
 
     newFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
@@ -155,4 +226,14 @@ void Camera::updateCameraVectors() {
     front = normalize(newFront);
     right = normalize(cross(front, worldUp));
     up = normalize(cross(right, front));
+
+    if (mode == Mode::ORBIT) {
+        updateOrbitPosition();
+    }
+}
+
+void Camera::updateOrbitPosition() {
+        position.x = orbitTarget.x + orbitRadius * cos(glm::radians(orbitAngle));
+        position.z = orbitTarget.z + orbitRadius * sin(glm::radians(orbitAngle));
+        position.y = orbitTarget.y + orbitHeight;
 }

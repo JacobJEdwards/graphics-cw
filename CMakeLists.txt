@@ -22,7 +22,6 @@ add_executable(CW main.cpp
         Engine/graphics/Model.cpp
         Engine/helpers/AssimpGLMHelpers.cpp
         Engine/utils/Objects/Skybox.cpp
-        Engine/utils/Objects/ProceduralTerrain.cpp
         Engine/utils/Objects/Sun.cpp
         external/imgui/imgui.cpp
         external/imgui/imgui_widgets.cpp

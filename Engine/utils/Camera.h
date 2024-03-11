@@ -5,9 +5,8 @@
 #ifndef CW_CAMERA_H
 #define CW_CAMERA_H
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 
 #include <GL/glew.h>
 
@@ -42,7 +41,8 @@ public:
         FPS,
         FREE,
         ORBIT,
-        FIXED
+        FIXED,
+        PATH
     };
 
     explicit Camera(glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3 worldUp = glm::vec3(0.0F, 1.0F, 0.0F),
@@ -59,9 +59,11 @@ public:
 
     void processMouseScroll(float yOffset);
 
-    void setFPS(bool value);
+    void setMode(Mode value);
 
-    [[nodiscard]] auto isFPS() const -> bool;
+    void setOrbit(glm::vec3 target, float radius, float angle, float speed);
+
+    [[nodiscard]] auto getMode() const -> Mode;
 
     [[nodiscard]] auto getZoom() const -> float;
 
@@ -77,6 +79,7 @@ public:
 
     void setPosition(const glm::vec3 &position);
 
+    void circleOrbit(float deltaTime);
 private:
 
     Mode mode = Mode::FREE;
@@ -100,12 +103,22 @@ private:
     float mouseSensitivity = SENSITIVITY;
     float zoom = ZOOM;
 
+    glm::vec3 orbitTarget = glm::vec3(0.0F, 0.0F, 0.0F);
+    float orbitRadius = 0.0F;
+    float orbitAngle = 0.0F;
+    float orbitSpeed = 0.0F;
+    float orbitHeight = 0.0F;
+
     glm::vec3 velocity = glm::vec3(0.0F, 0.0F, 0.0F);
 
     float yPosition = 0.0F;
     bool downwards = false;
 
     void updateCameraVectors();
+    void updateOrbitPosition();
+    void updatePosition(float deltaTime);
+    void adjustOrbitPosition(glm::vec3 &newPos);
+    void applyFPSModeEffects();
 };
 
 
