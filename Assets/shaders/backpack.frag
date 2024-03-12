@@ -24,22 +24,19 @@ vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 s
     viewDirection = normalize(viewDirection);
     surfaceNormal = normalize(surfaceNormal);
 
-    // Halfway vector calculation
     vec3 halfwayDir = normalize(lightDirection + viewDirection);
 
-    // Diffuse component
     float diffuseFactor = max(dot(lightDirection, surfaceNormal), 0.0);
 
-    // Specular component
     float specularFactor = 0.0;
+
     if (diffuseFactor > 0.0) {
         specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
     }
 
-    // Final lighting calculation
-    vec3 ambient = 0.1 * lightColor; // Ambient term
-    vec3 diffuse = diffuseFactor * lightColor * surfaceColor; // Diffuse term
-    vec3 specular = specularFactor * lightColor; // Specular term
+    vec3 ambient = 0.1 * lightColor;
+    vec3 diffuse = diffuseFactor * lightColor * surfaceColor;
+    vec3 specular = specularFactor * lightColor;
 
     return ambient + diffuse + specular;
 }
@@ -54,11 +51,9 @@ uniform Light light;
 uniform vec3 viewPos;
 
 void main() {
-    // Diffuse
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(light.position - FragPos);
 
-    // Specular
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, norm, light.diffuse * 2.0, vec3(texture(material.texture_diffuse1, TexCoords)), material.shininess);
 

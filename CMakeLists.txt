@@ -33,6 +33,7 @@ add_executable(CW main.cpp
         Engine/App.cpp
         Engine/View.cpp
         Engine/graphics/Color.cpp
+        Engine/utils/Buffer.cpp
 )
 
 # Link libraries

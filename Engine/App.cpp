@@ -7,11 +7,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Config.h"
+
 void setupGLFW();
 
 View App::view;
 Camera App::camera;
-glm::mat4 App::projection = glm::mat4(1.0F);
+glm::mat4 App::projection = Config::IDENTITY_MATRIX;
 bool App::paused = false;
 
 bool App::init() {
@@ -47,6 +49,14 @@ void App::quit() {
     view.quit();
 }
 
+void App::setPaused(const bool value) {
+    paused = value;
+    if (!paused) {
+        glfwSetInputMode(view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    } else {
+        glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+}
 
 void App::calculateProjection() {
      projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(view.getWidth()) / static_cast<float>(view.getHeight()), 0.1F, 100.0F);

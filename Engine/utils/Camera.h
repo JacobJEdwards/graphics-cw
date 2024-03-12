@@ -21,7 +21,7 @@ constexpr float SMOOTHING = 0.9F;
 constexpr float ACCELERATION = 5.0F;
 constexpr float MAXSPEED = 10000.0F;
 
-constexpr float MAXZOOM = 45.0F;
+constexpr float MAXZOOM = 90.0F;
 constexpr float MINZOOM = 1.0F;
 
 constexpr float MAXPITCH = 89.0F;
@@ -80,6 +80,10 @@ public:
     void setPosition(const glm::vec3 &position);
 
     void circleOrbit(float deltaTime);
+
+    void modeInterface();
+    void controlInterface();
+
 private:
 
     Mode mode = Mode::FREE;
@@ -117,8 +121,10 @@ private:
     void updateCameraVectors();
     void updateOrbitPosition();
     void updatePosition(float deltaTime);
-    void adjustOrbitPosition(glm::vec3 &newPos);
+    void adjustOrbitPosition(glm::vec3 &newPos) const;
     void applyFPSModeEffects();
+
+    [[nodiscard]] auto getModeInt() const -> int;
 };
 
 

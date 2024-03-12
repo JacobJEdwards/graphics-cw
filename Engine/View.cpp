@@ -69,8 +69,6 @@ auto View::init(const std::string& title, int width, int height) -> bool {
     this->HEIGHT = height;
     this->title = title;
 
-    // projection = glm::perspective(glm::radians(camera.getZoom()),static_cast<float>(width) / static_cast<float>(height), 0.1F, 100.0F);
-
     if (!setupGLEW()) {
         std::cerr << "Failed to initialize GLEW" << std::endl;
         return false;
@@ -234,4 +232,12 @@ void View::setResize(Handle handle) {
 
 void View::setError(ErrorHandle handle) {
     error = std::move(handle);
+}
+
+void View::close() const {
+     glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+auto View::getKey(int key) const -> int {
+    return glfwGetKey(window, key);
 }

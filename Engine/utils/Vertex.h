@@ -19,6 +19,16 @@ namespace Vertex {
         glm::vec2 texCoords;
         glm::vec3 tangent;
         glm::vec3 bitangent;
+
+        Data() = default;
+        Data(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords, const glm::vec3 &tangent, const glm::vec3 &bitangent) : position(position), normal(normal), texCoords(texCoords), tangent(tangent), bitangent(bitangent) {}
+        Data(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords) : position(position), normal(normal), texCoords(texCoords), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}
+        Data(const glm::vec3 &postion, const glm::vec2 &texCoords) : position(postion), normal(glm::vec3(0.0F)), texCoords(texCoords), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}
+    };
+
+    struct Data2D {
+        glm::vec2 position;
+        glm::vec2 texCoords;
     };
 
     struct Layout {
@@ -29,16 +39,9 @@ namespace Vertex {
         static constexpr GLuint BITANGENT = 4;
     };
 
-    struct Buffer {
-        GLuint VAO;
-        GLuint VBO;
-        GLuint EBO;
-    };
-
-    struct BufferData {
-        std::vector<Data> vertices;
-        std::vector<GLuint> indices;
-        std::vector<Texture::Data> textures;
+    struct Layout2D {
+        static constexpr GLuint POSITION = 0;
+        static constexpr GLuint TEX_COORDS = 1;
     };
 }
 

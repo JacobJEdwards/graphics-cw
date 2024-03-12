@@ -69,11 +69,16 @@ public:
         return window;
     }
 
+    void close() const;
+
+    int getKey(int key) const;
+
+
 private:
     GLFWwindow *window = nullptr;
 
-    unsigned int WIDTH = 0;
-    unsigned int HEIGHT = 0;
+    int WIDTH = 0;
+    int HEIGHT = 0;
     std::string title;
 
     ImGuiIO io;

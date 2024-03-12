@@ -1,4 +1,4 @@
-#version 330 core
+#version 410 core
 struct Light {
     vec3 position;
     vec3 direction;

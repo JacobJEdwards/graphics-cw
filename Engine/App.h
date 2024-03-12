@@ -34,6 +34,8 @@ namespace App {
 
     void calculateProjection();
 
+    void setPaused(bool value);
+
     template<typename F, typename... Args>
     void loop(F &&func, Args &&... args) {
         while (!view.shouldClose()) {

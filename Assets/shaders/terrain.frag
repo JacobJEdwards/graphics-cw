@@ -1,4 +1,4 @@
-#version 330 core
+#version 410 core
 flat in vec3 flatColor;
 in vec3 Color;
 

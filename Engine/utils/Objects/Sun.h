@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "graphics/Model.h"
+#include <cmath>
 
 #include "utils/Shader.h"
 
@@ -19,8 +20,8 @@ public:
 
     void update(const float dt) {
         angle += 0.5F * dt;
-        position.x = 10.0F * cos(angle);
-        position.y = 10.0F * sin(angle);
+        position.x = 10.0F * std::cos(angle);
+        position.y = 10.0F * std::sin(angle);
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const {
@@ -31,8 +32,8 @@ public:
         shader->setUniform("projection", projection);
 
         auto model = glm::mat4(1.0F);
-        model = glm::translate(model, glm::vec3(position, -10.0F));
-        model = glm::scale(model, glm::vec3(scale));
+        model = translate(model, glm::vec3(position, -10.0F));
+        model = scale(model, glm::vec3(scale));
         shader->setUniform("model", model);
 
         sun.draw(shader);
@@ -59,7 +60,6 @@ private:
     glm::vec2 position = glm::vec2(0.0F, 0.0F);
     float scale = 0.001F;
     float angle = 0.0F;
-
 };
 
 #endif //SUN_H

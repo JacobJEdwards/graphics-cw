@@ -22,59 +22,41 @@
 #include "utils/Objects/Sun.h"
 #include "utils/Shader.h"
 
-Shader *ourShader;
+Shader* ourShader;
 
 bool useMouse = false;
 
 void processInput();
 
-int getModeInt() {
-    switch(App::camera.getMode()) {
-        case Camera::Mode::ORBIT:
-            return 0;
-        case Camera::Mode::FREE:
-            return 1;
-        case Camera::Mode::FPS:
-            return 2;
-        default:
-            return -1;
-    }
-}
-
-auto main() -> int {
+auto main() -> int
+{
     App::window("Coursework", App::DEFAULT_WIDTH, App::DEFAULT_HEIGHT);
     App::init();
 
     App::view.setKey(processInput);
     App::view.setMouse([&] {
-        App::camera.processMouseMovement(App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
+        if (!App::paused) {
+            App::camera.processMouseMovement(App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
+        }
     });
+
     App::view.setScroll([&] {
         App::camera.processMouseScroll(App::view.getScrollY());
     });
+
     App::view.setResize([&] {
         glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()), static_cast<GLsizei>(App::view.getHeight()));
         App::calculateProjection();
     });
 
-    bool showMenu = false;
-
     App::view.setMenu([&] {
         glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         View::clearTarget(Color::BLACK);
-
-        ImGui::Begin("Menu");
-        ImGui::Text("Hello, world!");
-        ImGui::Checkbox("Show Menu", &showMenu);
-        ImGui::End();
-
-        if (!showMenu) {
-            App::view.setShowMenu(false);
-            glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        }
     });
 
-    const std::array<std::string, 6> skyboxFaces{
+    App::view.setShowMenu(false);
+
+    const std::array<std::string, 6> skyboxFaces {
         "../Assets/textures/skybox/right.jpg",
         "../Assets/textures/skybox/left.jpg",
         "../Assets/textures/skybox/top.jpg",
@@ -109,8 +91,7 @@ auto main() -> int {
 
     auto model = glm::mat4(1.0F);
     glm::vec3 newPosition = App::camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F);
-    const glm::mat4 helicopterModel = translate(model, newPosition) * scale(
-                                          glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
+    const glm::mat4 helicopterModel = translate(model, newPosition) * scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
 
     ourShader->setUniform("model", helicopterModel);
 
@@ -143,26 +124,10 @@ auto main() -> int {
         sun.draw(view, App::projection);
     });
 
-    int checked = getModeInt();
     App::view.setInterface([&]() {
-        ImGui::Begin("Camera Mode");
-        ImGui::RadioButton("Orbit", &checked, 0);
-        ImGui::RadioButton("Free", &checked, 1);
-        ImGui::RadioButton("FPS", &checked, 2);
-        ImGui::End();
-
-        switch (checked) {
-            case 0:
-                App::camera.setMode(Camera::Mode::ORBIT);
-                break;
-            case 1:
-                App::camera.setMode(Camera::Mode::FREE);
-                break;
-            case 2:
-                App::camera.setMode(Camera::Mode::FPS);
-                break;
-            default:
-                break;
+        if (App::paused) {
+            App::camera.modeInterface();
+            App::camera.controlInterface();
         }
     });
 
@@ -183,39 +148,36 @@ auto main() -> int {
 
 // might be cleaner, however need to change moved thing, unless keep App::camera controls separate
 // if in class namespace or something can keep window as global save on fuzz
-void processInput() {
+void processInput()
+{
     bool moved = false;
 
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        if (useMouse) {
-            glfwSetWindowShouldClose(App::view.getWindow(), GLFW_TRUE);
-        }
-
-        glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        useMouse = true;
+    if (App::view.getKey(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        App::view.close();
     }
 
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_ENTER) == GLFW_PRESS) {
-        glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        useMouse = false;
+    if (App::view.getKey(GLFW_KEY_SPACE) == GLFW_PRESS) {
+        App::setPaused(!App::paused);
     }
 
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
+    if (App::paused && App::camera.getMode() != Camera::Mode::ORBIT) { return; }
+
+    if (App::view.getKey(GLFW_KEY_W) == GLFW_PRESS) {
         moved = true;
         App::camera.processKeyboard(Camera::Direction::FORWARD, App::view.getDeltaTime());
     }
 
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+    if (App::view.getKey(GLFW_KEY_S) == GLFW_PRESS) {
         moved = true;
         App::camera.processKeyboard(Camera::Direction::BACKWARD, App::view.getDeltaTime());
     }
 
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
+    if (App::view.getKey(GLFW_KEY_A) == GLFW_PRESS) {
         moved = true;
         App::camera.processKeyboard(Camera::Direction::LEFT, App::view.getDeltaTime());
     }
 
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
+    if (App::view.getKey(GLFW_KEY_D) == GLFW_PRESS) {
         moved = true;
         App::camera.processKeyboard(Camera::Direction::RIGHT, App::view.getDeltaTime());
     }
@@ -224,23 +186,4 @@ void processInput() {
         App::camera.processKeyboard(Camera::Direction::NONE, App::view.getDeltaTime());
     }
 
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
-        switch (App::camera.getMode()) {
-            case Camera::Mode::ORBIT:
-                App::camera.setMode(Camera::Mode::FREE);
-                break;
-            case Camera::Mode::FREE:
-                App::camera.setMode(Camera::Mode::FPS);
-                break;
-            case Camera::Mode::FPS:
-                App::camera.setMode(Camera::Mode::ORBIT);
-                break;
-            default:
-                break;
-        }
-    }
-
-    if (glfwGetKey(App::view.getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
-        App::paused = !App::paused;
-    }
 }

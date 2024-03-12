@@ -4,24 +4,26 @@
 
 #include "Model.h"
 
+#include <assimp/material.h>
+#include <assimp/mesh.h>
 #include <memory>
+#include <stdexcept>
+#include <string>
 #include <vector>
-#include <fstream>
 #include <sstream>
 #include <stack>
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include "utils/Vertex.h"
+#include "graphics/Texture.h"
 #include "graphics/Mesh.h"
 #include "helpers/AssimpGLMHelpers.h"
+#include "utils/Shader.h"
 
 
 Model::Model(const std::string &path, const bool gamma) : gammaCorrection(gamma) {
@@ -87,7 +89,7 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
         {
             // a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't
             // use models where a vertex can have multiple texture coordinates so we always take the first set (0).
-            glm::vec3 vec = AssimpGLMHelpers::getGLMVec(mesh->mTextureCoords[0][i]);
+            const glm::vec3 vec = AssimpGLMHelpers::getGLMVec(mesh->mTextureCoords[0][i]);
             vertex.texCoords = glm::vec2(vec.x, vec.y);
 
             if (mesh->HasTangentsAndBitangents()) {
@@ -147,7 +149,7 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat, const aiTextureTyp
         aiString str;
         mat->GetTexture(type, i, &str);
 
-        std::string path(str.C_Str());
+        const std::string path(str.C_Str());
 
         auto loaded = textures_loaded.find(path);
         if (loaded != textures_loaded.end()) {
@@ -155,8 +157,8 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat, const aiTextureTyp
             continue;
         }
 
-        Texture::Data texture{
-            Texture::Loader::load(path, directory, gammaCorrection),
+        const Texture::Data texture{
+            Texture::Loader::load(path, directory),
             texType,
             str.C_Str()
         };
