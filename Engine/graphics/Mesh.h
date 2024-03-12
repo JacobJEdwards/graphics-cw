@@ -11,6 +11,7 @@
 #include "utils/Vertex.h"
 #include "graphics/Texture.h"
 #include "utils/Shader.h"
+#include "utils/Buffer.h"
 
 class Mesh {
 public:
@@ -19,15 +20,9 @@ public:
     void draw(const Shader *shader) const;
 
 private:
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EBO = 0;
-
-    std::vector<Vertex::Data> vertices;
-    std::vector<GLuint> indices;
     std::vector<Texture::Data> textures;
 
-    void setupMesh();
+    Buffer buffer;
 };
 
 

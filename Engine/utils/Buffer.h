@@ -8,120 +8,93 @@
 #include <initializer_list>
 #include <vector>
 #include <GL/glew.h>
+#include "utils/Vertex.h"
+#include <iostream>
 
-struct Buffer {
-    GLuint index = 0;
-    size_t SIZE = 0;
+class Buffer {
+public:
+    GLuint VAO;
+    GLuint VBO;
+    GLuint EBO;
+
+    struct Data {
+        std::vector<Vertex::Data> vertices;
+        std::vector<GLuint> indices;
+    };
+
+    Data data;
 
     Buffer() {
-        glGenBuffers(1, &index);
+        glGenVertexArrays(1, &VAO);
+        glGenBuffers(1, &VBO);
+        glGenBuffers(1, &EBO);
     }
 
-    ~Buffer() {
-        glDeleteBuffers(1, &index);
+    void fill(std::initializer_list<Vertex::Data> vertices, std::initializer_list<GLuint> indices) {
+        data.vertices = vertices;
+        data.indices = indices;
+
+        setup();
     }
 
-    Buffer(const Buffer& other) : SIZE(other.SIZE) {
-        glGenBuffers(1, &index);
-        glBindBuffer(GL_COPY_READ_BUFFER, other.index);
-        glBindBuffer(GL_COPY_WRITE_BUFFER, index);
-        glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, SIZE * sizeof(GLfloat));
-        glBindBuffer(GL_COPY_READ_BUFFER, 0);
-        glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
+    void fill(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices) {
+        data.vertices = vertices;
+        data.indices = indices;
+
+        setup();
     }
 
-    auto operator=(const Buffer& other) -> Buffer& {
-        if (this != &other) {
-            // Release current resources
-            glDeleteBuffers(1, &index);
-            // Copy data
-            glGenBuffers(1, &index);
-            glBindBuffer(GL_COPY_READ_BUFFER, other.index);
-            glBindBuffer(GL_COPY_WRITE_BUFFER, index);
-            glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, SIZE * sizeof(GLfloat));
-            glBindBuffer(GL_COPY_READ_BUFFER, 0);
-            glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
-            SIZE = other.SIZE;
-        }
-        return *this;
+    void bind() const {
+        glBindVertexArray(VAO);
     }
 
-    Buffer(Buffer&& other) noexcept : index(other.index), SIZE(other.SIZE) {
-        other.index = 0;
-        other.SIZE = 0;
+    void unbind() const {
+        glBindVertexArray(0);
     }
 
-    // Move assignment operator
-    auto operator=(Buffer&& other) noexcept -> Buffer& {
-        if (this != &other) {
-            // Release current resources
-            glDeleteBuffers(1, &index);
-            // Move data
-            index = other.index;
-            SIZE = other.SIZE;
-            other.index = 0;
-            other.SIZE = 0;
-        }
-        return *this;
+    void draw() const {
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(data.indices.size()), GL_UNSIGNED_INT, nullptr);
     }
 
-    template<typename T>
-    explicit Buffer(std::vector<T> buf) : Buffer() {
-        fill(buf);
+private:
+    void setup() {
+        bind();
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(data.vertices.size() * sizeof(Vertex::Data)),
+                     data.vertices.data(),
+                     GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(data.indices.size() * sizeof(GLuint)),
+                     data.indices.data(),
+                     GL_STATIC_DRAW);
+
+        // vertex positions
+        glEnableVertexAttribArray(Vertex::Layout::POSITION);
+        glVertexAttribPointer(Vertex::Layout::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data), nullptr);
+
+        // vertex normals
+        glEnableVertexAttribArray(Vertex::Layout::NORMAL);
+        glVertexAttribPointer(Vertex::Layout::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
+                              reinterpret_cast<void *>(offsetof(Vertex::Data, normal)));
+
+        // vertex texture coords
+        glEnableVertexAttribArray(Vertex::Layout::TEX_COORDS);
+        glVertexAttribPointer(Vertex::Layout::TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
+                              reinterpret_cast<void *>(offsetof(Vertex::Data, texCoords)));
+
+        // vertex tangent
+        glEnableVertexAttribArray(Vertex::Layout::TANGENT);
+        glVertexAttribPointer(Vertex::Layout::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
+                              reinterpret_cast<void *>(offsetof(Vertex::Data, tangent)));
+
+        // vertex bitangent
+        glEnableVertexAttribArray(Vertex::Layout::BITANGENT);
+        glVertexAttribPointer(Vertex::Layout::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
+                              reinterpret_cast<void *>(offsetof(Vertex::Data, bitangent)));
+        unbind();
     }
-
-    template<typename T>
-    Buffer(std::initializer_list<T> buf) : Buffer() {
-        fill<T>(buf);
-    }
-
-    template<typename T>
-    explicit Buffer(size_t size, T* data) : Buffer() {
-        fill(size, data);
-    }
-
-    template<typename T> void fill(size_t size, T* data);
-    template<typename T> void fill(std::vector<T> buf);
-    template<typename T> void fill(T val);
-    template<typename T> void retrieve(size_t size, T* data);
-    template<typename T> void retrieve(std::vector<T>& buf);
-    template<typename T> void retrieve(T& val);
-
 };
-
-template<typename T>
-void Buffer::fill(size_t size, T* data) {
-    glBindBuffer(GL_ARRAY_BUFFER, index);
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(T), data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    SIZE = size;
-}
-
-
-template<typename T>
-void Buffer::fill(T val) {
-    fill(1, &val);
-}
-
-template<typename T>
-void Buffer::fill(std::vector<T> buf) {
-    fill(buf.size(), buf.data());
-}
-
-template<typename T>
-void Buffer::retrieve(size_t size,  T* data) {
-    glBindBuffer(GL_ARRAY_BUFFER, index);
-    glGetBufferSubData(GL_ARRAY_BUFFER, 0, size*sizeof(T), data);
-}
-
-template<typename T>
-void Buffer::retrieve(std::vector<T> &buf) {
-    retrieve(buf.size(), buf.data());
-}
-
-template<typename T>
-void Buffer::retrieve(T &val) {
-    retrieve(1, &val);
-}
 
 #endif //CW_BUFFER_H
