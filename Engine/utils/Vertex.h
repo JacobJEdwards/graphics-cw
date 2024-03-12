@@ -5,12 +5,10 @@
 #ifndef CW_VERTEX_H
 #define CW_VERTEX_H
 
+#include <glm/ext/vector_float2.hpp>
+#include <glm/ext/vector_float3.hpp>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-
-#include <vector>
-
-#include "graphics/Texture.h"
 
 namespace Vertex {
     struct Data {
@@ -21,6 +19,11 @@ namespace Vertex {
         glm::vec3 bitangent;
     };
 
+    struct Data2D {
+        glm::vec2 position;
+        glm::vec2 texCoords;
+    };
+
     struct Layout {
         static constexpr GLuint POSITION = 0;
         static constexpr GLuint NORMAL = 1;
@@ -29,16 +32,9 @@ namespace Vertex {
         static constexpr GLuint BITANGENT = 4;
     };
 
-    struct Buffer {
-        GLuint VAO;
-        GLuint VBO;
-        GLuint EBO;
-    };
-
-    struct BufferData {
-        std::vector<Data> vertices;
-        std::vector<GLuint> indices;
-        std::vector<Texture::Data> textures;
+    struct Layout2D {
+        static constexpr GLuint POSITION = 0;
+        static constexpr GLuint TEX_COORDS = 1;
     };
 }
 

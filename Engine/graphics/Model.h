@@ -5,6 +5,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <memory>
 #include <vector>
 #include <sstream>
 #include <unordered_map>
@@ -13,8 +14,8 @@
 #include <assimp/scene.h>
 
 #include "Mesh.h"
-#include "./Texture.h"
-#include "../utils/Shader.h"
+#include "graphics/Texture.h"
+#include "utils/Shader.h"
 
 struct BoundingBox {
     glm::vec3 min;

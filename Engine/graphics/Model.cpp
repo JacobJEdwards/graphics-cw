@@ -20,8 +20,10 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include "Texture.h"
 #include "graphics/Mesh.h"
 #include "helpers/AssimpGLMHelpers.h"
+#include "utils/Vertex.h"
 
 
 Model::Model(const std::string &path, const bool gamma) : gammaCorrection(gamma) {

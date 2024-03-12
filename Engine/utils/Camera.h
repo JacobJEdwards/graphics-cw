@@ -80,6 +80,9 @@ public:
     void setPosition(const glm::vec3 &position);
 
     void circleOrbit(float deltaTime);
+
+    void modeInterface();
+
 private:
 
     Mode mode = Mode::FREE;
@@ -119,6 +122,8 @@ private:
     void updatePosition(float deltaTime);
     void adjustOrbitPosition(glm::vec3 &newPos);
     void applyFPSModeEffects();
+
+    auto getModeInt() -> int;
 };
 
 

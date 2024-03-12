@@ -28,19 +28,6 @@ bool useMouse = false;
 
 void processInput();
 
-int getModeInt() {
-    switch(App::camera.getMode()) {
-        case Camera::Mode::ORBIT:
-            return 0;
-        case Camera::Mode::FREE:
-            return 1;
-        case Camera::Mode::FPS:
-            return 2;
-        default:
-            return -1;
-    }
-}
-
 auto main() -> int {
     App::window("Coursework", App::DEFAULT_WIDTH, App::DEFAULT_HEIGHT);
     App::init();
@@ -95,6 +82,7 @@ auto main() -> int {
     App::camera.setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
     App::camera.setMode(Camera::Mode::ORBIT);
 
+
     const InfinitePlane terrain;
     ourShader = new Shader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
 
@@ -131,10 +119,10 @@ auto main() -> int {
         ourShader->setUniform("view", view);
         ourShader->setUniform("viewPos", App::camera.getPosition());
         ourShader->setUniform("model", helicopterModel);
-        newModel.draw(ourShader);
+        // newModel.draw(ourShader);
 
         ourShader->setUniform("model", backpackModel);
-        model2.draw(ourShader);
+        // model2.draw(ourShader);
 
         terrain.draw(view, App::projection, glm::vec3(sun.getPosition(), 1.0F), App::camera.getPosition());
 
@@ -143,27 +131,8 @@ auto main() -> int {
         sun.draw(view, App::projection);
     });
 
-    int checked = getModeInt();
     App::view.setInterface([&]() {
-        ImGui::Begin("Camera Mode");
-        ImGui::RadioButton("Orbit", &checked, 0);
-        ImGui::RadioButton("Free", &checked, 1);
-        ImGui::RadioButton("FPS", &checked, 2);
-        ImGui::End();
-
-        switch (checked) {
-            case 0:
-                App::camera.setMode(Camera::Mode::ORBIT);
-                break;
-            case 1:
-                App::camera.setMode(Camera::Mode::FREE);
-                break;
-            case 2:
-                App::camera.setMode(Camera::Mode::FPS);
-                break;
-            default:
-                break;
-        }
+        App::camera.modeInterface();
     });
 
     App::loop([&] {

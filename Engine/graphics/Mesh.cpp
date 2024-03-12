@@ -13,14 +13,18 @@
 #include <vector>
 #include <string>
 #include <GL/glew.h>
+#include "utils/Buffer.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
-           std::vector<Texture::Data> textures) : vertices(std::move(vertices)), indices(std::move(indices)),
-                                                  textures(std::move(textures)) {
-    setupMesh();
+           std::vector<Texture::Data> textures) :  textures(std::move(textures)) {
+
+    bufferData = BufferData(std::move(vertices), std::move(indices));
+    buffer.fill(bufferData);
 }
 
 void Mesh::draw(const Shader *shader) const {
+    shader->use();
+
     GLuint diffuseNr = 1;
     GLuint specularNr = 1;
     GLuint normalNr = 1;
@@ -66,53 +70,10 @@ void Mesh::draw(const Shader *shader) const {
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
         shader->setUniform(("material.texture_" + toString(name) + number), static_cast<GLint>(i));
     }
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
+
+    buffer.bind();
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(bufferData.indices.size()), GL_UNSIGNED_INT, nullptr);
+    buffer.unbind();
 
     glActiveTexture(GL_TEXTURE0);
 }
-
-void Mesh::setupMesh() {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertices.size() * sizeof(Vertex::Data)), vertices.data(),
-                 GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(indices.size() * sizeof(GLuint)), indices.data(),
-                 GL_STATIC_DRAW);
-
-    // vertex positions
-    glEnableVertexAttribArray(Vertex::Layout::POSITION);
-    glVertexAttribPointer(Vertex::Layout::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data), nullptr);
-
-    // vertex normals
-    glEnableVertexAttribArray(Vertex::Layout::NORMAL);
-    glVertexAttribPointer(Vertex::Layout::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
-                          reinterpret_cast<void *>(offsetof(Vertex::Data, normal)));
-
-    // vertex texture coords
-    glEnableVertexAttribArray(Vertex::Layout::TEX_COORDS);
-    glVertexAttribPointer(Vertex::Layout::TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
-                          reinterpret_cast<void *>(offsetof(Vertex::Data, texCoords)));
-
-    // vertex tangent
-    glEnableVertexAttribArray(Vertex::Layout::TANGENT);
-    glVertexAttribPointer(Vertex::Layout::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
-                          reinterpret_cast<void *>(offsetof(Vertex::Data, tangent)));
-
-    // vertex bitangent
-    glEnableVertexAttribArray(Vertex::Layout::BITANGENT);
-    glVertexAttribPointer(Vertex::Layout::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
-                          reinterpret_cast<void *>(offsetof(Vertex::Data, bitangent)));
-
-    glBindVertexArray(0);
-}
-
-

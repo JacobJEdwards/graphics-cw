@@ -8,120 +8,48 @@
 #include <initializer_list>
 #include <vector>
 #include <GL/glew.h>
+#include <span>
+#include <utility>
+
+#include "Vertex.h"
+
+struct BufferData {
+    std::vector<Vertex::Data> vertices;
+    std::vector<GLuint> indices;
+
+    BufferData() = default;
+
+    BufferData(std::initializer_list<Vertex::Data> vertices, std::initializer_list<GLuint> indices) : vertices(vertices), indices(indices) {}
+
+    BufferData(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices) : vertices(std::move(vertices)), indices(std::move(indices)) {}
+};
 
 struct Buffer {
-    GLuint index = 0;
-    size_t SIZE = 0;
+    GLuint VAO = 0;
+    GLuint VBO = 0;
+    GLuint EBO = 0;
 
     Buffer() {
-        glGenBuffers(1, &index);
+        glGenVertexArrays(1, &VAO);
+        glGenBuffers(1, &VBO);
+        glGenBuffers(1, &EBO);
     }
 
     ~Buffer() {
-        glDeleteBuffers(1, &index);
+        glDeleteVertexArrays(1, &VAO);
+        glDeleteBuffers(1, &VBO);
+        glDeleteBuffers(1, &EBO);
     }
 
-    Buffer(const Buffer& other) : SIZE(other.SIZE) {
-        glGenBuffers(1, &index);
-        glBindBuffer(GL_COPY_READ_BUFFER, other.index);
-        glBindBuffer(GL_COPY_WRITE_BUFFER, index);
-        glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, SIZE * sizeof(GLfloat));
-        glBindBuffer(GL_COPY_READ_BUFFER, 0);
-        glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
+    void bind() const {
+        glBindVertexArray(VAO);
     }
 
-    auto operator=(const Buffer& other) -> Buffer& {
-        if (this != &other) {
-            // Release current resources
-            glDeleteBuffers(1, &index);
-            // Copy data
-            glGenBuffers(1, &index);
-            glBindBuffer(GL_COPY_READ_BUFFER, other.index);
-            glBindBuffer(GL_COPY_WRITE_BUFFER, index);
-            glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, SIZE * sizeof(GLfloat));
-            glBindBuffer(GL_COPY_READ_BUFFER, 0);
-            glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
-            SIZE = other.SIZE;
-        }
-        return *this;
+    void unbind() const {
+        glBindVertexArray(0);
     }
 
-    Buffer(Buffer&& other) noexcept : index(other.index), SIZE(other.SIZE) {
-        other.index = 0;
-        other.SIZE = 0;
-    }
-
-    // Move assignment operator
-    auto operator=(Buffer&& other) noexcept -> Buffer& {
-        if (this != &other) {
-            // Release current resources
-            glDeleteBuffers(1, &index);
-            // Move data
-            index = other.index;
-            SIZE = other.SIZE;
-            other.index = 0;
-            other.SIZE = 0;
-        }
-        return *this;
-    }
-
-    template<typename T>
-    explicit Buffer(std::vector<T> buf) : Buffer() {
-        fill(buf);
-    }
-
-    template<typename T>
-    Buffer(std::initializer_list<T> buf) : Buffer() {
-        fill<T>(buf);
-    }
-
-    template<typename T>
-    explicit Buffer(size_t size, T* data) : Buffer() {
-        fill(size, data);
-    }
-
-    template<typename T> void fill(size_t size, T* data);
-    template<typename T> void fill(std::vector<T> buf);
-    template<typename T> void fill(T val);
-    template<typename T> void retrieve(size_t size, T* data);
-    template<typename T> void retrieve(std::vector<T>& buf);
-    template<typename T> void retrieve(T& val);
-
+    void fill(const BufferData &data) const;
 };
-
-template<typename T>
-void Buffer::fill(size_t size, T* data) {
-    glBindBuffer(GL_ARRAY_BUFFER, index);
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(T), data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    SIZE = size;
-}
-
-
-template<typename T>
-void Buffer::fill(T val) {
-    fill(1, &val);
-}
-
-template<typename T>
-void Buffer::fill(std::vector<T> buf) {
-    fill(buf.size(), buf.data());
-}
-
-template<typename T>
-void Buffer::retrieve(size_t size,  T* data) {
-    glBindBuffer(GL_ARRAY_BUFFER, index);
-    glGetBufferSubData(GL_ARRAY_BUFFER, 0, size*sizeof(T), data);
-}
-
-template<typename T>
-void Buffer::retrieve(std::vector<T> &buf) {
-    retrieve(buf.size(), buf.data());
-}
-
-template<typename T>
-void Buffer::retrieve(T &val) {
-    retrieve(1, &val);
-}
 
 #endif //CW_BUFFER_H
