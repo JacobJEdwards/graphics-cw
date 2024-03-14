@@ -21,7 +21,7 @@ constexpr float SMOOTHING = 0.9F;
 constexpr float ACCELERATION = 5.0F;
 constexpr float MAXSPEED = 10000.0F;
 
-constexpr float MAXZOOM = 90.0F;
+constexpr float MAXZOOM = 180.0F;
 constexpr float MINZOOM = 1.0F;
 
 constexpr float MAXPITCH = 89.0F;
@@ -77,15 +77,33 @@ public:
 
     [[nodiscard]] auto getWorldUp() const -> glm::vec3;
 
+    [[nodiscard]] auto getRenderDistance() const -> float;
+
+    [[nodiscard]] auto getProjectionMatrix() const -> glm::mat4;
+
+    [[nodiscard]] auto getYaw() const -> float;
+
+    auto getVelocity() -> glm::vec3 {
+        return velocity;
+    }
+
+    void setVelocity(const glm::vec3 &velocity) {
+        Camera::velocity = velocity;
+    }
+
     void setPosition(const glm::vec3 &position);
 
     void circleOrbit(float deltaTime);
 
+    void setAspect(float aspect);
+
     void modeInterface();
+
     void controlInterface();
 
-private:
 
+
+private:
     Mode mode = Mode::FREE;
 
     glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
@@ -113,15 +131,23 @@ private:
     float orbitSpeed = 0.0F;
     float orbitHeight = 0.0F;
 
+    float aspect = 1.0F;
+
+    float renderDistance = 100.0F;
+
     glm::vec3 velocity = glm::vec3(0.0F, 0.0F, 0.0F);
 
     float yPosition = 0.0F;
     bool downwards = false;
 
     void updateCameraVectors();
+
     void updateOrbitPosition();
+
     void updatePosition(float deltaTime);
+
     void adjustOrbitPosition(glm::vec3 &newPos) const;
+
     void applyFPSModeEffects();
 
     [[nodiscard]] auto getModeInt() const -> int;

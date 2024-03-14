@@ -56,8 +56,8 @@ public:
 
     [[nodiscard]] auto shouldShowInterface() const -> bool { return showInterface; }
 
-    void setShowInterface(bool show) { showInterface = show; }
-    void setShowMenu(bool show) { showMenu = show; }
+    void setShowInterface(const bool show) { showInterface = show; }
+    void setShowMenu(const bool show) { showMenu = show; }
 
     [[nodiscard]] auto getDeltaTime() const -> float { return deltaTime; }
 

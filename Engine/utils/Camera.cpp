@@ -7,11 +7,13 @@
 
 #include <algorithm>
 #include <glm/common.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "imgui/imgui.h"
 
@@ -43,18 +45,13 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
     }
 }
 
-/*
-[[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
-    const glm::vec3 pos = orbitTarget - front * orbitRadius;
-    switch (mode) {
-        case Mode::ORBIT:
-            return lookAt(pos, orbitTarget, up);
-        default:
-            return lookAt(position, position + front, up);
-    }
+[[nodiscard]] auto Camera::getRenderDistance() const -> float {
+    return renderDistance;
 }
 
- */
+[[nodiscard]] auto Camera::getProjectionMatrix() const -> glm::mat4 {
+    return glm::perspective(glm::radians(zoom), aspect, 0.1F, renderDistance);
+}
 
 void Camera::processKeyboard(const Direction direction, const float deltaTime) {
     const float curAcceleration = acceleration * deltaTime * 10.0F;
@@ -212,6 +209,10 @@ void Camera::setOrbit(const glm::vec3 target, const float radius, const float an
     return worldUp;
 }
 
+[[nodiscard]] auto Camera::getYaw() const -> float {
+    return yaw;
+}
+
 void Camera::setPosition(const glm::vec3 &position) {
     this->position = position;
     updateCameraVectors();
@@ -245,6 +246,7 @@ void Camera::controlInterface() {
     ImGui::SliderFloat("Zoom", &zoom, MINZOOM, MAXZOOM);
     ImGui::SliderFloat("Movement Speed", &movementSpeed, 0.0F, MAXSPEED);
     ImGui::SliderFloat("Sensitivity", &mouseSensitivity, 0.0F, 2.5F);
+    ImGui::SliderFloat("Render Distance", &renderDistance, 1.0F, 1000.0F);
 
     ImGui::SeparatorText("Orbit");
     ImGui::SliderFloat("Orbit Radius", &orbitRadius, 0.0F, 100.0F);
@@ -287,4 +289,8 @@ void Camera::modeInterface() {
         default:
             return -1;
     }
+}
+
+void Camera::setAspect(const float aspect) {
+    this->aspect = aspect;
 }

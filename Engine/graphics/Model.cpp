@@ -4,6 +4,7 @@
 
 #include "Model.h"
 
+#include <algorithm>
 #include <assimp/material.h>
 #include <assimp/mesh.h>
 #include <memory>
@@ -12,6 +13,10 @@
 #include <vector>
 #include <sstream>
 #include <stack>
+#include <unordered_map>
+#include <ranges>
+#include <utility>
+#include <numeric>
 
 #include <GL/glew.h>
 
@@ -24,9 +29,10 @@
 #include "graphics/Mesh.h"
 #include "helpers/AssimpGLMHelpers.h"
 #include "utils/Shader.h"
+#include "utils/BoundingBox.h"
 
 
-Model::Model(const std::string &path, const bool gamma) : gammaCorrection(gamma) {
+Model::Model(const std::string &path) {
     loadModel(path);
 }
 
@@ -46,9 +52,6 @@ void Model::loadModel(const std::string &path) {
     }
 
     directory = path.substr(0, path.find_last_of('/'));
-
-    this->boundingBox.min = AssimpGLMHelpers::getGLMVec(scene->mMeshes[0]->mAABB.mMin);
-    this->boundingBox.max = AssimpGLMHelpers::getGLMVec(scene->mMeshes[0]->mAABB.mMax);
 
     processNode(scene->mRootNode, scene);
 }
@@ -76,6 +79,8 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     std::vector<Vertex::Data> vertices;
     std::vector<GLuint> indices;
     std::vector<Texture::Data> textures;
+
+    BoundingBox box{AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMin), AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMax)};
 
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex::Data vertex{};
@@ -138,7 +143,7 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     std::vector<Texture::Data> emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE,
                                                                    Texture::Type::EMISSIVE);
     textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
-    return {vertices, indices, textures};
+    return {vertices, indices, textures, box};
 }
 
 auto Model::loadMaterialTextures(const aiMaterial *const mat, const aiTextureType type,
@@ -168,4 +173,22 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat, const aiTextureTyp
     }
 
     return textures;
+}
+
+auto Model::detectCollisions(const glm::vec3 &point) const -> bool {
+    return std::ranges::any_of(meshes, [&](const auto &mesh) {
+        return mesh->detectCollisions(point);
+    });
+}
+
+auto Model::getCentre() const -> glm::vec3 {
+    return std::accumulate(meshes.begin(), meshes.end(), glm::vec3(0.0F), [](const auto &acc, const auto &mesh) {
+        return acc + mesh->getCentre();
+    }) / static_cast<float>(meshes.size());
+}
+
+auto Model::getOffset(const glm::vec3 &point) const -> glm::vec3 {
+    return std::accumulate(meshes.begin(), meshes.end(), glm::vec3(0.0F), [&](const auto &acc, const auto &mesh) {
+        return acc + mesh->getOffset(point);
+    }) / static_cast<float>(meshes.size());
 }

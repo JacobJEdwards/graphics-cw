@@ -18,7 +18,6 @@
 namespace App {
     extern View view;
     extern Camera camera;
-    extern glm::mat4 projection;
 
     extern bool paused;
 
@@ -31,8 +30,6 @@ namespace App {
                 unsigned int height = DEFAULT_HEIGHT) -> bool;
 
     void quit();
-
-    void calculateProjection();
 
     void setPaused(bool value);
 

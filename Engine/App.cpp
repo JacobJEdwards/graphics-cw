@@ -13,7 +13,6 @@ void setupGLFW();
 
 View App::view;
 Camera App::camera;
-glm::mat4 App::projection = Config::IDENTITY_MATRIX;
 bool App::paused = false;
 
 bool App::init() {
@@ -22,10 +21,12 @@ bool App::init() {
         return false;
     }
 
-    calculateProjection();
-
     glViewport(0, 0, view.getWidth(), view.getHeight());
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_FRAMEBUFFER_SRGB);
 
     return true;
 }
@@ -34,6 +35,7 @@ bool App::window(const std::string& title, unsigned int width, unsigned int heig
     if (!view.init(title, width, height)) {
         return false;
     }
+    camera.setAspect(static_cast<float>(width) / static_cast<float>(height));
     return true;
 }
 
@@ -56,10 +58,6 @@ void App::setPaused(const bool value) {
     } else {
         glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
-}
-
-void App::calculateProjection() {
-     projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(view.getWidth()) / static_cast<float>(view.getHeight()), 0.1F, 100.0F);
 }
 
 void setupGLFW() {

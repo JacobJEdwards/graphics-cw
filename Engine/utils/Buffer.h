@@ -24,18 +24,16 @@ public:
         std::vector<GLuint> indices;
     };
 
-    struct Data2D {
-        std::vector<Vertex::Data2D> vertices;
-        std::vector<GLuint> indices;
-    };
-
     Data data;
-    Data2D data2D;
 
     Buffer();
 
+    void fill(std::initializer_list<Vertex::Data> vertices, std::initializer_list<GLuint> indices);
     void fill(std::span<const Vertex::Data> vertices, std::span<const GLuint> indices);
-    void fill(std::span<const Vertex::Data2D> vertices, std::span<const GLuint> indices);
+
+    void fill(std::initializer_list<Vertex::Data> vertices);
+    void fill(std::span<const Vertex::Data> vertices);
+
 
     void bind() const;
 
@@ -44,8 +42,7 @@ public:
     void draw() const;
 
 private:
-    void setup3D();
-    void setup2D();
+    void setup();
 };
 
 #endif //CW_BUFFER_H

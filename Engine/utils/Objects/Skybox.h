@@ -23,24 +23,24 @@ constexpr unsigned int NUM_FACES = 6;
 // REFACTOR THIS
 class Skybox {
 public:
-    explicit Skybox(std::span<const std::string, NUM_FACES> faces)  {
+    explicit Skybox(std::span<const std::string, NUM_FACES> faces) {
         init();
         loadTextures(faces);
     }
 
     void draw(const glm::mat4 &projection, const glm::mat4 &view, const GLfloat y) const {
         glDepthFunc(GL_LEQUAL);
-        shader->use();
+        shader.use();
 
-        shader->setUniform("view", view);
-        shader->setUniform("projection", projection);
-        shader->setUniform("intensity", y);
+        shader.setUniform("view", view);
+        shader.setUniform("projection", projection);
+        shader.setUniform("intensity", y);
 
-        glBindVertexArray(VAO);
+        buffer.bind();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP, texture.id);
-        glDrawArrays(GL_TRIANGLES, 0, NUM_VERTEX);
-        glBindVertexArray(0);
+        buffer.draw();
+        buffer.unbind();
         glDepthFunc(GL_LESS);
     }
 
@@ -48,10 +48,7 @@ private:
     Texture::Data texture;
     Buffer buffer;
 
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-
-    const std::vector<Vertex::Data> vertices = {
+    const std::array<Vertex::Data, 36> vertices = {
         Vertex::Data{glm::vec3(-1.0F, 1.0F, -1.0F)},
         Vertex::Data{glm::vec3(-1.0F, -1.0F, -1.0F)},
         Vertex::Data{glm::vec3(1.0F, -1.0F, -1.0F)},
@@ -79,66 +76,49 @@ private:
         Vertex::Data{glm::vec3(1.0F, 1.0F, 1.0F)},
         Vertex::Data{glm::vec3(1.0F, -1.0F, 1.0F)},
         Vertex::Data{glm::vec3(-1.0F, -1.0F, 1.0F)},
-    }
 
-    static constexpr std::array<GLfloat, static_cast<size_t>(NUM_VERTEX * 3)> vertices = {
-        // positions
-        -1.0F, 1.0F, -1.0F,
-        -1.0F, -1.0F, -1.0F,
-        1.0F, -1.0F, -1.0F,
-        1.0F, -1.0F, -1.0F,
-        1.0F, 1.0F, -1.0F,
-        -1.0F, 1.0F, -1.0F,
+        Vertex::Data{glm::vec3(-1.0F, 1.0F, -1.0F)},
+        Vertex::Data{glm::vec3(1.0F, 1.0F, -1.0F)},
+        Vertex::Data{glm::vec3(1.0F, 1.0F, 1.0F)},
+        Vertex::Data{glm::vec3(1.0F, 1.0F, 1.0F)},
+        Vertex::Data{glm::vec3(-1.0F, 1.0F, 1.0F)},
+        Vertex::Data{glm::vec3(-1.0F, 1.0F, -1.0F)},
 
-        -1.0F, -1.0F, 1.0F,
-        -1.0F, -1.0F, -1.0F,
-        -1.0F, 1.0F, -1.0F,
-        -1.0F, 1.0F, -1.0F,
-        -1.0F, 1.0F, 1.0F,
-        -1.0F, -1.0F, 1.0F,
-
-        1.0F, -1.0F, -1.0F,
-        1.0F, -1.0F, 1.0F,
-        1.0F, 1.0F, 1.0F,
-        1.0F, 1.0F, 1.0F,
-        1.0F, 1.0F, -1.0F,
-        1.0F, -1.0F, -1.0F,
-
-        -1.0F, -1.0F, 1.0F,
-        -1.0F, 1.0F, 1.0F,
-        1.0F, 1.0F, 1.0F,
-        1.0F, 1.0F, 1.0F,
-        1.0F, -1.0F, 1.0F,
-        -1.0F, -1.0F, 1.0F,
-
-        -1.0F, 1.0F, -1.0F,
-        1.0F, 1.0F, -1.0F,
-        1.0F, 1.0F, 1.0F,
-        1.0F, 1.0F, 1.0F,
-        -1.0F, 1.0F, 1.0F,
-        -1.0F, 1.0F, -1.0F,
-
-        -1.0F, -1.0F, -1.0F,
-        -1.0F, -1.0F, 1.0F,
-        1.0F, -1.0F, -1.0F,
-        1.0F, -1.0F, -1.0F,
-        -1.0F, -1.0F, 1.0F,
-        1.0F, -1.0F, 1.0F
+        Vertex::Data{glm::vec3(-1.0F, -1.0F, -1.0F)},
+        Vertex::Data{glm::vec3(-1.0F, -1.0F, 1.0F)},
+        Vertex::Data{glm::vec3(1.0F, -1.0F, -1.0F)},
+        Vertex::Data{glm::vec3(1.0F, -1.0F, -1.0F)},
+        Vertex::Data{glm::vec3(-1.0F, -1.0F, 1.0F)},
+        Vertex::Data{glm::vec3(1.0F, -1.0F, 1.0F)}
     };
 
-    Shader *shader = new Shader("../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
+    const std::array<GLuint, 36> indices = {
+        0, 1, 2,
+        3, 4, 5,
+
+        6, 7, 8,
+        9, 10, 11,
+
+        12, 13, 14,
+        15, 16, 17,
+
+        18, 19, 20,
+        21, 22, 23,
+
+        24, 25, 26,
+        27, 28, 29,
+
+        30, 31, 32,
+        33, 34, 35
+    };
+
+    Shader shader = Shader("../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
 
     void init() {
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+        buffer.fill(vertices, indices);
 
-        shader->use();
-        shader->setUniform("skybox", 0);
+        shader.use();
+        shader.setUniform("skybox", 0);
     }
 
     void loadTextures(std::span<const std::string, NUM_FACES> faces) {

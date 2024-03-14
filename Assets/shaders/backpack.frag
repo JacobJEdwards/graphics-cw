@@ -41,7 +41,6 @@ vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 s
     return ambient + diffuse + specular;
 }
 
-
 in vec3 FragPos;
 in vec2 TexCoords;
 in vec3 Normal;
@@ -55,10 +54,15 @@ void main() {
     vec3 lightDir = normalize(light.position - FragPos);
 
     vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, norm, light.diffuse * 2.0, vec3(texture(material.texture_diffuse1, TexCoords)), material.shininess);
+    vec4 texColor = texture(material.texture_diffuse1, TexCoords);
+
+    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, norm, light.diffuse * 2.0, texColor.xyz, material.shininess);
+
+    // Apply alpha blending
+    result *= texColor.a;
 
     if (light.position.y < -0.2) {
-        result = result * 0.1;
+        result *= 0.1;
     }
 
     FragColor = vec4(result, 1.0);

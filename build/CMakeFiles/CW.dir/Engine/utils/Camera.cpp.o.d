@@ -811,18 +811,35 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__functional/weak_result_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__memory/allocator_destructor.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__memory/uses_allocator_construction.h \
-  /usr/local/include/glm/common.hpp /usr/local/include/glm/geometric.hpp \
-  /usr/local/include/glm/ext/matrix_transform.hpp \
-  /usr/local/include/glm/ext/../gtc/constants.hpp \
-  /usr/local/include/glm/ext/../gtc/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/common.hpp \
+  /usr/local/include/glm/ext/matrix_clip_space.hpp \
+  /usr/local/include/glm/ext/../ext/scalar_constants.hpp \
   /usr/local/include/glm/ext/scalar_constants.inl \
-  /usr/local/include/glm/ext/../gtc/constants.inl \
   /usr/local/include/glm/ext/../geometric.hpp \
   /usr/local/include/glm/ext/../trigonometric.hpp \
   /usr/local/include/glm/ext/../detail/../detail/func_trigonometric.inl \
+  /usr/local/include/glm/ext/matrix_clip_space.inl \
+  /usr/local/include/glm/geometric.hpp \
+  /usr/local/include/glm/ext/matrix_transform.hpp \
+  /usr/local/include/glm/ext/../gtc/constants.hpp \
+  /usr/local/include/glm/ext/../gtc/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/ext/../gtc/constants.inl \
   /usr/local/include/glm/ext/../matrix.hpp \
   /usr/local/include/glm/ext/matrix_transform.inl \
   /usr/local/include/glm/trigonometric.hpp \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
+  /usr/local/include/glm/ext/../gtc/../mat4x4.hpp \
+  /usr/local/include/glm/ext/../gtc/../vec2.hpp \
+  /usr/local/include/glm/ext/../gtc/../vec3.hpp \
+  /usr/local/include/glm/ext/../gtc/../vec4.hpp \
+  /usr/local/include/glm/ext/../gtc/../ext/matrix_projection.hpp \
+  /usr/local/include/glm/ext/matrix_projection.inl \
+  /usr/local/include/glm/ext/../gtc/../ext/matrix_clip_space.hpp \
+  /usr/local/include/glm/ext/../gtc/../ext/matrix_transform.hpp \
+  /usr/local/include/glm/ext/../gtc/matrix_transform.inl \
+  /usr/local/include/glm/ext/../gtc/../geometric.hpp \
+  /usr/local/include/glm/ext/../gtc/../trigonometric.hpp \
+  /usr/local/include/glm/ext/../gtc/../matrix.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/float.h \

@@ -21,6 +21,7 @@ namespace Vertex {
         glm::vec3 bitangent;
 
         Data() = default;
+        Data(const glm::vec3 &position) : position(position), normal(glm::vec3(0.0F)), texCoords(glm::vec2(0.0F)), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}
         Data(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords, const glm::vec3 &tangent, const glm::vec3 &bitangent) : position(position), normal(normal), texCoords(texCoords), tangent(tangent), bitangent(bitangent) {}
         Data(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords) : position(position), normal(normal), texCoords(texCoords), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}
         Data(const glm::vec3 &postion, const glm::vec2 &texCoords) : position(postion), normal(glm::vec3(0.0F)), texCoords(texCoords), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}

@@ -6,11 +6,14 @@
 #define INFINITEPLANE_H
 #include <GL/glew.h>
 #include <array>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/glm.hpp>
 #include "utils/Vertex.h"
 #include "utils/Buffer.h"
+#include "utils/BoundingBox.h"
 
 #include "utils/Shader.h"
+#include "Config.h"
 
 // TODO
 // REFACTOR THIS
@@ -29,7 +32,7 @@ public:
         shader.setUniform("projection", projection);
         shader.setUniform("light.position", lightPos);
         shader.setUniform("viewPos", viewPos);
-        auto model = glm::mat4(1.0F);
+        auto model = Config::IDENTITY_MATRIX;
         // move model down by 2.0F
         model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));
         shader.setUniform("model", model);
@@ -37,6 +40,20 @@ public:
         buffer.unbind();
 
     }
+
+    [[nodiscard]] auto collides(const glm::vec3 &position) const -> bool {
+        return box.contains(position);
+    }
+
+    [[nodiscard]] auto getBoundingBox() const -> const BoundingBox & {
+        return box;
+    }
+
+    [[nodiscard]] auto getOffset(const glm::vec3 &point) const -> glm::vec3 {
+        return box.getOffset(point);
+    }
+
+
 private:
     static constexpr float SIZE = 1000.0F;
 
@@ -51,6 +68,8 @@ private:
         0, 1, 2,
         2, 3, 0
     };
+
+    BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, 1.0F, SIZE)};
 
     Buffer buffer;
 

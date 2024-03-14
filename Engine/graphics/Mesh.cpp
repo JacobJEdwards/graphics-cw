@@ -15,7 +15,7 @@
 #include <GL/glew.h>
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
-           std::vector<Texture::Data> textures) :  textures(std::move(textures)) {
+           std::vector<Texture::Data> textures, BoundingBox box) :  textures(std::move(textures)), box(std::move(box))  {
     buffer.fill(std::move(vertices), std::move(indices));
 }
 
@@ -72,3 +72,14 @@ void Mesh::draw(const Shader *shader) const {
     glActiveTexture(GL_TEXTURE0);
 }
 
+auto Mesh::detectCollisions(const glm::vec3 &position) const -> bool {
+    return box.contains(position);
+}
+
+auto Mesh::getCentre() const -> glm::vec3 {
+    return box.getCenter();
+}
+
+auto Mesh::getOffset(const glm::vec3 &point) const -> glm::vec3 {
+    return box.getOffset(point);
+}

@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "graphics/Model.h"
+#include "Config.h"
 #include <cmath>
 
 #include "utils/Shader.h"
@@ -27,16 +28,16 @@ public:
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const {
         glDepthFunc(GL_LEQUAL);
 
-        shader->use();
-        shader->setUniform("view", view);
-        shader->setUniform("projection", projection);
+        shader.use();
+        shader.setUniform("view", view);
+        shader.setUniform("projection", projection);
 
-        auto model = glm::mat4(1.0F);
-        model = translate(model, glm::vec3(position, -10.0F));
-        model = scale(model, glm::vec3(scale));
-        shader->setUniform("model", model);
+        auto model = Config::IDENTITY_MATRIX;
+        model = glm::translate(model, glm::vec3(position, -10.0F));
+        model = glm::scale(model, glm::vec3(scale));
+        shader.setUniform("model", model);
 
-        sun.draw(shader);
+        sun.draw(&shader);
 
         glDepthFunc(GL_LESS);
     }
@@ -54,8 +55,8 @@ public:
     }
 
 private:
-    Shader *shader = new Shader("../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
-    Model sun{"../Assets/objects/sun/sun.obj"};
+    Shader shader = Shader("../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
+    Model sun = Model("../Assets/objects/sun/sun.obj");
 
     glm::vec2 position = glm::vec2(0.0F, 0.0F);
     float scale = 0.001F;
