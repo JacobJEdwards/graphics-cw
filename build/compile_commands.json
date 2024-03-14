@@ -1,0 +1,128 @@
+[
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/main.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/main.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/main.cpp",
+  "output": "CMakeFiles/CW.dir/main.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/external/imgui/imgui.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp",
+  "output": "CMakeFiles/CW.dir/external/imgui/imgui.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp",
+  "output": "CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp",
+  "output": "CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp",
+  "output": "CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp",
+  "output": "CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp",
+  "output": "CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp",
+  "output": "CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/App.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/App.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/View.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/View.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o"
+}
+]

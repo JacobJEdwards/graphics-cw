@@ -5,11 +5,10 @@
 #ifndef CW_BUFFER_H
 #define CW_BUFFER_H
 
+#include "utils/Vertex.h"
+#include <GL/glew.h>
 #include <initializer_list>
 #include <vector>
-#include <GL/glew.h>
-#include "utils/Vertex.h"
-#include <iostream>
 
 #include <span>
 
@@ -34,7 +33,6 @@ public:
     void fill(std::initializer_list<Vertex::Data> vertices);
     void fill(std::span<const Vertex::Data> vertices);
 
-
     void bind() const;
 
     void unbind() const;
@@ -45,4 +43,4 @@ private:
     void setup();
 };
 
-#endif //CW_BUFFER_H
+#endif // CW_BUFFER_H

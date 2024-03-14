@@ -5,8 +5,8 @@
 #ifndef CW_CAMERA_H
 #define CW_CAMERA_H
 
-#include <glm/ext/vector_float3.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include <GL/glew.h>
 
@@ -46,8 +46,8 @@ public:
     };
 
     explicit Camera(glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3 worldUp = glm::vec3(0.0F, 1.0F, 0.0F),
-                    float yaw = YAW, float pitch = PITCH, float damping = DAMPING, float smoothing = SMOOTHING,
-                    float acceleration = ACCELERATION, float maxspeed = MAXSPEED);
+        float yaw = YAW, float pitch = PITCH, float damping = DAMPING, float smoothing = SMOOTHING,
+        float acceleration = ACCELERATION, float maxspeed = MAXSPEED);
 
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
@@ -83,15 +83,17 @@ public:
 
     [[nodiscard]] auto getYaw() const -> float;
 
-    auto getVelocity() -> glm::vec3 {
+    auto getVelocity() -> glm::vec3
+    {
         return velocity;
     }
 
-    void setVelocity(const glm::vec3 &velocity) {
+    void setVelocity(const glm::vec3& velocity)
+    {
         Camera::velocity = velocity;
     }
 
-    void setPosition(const glm::vec3 &position);
+    void setPosition(const glm::vec3& position);
 
     void circleOrbit(float deltaTime);
 
@@ -101,14 +103,12 @@ public:
 
     void controlInterface();
 
-
-
 private:
     Mode mode = Mode::FREE;
 
     glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
-    glm::vec3 up{};
-    glm::vec3 right{};
+    glm::vec3 up {};
+    glm::vec3 right {};
 
     glm::vec3 position;
     glm::vec3 worldUp;
@@ -146,12 +146,11 @@ private:
 
     void updatePosition(float deltaTime);
 
-    void adjustOrbitPosition(glm::vec3 &newPos) const;
+    void adjustOrbitPosition(glm::vec3& newPos) const;
 
     void applyFPSModeEffects();
 
     [[nodiscard]] auto getModeInt() const -> int;
 };
 
-
-#endif //CW_CAMERA_H
+#endif // CW_CAMERA_H

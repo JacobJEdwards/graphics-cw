@@ -953,5 +953,4 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/iostream
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h

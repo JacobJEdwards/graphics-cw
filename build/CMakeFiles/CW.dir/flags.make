@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include
 
-CXX_FLAGS =  -std=c++20 -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks 
+CXX_FLAGS =  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks 
 

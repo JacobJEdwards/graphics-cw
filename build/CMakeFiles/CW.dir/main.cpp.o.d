@@ -941,11 +941,11 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../detail/type_half.inl \
   /usr/local/include/glm/ext/../detail/../integer.hpp \
   /usr/local/include/glm/ext/../detail/../detail/func_integer.inl \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.h \
   /usr/local/include/glm/ext/vector_float3.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.h \
   /usr/local/include/glm/ext/vector_float4.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
@@ -974,10 +974,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/assimp/material.inl \
   /usr/local/include/assimp/anim.h /usr/local/include/assimp/metadata.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/span \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__fwd/span.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/filesystem \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
@@ -997,10 +994,13 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/span \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__fwd/span.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
-  /usr/local/include/glm/gtc/matrix_transform.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.h \
+  /usr/local/include/glm/gtc/quaternion.hpp \
+  /usr/local/include/glm/ext/../gtc/../gtc/constants.hpp \
+  /usr/local/include/glm/ext/../gtc/../gtc/matrix_transform.hpp \
   /usr/local/include/glm/ext/../gtc/../mat4x4.hpp \
   /usr/local/include/glm/ext/../gtc/../vec2.hpp \
   /usr/local/include/glm/ext/../gtc/../vec3.hpp \
@@ -1015,10 +1015,6 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../gtc/../geometric.hpp \
   /usr/local/include/glm/ext/../gtc/../trigonometric.hpp \
   /usr/local/include/glm/ext/../gtc/../matrix.hpp \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.h \
-  /usr/local/include/glm/gtc/quaternion.hpp \
-  /usr/local/include/glm/ext/../gtc/../gtc/constants.hpp \
-  /usr/local/include/glm/ext/../gtc/../gtc/matrix_transform.hpp \
   /usr/local/include/glm/ext/../gtc/../ext/vector_relational.hpp \
   /usr/local/include/glm/ext/vector_relational.inl \
   /usr/local/include/glm/ext/../vector_relational.hpp \
@@ -1065,9 +1061,12 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../gtc/epsilon.inl \
   /usr/local/include/glm/ext/../gtc/../vector_relational.hpp \
   /usr/local/include/glm/ext/../gtc/../common.hpp \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/./Texture.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/../utils/Shader.h \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/InfinitePlane.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.h \
   /usr/local/include/glm/gtc/type_ptr.hpp \
@@ -1093,5 +1092,4 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../gtc/../mat3x4.hpp \
   /usr/local/include/glm/ext/../gtc/../mat4x2.hpp \
   /usr/local/include/glm/ext/../gtc/../mat4x3.hpp \
-  /usr/local/include/glm/ext/../gtc/type_ptr.inl \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h
+  /usr/local/include/glm/ext/../gtc/type_ptr.inl

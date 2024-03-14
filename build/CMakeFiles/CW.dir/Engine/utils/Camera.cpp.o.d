@@ -1,8 +1,9 @@
 CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
-  /usr/local/include/glm/ext/vector_float3.hpp \
-  /usr/local/include/glm/ext/../detail/type_vec3.hpp \
+  /usr/local/include/glm/ext/matrix_float4x4.hpp \
+  /usr/local/include/glm/ext/../detail/type_mat4x4.hpp \
+  /usr/local/include/glm/ext/../detail/type_vec4.hpp \
   /usr/local/include/glm/ext/../detail/qualifier.hpp \
   /usr/local/include/glm/ext/../detail/setup.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cassert \
@@ -213,14 +214,10 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__type_traits/remove_pointer.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__type_traits/result_of.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__type_traits/type_identity.h \
-  /usr/local/include/glm/ext/../detail/type_vec3.inl \
+  /usr/local/include/glm/ext/../detail/type_vec4.inl \
   /usr/local/include/glm/ext/../detail/compute_vector_relational.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/limits \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__undef_macros \
-  /usr/local/include/glm/ext/matrix_float4x4.hpp \
-  /usr/local/include/glm/ext/../detail/type_mat4x4.hpp \
-  /usr/local/include/glm/ext/../detail/type_vec4.hpp \
-  /usr/local/include/glm/ext/../detail/type_vec4.inl \
   /usr/local/include/glm/ext/../detail/type_mat4x4.inl \
   /usr/local/include/glm/ext/../detail/../matrix.hpp \
   /usr/local/include/glm/ext/../detail/../detail/qualifier.hpp \
@@ -245,6 +242,8 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /usr/local/include/glm/ext/../ext/scalar_uint_sized.hpp \
   /usr/local/include/glm/ext/../detail/../vec3.hpp \
   /usr/local/include/glm/ext/../detail/.././ext/vector_bool3.hpp \
+  /usr/local/include/glm/ext/../detail/type_vec3.hpp \
+  /usr/local/include/glm/ext/../detail/type_vec3.inl \
   /usr/local/include/glm/ext/../detail/.././ext/vector_bool3_precision.hpp \
   /usr/local/include/glm/ext/../detail/.././ext/vector_float3.hpp \
   /usr/local/include/glm/ext/../detail/.././ext/vector_float3_precision.hpp \
@@ -352,6 +351,7 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /usr/local/include/glm/ext/../detail/../detail/func_common.inl \
   /usr/local/include/glm/ext/../detail/compute_common.hpp \
   /usr/local/include/glm/ext/../detail/type_vec1.hpp \
+  /usr/local/include/glm/ext/vector_float3.hpp \
   /usr/local/include/GL/glew.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers/glu.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
@@ -819,14 +819,13 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /usr/local/include/glm/ext/../trigonometric.hpp \
   /usr/local/include/glm/ext/../detail/../detail/func_trigonometric.inl \
   /usr/local/include/glm/ext/matrix_clip_space.inl \
-  /usr/local/include/glm/geometric.hpp \
   /usr/local/include/glm/ext/matrix_transform.hpp \
   /usr/local/include/glm/ext/../gtc/constants.hpp \
   /usr/local/include/glm/ext/../gtc/../ext/scalar_constants.hpp \
   /usr/local/include/glm/ext/../gtc/constants.inl \
   /usr/local/include/glm/ext/../matrix.hpp \
   /usr/local/include/glm/ext/matrix_transform.inl \
-  /usr/local/include/glm/trigonometric.hpp \
+  /usr/local/include/glm/geometric.hpp \
   /usr/local/include/glm/gtc/matrix_transform.hpp \
   /usr/local/include/glm/ext/../gtc/../mat4x4.hpp \
   /usr/local/include/glm/ext/../gtc/../vec2.hpp \
@@ -840,6 +839,8 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /usr/local/include/glm/ext/../gtc/../geometric.hpp \
   /usr/local/include/glm/ext/../gtc/../trigonometric.hpp \
   /usr/local/include/glm/ext/../gtc/../matrix.hpp \
+  /usr/local/include/glm/trigonometric.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/float.h \

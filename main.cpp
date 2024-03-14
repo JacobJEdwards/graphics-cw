@@ -12,7 +12,6 @@
 #include <glm/ext/matrix_transform.hpp>
 
 #include "Config.h"
-#include "imgui/imgui.h"
 
 #include "App.h"
 #include "utils/Camera.h"
@@ -21,169 +20,181 @@
 #include "graphics/Model.h"
 #include "graphics/Texture.h"
 #include "utils/Objects/InfinitePlane.h"
+#include "utils/Objects/Player.h"
 #include "utils/Objects/Skybox.h"
 #include "utils/Objects/Sun.h"
-#include "utils/Objects/Player.h"
 #include "utils/Shader.h"
 
-Shader* ourShader;
+Shader *ourShader;
 
 bool useMouse = false;
 
 void processInput();
 
-auto main() -> int
-{
-    App::window("Coursework", App::DEFAULT_WIDTH, App::DEFAULT_HEIGHT);
-    App::init();
+auto main() -> int {
+  auto ourShader = std::make_shared<Shader>("../Assets/shaders/backpack.vert",
+                                            "../Assets/shaders/backpack.frag");
+  App::window("Coursework", App::DEFAULT_WIDTH, App::DEFAULT_HEIGHT);
+  App::init();
 
-    App::view.setKey(processInput);
-    App::view.setMouse([&] {
-        if (!App::paused) {
-            App::camera.processMouseMovement(App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
-        }
-    });
+  App::view.setKey(processInput);
+  App::view.setMouse([&] {
+    if (!App::paused) {
+      App::camera.processMouseMovement(App::view.getMouseOffsetX(),
+                                       App::view.getMouseOffsetY());
+    }
+  });
 
-    App::view.setScroll([&] {
-        App::camera.processMouseScroll(App::view.getScrollY());
-    });
+  App::view.setScroll(
+      [&] { App::camera.processMouseScroll(App::view.getScrollY()); });
 
-    App::view.setResize([&] {
-        App::camera.setAspect(App::view.getWidth() / App::view.getHeight());
-        glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()), static_cast<GLsizei>(App::view.getHeight()));
-    });
+  App::view.setResize([&] {
+    App::camera.setAspect(static_cast<float>(App::view.getWidth()) /
+                          App::view.getHeight());
+    glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
+               static_cast<GLsizei>(App::view.getHeight()));
+  });
 
-    App::view.setMenu([&] {
-        glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        View::clearTarget(Color::BLACK);
-    });
+  App::view.setMenu([&] {
+    glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    View::clearTarget(Color::BLACK);
+  });
 
-    App::view.setShowMenu(false);
+  App::view.setShowMenu(false);
 
-    const std::array<std::string, 6> skyboxFaces {
-        "../Assets/textures/skybox/right.jpg",
-        "../Assets/textures/skybox/left.jpg",
-        "../Assets/textures/skybox/top.jpg",
-        "../Assets/textures/skybox/bottom.jpg",
-        "../Assets/textures/skybox/front.jpg",
-        "../Assets/textures/skybox/back.jpg",
-    };
+  const std::array<std::string, 6> skyboxFaces{
+      "../Assets/textures/skybox/right.jpg",
+      "../Assets/textures/skybox/left.jpg",
+      "../Assets/textures/skybox/top.jpg",
+      "../Assets/textures/skybox/bottom.jpg",
+      "../Assets/textures/skybox/front.jpg",
+      "../Assets/textures/skybox/back.jpg",
+  };
 
-    const Skybox skybox(skyboxFaces);
-    Sun sun;
+  const Skybox skybox(skyboxFaces);
+  Sun sun;
 
-    Texture::Loader::setFlip(false);
-    const Model newModel("../Assets/objects/helecopter/chopper.obj");
-    Texture::Loader::setFlip(true);
-    const Model model2("../Assets/objects/backpack/backpack.obj");
-    Texture::Loader::setFlip(false);
+  Texture::Loader::setFlip(false);
+  Model newModel("../Assets/objects/helecopter/chopper.obj");
+  Texture::Loader::setFlip(true);
+  Model model2("../Assets/objects/backpack/backpack.obj");
+  Texture::Loader::setFlip(false);
 
-     Player person;
+  Player person;
 
-    App::camera.setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
-    App::camera.setMode(Camera::Mode::ORBIT);
+  App::camera.setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
+  App::camera.setMode(Camera::Mode::ORBIT);
 
-    const InfinitePlane terrain;
-    ourShader = new Shader("../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
+  const InfinitePlane terrain;
+
+  ourShader->use();
+  ourShader->setUniform("projection", App::camera.getProjectionMatrix());
+  ourShader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
+  ourShader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+  ourShader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+  // material properties
+  ourShader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
+  ourShader->setUniform("material.shininess", 64.0F);
+
+  auto model = glm::mat4(1.0F);
+  glm::vec3 newPosition =
+      App::camera.getPosition() + glm::vec3(0.0F, 4.0F, 0.45F);
+  const glm::mat4 helicopterModel =
+      translate(model, newPosition) *
+      scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
+
+  // newModel.scale(glm::vec3(0.1F, 0.1F, 0.1F));
+  // newModel.translate(newPosition);
+  newModel.transform(helicopterModel);
+
+  ourShader->setUniform("model", helicopterModel);
+
+  model = Config::IDENTITY_MATRIX;
+  newPosition = App::camera.getPosition() + glm::vec3(5.0F, -0.15F, 0.45F);
+  const glm::mat4 backpackModel = translate(model, newPosition);
+  // scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
+
+  sun.setPosition(App::camera.getPosition());
+
+  newModel.setShader(ourShader);
+  model2.setShader(ourShader);
+
+  App::view.setPipeline([&]() {
+    const auto projectionMatrix = App::camera.getProjectionMatrix();
+
+    View::clearTarget(Color::BLACK);
 
     ourShader->use();
-    ourShader->setUniform("projection", App::camera.getProjectionMatrix());
-    ourShader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    ourShader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    ourShader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
-    // material properties
-    ourShader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
-    ourShader->setUniform("material.shininess", 64.0F);
 
-    auto model = glm::mat4(1.0F);
-    glm::vec3 newPosition = App::camera.getPosition() + glm::vec3(0.0F, -0.15F, 0.45F);
-    const glm::mat4 helicopterModel = translate(model, newPosition) * scale(glm::mat4(1.0F), glm::vec3(0.3F, 0.3F, 0.3F));
+    ourShader->setUniform("projection", projectionMatrix);
 
+    ourShader->setUniform("light.position", glm::vec3(sun.getPosition(), 1.0F));
+    // view/projection transformations
+    glm::mat4 view = App::camera.getViewMatrix();
+    ourShader->setUniform("view", view);
+    ourShader->setUniform("viewPos", App::camera.getPosition());
     ourShader->setUniform("model", helicopterModel);
+    newModel.draw();
 
-    model = Config::IDENTITY_MATRIX;
-    newPosition = App::camera.getPosition() + glm::vec3(5.0F, -0.15F, 0.45F);
-    const glm::mat4 backpackModel = translate(model, newPosition) * scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
+    if (newModel.isColliding(person.getBoundingBox())) {
+      const auto offset = newModel.getOffset(person.getBoundingBox());
+      App::camera.setPosition(App::camera.getPosition() + offset);
+      auto velocity = App::camera.getVelocity();
+      if (std::abs(offset.y) > 0.0F) {
+        velocity.y = 0.0F;
+      }
 
-    sun.setPosition(App::camera.getPosition());
+      if (std::abs(offset.x) > 0.0F) {
+        velocity.x = 0.0F;
+      }
 
-    App::view.setPipeline([&]() {
-        const auto projectionMatrix = App::camera.getProjectionMatrix();
+      if (std::abs(offset.z) > 0.0F) {
+        velocity.z = 0.0F;
+      }
 
-        View::clearTarget(Color::BLACK);
-
-        ourShader->use();
-
-        ourShader->setUniform("projection", projectionMatrix);
-
-        ourShader->setUniform("light.position", glm::vec3(sun.getPosition(), 1.0F));
-        // view/projection transformations
-        glm::mat4 view = App::camera.getViewMatrix();
-        ourShader->setUniform("view", view);
-        ourShader->setUniform("viewPos", App::camera.getPosition());
-        ourShader->setUniform("model", model);
-        newModel.draw(ourShader);
-
-        if (newModel.detectCollisions(App::camera.getPosition())) {
-            const auto offset = newModel.getOffset(App::camera.getPosition());
-            App::camera.setPosition(App::camera.getPosition() + offset * 1.1F);
-            auto velocity = App::camera.getVelocity();
-            if (std::abs(offset.y) > 0.0F) {
-                velocity.y = 0.0F;
-            }
-
-            if (std::abs(offset.x) > 0.0F) {
-                velocity.x = 0.0F;
-            }
-
-            if (std::abs(offset.z) > 0.0F) {
-                velocity.z = 0.0F;
-            }
-
-            App::camera.setVelocity(velocity);
-        }
-
-        ourShader->setUniform("model", backpackModel);
-        model2.draw(ourShader);
-
-        terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F), App::camera.getPosition());
-
-        if (terrain.collides(App::camera.getPosition())) {
-            const auto offset = terrain.getOffset(App::camera.getPosition());
-            App::camera.setPosition(App::camera.getPosition() + offset*1.1F);
-
-            auto velocity = App::camera.getVelocity();
-
-            if (std::abs(offset.y) > 0.0F) {
-                velocity.y = 0.0F;
-            }
-        }
-
-
-        view = glm::mat4(glm::mat3(App::camera.getViewMatrix()));
-        skybox.draw(projectionMatrix, view, sun.getPosition().y);
-        sun.draw(view, projectionMatrix);
-
-        person.draw(App::camera.getViewMatrix(), projectionMatrix, App::camera.getPosition(), App::camera.getYaw());
-    });
-
-    App::view.setInterface([&]() {
-        if (App::paused) {
-            App::camera.modeInterface();
-            App::camera.controlInterface();
-        }
-    });
-
-    try {
-        App::loop([&] {
-            sun.update(App::view.getDeltaTime());
-            App::camera.circleOrbit(App::view.getDeltaTime());
-        });
-    } catch (const std::exception &e) {
-        std::cerr << e.what() << std::endl;
+      App::camera.setVelocity(velocity);
     }
 
-    App::quit();
+    ourShader->setUniform("model", backpackModel);
+    model2.draw();
+
+    terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
+                 App::camera.getPosition());
+
+    if (terrain.isColliding(person.getBoundingBox())) {
+      const auto offset = terrain.getOffset(person.getBoundingBox());
+      if (std::abs(offset.y) > 0.0F) {
+        App::camera.setPosition(App::camera.getPosition() + offset);
+        auto velocity = App::camera.getVelocity();
+        velocity.y = 0.0F;
+      }
+    }
+
+    view = glm::mat4(glm::mat3(App::camera.getViewMatrix()));
+    skybox.draw(projectionMatrix, view, sun.getPosition().y);
+    sun.draw(view, projectionMatrix);
+
+    person.draw(App::camera.getViewMatrix(), projectionMatrix);
+    person.setPosition(App::camera.getPosition());
+  });
+
+  App::view.setInterface([&]() {
+    if (App::paused) {
+      App::camera.modeInterface();
+      App::camera.controlInterface();
+    }
+  });
+
+  try {
+    App::loop([&] {
+      sun.update(App::view.getDeltaTime());
+      App::camera.circleOrbit(App::view.getDeltaTime());
+    });
+  } catch (const std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  }
+
+  App::quit();
 }
 
 // move keys keys into function
@@ -192,46 +203,53 @@ auto main() -> int
 // might be better in a callback or something
 // prototype:
 
-/** def input(glEnum(?) key, std::function<void()> callback, keyAction = GLFW_PRESS); */
+/** def input(glEnum(?) key, std::function<void()> callback, keyAction =
+ * GLFW_PRESS); */
 
-// might be cleaner, however need to change moved thing, unless keep App::camera controls separate
-// if in class namespace or something can keep window as global save on fuzz
-void processInput()
-{
-    bool moved = false;
+// might be cleaner, however need to change moved thing, unless keep App::camera
+// controls separate if in class namespace or something can keep window as
+// global save on fuzz
+void processInput() {
+  bool moved = false;
 
-    if (App::view.getKey(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        App::view.close();
-    }
+  if (App::view.getKey(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    App::view.close();
+  }
 
-    if (App::view.getKey(GLFW_KEY_SPACE) == GLFW_PRESS) {
-        App::setPaused(!App::paused);
-    }
+  if (App::view.getKey(GLFW_KEY_SPACE) == GLFW_PRESS) {
+    App::setPaused(!App::paused);
+  }
 
-    if (App::paused && App::camera.getMode() != Camera::Mode::ORBIT) { return; }
+  if (App::paused && App::camera.getMode() != Camera::Mode::ORBIT) {
+    return;
+  }
 
-    if (App::view.getKey(GLFW_KEY_W) == GLFW_PRESS) {
-        moved = true;
-        App::camera.processKeyboard(Camera::Direction::FORWARD, App::view.getDeltaTime());
-    }
+  if (App::view.getKey(GLFW_KEY_W) == GLFW_PRESS) {
+    moved = true;
+    App::camera.processKeyboard(Camera::Direction::FORWARD,
+                                App::view.getDeltaTime());
+  }
 
-    if (App::view.getKey(GLFW_KEY_S) == GLFW_PRESS) {
-        moved = true;
-        App::camera.processKeyboard(Camera::Direction::BACKWARD, App::view.getDeltaTime());
-    }
+  if (App::view.getKey(GLFW_KEY_S) == GLFW_PRESS) {
+    moved = true;
+    App::camera.processKeyboard(Camera::Direction::BACKWARD,
+                                App::view.getDeltaTime());
+  }
 
-    if (App::view.getKey(GLFW_KEY_A) == GLFW_PRESS) {
-        moved = true;
-        App::camera.processKeyboard(Camera::Direction::LEFT, App::view.getDeltaTime());
-    }
+  if (App::view.getKey(GLFW_KEY_A) == GLFW_PRESS) {
+    moved = true;
+    App::camera.processKeyboard(Camera::Direction::LEFT,
+                                App::view.getDeltaTime());
+  }
 
-    if (App::view.getKey(GLFW_KEY_D) == GLFW_PRESS) {
-        moved = true;
-        App::camera.processKeyboard(Camera::Direction::RIGHT, App::view.getDeltaTime());
-    }
+  if (App::view.getKey(GLFW_KEY_D) == GLFW_PRESS) {
+    moved = true;
+    App::camera.processKeyboard(Camera::Direction::RIGHT,
+                                App::view.getDeltaTime());
+  }
 
-    if (!moved) {
-        App::camera.processKeyboard(Camera::Direction::NONE, App::view.getDeltaTime());
-    }
-
+  if (!moved) {
+    App::camera.processKeyboard(Camera::Direction::NONE,
+                                App::view.getDeltaTime());
+  }
 }

@@ -1,8 +1,7 @@
 CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.h \
-  /usr/local/include/assimp/quaternion.h \
-  /usr/local/include/assimp/defs.h /usr/local/include/assimp/config.h \
+  /usr/local/include/assimp/matrix4x4.h \
   /usr/local/include/assimp/vector3.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cmath \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__assert \
@@ -215,7 +214,8 @@ CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/malloc/_malloc_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/_types/_dev_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/_types/_mode_t.h \
-  /usr/local/include/assimp/matrix4x4.h /usr/local/include/glm/glm.hpp \
+  /usr/local/include/assimp/defs.h /usr/local/include/assimp/config.h \
+  /usr/local/include/assimp/quaternion.h /usr/local/include/glm/glm.hpp \
   /usr/local/include/glm/detail/_fixes.hpp \
   /usr/local/include/glm/detail/setup.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cassert \

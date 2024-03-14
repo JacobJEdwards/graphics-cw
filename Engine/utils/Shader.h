@@ -8,25 +8,25 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include <string>
 #include <filesystem>
+#include <string>
 
 class Shader {
 public:
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
     Shader(std::string vertexPath, std::string fragmentPath,
-           std::string geometryPath = "", std::string tessControlPath = "", std::string tessEvalPath = "");
+        std::string geometryPath = "", std::string tessControlPath = "", std::string tessEvalPath = "");
 
     ~Shader();
 
-    auto operator=(Shader &&other) noexcept -> Shader &;
+    auto operator=(Shader&& other) noexcept -> Shader&;
 
-    Shader(Shader &&other) noexcept;
+    Shader(Shader&& other) noexcept;
 
-    Shader(const Shader &) = delete;
+    Shader(const Shader&) = delete;
 
-    auto operator=(const Shader &) -> Shader & = delete;
+    auto operator=(const Shader&) -> Shader& = delete;
 
     [[nodiscard]] auto validateProgram() const -> bool;
 
@@ -36,8 +36,8 @@ public:
 
     [[nodiscard]] auto getProgramID() const -> GLuint;
 
-    template<typename T>
-    void setUniform(const std::string &name, T value) const;
+    template <typename T>
+    void setUniform(const std::string& name, T value) const;
 
 private:
     std::filesystem::path vertexPath;
@@ -62,8 +62,8 @@ private:
 
     void load();
 
-    static auto readShaderFile(const std::filesystem::path &path) -> std::string;
-    static auto compileShader(const std::string &shaderCode, GLenum shaderType) -> GLuint;
+    static auto readShaderFile(const std::filesystem::path& path) -> std::string;
+    static auto compileShader(const std::string& shaderCode, GLenum shaderType) -> GLuint;
 };
 
-#endif //CW_SHADER_H
+#endif // CW_SHADER_H

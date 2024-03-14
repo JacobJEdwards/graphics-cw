@@ -5,45 +5,69 @@
 #ifndef CW_VERTEX_H
 #define CW_VERTEX_H
 
-#include <glm/glm.hpp>
 #include <GL/glew.h>
-
-#include <vector>
-
-#include "graphics/Texture.h"
+#include <glm/glm.hpp>
 
 namespace Vertex {
-    struct Data {
-        glm::vec3 position;
-        glm::vec3 normal;
-        glm::vec2 texCoords;
-        glm::vec3 tangent;
-        glm::vec3 bitangent;
+struct Data {
+    glm::vec3 position;
+    glm::vec3 normal;
+    glm::vec2 texCoords;
+    glm::vec3 tangent;
+    glm::vec3 bitangent;
 
-        Data() = default;
-        Data(const glm::vec3 &position) : position(position), normal(glm::vec3(0.0F)), texCoords(glm::vec2(0.0F)), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}
-        Data(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords, const glm::vec3 &tangent, const glm::vec3 &bitangent) : position(position), normal(normal), texCoords(texCoords), tangent(tangent), bitangent(bitangent) {}
-        Data(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords) : position(position), normal(normal), texCoords(texCoords), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}
-        Data(const glm::vec3 &postion, const glm::vec2 &texCoords) : position(postion), normal(glm::vec3(0.0F)), texCoords(texCoords), tangent(glm::vec3(0.0F)), bitangent(glm::vec3(0.0F)) {}
-    };
+    Data() = default;
+    Data(const glm::vec3& position)
+        : position(position)
+        , normal(glm::vec3(0.0F))
+        , texCoords(glm::vec2(0.0F))
+        , tangent(glm::vec3(0.0F))
+        , bitangent(glm::vec3(0.0F))
+    {
+    }
+    Data(const glm::vec3& position, const glm::vec3& normal, const glm::vec2& texCoords, const glm::vec3& tangent, const glm::vec3& bitangent)
+        : position(position)
+        , normal(normal)
+        , texCoords(texCoords)
+        , tangent(tangent)
+        , bitangent(bitangent)
+    {
+    }
+    Data(const glm::vec3& position, const glm::vec3& normal, const glm::vec2& texCoords)
+        : position(position)
+        , normal(normal)
+        , texCoords(texCoords)
+        , tangent(glm::vec3(0.0F))
+        , bitangent(glm::vec3(0.0F))
+    {
+    }
+    Data(const glm::vec3& postion, const glm::vec2& texCoords)
+        : position(postion)
+        , normal(glm::vec3(0.0F))
+        , texCoords(texCoords)
+        , tangent(glm::vec3(0.0F))
+        , bitangent(glm::vec3(0.0F))
+    {
+    }
+};
 
-    struct Data2D {
-        glm::vec2 position;
-        glm::vec2 texCoords;
-    };
+struct Data2D {
+    glm::vec2 position;
+    glm::vec2 texCoords;
+};
 
-    struct Layout {
-        static constexpr GLuint POSITION = 0;
-        static constexpr GLuint NORMAL = 1;
-        static constexpr GLuint TEX_COORDS = 2;
-        static constexpr GLuint TANGENT = 3;
-        static constexpr GLuint BITANGENT = 4;
-    };
+struct Layout {
+    static constexpr GLuint POSITION = 0;
+    static constexpr GLuint NORMAL = 1;
+    static constexpr GLuint TEX_COORDS = 2;
+    static constexpr GLuint TANGENT = 3;
+    static constexpr GLuint BITANGENT = 4;
+};
 
-    struct Layout2D {
-        static constexpr GLuint POSITION = 0;
-        static constexpr GLuint TEX_COORDS = 1;
-    };
+struct Layout2D {
+    static constexpr GLuint POSITION = 0;
+    static constexpr GLuint TEX_COORDS = 1;
+};
 }
 
-#endif //CW_VERTEX_H
+#endif // CW_VERTEX_H
