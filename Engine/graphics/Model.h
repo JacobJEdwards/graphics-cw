@@ -24,16 +24,12 @@ class Model {
 
 public:
   explicit Model(const std::string &path);
-  void draw() const;
+  void draw(const Shader *shader) const;
   [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
   [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool;
   auto getCentre() const -> glm::vec3;
   auto getOffset(const glm::vec3 &point) const -> glm::vec3;
   auto getOffset(const BoundingBox &other) const -> glm::vec3;
-
-  void setShader(const std::shared_ptr<Shader> &shader) {
-    this->shader = shader;
-  }
 
   void translate(const glm::vec3 &translation);
   void transform(const glm::mat4 &transform);
@@ -49,7 +45,6 @@ private:
 
   BoundingBox boundingBox;
   glm::mat4 modelMatrix = Config::IDENTITY_MATRIX;
-  std::shared_ptr<Shader> shader;
 
   void loadModel(const std::string &path);
 

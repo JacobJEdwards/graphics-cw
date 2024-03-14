@@ -8,7 +8,6 @@
 #include "utils/BoundingBox.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <memory>
 
 #include "Config.h"
 #include "graphics/Model.h"
@@ -16,10 +15,7 @@
 
 class Player {
 public:
-  Player() {
-    boundingBox = player.getBoundingBox();
-    player.setShader(shader);
-  };
+  Player() { boundingBox = player.getBoundingBox(); };
 
   [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }
 
@@ -29,9 +25,9 @@ public:
   }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection) {
-    shader->use();
-    shader->setUniform("view", view);
-    shader->setUniform("projection", projection);
+    shader.use();
+    shader.setUniform("view", view);
+    shader.setUniform("projection", projection);
     auto model = Config::IDENTITY_MATRIX;
     model = glm::translate(model, position);
     model = glm::translate(model, glm::vec3(0.0F, -7.0F, 0.0F));
@@ -40,8 +36,8 @@ public:
 
     // boundingBox.transform(model);
 
-    shader->setUniform("model", model);
-    player.draw();
+    shader.setUniform("model", model);
+    player.draw(&shader);
   }
 
   [[nodiscard]] auto getBoundingBox() const -> BoundingBox {
@@ -63,8 +59,8 @@ private:
   BoundingBox boundingBox =
       BoundingBox(glm::vec3(-0.5F, -0.5F, -0.5F), glm::vec3(0.5F, 0.5F, 0.5F));
 
-  std::shared_ptr<Shader> shader = std::make_shared<Shader>(
-      "../Assets/shaders/player.vert", "../Assets/shaders/player.frag");
+  Shader shader =
+      Shader("../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
   Model player = Model("../Assets/objects/person/person.obj");
 };
 

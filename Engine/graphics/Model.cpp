@@ -30,7 +30,7 @@
 
 Model::Model(const std::string &path) { loadModel(path); }
 
-void Model::draw() const {
+void Model::draw(const Shader *shader) const {
   for (const auto &mesh : meshes) {
     mesh->draw(shader);
   }

@@ -32,8 +32,6 @@ bool useMouse = false;
 void processInput();
 
 auto main() -> int {
-  auto ourShader = std::make_shared<Shader>("../Assets/shaders/backpack.vert",
-                                            "../Assets/shaders/backpack.frag");
   App::window("Coursework", App::DEFAULT_WIDTH, App::DEFAULT_HEIGHT);
   App::init();
 
@@ -86,6 +84,8 @@ auto main() -> int {
   App::camera.setMode(Camera::Mode::ORBIT);
 
   const InfinitePlane terrain;
+  ourShader = new Shader("../assets/shaders/backpack.vert",
+                         "../Assets/shaders/backpack.frag");
 
   ourShader->use();
   ourShader->setUniform("projection", App::camera.getProjectionMatrix());
@@ -116,9 +116,6 @@ auto main() -> int {
 
   sun.setPosition(App::camera.getPosition());
 
-  newModel.setShader(ourShader);
-  model2.setShader(ourShader);
-
   App::view.setPipeline([&]() {
     const auto projectionMatrix = App::camera.getProjectionMatrix();
 
@@ -134,7 +131,7 @@ auto main() -> int {
     ourShader->setUniform("view", view);
     ourShader->setUniform("viewPos", App::camera.getPosition());
     ourShader->setUniform("model", helicopterModel);
-    newModel.draw();
+    newModel.draw(ourShader);
 
     if (newModel.isColliding(person.getBoundingBox())) {
       const auto offset = newModel.getOffset(person.getBoundingBox());
@@ -156,7 +153,7 @@ auto main() -> int {
     }
 
     ourShader->setUniform("model", backpackModel);
-    model2.draw();
+    model2.draw(ourShader);
 
     terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
                  App::camera.getPosition());
