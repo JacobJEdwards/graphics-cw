@@ -19,7 +19,7 @@ public:
   Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
        std::vector<Texture::Data> textures, BoundingBox box);
 
-  void draw(const Shader *shader) const;
+  void draw(std::shared_ptr<Shader> shader) const;
   auto detectCollisions(const glm::vec3 &position) const -> bool;
   glm::vec3 getCentre() const;
   glm::vec3 getOffset(const glm::vec3 &point) const;

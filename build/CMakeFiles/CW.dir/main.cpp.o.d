@@ -927,25 +927,14 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../detail/../detail/func_trigonometric.inl \
   /usr/local/include/glm/ext/../matrix.hpp \
   /usr/local/include/glm/ext/matrix_transform.inl \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h \
-  /usr/local/include/glm/glm.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cfloat \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/float.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/float.h \
-  /usr/local/include/glm/ext/../detail/../fwd.hpp \
-  /usr/local/include/glm/ext/../detail/../trigonometric.hpp \
-  /usr/local/include/glm/ext/../detail/../packing.hpp \
-  /usr/local/include/glm/ext/../detail/../detail/func_packing.inl \
-  /usr/local/include/glm/ext/../detail/type_half.hpp \
-  /usr/local/include/glm/ext/../detail/type_half.inl \
-  /usr/local/include/glm/ext/../detail/../integer.hpp \
-  /usr/local/include/glm/ext/../detail/../detail/func_integer.inl \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.h \
   /usr/local/include/glm/ext/vector_float3.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/float.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/float.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.h \
   /usr/local/include/glm/ext/vector_float4.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
@@ -973,6 +962,17 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/assimp/material.h \
   /usr/local/include/assimp/material.inl \
   /usr/local/include/assimp/anim.h /usr/local/include/assimp/metadata.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h \
+  /usr/local/include/glm/glm.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cfloat \
+  /usr/local/include/glm/ext/../detail/../fwd.hpp \
+  /usr/local/include/glm/ext/../detail/../trigonometric.hpp \
+  /usr/local/include/glm/ext/../detail/../packing.hpp \
+  /usr/local/include/glm/ext/../detail/../detail/func_packing.inl \
+  /usr/local/include/glm/ext/../detail/type_half.hpp \
+  /usr/local/include/glm/ext/../detail/type_half.inl \
+  /usr/local/include/glm/ext/../detail/../integer.hpp \
+  /usr/local/include/glm/ext/../detail/../detail/func_integer.inl \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/filesystem \

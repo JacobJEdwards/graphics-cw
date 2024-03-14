@@ -9,6 +9,7 @@
 #include "utils/Shader.h"
 #include "utils/Vertex.h"
 #include <GL/glew.h>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -20,7 +21,9 @@ Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
   buffer.fill(std::move(vertices), std::move(indices));
 }
 
-void Mesh::draw(const Shader *shader) const {
+void Mesh::draw(std::shared_ptr<Shader> shader) const {
+  shader->use();
+
   GLuint diffuseNr = 1;
   GLuint specularNr = 1;
   GLuint normalNr = 1;
@@ -67,6 +70,7 @@ void Mesh::draw(const Shader *shader) const {
     shader->setUniform(("material.texture_" + toString(name) + number),
                        static_cast<GLint>(i));
   }
+
   buffer.bind();
   buffer.draw();
   buffer.unbind();

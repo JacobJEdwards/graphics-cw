@@ -7,11 +7,10 @@
 
 #include <array>
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include <glm/ext/matrix_transform.hpp>
-
-#include "Config.h"
 
 #include "App.h"
 #include "utils/Camera.h"
@@ -24,8 +23,6 @@
 #include "utils/Objects/Skybox.h"
 #include "utils/Objects/Sun.h"
 #include "utils/Shader.h"
-
-Shader *ourShader;
 
 bool useMouse = false;
 
@@ -60,6 +57,9 @@ auto main() -> int {
 
   App::view.setShowMenu(false);
 
+  std::shared_ptr<Shader> ourShader = std::make_shared<Shader>(
+      "../assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
+
   const std::array<std::string, 6> skyboxFaces{
       "../Assets/textures/skybox/right.jpg",
       "../Assets/textures/skybox/left.jpg",
@@ -70,7 +70,6 @@ auto main() -> int {
   };
 
   const Skybox skybox(skyboxFaces);
-  Sun sun;
 
   Texture::Loader::setFlip(false);
   Model newModel("../Assets/objects/helecopter/chopper.obj");
@@ -78,14 +77,15 @@ auto main() -> int {
   Model model2("../Assets/objects/backpack/backpack.obj");
   Texture::Loader::setFlip(false);
 
+  newModel.setShader(ourShader);
+  model2.setShader(ourShader);
+
+  Sun sun;
   Player person;
+  InfinitePlane terrain;
 
   App::camera.setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
   App::camera.setMode(Camera::Mode::ORBIT);
-
-  const InfinitePlane terrain;
-  ourShader = new Shader("../assets/shaders/backpack.vert",
-                         "../Assets/shaders/backpack.frag");
 
   ourShader->use();
   ourShader->setUniform("projection", App::camera.getProjectionMatrix());
@@ -96,23 +96,15 @@ auto main() -> int {
   ourShader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
   ourShader->setUniform("material.shininess", 64.0F);
 
-  auto model = glm::mat4(1.0F);
   glm::vec3 newPosition =
       App::camera.getPosition() + glm::vec3(0.0F, 4.0F, 0.45F);
-  const glm::mat4 helicopterModel =
-      translate(model, newPosition) *
-      scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
 
-  // newModel.scale(glm::vec3(0.1F, 0.1F, 0.1F));
-  // newModel.translate(newPosition);
-  newModel.transform(helicopterModel);
+  newModel.translate(newPosition);
+  newModel.scale(glm::vec3(0.1F, 0.1F, 0.1F));
 
-  ourShader->setUniform("model", helicopterModel);
-
-  model = Config::IDENTITY_MATRIX;
   newPosition = App::camera.getPosition() + glm::vec3(5.0F, -0.15F, 0.45F);
-  const glm::mat4 backpackModel = translate(model, newPosition);
-  // scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
+
+  model2.translate(newPosition);
 
   sun.setPosition(App::camera.getPosition());
 
@@ -130,10 +122,10 @@ auto main() -> int {
     glm::mat4 view = App::camera.getViewMatrix();
     ourShader->setUniform("view", view);
     ourShader->setUniform("viewPos", App::camera.getPosition());
-    ourShader->setUniform("model", helicopterModel);
-    newModel.draw(ourShader);
+    newModel.draw();
 
     if (newModel.isColliding(person.getBoundingBox())) {
+      std::cout << "Colliding" << std::endl;
       const auto offset = newModel.getOffset(person.getBoundingBox());
       App::camera.setPosition(App::camera.getPosition() + offset);
       auto velocity = App::camera.getVelocity();
@@ -152,8 +144,26 @@ auto main() -> int {
       App::camera.setVelocity(velocity);
     }
 
-    ourShader->setUniform("model", backpackModel);
-    model2.draw(ourShader);
+    model2.draw();
+
+    if (model2.isColliding(person.getBoundingBox())) {
+      const auto offset = model2.getOffset(person.getBoundingBox());
+      App::camera.setPosition(App::camera.getPosition() + offset);
+      auto velocity = App::camera.getVelocity();
+      if (std::abs(offset.y) > 0.0F) {
+        velocity.y = 0.0F;
+      }
+
+      if (std::abs(offset.x) > 0.0F) {
+        velocity.x = 0.0F;
+      }
+
+      if (std::abs(offset.z) > 0.0F) {
+        velocity.z = 0.0F;
+      }
+
+      App::camera.setVelocity(velocity);
+    }
 
     terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
                  App::camera.getPosition());
@@ -172,7 +182,6 @@ auto main() -> int {
     sun.draw(view, projectionMatrix);
 
     person.draw(App::camera.getViewMatrix(), projectionMatrix);
-    person.setPosition(App::camera.getPosition());
   });
 
   App::view.setInterface([&]() {
@@ -186,6 +195,7 @@ auto main() -> int {
     App::loop([&] {
       sun.update(App::view.getDeltaTime());
       App::camera.circleOrbit(App::view.getDeltaTime());
+      person.setPosition(App::camera.getPosition());
     });
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;

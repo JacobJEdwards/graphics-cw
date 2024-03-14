@@ -23,7 +23,7 @@ public:
   InfinitePlane() { load(); }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection,
-            const glm::vec3 &lightPos, const glm::vec3 &viewPos) const {
+            const glm::vec3 &lightPos, const glm::vec3 &viewPos) {
     buffer.bind();
 
     shader.use();
@@ -34,7 +34,10 @@ public:
     auto model = Config::IDENTITY_MATRIX;
     // move model down by 2.0F
     model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));
+
     shader.setUniform("model", model);
+    // box.transform(model);
+
     buffer.draw();
     buffer.unbind();
   }

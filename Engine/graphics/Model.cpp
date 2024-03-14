@@ -26,15 +26,21 @@
 #include "graphics/Texture.h"
 #include "helpers/AssimpGLMHelpers.h"
 #include "utils/BoundingBox.h"
+#include "utils/Shader.h"
 #include "utils/Vertex.h"
 
 Model::Model(const std::string &path) { loadModel(path); }
 
-void Model::draw(const Shader *shader) const {
+void Model::draw() const {
+  shader->use();
+  shader->setUniform("model", modelMatrix);
+
   for (const auto &mesh : meshes) {
     mesh->draw(shader);
   }
 }
+
+void Model::setShader(std::shared_ptr<Shader> shader) { this->shader = shader; }
 
 void Model::loadModel(const std::string &path) {
   Assimp::Importer importer;
@@ -212,6 +218,7 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
 
 void Model::rotate(const glm::vec3 &axis, float angle) {
   modelMatrix = glm::rotate(modelMatrix, angle, axis);
+
   for (auto &mesh : meshes) {
     mesh->rotate(axis, angle);
   }
@@ -219,13 +226,20 @@ void Model::rotate(const glm::vec3 &axis, float angle) {
 
 void Model::translate(const glm::vec3 &translation) {
   modelMatrix = glm::translate(modelMatrix, translation);
+
   for (auto &mesh : meshes) {
     mesh->translate(translation);
   }
 }
 
+void Model::setPosition(const glm::vec3 &position) {
+  modelMatrix = glm::translate(glm::mat4(1.0F), position);
+  boundingBox.setPosition(position);
+}
+
 void Model::scale(const glm::vec3 &scale) {
   modelMatrix = glm::scale(modelMatrix, scale);
+
   for (auto &mesh : meshes) {
     mesh->scale(scale);
   }
