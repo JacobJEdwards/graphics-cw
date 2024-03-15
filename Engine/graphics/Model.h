@@ -24,17 +24,20 @@ class Model {
 
 public:
   explicit Model(const std::string &path);
-  void draw(const Shader *shader) const;
+  void draw() const;
   [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
   [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool;
   auto getCentre() const -> glm::vec3;
   auto getOffset(const glm::vec3 &point) const -> glm::vec3;
   auto getOffset(const BoundingBox &other) const -> glm::vec3;
+  void setShader(std::shared_ptr<Shader> shader);
 
   void translate(const glm::vec3 &translation);
   void transform(const glm::mat4 &transform);
   void scale(const glm::vec3 &scale);
   void rotate(const glm::vec3 &axis, float angle);
+  void setModelMatrix(const glm::mat4 &modelMatrix);
+  [[nodiscard]] auto getModelMatrix() const -> glm::mat4;
 
   [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
@@ -42,6 +45,8 @@ private:
   std::unordered_map<std::string, Texture::Data> textures_loaded;
   std::vector<std::unique_ptr<Mesh>> meshes;
   std::string directory;
+
+  std::shared_ptr<Shader> shader;
 
   BoundingBox boundingBox;
   glm::mat4 modelMatrix = Config::IDENTITY_MATRIX;

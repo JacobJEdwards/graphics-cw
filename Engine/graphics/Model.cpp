@@ -30,10 +30,16 @@
 
 Model::Model(const std::string &path) { loadModel(path); }
 
-void Model::draw(const Shader *shader) const {
+void Model::draw() const {
+  shader->use();
+  shader->setUniform("model", modelMatrix);
   for (const auto &mesh : meshes) {
     mesh->draw(shader);
   }
+}
+
+void Model::setShader(std::shared_ptr<Shader> shader) {
+  this->shader = std::move(shader);
 }
 
 void Model::loadModel(const std::string &path) {
@@ -208,6 +214,14 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
 [[nodiscard]] auto Model::isColliding(const BoundingBox &other) const -> bool {
   return std::ranges::any_of(
       meshes, [&](const auto &mesh) { return mesh->isColliding(other); });
+}
+
+void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
+  this->modelMatrix = modelMatrix;
+}
+
+[[nodiscard]] auto Model::getModelMatrix() const -> glm::mat4 {
+  return modelMatrix;
 }
 
 void Model::rotate(const glm::vec3 &axis, float angle) {

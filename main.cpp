@@ -7,6 +7,7 @@
 
 #include <array>
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include <glm/ext/matrix_transform.hpp>
@@ -84,8 +85,12 @@ auto main() -> int {
   App::camera.setMode(Camera::Mode::ORBIT);
 
   const InfinitePlane terrain;
-  ourShader = new Shader("../assets/shaders/backpack.vert",
-                         "../Assets/shaders/backpack.frag");
+
+  auto ourShader = std::make_shared<Shader>("../assets/shaders/backpack.vert",
+                                            "../assets/shaders/backpack.frag");
+
+  newModel.setShader(ourShader);
+  model2.setShader(ourShader);
 
   ourShader->use();
   ourShader->setUniform("projection", App::camera.getProjectionMatrix());
@@ -98,20 +103,18 @@ auto main() -> int {
 
   auto model = glm::mat4(1.0F);
   glm::vec3 newPosition =
-      App::camera.getPosition() + glm::vec3(0.0F, 4.0F, 0.45F);
-  const glm::mat4 helicopterModel =
-      translate(model, newPosition) *
-      scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
+      App::camera.getPosition() + glm::vec3(0.0F, 4.0F, 5.0F);
+  const glm::mat4 helicopterModel = translate(model, newPosition);
 
   // newModel.scale(glm::vec3(0.1F, 0.1F, 0.1F));
   // newModel.translate(newPosition);
   newModel.transform(helicopterModel);
 
-  ourShader->setUniform("model", helicopterModel);
-
   model = Config::IDENTITY_MATRIX;
   newPosition = App::camera.getPosition() + glm::vec3(5.0F, -0.15F, 0.45F);
   const glm::mat4 backpackModel = translate(model, newPosition);
+
+  model2.transform(backpackModel);
   // scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
 
   sun.setPosition(App::camera.getPosition());
@@ -130,8 +133,8 @@ auto main() -> int {
     glm::mat4 view = App::camera.getViewMatrix();
     ourShader->setUniform("view", view);
     ourShader->setUniform("viewPos", App::camera.getPosition());
-    ourShader->setUniform("model", helicopterModel);
-    newModel.draw(ourShader);
+
+    newModel.draw();
 
     if (newModel.isColliding(person.getBoundingBox())) {
       const auto offset = newModel.getOffset(person.getBoundingBox());
@@ -152,8 +155,7 @@ auto main() -> int {
       App::camera.setVelocity(velocity);
     }
 
-    ourShader->setUniform("model", backpackModel);
-    model2.draw(ourShader);
+    model2.draw();
 
     terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
                  App::camera.getPosition());
@@ -164,6 +166,7 @@ auto main() -> int {
         App::camera.setPosition(App::camera.getPosition() + offset);
         auto velocity = App::camera.getVelocity();
         velocity.y = 0.0F;
+        App::camera.setVelocity(velocity);
       }
     }
 

@@ -12,12 +12,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <memory>
 
 #include "utils/Shader.h"
 
 class Sun {
 public:
-  Sun() = default;
+  Sun() { sun.setShader(shader); };
 
   void update(const float dt) {
     angle += 0.5F * dt;
@@ -25,19 +26,20 @@ public:
     position.y = 10.0F * std::sin(angle);
   }
 
-  void draw(const glm::mat4 &view, const glm::mat4 &projection) const {
+  void draw(const glm::mat4 &view, const glm::mat4 &projection) {
     glDepthFunc(GL_LEQUAL);
 
-    shader.use();
-    shader.setUniform("view", view);
-    shader.setUniform("projection", projection);
+    shader->use();
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
 
     auto model = Config::IDENTITY_MATRIX;
     model = glm::translate(model, glm::vec3(position, -10.0F));
     model = glm::scale(model, glm::vec3(scale));
-    shader.setUniform("model", model);
 
-    sun.draw(&shader);
+    sun.setModelMatrix(model);
+
+    sun.draw();
 
     glDepthFunc(GL_LESS);
   }
@@ -49,8 +51,8 @@ public:
   [[nodiscard]] auto getPosition() const -> glm::vec2 { return position; }
 
 private:
-  Shader shader =
-      Shader("../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
+  std::shared_ptr<Shader> shader = std::make_shared<Shader>(
+      "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
   Model sun = Model("../Assets/objects/sun/sun.obj");
 
   glm::vec2 position = glm::vec2(0.0F, 0.0F);
