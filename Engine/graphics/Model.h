@@ -24,6 +24,8 @@ class Model {
   using MeshPtr = std::unique_ptr<Mesh>;
 
 public:
+  Physics::Attributes attributes;
+
   explicit Model(const std::string &path);
   void draw() const;
   [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
@@ -42,14 +44,14 @@ public:
 
   [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
+  void update(float dt);
+
 private:
   std::unordered_map<std::string, Texture::Data> textures_loaded;
   std::vector<std::unique_ptr<Mesh>> meshes;
   std::string directory;
 
   std::shared_ptr<Shader> shader;
-
-  Physics::Attributes attributes;
 
   BoundingBox boundingBox;
   glm::mat4 modelMatrix = Config::IDENTITY_MATRIX;

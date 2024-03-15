@@ -4,6 +4,8 @@
 
 #include "Model.h"
 
+#include <iostream>
+
 #include <algorithm>
 #include <assimp/material.h>
 #include <assimp/mesh.h>
@@ -218,6 +220,9 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
 
 void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
   this->modelMatrix = modelMatrix;
+
+  attributes.position =
+      glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 }
 
 [[nodiscard]] auto Model::getModelMatrix() const -> glm::mat4 {
@@ -229,6 +234,9 @@ void Model::rotate(const glm::vec3 &axis, float angle) {
   for (auto &mesh : meshes) {
     mesh->rotate(axis, angle);
   }
+
+  attributes.position =
+      glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 }
 
 void Model::translate(const glm::vec3 &translation) {
@@ -236,6 +244,9 @@ void Model::translate(const glm::vec3 &translation) {
   for (auto &mesh : meshes) {
     mesh->translate(translation);
   }
+
+  attributes.position =
+      glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 }
 
 void Model::scale(const glm::vec3 &scale) {
@@ -243,6 +254,9 @@ void Model::scale(const glm::vec3 &scale) {
   for (auto &mesh : meshes) {
     mesh->scale(scale);
   }
+
+  attributes.position =
+      glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 }
 
 void Model::transform(const glm::mat4 &transform) {
@@ -251,6 +265,9 @@ void Model::transform(const glm::mat4 &transform) {
   for (auto &mesh : meshes) {
     mesh->transform(transform);
   }
+
+  attributes.position =
+      glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 }
 
 auto Model::getBoundingBox() const -> BoundingBox {
@@ -272,4 +289,22 @@ auto Model::getBoundingBox() const -> BoundingBox {
   }
 
   return modelBoundingBox;
+}
+
+void Model::update(float dt) {
+  attributes.update(dt);
+  glm::vec3 newPosition = attributes.position;
+
+  glm::mat4 newMatrix = modelMatrix;
+  newMatrix[3][0] = newPosition.x;
+  newMatrix[3][1] = newPosition.y;
+  newMatrix[3][2] = newPosition.z;
+
+  glm::vec3 translation = newPosition - glm::vec3(modelMatrix[3]);
+
+  modelMatrix = newMatrix;
+
+  for (auto &mesh : meshes) {
+    mesh->translate(translation);
+  }
 }

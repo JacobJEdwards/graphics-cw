@@ -17,12 +17,10 @@
 
 #include "imgui/imgui.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 worldUp, float yaw, float pitch,
-               float damping, float smoothing, float acceleration,
-               float maxspeed)
-    : position(position), worldUp(worldUp), yaw(yaw), pitch(pitch),
-      damping(damping), smoothing(smoothing), acceleration(acceleration),
-      maxSpeed(maxspeed) {
+Camera::Camera(glm::vec3 position, glm::vec3 worldUp, float yaw, float pitch)
+    : position(position), worldUp(worldUp), yaw(yaw), pitch(pitch) {
+
+  attributes.position = position;
   updateCameraVectors();
 }
 
@@ -31,23 +29,20 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
                float upZ, float yaw, float pitch)
     : position(glm::vec3(posX, posY, posZ)), worldUp(glm::vec3(upX, upY, upZ)),
       yaw(yaw), pitch(pitch) {
-  acceleration = ACCELERATION;
-  maxSpeed = MAXSPEED;
-  damping = DAMPING;
-  smoothing = SMOOTHING;
+  attributes.position = position;
   updateCameraVectors();
 }
 
 [[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
   switch (mode) {
   case Mode::ORBIT:
-    return lookAt(position, orbitTarget, worldUp);
+    return lookAt(position, target, worldUp);
   case Mode::FPS:
-    return lookAt(position, position + front, up);
+    return lookAt(attributes.position, attributes.position + front, up);
   case Mode::FREE:
-    return lookAt(position, position + front, up);
+    return lookAt(attributes.position, attributes.position + front, up);
   case Mode::FIXED:
-    return lookAt(fixedPosition, fixedTarget, up);
+    return lookAt(position, target, up);
 
   default:
     return lookAt(position, position + front, up);
@@ -63,84 +58,51 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
 }
 
 void Camera::processKeyboard(const Direction direction, const float deltaTime) {
-  const float curAcceleration = acceleration * deltaTime * 10.0F;
-
-  auto targetVelocity = glm::vec3(0.0F);
-
   switch (direction) {
   case Direction::FORWARD:
-    targetVelocity += front;
+    attributes.applyForce(front * 10.0F);
+
     if (mode == Mode::ORBIT) {
-      orbitTarget += glm::vec3(0.0F, 0.1F, 0.0F);
+      target += glm::vec3(0.0F, 0.1F, 0.0F);
     }
     break;
   case Direction::BACKWARD:
-    targetVelocity -= front;
+    attributes.applyForce(-front * 10.0F);
     if (mode == Mode::ORBIT) {
-      orbitTarget += glm::vec3(0.0F, -0.1F, 0.0F);
-      orbitTarget.y = std::max(orbitTarget.y, 0.0F);
+      target += glm::vec3(0.0F, -0.1F, 0.0F);
+      target.y = std::max(target.y, 0.0F);
     }
     break;
   case Direction::LEFT:
-    targetVelocity -= right;
+    attributes.applyForce(-right * 10.0F);
     break;
   case Direction::RIGHT:
-    targetVelocity += right;
+    attributes.applyForce(right * 10.0F);
     break;
   case Direction::NONE:
+    attributes.applyDrag(0.5F);
     break;
   }
-
-  glm::vec3 newVelocity = velocity + targetVelocity * curAcceleration;
-
-  if (length(newVelocity) > maxSpeed) {
-    newVelocity = normalize(newVelocity) * maxSpeed;
-  }
-
-  velocity = mix(velocity, newVelocity, smoothing);
-
-  updatePosition(deltaTime);
 
   if (mode == Mode::FPS) {
     applyFPSModeEffects();
   }
-}
-
-void Camera::updatePosition(const float deltaTime) {
-  glm::vec3 newPos = position + velocity * deltaTime;
 
   if (mode == Mode::ORBIT) {
-    adjustOrbitPosition(newPos);
+    circleOrbit(deltaTime);
   }
-
-  position = mix(position, newPos, smoothing);
-
-  velocity *= damping;
-}
-
-void Camera::adjustOrbitPosition(glm::vec3 &newPos) const {
-  const glm::vec3 dirToTarget = orbitTarget - newPos;
-  newPos = orbitTarget - normalize(dirToTarget) * orbitRadius;
 }
 
 void Camera::circleOrbit(const float deltaTime) {
-  if (!(mode == Mode::ORBIT)) {
-    return;
-  }
-
   orbitAngle += deltaTime * orbitSpeed;
   updateOrbitPosition();
 }
 
 void Camera::applyFPSModeEffects() {
-
-  if (!grounded) {
-    velocity.y = velocity.y - 0.05F;
-  }
+  attributes.applyGravity();
+  attributes.applyDrag(0.5F);
 
   downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
-
-  velocity *= damping;
 
   if (yPosition > 0.03) {
     downwards = true;
@@ -190,7 +152,7 @@ void Camera::setMode(const Mode value) { mode = value; }
 
 void Camera::setOrbit(const glm::vec3 target, const float radius,
                       const float angle, const float speed) {
-  orbitTarget = target;
+  this->target = target;
   orbitRadius = radius;
   orbitAngle = angle;
   orbitSpeed = speed;
@@ -198,7 +160,7 @@ void Camera::setOrbit(const glm::vec3 target, const float radius,
 
 void Camera::setOrbit(glm::vec3 target, float radius, float angle, float speed,
                       float height) {
-  orbitTarget = target;
+  this->target = target;
   orbitRadius = radius;
   orbitAngle = angle;
   orbitSpeed = speed;
@@ -206,16 +168,18 @@ void Camera::setOrbit(glm::vec3 target, float radius, float angle, float speed,
 }
 
 void Camera::setFixed(glm::vec3 target, glm::vec3 position) {
-  fixedTarget = target;
-  fixedPosition = position;
-  distance = glm::distance(fixedTarget, fixedPosition);
+  this->target = target;
+  this->position = position;
+  distance = glm::distance(target, position);
 }
 
 [[nodiscard]] auto Camera::getMode() const -> Mode { return mode; }
 
 [[nodiscard]] auto Camera::getZoom() const -> float { return zoom; }
 
-[[nodiscard]] auto Camera::getPosition() const -> glm::vec3 { return position; }
+[[nodiscard]] auto Camera::getPosition() const -> glm::vec3 {
+  return attributes.position;
+}
 
 [[nodiscard]] auto Camera::getFront() const -> glm::vec3 { return front; }
 
@@ -228,7 +192,7 @@ void Camera::setFixed(glm::vec3 target, glm::vec3 position) {
 [[nodiscard]] auto Camera::getYaw() const -> float { return yaw; }
 
 void Camera::setPosition(const glm::vec3 &position) {
-  this->position = position;
+  attributes.position = position;
   updateCameraVectors();
 }
 
@@ -249,16 +213,15 @@ void Camera::updateCameraVectors() {
 }
 
 void Camera::updateOrbitPosition() {
-  position.x = orbitTarget.x + orbitRadius * cos(glm::radians(orbitAngle));
-  position.z = orbitTarget.z + orbitRadius * sin(glm::radians(orbitAngle));
-  position.y = orbitTarget.y + orbitHeight;
+  position.x = target.x + orbitRadius * cos(glm::radians(orbitAngle));
+  position.z = target.z + orbitRadius * sin(glm::radians(orbitAngle));
+  position.y = target.y + orbitHeight;
 }
 
 void Camera::controlInterface() {
   ImGui::Begin("Camera Options");
   ImGui::SeparatorText("General");
   ImGui::SliderFloat("Zoom", &zoom, MINZOOM, MAXZOOM);
-  ImGui::SliderFloat("Movement Speed", &movementSpeed, 0.0F, MAXSPEED);
   ImGui::SliderFloat("Sensitivity", &mouseSensitivity, 0.0F, 2.5F);
   ImGui::SliderFloat("Render Distance", &renderDistance, 1.0F, 1000.0F);
 
@@ -273,14 +236,12 @@ void Camera::controlInterface() {
     ImGui::SliderFloat("Distance", &distance, 0.0F, 100.0F);
 
     // calculate the new position
-    fixedPosition.x = fixedTarget.x + distance * cos(glm::radians(yaw));
-    fixedPosition.z = fixedTarget.z + distance * sin(glm::radians(yaw));
+    position.x = target.x + distance * cos(glm::radians(yaw));
+    position.z = target.z + distance * sin(glm::radians(yaw));
   }
   ImGui::End();
 }
 
 void Camera::setAspect(const float aspect) { this->aspect = aspect; }
 
-void Camera::isGrounded(bool grounded) { this->grounded = grounded; }
-
-[[nodiscard]] auto Camera::isGrounded() -> bool { return grounded; }
+void Camera::update(float dt) { attributes.update(dt); }

@@ -297,6 +297,30 @@ Engine/helpers/AssimpGLMHelpers.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.s
 .PHONY : Engine/helpers/AssimpGLMHelpers.cpp.s
 
+Engine/physics/Gravity.o: Engine/physics/Gravity.cpp.o
+.PHONY : Engine/physics/Gravity.o
+
+# target to build an object file
+Engine/physics/Gravity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o
+.PHONY : Engine/physics/Gravity.cpp.o
+
+Engine/physics/Gravity.i: Engine/physics/Gravity.cpp.i
+.PHONY : Engine/physics/Gravity.i
+
+# target to preprocess a source file
+Engine/physics/Gravity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.i
+.PHONY : Engine/physics/Gravity.cpp.i
+
+Engine/physics/Gravity.s: Engine/physics/Gravity.cpp.s
+.PHONY : Engine/physics/Gravity.s
+
+# target to generate assembly for a file
+Engine/physics/Gravity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.s
+.PHONY : Engine/physics/Gravity.cpp.s
+
 Engine/physics/ModelAttributes.o: Engine/physics/ModelAttributes.cpp.o
 .PHONY : Engine/physics/ModelAttributes.o
 
@@ -687,6 +711,9 @@ help:
 	@echo "... Engine/helpers/AssimpGLMHelpers.o"
 	@echo "... Engine/helpers/AssimpGLMHelpers.i"
 	@echo "... Engine/helpers/AssimpGLMHelpers.s"
+	@echo "... Engine/physics/Gravity.o"
+	@echo "... Engine/physics/Gravity.i"
+	@echo "... Engine/physics/Gravity.s"
 	@echo "... Engine/physics/ModelAttributes.o"
 	@echo "... Engine/physics/ModelAttributes.i"
 	@echo "... Engine/physics/ModelAttributes.s"

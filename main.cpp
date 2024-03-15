@@ -26,14 +26,10 @@
 #include "utils/Objects/Sun.h"
 #include "utils/Shader.h"
 
-Shader *ourShader;
-
-bool useMouse = false;
-
 void processInput();
 
 auto main() -> int {
-  App::window("Coursework", App::DEFAULT_WIDTH, App::DEFAULT_HEIGHT);
+  App::window("Coursework", Config::DEFAULT_WIDTH, Config::DEFAULT_HEIGHT);
   App::init();
 
   App::view.setKey(processInput);
@@ -161,6 +157,9 @@ auto main() -> int {
 
     newModel.draw();
 
+    // go upwards
+    newModel.attributes.applyForce(glm::vec3(0.0F, 1.0F, 0.0F));
+
     if (newModel.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
       const auto offset =
@@ -213,7 +212,6 @@ auto main() -> int {
 
     if (terrain.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
-      App::cameras.getActiveCamera()->isGrounded(true);
       const auto offset =
           terrain.getOffset(App::cameras.getActiveCamera()->getPosition());
       if (offset.y > 0.0F) {
@@ -223,8 +221,6 @@ auto main() -> int {
         velocity.y = 0.0F;
         App::cameras.getActiveCamera()->setVelocity(velocity);
       }
-    } else {
-      App::cameras.getActiveCamera()->isGrounded(false);
     }
 
     view =
@@ -247,7 +243,9 @@ auto main() -> int {
     App::loop([&] {
       sun.update(App::view.getDeltaTime());
       App::cameras.getActiveCamera()->circleOrbit(App::view.getDeltaTime());
+      App::cameras.getActiveCamera()->update(App::view.getDeltaTime());
       person.update();
+      newModel.update(App::view.getDeltaTime());
     });
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;

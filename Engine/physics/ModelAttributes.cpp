@@ -9,6 +9,8 @@ void Physics::Attributes::update(float dt) {
   position += velocity * dt;
   acceleration = force / mass;
   force = glm::vec3(0.0f);
+
+  velocity *= damping;
 }
 
 void Physics::Attributes::applyForce(const glm::vec3 &f) { force += f; }

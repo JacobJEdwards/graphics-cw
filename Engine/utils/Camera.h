@@ -14,14 +14,8 @@
 
 constexpr float YAW = -90.0F;
 constexpr float PITCH = 0.0F;
-constexpr float SPEED = 3.0F;
 constexpr float SENSITIVITY = 0.1F;
 constexpr float ZOOM = 45.0F;
-
-constexpr float DAMPING = 0.99F;
-constexpr float SMOOTHING = 0.9F;
-constexpr float ACCELERATION = 5.0F;
-constexpr float MAXSPEED = 10000.0F;
 
 constexpr float MAXZOOM = 180.0F;
 constexpr float MINZOOM = 1.0F;
@@ -37,9 +31,7 @@ public:
 
   explicit Camera(glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F),
                   glm::vec3 worldUp = glm::vec3(0.0F, 1.0F, 0.0F),
-                  float yaw = YAW, float pitch = PITCH, float damping = DAMPING,
-                  float smoothing = SMOOTHING,
-                  float acceleration = ACCELERATION, float maxspeed = MAXSPEED);
+                  float yaw = YAW, float pitch = PITCH);
 
   Camera(float posX, float posY, float posZ, float upX, float upY, float upZ,
          float yaw, float pitch);
@@ -82,9 +74,11 @@ public:
 
   [[nodiscard]] auto getYaw() const -> float;
 
-  auto getVelocity() -> glm::vec3 { return velocity; }
+  auto getVelocity() -> glm::vec3 { return attributes.velocity; }
 
-  void setVelocity(const glm::vec3 &velocity) { Camera::velocity = velocity; }
+  void setVelocity(const glm::vec3 &velocity) {
+    attributes.velocity = velocity;
+  }
 
   void setPosition(const glm::vec3 &position);
 
@@ -94,8 +88,7 @@ public:
 
   void controlInterface();
 
-  void isGrounded(bool grounded);
-  [[nodiscard]] auto isGrounded() -> bool;
+  void update(float dt);
 
 private:
   Mode mode = Mode::FREE;
@@ -110,42 +103,31 @@ private:
   float yaw;
   float pitch;
 
-  float damping;
-  float smoothing;
-  float acceleration;
-  float maxSpeed;
-
-  float movementSpeed = SPEED;
   float mouseSensitivity = SENSITIVITY;
   float zoom = ZOOM;
 
-  glm::vec3 orbitTarget = glm::vec3(0.0F, 0.0F, 0.0F);
+  glm::vec3 target = glm::vec3(0.0F, 0.0F, 0.0F);
+
   float orbitRadius = 0.0F;
   float orbitAngle = 0.0F;
   float orbitSpeed = 0.0F;
   float orbitHeight = 0.0F;
 
-  glm::vec3 fixedTarget = glm::vec3(0.0F, 0.0F, 0.0F);
-  glm::vec3 fixedPosition = glm::vec3(0.0F, 0.0F, 0.0F);
   float distance = 0.0F;
 
   float aspect = 1.0F;
 
   float renderDistance = 100.0F;
 
-  glm::vec3 velocity = glm::vec3(0.0F, 0.0F, 0.0F);
-
   float yPosition = 0.0F;
+
   bool downwards = false;
-  bool grounded = false;
 
   Physics::Attributes attributes;
 
   void updateCameraVectors();
 
   void updateOrbitPosition();
-
-  void updatePosition(float deltaTime);
 
   void adjustOrbitPosition(glm::vec3 &newPos) const;
 

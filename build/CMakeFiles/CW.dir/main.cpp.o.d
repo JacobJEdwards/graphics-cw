@@ -360,29 +360,6 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/os/availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
   /usr/local/include/GLFW/glfw3.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
-  /usr/local/include/glm/glm.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/climits \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/limits.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/limits.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/limits.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/machine/limits.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/i386/limits.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/i386/_limits.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/syslimits.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cfloat \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/float.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/float.h \
-  /usr/local/include/glm/ext/../detail/../fwd.hpp \
-  /usr/local/include/glm/ext/../detail/../trigonometric.hpp \
-  /usr/local/include/glm/ext/../detail/../detail/func_trigonometric.inl \
-  /usr/local/include/glm/ext/../detail/../packing.hpp \
-  /usr/local/include/glm/ext/../detail/../detail/func_packing.inl \
-  /usr/local/include/glm/ext/../detail/type_half.hpp \
-  /usr/local/include/glm/ext/../detail/type_half.inl \
-  /usr/local/include/glm/ext/../detail/../integer.hpp \
-  /usr/local/include/glm/ext/../detail/../detail/func_integer.inl \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/array \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__algorithm/equal.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__algorithm/comp.h \
@@ -622,6 +599,14 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__bit/endian.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__bit/has_single_bit.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__bit/popcount.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/climits \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/limits.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/machine/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/i386/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/i386/_limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/syslimits.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__algorithm/partial_sort_copy.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__algorithm/make_projected.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__algorithm/partition.h \
@@ -939,9 +924,23 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../gtc/constants.inl \
   /usr/local/include/glm/ext/../geometric.hpp \
   /usr/local/include/glm/ext/../trigonometric.hpp \
+  /usr/local/include/glm/ext/../detail/../detail/func_trigonometric.inl \
   /usr/local/include/glm/ext/../matrix.hpp \
   /usr/local/include/glm/ext/matrix_transform.inl \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h \
+  /usr/local/include/glm/glm.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cfloat \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/float.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/float.h \
+  /usr/local/include/glm/ext/../detail/../fwd.hpp \
+  /usr/local/include/glm/ext/../detail/../trigonometric.hpp \
+  /usr/local/include/glm/ext/../detail/../packing.hpp \
+  /usr/local/include/glm/ext/../detail/../detail/func_packing.inl \
+  /usr/local/include/glm/ext/../detail/type_half.hpp \
+  /usr/local/include/glm/ext/../detail/type_half.inl \
+  /usr/local/include/glm/ext/../detail/../integer.hpp \
+  /usr/local/include/glm/ext/../detail/../detail/func_integer.inl \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.h \
   /usr/local/include/glm/ext/vector_float3.hpp \
@@ -951,6 +950,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/vector_float4.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
   /usr/local/include/glfw/glfw3.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.h \
   /usr/local/include/assimp/Importer.hpp \

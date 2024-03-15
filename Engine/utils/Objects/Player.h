@@ -5,6 +5,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -24,6 +25,8 @@ public:
     player.setShader(shader);
     camera->setMode(Camera::Mode::FPS);
     App::cameras.addCamera("Player", camera);
+    camera->setPosition(glm::vec3(0.0F, 20.0F, 3.0F));
+    position = camera->getPosition();
   };
 
   [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }

@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "Config.h"
 #include "View.h"
 #include "utils/CameraHolder.h"
 
@@ -21,13 +22,11 @@ extern CameraHolder cameras;
 
 extern bool paused;
 
-constexpr static unsigned int DEFAULT_WIDTH = 1200;
-constexpr static unsigned int DEFAULT_HEIGHT = 900;
-
 auto init() -> bool;
 
-auto window(const std::string &title, unsigned int width = DEFAULT_WIDTH,
-            unsigned int height = DEFAULT_HEIGHT) -> bool;
+auto window(const std::string &title,
+            unsigned int width = Config::DEFAULT_WIDTH,
+            unsigned int height = Config::DEFAULT_HEIGHT) -> bool;
 
 void quit();
 

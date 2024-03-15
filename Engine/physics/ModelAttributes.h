@@ -1,3 +1,6 @@
+#ifndef PHYSICSATTRIBUTES_H
+#define PHYSICSATTRIBUTES_H
+
 #include <glm/glm.hpp>
 
 namespace Physics {
@@ -30,3 +33,5 @@ struct Attributes {
 };
 
 } // namespace Physics
+
+#endif // PHYSICSATTRIBUTES_H
