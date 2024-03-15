@@ -129,7 +129,9 @@ void Camera::circleOrbit(const float deltaTime) {
 
 void Camera::applyFPSModeEffects() {
 
-  velocity.y = velocity.y - 0.05F;
+  if (!grounded) {
+    velocity.y = velocity.y - 0.05F;
+  }
 
   downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
 
@@ -235,47 +237,16 @@ void Camera::controlInterface() {
   ImGui::SliderFloat("Sensitivity", &mouseSensitivity, 0.0F, 2.5F);
   ImGui::SliderFloat("Render Distance", &renderDistance, 1.0F, 1000.0F);
 
-  ImGui::SeparatorText("Orbit");
-  ImGui::SliderFloat("Orbit Radius", &orbitRadius, 0.0F, 100.0F);
-  ImGui::SliderFloat("Orbit Height", &orbitHeight, 0.0F, 100.0F);
-  ImGui::End();
-}
-
-void Camera::modeInterface() {
-  int checked = getModeInt();
-
-  ImGui::Begin("Camera Mode");
-  ImGui::RadioButton("Orbit", &checked, 0);
-  ImGui::RadioButton("Free", &checked, 1);
-  ImGui::RadioButton("FPS", &checked, 2);
-  ImGui::End();
-
-  switch (checked) {
-  case 0:
-    mode = Mode::ORBIT;
-    break;
-  case 1:
-    mode = Mode::FREE;
-    break;
-  case 2:
-    mode = Mode::FPS;
-    break;
-  default:
-    break;
+  if (mode == Mode::ORBIT) {
+    ImGui::SeparatorText("Orbit");
+    ImGui::SliderFloat("Orbit Radius", &orbitRadius, 0.0F, 100.0F);
+    ImGui::SliderFloat("Orbit Height", &orbitHeight, 0.0F, 100.0F);
   }
-}
-
-[[nodiscard]] auto Camera::getModeInt() const -> int {
-  switch (mode) {
-  case Mode::ORBIT:
-    return 0;
-  case Mode::FREE:
-    return 1;
-  case Mode::FPS:
-    return 2;
-  default:
-    return -1;
-  }
+  ImGui::End();
 }
 
 void Camera::setAspect(const float aspect) { this->aspect = aspect; }
+
+void Camera::isGrounded(bool grounded) { this->grounded = grounded; }
+
+[[nodiscard]] auto Camera::isGrounded() -> bool { return grounded; }

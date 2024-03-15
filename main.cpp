@@ -39,17 +39,18 @@ auto main() -> int {
   App::view.setKey(processInput);
   App::view.setMouse([&] {
     if (!App::paused) {
-      App::camera.processMouseMovement(App::view.getMouseOffsetX(),
-                                       App::view.getMouseOffsetY());
+      App::cameras.getActiveCamera()->processMouseMovement(
+          App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
     }
   });
 
-  App::view.setScroll(
-      [&] { App::camera.processMouseScroll(App::view.getScrollY()); });
+  App::view.setScroll([&] {
+    App::cameras.getActiveCamera()->processMouseScroll(App::view.getScrollY());
+  });
 
   App::view.setResize([&] {
-    App::camera.setAspect(static_cast<float>(App::view.getWidth()) /
-                          App::view.getHeight());
+    App::cameras.getActiveCamera()->setAspect(
+        static_cast<float>(App::view.getWidth()) / App::view.getHeight());
     glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
                static_cast<GLsizei>(App::view.getHeight()));
   });
@@ -81,8 +82,22 @@ auto main() -> int {
 
   Player person;
 
-  App::camera.setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
-  App::camera.setMode(Camera::Mode::ORBIT);
+  auto orbitCamera = std::make_shared<Camera>(glm::vec3(0.0F, 0.0F, 0.0F));
+
+  orbitCamera->setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
+  orbitCamera->setMode(Camera::Mode::ORBIT);
+
+  App::cameras.addCamera("Orbit", orbitCamera);
+
+  auto freeCamera = std::make_shared<Camera>(glm::vec3(0.0F, 0.0F, 0.0F));
+  freeCamera->setMode(Camera::Mode::FREE);
+  App::cameras.addCamera("Free", freeCamera);
+
+  auto fpsCamera = std::make_shared<Camera>(glm::vec3(0.0F, 0.0F, 0.0F));
+  fpsCamera->setMode(Camera::Mode::FPS);
+  App::cameras.addCamera("FPS", fpsCamera);
+
+  App::cameras.setActiveCamera("Orbit");
 
   const InfinitePlane terrain;
 
@@ -93,7 +108,8 @@ auto main() -> int {
   model2.setShader(ourShader);
 
   ourShader->use();
-  ourShader->setUniform("projection", App::camera.getProjectionMatrix());
+  ourShader->setUniform("projection",
+                        App::cameras.getActiveCamera()->getProjectionMatrix());
   ourShader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
   ourShader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
   ourShader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
@@ -102,25 +118,29 @@ auto main() -> int {
   ourShader->setUniform("material.shininess", 64.0F);
 
   auto model = glm::mat4(1.0F);
-  glm::vec3 newPosition =
-      App::camera.getPosition() + glm::vec3(0.0F, 4.0F, 5.0F);
-  const glm::mat4 helicopterModel = translate(model, newPosition);
+  glm::vec3 newPosition = App::cameras.getActiveCamera()->getPosition() +
+                          glm::vec3(0.0F, 4.0F, 5.0F);
+  const glm::mat4 helicopterModel =
+      translate(model, newPosition) *
+      rotate(model, glm::radians(90.0F), glm::vec3(1.0F, 0.0F, 0.0F));
 
   // newModel.scale(glm::vec3(0.1F, 0.1F, 0.1F));
   // newModel.translate(newPosition);
   newModel.transform(helicopterModel);
 
   model = Config::IDENTITY_MATRIX;
-  newPosition = App::camera.getPosition() + glm::vec3(5.0F, -0.15F, 0.45F);
+  newPosition = App::cameras.getActiveCamera()->getPosition() +
+                glm::vec3(5.0F, 3.0F, 0.45F);
   const glm::mat4 backpackModel = translate(model, newPosition);
 
   model2.transform(backpackModel);
   // scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
 
-  sun.setPosition(App::camera.getPosition());
+  sun.setPosition(App::cameras.getActiveCamera()->getPosition());
 
   App::view.setPipeline([&]() {
-    const auto projectionMatrix = App::camera.getProjectionMatrix();
+    const auto projectionMatrix =
+        App::cameras.getActiveCamera()->getProjectionMatrix();
 
     View::clearTarget(Color::BLACK);
 
@@ -130,16 +150,20 @@ auto main() -> int {
 
     ourShader->setUniform("light.position", glm::vec3(sun.getPosition(), 1.0F));
     // view/projection transformations
-    glm::mat4 view = App::camera.getViewMatrix();
+    glm::mat4 view = App::cameras.getActiveCamera()->getViewMatrix();
     ourShader->setUniform("view", view);
-    ourShader->setUniform("viewPos", App::camera.getPosition());
+    ourShader->setUniform("viewPos",
+                          App::cameras.getActiveCamera()->getPosition());
 
     newModel.draw();
 
     if (newModel.isColliding(person.getBoundingBox())) {
-      const auto offset = newModel.getOffset(person.getBoundingBox());
-      App::camera.setPosition(App::camera.getPosition() + offset);
-      auto velocity = App::camera.getVelocity();
+      const auto offset =
+          newModel.getOffset(App::cameras.getActiveCamera()->getPosition());
+      App::cameras.getActiveCamera()->setPosition(
+          App::cameras.getActiveCamera()->getPosition() + offset);
+      auto velocity = App::cameras.getActiveCamera()->getVelocity();
+
       if (std::abs(offset.y) > 0.0F) {
         velocity.y = 0.0F;
       }
@@ -152,43 +176,70 @@ auto main() -> int {
         velocity.z = 0.0F;
       }
 
-      App::camera.setVelocity(velocity);
+      App::cameras.getActiveCamera()->setVelocity(velocity);
     }
 
     model2.draw();
 
-    terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
-                 App::camera.getPosition());
-
-    if (terrain.isColliding(person.getBoundingBox())) {
-      const auto offset = terrain.getOffset(person.getBoundingBox());
+    if (model2.isColliding(person.getBoundingBox())) {
+      const auto offset =
+          model2.getOffset(App::cameras.getActiveCamera()->getPosition());
+      App::cameras.getActiveCamera()->setPosition(
+          App::cameras.getActiveCamera()->getPosition() + offset);
+      auto velocity = App::cameras.getActiveCamera()->getVelocity();
       if (std::abs(offset.y) > 0.0F) {
-        App::camera.setPosition(App::camera.getPosition() + offset);
-        auto velocity = App::camera.getVelocity();
         velocity.y = 0.0F;
-        App::camera.setVelocity(velocity);
       }
+
+      if (std::abs(offset.x) > 0.0F) {
+        velocity.x = 0.0F;
+      }
+
+      if (std::abs(offset.z) > 0.0F) {
+        velocity.z = 0.0F;
+      }
+
+      App::cameras.getActiveCamera()->setVelocity(velocity);
     }
 
-    view = glm::mat4(glm::mat3(App::camera.getViewMatrix()));
+    terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
+                 App::cameras.getActiveCamera()->getPosition());
+
+    if (terrain.isColliding(person.getBoundingBox())) {
+      App::cameras.getActiveCamera()->isGrounded(true);
+      const auto offset = terrain.getOffset(person.getBoundingBox());
+      if (offset.y > 0.0F) {
+        App::cameras.getActiveCamera()->setPosition(
+            App::cameras.getActiveCamera()->getPosition() + offset);
+        auto velocity = App::cameras.getActiveCamera()->getVelocity();
+        velocity.y = 0.0F;
+        App::cameras.getActiveCamera()->setVelocity(velocity);
+      }
+    } else {
+      App::cameras.getActiveCamera()->isGrounded(false);
+    }
+
+    view =
+        glm::mat4(glm::mat3(App::cameras.getActiveCamera()->getViewMatrix()));
     skybox.draw(projectionMatrix, view, sun.getPosition().y);
     sun.draw(view, projectionMatrix);
 
-    person.draw(App::camera.getViewMatrix(), projectionMatrix);
-    person.setPosition(App::camera.getPosition());
+    person.draw(App::cameras.getActiveCamera()->getViewMatrix(),
+                projectionMatrix);
+    person.setPosition(App::cameras.getActiveCamera()->getPosition());
   });
 
   App::view.setInterface([&]() {
     if (App::paused) {
-      App::camera.modeInterface();
-      App::camera.controlInterface();
+      App::cameras.getActiveCamera()->controlInterface();
+      App::cameras.interface();
     }
   });
 
   try {
     App::loop([&] {
       sun.update(App::view.getDeltaTime());
-      App::camera.circleOrbit(App::view.getDeltaTime());
+      App::cameras.getActiveCamera()->circleOrbit(App::view.getDeltaTime());
     });
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
@@ -220,36 +271,37 @@ void processInput() {
     App::setPaused(!App::paused);
   }
 
-  if (App::paused && App::camera.getMode() != Camera::Mode::ORBIT) {
+  if (App::paused &&
+      App::cameras.getActiveCamera()->getMode() != Camera::Mode::ORBIT) {
     return;
   }
 
   if (App::view.getKey(GLFW_KEY_W) == GLFW_PRESS) {
     moved = true;
-    App::camera.processKeyboard(Camera::Direction::FORWARD,
-                                App::view.getDeltaTime());
+    App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::FORWARD,
+                                                    App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_S) == GLFW_PRESS) {
     moved = true;
-    App::camera.processKeyboard(Camera::Direction::BACKWARD,
-                                App::view.getDeltaTime());
+    App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::BACKWARD,
+                                                    App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_A) == GLFW_PRESS) {
     moved = true;
-    App::camera.processKeyboard(Camera::Direction::LEFT,
-                                App::view.getDeltaTime());
+    App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::LEFT,
+                                                    App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_D) == GLFW_PRESS) {
     moved = true;
-    App::camera.processKeyboard(Camera::Direction::RIGHT,
-                                App::view.getDeltaTime());
+    App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::RIGHT,
+                                                    App::view.getDeltaTime());
   }
 
   if (!moved) {
-    App::camera.processKeyboard(Camera::Direction::NONE,
-                                App::view.getDeltaTime());
+    App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::NONE,
+                                                    App::view.getDeltaTime());
   }
 }

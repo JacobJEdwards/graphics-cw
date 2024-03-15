@@ -31,20 +31,20 @@ public:
   void setMax(const glm::vec3 &max) { BoundingBox::max = max; }
 
   void transform(const glm::mat4 &model) {
-    // Transform min and max points using the transformation matrix
-    min = glm::vec3(model * glm::vec4(min, 1.0f));
-    max = glm::vec3(model * glm::vec4(max, 1.0f));
+    glm::vec3 newMin = glm::vec3(model * glm::vec4(min, 1.0F));
+    glm::vec3 newMax = glm::vec3(model * glm::vec4(max, 1.0F));
+
+    min = glm::min(newMin, newMax);
+    max = glm::max(newMin, newMax);
   }
 
   bool collides(const BoundingBox &other) const {
-    // Check for overlap on each axis
     for (int i = 0; i < 3; ++i) {
       if (max[i] < other.min[i] || min[i] > other.max[i]) {
         // No overlap on this axis, so no collision
         return false;
       }
     }
-    // Overlap on all axes, so collision detected
     return true;
   }
 
@@ -64,6 +64,7 @@ public:
   void setPosition(const glm::vec3 &position) {
     auto center = getCenter();
     auto offset = position - center;
+
     translate(offset);
   }
 
@@ -140,34 +141,21 @@ public:
   }
 
   auto getOffset(const BoundingBox &other) const -> glm::vec3 {
-    glm::vec3 mtv = glm::vec3(std::numeric_limits<float>::max());
+    glm::vec3 overlap = glm::min(max, other.max) - glm::max(min, other.min);
 
-    for (int i = 0; i < 3; ++i) {
-      float overlap =
-          std::min(max[i], other.max[i]) - std::max(min[i], other.min[i]);
-      if (overlap < 0) {
-        return glm::vec3(0.0f);
-      } else {
-        mtv[i] = overlap;
-      }
+    if (overlap.x < 0 || overlap.y < 0 || overlap.z < 0) {
+      return glm::vec3(0.0f);
     }
 
-    const float mtvX = std::abs(mtv.x);
-    const float mtvY = std::abs(mtv.y);
-    const float mtvZ = std::abs(mtv.z);
+    float minOverlap = std::min(std::min(overlap.x, overlap.y), overlap.z);
 
-    if (mtvX < mtvY && mtvX < mtvZ) {
-      mtv.y = 0.0f;
-      mtv.z = 0.0f;
-    } else if (mtvY < mtvX && mtvY < mtvZ) {
-      mtv.x = 0.0f;
-      mtv.z = 0.0f;
+    if (overlap.x == minOverlap) {
+      return glm::vec3(overlap.x, 0.0f, 0.0f);
+    } else if (overlap.y == minOverlap) {
+      return glm::vec3(0.0f, overlap.y, 0.0f);
     } else {
-      mtv.x = 0.0f;
-      mtv.y = 0.0f;
+      return glm::vec3(0.0f, 0.0f, overlap.z);
     }
-
-    return mtv;
   }
 
   void expand(const glm::vec3 &amount) {

@@ -784,10 +784,10 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: /Users/jacobedwards/University/Year2/Semeste
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
   /usr/local/include/GL/glew.h \
@@ -13914,6 +13914,7 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/InfinitePlane.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.h \
@@ -14329,6 +14330,8 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/mach_error.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/mach.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/kmod.h:
 
 /usr/local/include/glm/simd/platform.h:
@@ -14362,8 +14365,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__type_traits/aligned_storage.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/launch.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/mach.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/i386/param.h:
 
@@ -15173,6 +15174,12 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/dispatch/once.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFDictionary.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__concepts/constructible.h:
+
+/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/select.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/partial_sum.h:
@@ -15689,13 +15696,11 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 
 /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__bit/blsr.h:
+
+/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFPlugIn.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFDictionary.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__concepts/constructible.h:
-
-/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGDirectDisplayMetal.h:
 
@@ -17062,8 +17067,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/xpc/availability.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__ios/fpos.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__bit/blsr.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/avx512vlbitalgintrin.h:
 

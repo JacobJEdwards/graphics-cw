@@ -785,10 +785,10 @@ CMakeFiles/CW.dir/Engine/App.cpp.o
  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h
  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.h
- /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h
+ /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h
  /usr/local/include/GL/glew.h
@@ -13935,6 +13935,7 @@ CMakeFiles/CW.dir/main.cpp.o
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h
+ /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/InfinitePlane.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h
  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.h
