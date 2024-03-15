@@ -20,7 +20,11 @@
 // should use vertex struct -> create layout 2d -> templated buffer
 class InfinitePlane {
 public:
-  InfinitePlane() { load(); }
+  InfinitePlane() {
+    load();
+    model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));
+    box.transform(model);
+  }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection,
             const glm::vec3 &lightPos, const glm::vec3 &viewPos) {
@@ -32,12 +36,7 @@ public:
     shader.setUniform("light.position", lightPos);
     shader.setUniform("viewPos", viewPos);
 
-    auto model = Config::IDENTITY_MATRIX;
-    // move model down by 2.0F
-    model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));
-
     shader.setUniform("model", model);
-    // box.transform(model);
 
     buffer.draw();
     buffer.unbind();
@@ -75,6 +74,8 @@ private:
   static constexpr std::array<GLuint, 6> indices = {0, 1, 2, 2, 3, 0};
 
   BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, 1.0F, SIZE)};
+
+  glm::mat4 model = Config::IDENTITY_MATRIX;
 
   Buffer buffer;
 

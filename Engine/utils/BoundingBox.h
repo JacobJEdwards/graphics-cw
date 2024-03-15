@@ -61,13 +61,15 @@ public:
     return collides(other) || contains(other) || other.contains(*this);
   }
 
-  void setPosition(const glm::vec3 &position) {
-    auto center = getCenter();
-    auto offset = position - center;
-    translate(offset);
-  }
+  void setPosition(const glm::vec3 &position) { setCenter(position); }
 
   glm::vec3 getCenter() const { return (min + max) / 2.0F; }
+
+  void setCenter(const glm::vec3 &center) {
+    glm::vec3 size = getSize();
+    min = center - size / 2.0F;
+    max = center + size / 2.0F;
+  }
 
   glm::vec3 getSize() const { return max - min; }
 

@@ -108,6 +108,8 @@ auto main() -> int {
 
   sun.setPosition(App::camera.getPosition());
 
+  int hits = 0;
+
   App::view.setPipeline([&]() {
     const auto projectionMatrix = App::camera.getProjectionMatrix();
 
@@ -125,7 +127,6 @@ auto main() -> int {
     newModel.draw();
 
     if (newModel.isColliding(person.getBoundingBox())) {
-      std::cout << "Colliding" << std::endl;
       const auto offset = newModel.getOffset(person.getBoundingBox());
       App::camera.setPosition(App::camera.getPosition() + offset);
       auto velocity = App::camera.getVelocity();
@@ -169,7 +170,7 @@ auto main() -> int {
                  App::camera.getPosition());
 
     if (terrain.isColliding(person.getBoundingBox())) {
-      std::cout << "Colliding" << std::endl;
+      std::cout << "Colliding " << hits++ << std::endl;
       const auto offset = terrain.getOffset(person.getBoundingBox());
       if (std::abs(offset.y) > 0.0F) {
         App::camera.setPosition(App::camera.getPosition() + offset);

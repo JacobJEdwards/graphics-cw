@@ -19,7 +19,10 @@ public:
 
   [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }
 
-  void setPosition(const glm::vec3 &position) { Player::position = position; }
+  void setPosition(const glm::vec3 &position) {
+    Player::position = position;
+    player.getBoundingBox().setPosition(position);
+  }
 
   // issue is that original reset the mat every time, this tranlsates it
   // could isntead calculate
@@ -28,11 +31,14 @@ public:
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
+    glm::mat4 model = glm::mat4(1.0F);
+    model = glm::translate(model, position);
+    player.setModelMatrix(model);
 
-    player.resetModelMatrix();
+    // player.resetModelMatrix();
 
-    player.translate(position);
-    player.translate(glm::vec3(0.0F, -7.0F, 0.0F));
+    // player.translate(position);
+    // player.translate(glm::vec3(0.0F, -7.0F, 0.0F));
     // player.translate(glm::vec3(0.0F, 0.0F, -1.3F));
 
     player.draw();
