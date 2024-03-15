@@ -36,6 +36,7 @@ add_executable(CW main.cpp
         Engine/utils/Buffer.cpp
         Engine/physics/ModelAttributes.cpp
         Engine/physics/Gravity.cpp
+        Engine/physics/Collisions.cpp
 )
 
 # Link libraries

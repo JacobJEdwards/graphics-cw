@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o"
   "CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o"
+  "CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o"
   "CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o"

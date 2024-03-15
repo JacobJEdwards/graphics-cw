@@ -136,5 +136,11 @@
   "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp",
   "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp",
   "output": "CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o"
 }
 ]

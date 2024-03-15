@@ -20,6 +20,7 @@
 #include "graphics/Color.h"
 #include "graphics/Model.h"
 #include "graphics/Texture.h"
+#include "physics/Collisions.h"
 #include "utils/Objects/InfinitePlane.h"
 #include "utils/Objects/Player.h"
 #include "utils/Objects/Skybox.h"
@@ -162,16 +163,16 @@ auto main() -> int {
 
     if (newModel.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
-      Physics::calculateCollisionResponse(
-          App::cameras.getActiveCamera()->attributes, newModel.attributes);
+      Physics::Collisions::resolve(newModel.attributes,
+                                   App::cameras.getActiveCamera()->attributes);
     }
 
     model2.draw();
 
     if (model2.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
-      Physics::calculateCollisionResponse(
-          App::cameras.getActiveCamera()->attributes, model2.attributes);
+      Physics::Collisions::resolve(model2.attributes,
+                                   App::cameras.getActiveCamera()->attributes);
     }
 
     terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
@@ -179,8 +180,8 @@ auto main() -> int {
 
     if (terrain.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
-      Physics::calculateCollisionResponseFloor(
-          App::cameras.getActiveCamera()->attributes, terrain.attributes);
+      Physics::Collisions::resolve(App::cameras.getActiveCamera()->attributes,
+                                   terrain.attributes, true);
       App::cameras.getActiveCamera()->attributes.isGrounded = true;
     } else {
       App::cameras.getActiveCamera()->attributes.isGrounded = false;
