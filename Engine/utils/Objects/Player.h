@@ -20,6 +20,8 @@
 
 class Player {
 public:
+  Physics::Attributes attributes;
+
   Player() {
     boundingBox = player.getBoundingBox();
     player.setShader(shader);

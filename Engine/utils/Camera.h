@@ -25,6 +25,8 @@ constexpr float MINPITCH = -89.0F;
 
 class Camera {
 public:
+  Physics::Attributes attributes;
+
   enum class Direction { FORWARD, BACKWARD, LEFT, RIGHT, NONE };
 
   enum class Mode { FPS, FREE, ORBIT, FIXED, PATH };
@@ -122,8 +124,6 @@ private:
   float yPosition = 0.0F;
 
   bool downwards = false;
-
-  Physics::Attributes attributes;
 
   void updateCameraVectors();
 
