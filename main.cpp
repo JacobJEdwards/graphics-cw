@@ -169,6 +169,7 @@ auto main() -> int {
                  App::camera.getPosition());
 
     if (terrain.isColliding(person.getBoundingBox())) {
+      std::cout << "Colliding" << std::endl;
       const auto offset = terrain.getOffset(person.getBoundingBox());
       if (std::abs(offset.y) > 0.0F) {
         App::camera.setPosition(App::camera.getPosition() + offset);

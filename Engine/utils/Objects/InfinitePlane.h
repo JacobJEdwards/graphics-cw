@@ -31,6 +31,7 @@ public:
     shader.setUniform("projection", projection);
     shader.setUniform("light.position", lightPos);
     shader.setUniform("viewPos", viewPos);
+
     auto model = Config::IDENTITY_MATRIX;
     // move model down by 2.0F
     model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));

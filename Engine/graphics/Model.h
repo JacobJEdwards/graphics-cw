@@ -36,6 +36,11 @@ public:
   void scale(const glm::vec3 &scale);
   void rotate(const glm::vec3 &axis, float angle);
   void setPosition(const glm::vec3 &position);
+  void resetModelMatrix();
+  void setModelMatrix(const glm::mat4 &modelMatrix);
+
+  [[nodiscard]] auto getModelMatrix() const -> glm::mat4;
+  [[nodiscard]] auto getShader() const -> std::shared_ptr<Shader>;
 
   void setShader(std::shared_ptr<Shader> shader);
 

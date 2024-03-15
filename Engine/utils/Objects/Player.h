@@ -21,14 +21,19 @@ public:
 
   void setPosition(const glm::vec3 &position) { Player::position = position; }
 
+  // issue is that original reset the mat every time, this tranlsates it
+  // could isntead calculate
+  // or just reset the mat every time
   void draw(const glm::mat4 &view, const glm::mat4 &projection) {
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
 
+    player.resetModelMatrix();
+
     player.translate(position);
     player.translate(glm::vec3(0.0F, -7.0F, 0.0F));
-    player.translate(glm::vec3(0.0F, 0.0F, -1.3F));
+    // player.translate(glm::vec3(0.0F, 0.0F, -1.3F));
 
     player.draw();
   }

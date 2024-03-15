@@ -22,6 +22,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
+#include "Config.h"
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
 #include "helpers/AssimpGLMHelpers.h"
@@ -273,3 +274,14 @@ auto Model::getBoundingBox() const -> BoundingBox {
 
   return modelBoundingBox;
 }
+
+void Model::resetModelMatrix() { modelMatrix = Config::IDENTITY_MATRIX; }
+
+[[nodiscard]] auto Model::getModelMatrix() const -> glm::mat4 {
+  return modelMatrix;
+}
+[[nodiscard]] auto Model::getShader() const -> std::shared_ptr<Shader> {
+  return shader;
+}
+
+void Model::setModelMatrix(const glm::mat4 &matrix) { modelMatrix = matrix; }

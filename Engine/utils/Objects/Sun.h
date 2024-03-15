@@ -25,12 +25,17 @@ public:
     position.y = 10.0F * std::sin(angle);
   }
 
+  // issue is mat isnt being reset to identity
+  // so the sun is being drawn in the wrong place
+  // could either reset the matrix or just translate the sun
   void draw(const glm::mat4 &view, const glm::mat4 &projection) {
     glDepthFunc(GL_LEQUAL);
 
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
+
+    sun.resetModelMatrix();
 
     sun.translate(glm::vec3(position, -10.0F));
     sun.scale(glm::vec3(scale));
