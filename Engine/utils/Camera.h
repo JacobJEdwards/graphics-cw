@@ -5,6 +5,8 @@
 #ifndef CW_CAMERA_H
 #define CW_CAMERA_H
 
+#include "physics/ModelAttributes.h"
+
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float3.hpp>
 
@@ -136,6 +138,8 @@ private:
   float yPosition = 0.0F;
   bool downwards = false;
   bool grounded = false;
+
+  Physics::Attributes attributes;
 
   void updateCameraVectors();
 

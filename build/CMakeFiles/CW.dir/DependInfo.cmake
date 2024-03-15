@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.cpp" "CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.cpp" "CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp" "CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o.d"
+  "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp" "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp" "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp" "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp" "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o.d"

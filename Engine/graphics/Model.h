@@ -16,6 +16,7 @@
 #include "Config.h"
 #include "Mesh.h"
 #include "graphics/Texture.h"
+#include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
 #include "utils/Shader.h"
 
@@ -47,6 +48,8 @@ private:
   std::string directory;
 
   std::shared_ptr<Shader> shader;
+
+  Physics::Attributes attributes;
 
   BoundingBox boundingBox;
   glm::mat4 modelMatrix = Config::IDENTITY_MATRIX;

@@ -1,34 +1,25 @@
-#ifdef GRAVITY_H
+#ifndef GRAVITY_H
 #define GRAVITY_H
 
-#include <cmath>
 #include <glm/glm.hpp>
 
 namespace Physics {
 constexpr float GRAVITY = 9.8f;
+constexpr float TERMINAL_VELOCITY = 53.0f;
+constexpr glm::vec3 GRAVITY_VECTOR = glm::vec3(0.0f, -GRAVITY, 0.0f);
 
 // formulas
-auto calculateFallDistance(float time) -> float {
-  return 0.5f * GRAVITY * time * time;
-}
+auto calculateFallDistance(float time) -> float;
 
-auto calculateVelocityFloat(float time) -> float { return GRAVITY * time; }
+auto calculateVelocityFloat(float time) -> float;
 
-auto calculateTime(float distance) -> float {
-  return std::sqrt(2 * distance / GRAVITY);
-}
+auto calculateTime(float distance) -> float;
 
-auto calculateImpactVelocity(float distance) -> float {
-  return std::sqrt(2 * GRAVITY * distance);
-}
+auto calculateImpactVelocity(float distance) -> float;
 
-auto calculateVelocity(float time) -> glm::vec3 {
-  return glm::vec3(0.0f, -GRAVITY * time, 0.0f);
-}
+auto calculateVelocity(float time) -> glm::vec3;
 
-auto calculateVelocity(float time, glm::vec3 initialVelocity) -> glm::vec3 {
-  return initialVelocity + calculateVelocity(time);
-}
+auto calculateVelocity(float time, glm::vec3 initialVelocity) -> glm::vec3;
 
 } // namespace Physics
 

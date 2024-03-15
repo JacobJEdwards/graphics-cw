@@ -124,5 +124,11 @@
   "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp",
   "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp",
   "output": "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o"
 }
 ]

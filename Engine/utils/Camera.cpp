@@ -15,8 +15,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
-#include "physics/Gravity.h"
-
 #include "imgui/imgui.h"
 
 Camera::Camera(glm::vec3 position, glm::vec3 worldUp, float yaw, float pitch,

@@ -297,6 +297,30 @@ Engine/helpers/AssimpGLMHelpers.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.s
 .PHONY : Engine/helpers/AssimpGLMHelpers.cpp.s
 
+Engine/physics/ModelAttributes.o: Engine/physics/ModelAttributes.cpp.o
+.PHONY : Engine/physics/ModelAttributes.o
+
+# target to build an object file
+Engine/physics/ModelAttributes.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o
+.PHONY : Engine/physics/ModelAttributes.cpp.o
+
+Engine/physics/ModelAttributes.i: Engine/physics/ModelAttributes.cpp.i
+.PHONY : Engine/physics/ModelAttributes.i
+
+# target to preprocess a source file
+Engine/physics/ModelAttributes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.i
+.PHONY : Engine/physics/ModelAttributes.cpp.i
+
+Engine/physics/ModelAttributes.s: Engine/physics/ModelAttributes.cpp.s
+.PHONY : Engine/physics/ModelAttributes.s
+
+# target to generate assembly for a file
+Engine/physics/ModelAttributes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s
+.PHONY : Engine/physics/ModelAttributes.cpp.s
+
 Engine/utils/Buffer.o: Engine/utils/Buffer.cpp.o
 .PHONY : Engine/utils/Buffer.o
 
@@ -663,6 +687,9 @@ help:
 	@echo "... Engine/helpers/AssimpGLMHelpers.o"
 	@echo "... Engine/helpers/AssimpGLMHelpers.i"
 	@echo "... Engine/helpers/AssimpGLMHelpers.s"
+	@echo "... Engine/physics/ModelAttributes.o"
+	@echo "... Engine/physics/ModelAttributes.i"
+	@echo "... Engine/physics/ModelAttributes.s"
 	@echo "... Engine/utils/Buffer.o"
 	@echo "... Engine/utils/Buffer.i"
 	@echo "... Engine/utils/Buffer.s"
