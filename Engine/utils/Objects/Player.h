@@ -12,18 +12,23 @@
 
 #include "Config.h"
 #include "graphics/Model.h"
+#include "utils/Camera.h"
 #include "utils/Shader.h"
+
+#include "App.h"
 
 class Player {
 public:
   Player() {
     boundingBox = player.getBoundingBox();
     player.setShader(shader);
+    camera->setMode(Camera::Mode::FPS);
+    App::cameras.addCamera("Player", camera);
   };
 
   [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }
 
-  void setPosition(const glm::vec3 &position) { Player::position = position; }
+  void update() { position = camera->getPosition(); }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection) {
     shader->use();
@@ -51,16 +56,13 @@ public:
     return boundingBox.isColliding(other);
   }
 
-  void move(const glm::vec3 &direction) {
-    position += direction;
-    boundingBox.setPosition(position);
-  }
-
 private:
   glm::vec3 position;
-
   BoundingBox boundingBox =
       BoundingBox(glm::vec3(-0.5F, -0.5F, -0.5F), glm::vec3(0.5F, 0.5F, 0.5F));
+
+  std::shared_ptr<Camera> camera =
+      std::make_shared<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
 
   std::shared_ptr<Shader> shader = std::make_shared<Shader>(
       "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");

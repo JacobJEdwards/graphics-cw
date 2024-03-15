@@ -39,7 +39,7 @@ public:
     buffer.unbind();
   }
 
-  [[nodiscard]] auto collides(const glm::vec3 &position) const -> bool {
+  [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool {
     return box.contains(position);
   }
 

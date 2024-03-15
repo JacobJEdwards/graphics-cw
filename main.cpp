@@ -83,10 +83,8 @@ auto main() -> int {
   Player person;
 
   auto orbitCamera = std::make_shared<Camera>(glm::vec3(0.0F, 0.0F, 0.0F));
-
   orbitCamera->setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
   orbitCamera->setMode(Camera::Mode::ORBIT);
-
   App::cameras.addCamera("Orbit", orbitCamera);
 
   auto freeCamera = std::make_shared<Camera>(glm::vec3(0.0F, 0.0F, 0.0F));
@@ -96,6 +94,12 @@ auto main() -> int {
   auto fpsCamera = std::make_shared<Camera>(glm::vec3(0.0F, 0.0F, 0.0F));
   fpsCamera->setMode(Camera::Mode::FPS);
   App::cameras.addCamera("FPS", fpsCamera);
+
+  auto fixedCamera = std::make_shared<Camera>(glm::vec3(0.0F, 0.0F, 0.0F));
+  fixedCamera->setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
+                        glm::vec3(0.0F, 1.0F, 0.0F));
+  fixedCamera->setMode(Camera::Mode::FIXED);
+  App::cameras.addCamera("Fixed", fixedCamera);
 
   App::cameras.setActiveCamera("Orbit");
 
@@ -157,7 +161,8 @@ auto main() -> int {
 
     newModel.draw();
 
-    if (newModel.isColliding(person.getBoundingBox())) {
+    if (newModel.detectCollisions(
+            App::cameras.getActiveCamera()->getPosition())) {
       const auto offset =
           newModel.getOffset(App::cameras.getActiveCamera()->getPosition());
       App::cameras.getActiveCamera()->setPosition(
@@ -181,7 +186,8 @@ auto main() -> int {
 
     model2.draw();
 
-    if (model2.isColliding(person.getBoundingBox())) {
+    if (model2.detectCollisions(
+            App::cameras.getActiveCamera()->getPosition())) {
       const auto offset =
           model2.getOffset(App::cameras.getActiveCamera()->getPosition());
       App::cameras.getActiveCamera()->setPosition(
@@ -205,9 +211,11 @@ auto main() -> int {
     terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
                  App::cameras.getActiveCamera()->getPosition());
 
-    if (terrain.isColliding(person.getBoundingBox())) {
+    if (terrain.detectCollisions(
+            App::cameras.getActiveCamera()->getPosition())) {
       App::cameras.getActiveCamera()->isGrounded(true);
-      const auto offset = terrain.getOffset(person.getBoundingBox());
+      const auto offset =
+          terrain.getOffset(App::cameras.getActiveCamera()->getPosition());
       if (offset.y > 0.0F) {
         App::cameras.getActiveCamera()->setPosition(
             App::cameras.getActiveCamera()->getPosition() + offset);
@@ -226,7 +234,6 @@ auto main() -> int {
 
     person.draw(App::cameras.getActiveCamera()->getViewMatrix(),
                 projectionMatrix);
-    person.setPosition(App::cameras.getActiveCamera()->getPosition());
   });
 
   App::view.setInterface([&]() {
@@ -240,6 +247,7 @@ auto main() -> int {
     App::loop([&] {
       sun.update(App::view.getDeltaTime());
       App::cameras.getActiveCamera()->circleOrbit(App::view.getDeltaTime());
+      person.update();
     });
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;

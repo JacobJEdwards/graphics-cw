@@ -44,6 +44,13 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
   switch (mode) {
   case Mode::ORBIT:
     return lookAt(position, orbitTarget, worldUp);
+  case Mode::FPS:
+    return lookAt(position, position + front, up);
+  case Mode::FREE:
+    return lookAt(position, position + front, up);
+  case Mode::FIXED:
+    return lookAt(fixedPosition, fixedTarget, up);
+
   default:
     return lookAt(position, position + front, up);
   }
@@ -155,8 +162,13 @@ void Camera::processMouseMovement(float xOffset, float yOffset,
   pitch += yOffset;
 
   if (constrainPitch != 0U) {
-    pitch = std::min(pitch, MAXPITCH);
-    pitch = std::max(pitch, MINPITCH);
+    if (mode == Mode::FIXED) {
+      pitch = std::min(pitch, 89.0F);
+      pitch = std::max(pitch, -89.0F);
+    } else {
+      pitch = std::min(pitch, MAXPITCH);
+      pitch = std::max(pitch, MINPITCH);
+    }
   }
 
   updateCameraVectors();
@@ -184,6 +196,21 @@ void Camera::setOrbit(const glm::vec3 target, const float radius,
   orbitRadius = radius;
   orbitAngle = angle;
   orbitSpeed = speed;
+}
+
+void Camera::setOrbit(glm::vec3 target, float radius, float angle, float speed,
+                      float height) {
+  orbitTarget = target;
+  orbitRadius = radius;
+  orbitAngle = angle;
+  orbitSpeed = speed;
+  orbitHeight = height;
+}
+
+void Camera::setFixed(glm::vec3 target, glm::vec3 position) {
+  fixedTarget = target;
+  fixedPosition = position;
+  distance = glm::distance(fixedTarget, fixedPosition);
 }
 
 [[nodiscard]] auto Camera::getMode() const -> Mode { return mode; }
@@ -241,6 +268,15 @@ void Camera::controlInterface() {
     ImGui::SeparatorText("Orbit");
     ImGui::SliderFloat("Orbit Radius", &orbitRadius, 0.0F, 100.0F);
     ImGui::SliderFloat("Orbit Height", &orbitHeight, 0.0F, 100.0F);
+  }
+
+  if (mode == Mode::FIXED) {
+    ImGui::SeparatorText("Fixed");
+    ImGui::SliderFloat("Distance", &distance, 0.0F, 100.0F);
+
+    // calculate the new position
+    fixedPosition.x = fixedTarget.x + distance * cos(glm::radians(yaw));
+    fixedPosition.z = fixedTarget.z + distance * sin(glm::radians(yaw));
   }
   ImGui::End();
 }

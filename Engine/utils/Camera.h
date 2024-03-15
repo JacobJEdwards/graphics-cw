@@ -55,6 +55,11 @@ public:
 
   void setOrbit(glm::vec3 target, float radius, float angle, float speed);
 
+  void setOrbit(glm::vec3 target, float radius, float angle, float speed,
+                float height);
+
+  void setFixed(glm::vec3 target, glm::vec3 position);
+
   [[nodiscard]] auto getMode() const -> Mode;
 
   [[nodiscard]] auto getZoom() const -> float;
@@ -117,6 +122,10 @@ private:
   float orbitAngle = 0.0F;
   float orbitSpeed = 0.0F;
   float orbitHeight = 0.0F;
+
+  glm::vec3 fixedTarget = glm::vec3(0.0F, 0.0F, 0.0F);
+  glm::vec3 fixedPosition = glm::vec3(0.0F, 0.0F, 0.0F);
+  float distance = 0.0F;
 
   float aspect = 1.0F;
 
