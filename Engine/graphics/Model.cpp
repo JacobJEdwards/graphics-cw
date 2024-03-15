@@ -4,8 +4,6 @@
 
 #include "Model.h"
 
-#include <iostream>
-
 #include <algorithm>
 #include <assimp/material.h>
 #include <assimp/mesh.h>

@@ -11,6 +11,7 @@ struct Attributes {
   glm::vec3 force;
   float mass;
   float damping;
+  bool isGrounded = false;
 
   Attributes()
       : position(0.0f), velocity(0.0f), acceleration(0.0f), force(0.0f),
@@ -32,6 +33,9 @@ struct Attributes {
   void applyImpulse(const glm::vec3 &impulse);
 };
 
+void calculateCollisionResponse(Physics::Attributes &a, Physics::Attributes &b);
+void calculateCollisionResponseFloor(Physics::Attributes &a,
+                                     Physics::Attributes &b);
 } // namespace Physics
 
 #endif // PHYSICSATTRIBUTES_H

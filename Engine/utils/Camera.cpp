@@ -99,7 +99,9 @@ void Camera::circleOrbit(const float deltaTime) {
 }
 
 void Camera::applyFPSModeEffects() {
-  attributes.applyGravity();
+  if (!attributes.isGrounded) {
+    attributes.applyGravity();
+  }
   attributes.applyDrag(0.5F);
 
   downwards ? yPosition -= 0.0001 : yPosition += 0.0001;

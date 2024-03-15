@@ -4,6 +4,7 @@
 
 #ifndef INFINITEPLANE_H
 #define INFINITEPLANE_H
+#include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
 #include "utils/Buffer.h"
 #include "utils/Vertex.h"
@@ -11,6 +12,7 @@
 #include <array>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/glm.hpp>
+#include <limits>
 
 #include "Config.h"
 #include "utils/Shader.h"
@@ -20,7 +22,11 @@
 // should use vertex struct -> create layout 2d -> templated buffer
 class InfinitePlane {
 public:
-  InfinitePlane() { load(); }
+  Physics::Attributes attributes;
+  InfinitePlane() {
+    load();
+    attributes.mass = 0.0F;
+  }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection,
             const glm::vec3 &lightPos, const glm::vec3 &viewPos) const {

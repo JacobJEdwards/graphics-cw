@@ -99,7 +99,7 @@ auto main() -> int {
 
   App::cameras.setActiveCamera("Orbit");
 
-  const InfinitePlane terrain;
+  InfinitePlane terrain;
 
   auto ourShader = std::make_shared<Shader>("../assets/shaders/backpack.vert",
                                             "../assets/shaders/backpack.frag");
@@ -119,7 +119,7 @@ auto main() -> int {
 
   auto model = glm::mat4(1.0F);
   glm::vec3 newPosition = App::cameras.getActiveCamera()->getPosition() +
-                          glm::vec3(0.0F, 4.0F, 5.0F);
+                          glm::vec3(0.0F, 8.0F, 5.0F);
   const glm::mat4 helicopterModel =
       translate(model, newPosition) *
       rotate(model, glm::radians(90.0F), glm::vec3(1.0F, 0.0F, 0.0F));
@@ -158,53 +158,20 @@ auto main() -> int {
     newModel.draw();
 
     // go upwards
-    newModel.attributes.applyForce(glm::vec3(0.0F, 1.0F, 0.0F));
+    // newModel.attributes.applyForce(glm::vec3(0.0F, 1.0F, 0.0F));
 
     if (newModel.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
-      const auto offset =
-          newModel.getOffset(App::cameras.getActiveCamera()->getPosition());
-      App::cameras.getActiveCamera()->setPosition(
-          App::cameras.getActiveCamera()->getPosition() + offset);
-      auto velocity = App::cameras.getActiveCamera()->getVelocity();
-
-      if (std::abs(offset.y) > 0.0F) {
-        velocity.y = 0.0F;
-      }
-
-      if (std::abs(offset.x) > 0.0F) {
-        velocity.x = 0.0F;
-      }
-
-      if (std::abs(offset.z) > 0.0F) {
-        velocity.z = 0.0F;
-      }
-
-      App::cameras.getActiveCamera()->setVelocity(velocity);
+      Physics::calculateCollisionResponse(
+          App::cameras.getActiveCamera()->attributes, newModel.attributes);
     }
 
     model2.draw();
 
     if (model2.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
-      const auto offset =
-          model2.getOffset(App::cameras.getActiveCamera()->getPosition());
-      App::cameras.getActiveCamera()->setPosition(
-          App::cameras.getActiveCamera()->getPosition() + offset);
-      auto velocity = App::cameras.getActiveCamera()->getVelocity();
-      if (std::abs(offset.y) > 0.0F) {
-        velocity.y = 0.0F;
-      }
-
-      if (std::abs(offset.x) > 0.0F) {
-        velocity.x = 0.0F;
-      }
-
-      if (std::abs(offset.z) > 0.0F) {
-        velocity.z = 0.0F;
-      }
-
-      App::cameras.getActiveCamera()->setVelocity(velocity);
+      Physics::calculateCollisionResponse(
+          App::cameras.getActiveCamera()->attributes, model2.attributes);
     }
 
     terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
@@ -212,15 +179,11 @@ auto main() -> int {
 
     if (terrain.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
-      const auto offset =
-          terrain.getOffset(App::cameras.getActiveCamera()->getPosition());
-      if (offset.y > 0.0F) {
-        App::cameras.getActiveCamera()->setPosition(
-            App::cameras.getActiveCamera()->getPosition() + offset);
-        auto velocity = App::cameras.getActiveCamera()->getVelocity();
-        velocity.y = 0.0F;
-        App::cameras.getActiveCamera()->setVelocity(velocity);
-      }
+      Physics::calculateCollisionResponseFloor(
+          App::cameras.getActiveCamera()->attributes, terrain.attributes);
+      App::cameras.getActiveCamera()->attributes.isGrounded = true;
+    } else {
+      App::cameras.getActiveCamera()->attributes.isGrounded = false;
     }
 
     view =

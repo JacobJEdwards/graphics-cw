@@ -40,3 +40,48 @@ void Physics::Attributes::applySpring(const glm::vec3 &springAnchor,
                           glm::normalize(springVector);
   applyForce(springForce);
 }
+
+void Physics::calculateCollisionResponse(Physics::Attributes &a,
+                                         Physics::Attributes &b) {
+  glm::vec3 normal = glm::normalize(b.position - a.position);
+  glm::vec3 relativeVelocity = b.velocity - a.velocity;
+  float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
+
+  if (relativeVelocityAlongNormal > 0) {
+    return;
+  }
+
+  float e = 0.5f;
+  float j = -(1 + e) * relativeVelocityAlongNormal;
+  j /= 1 / a.mass + 1 / b.mass;
+
+  glm::vec3 impulse = j * normal;
+
+  if (a.mass != 0.0F) {
+    a.applyImpulse(-impulse);
+  }
+  if (b.mass != 0.0F) {
+    b.applyImpulse(impulse);
+  }
+}
+
+void Physics::calculateCollisionResponseFloor(Physics::Attributes &a,
+                                              Physics::Attributes &b) {
+  glm::vec3 normal = glm::vec3(0.0f, 1.0f, 0.0f);
+  glm::vec3 relativeVelocity = a.velocity;
+  float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
+
+  if (relativeVelocityAlongNormal > 0) {
+    return;
+  }
+
+  float e = 0.5f;
+  float j = -(1 + e) * relativeVelocityAlongNormal;
+  j /= 1 / a.mass;
+
+  glm::vec3 impulse = j * normal;
+
+  if (a.mass != 0.0F) {
+    a.applyImpulse(impulse);
+  }
+}
