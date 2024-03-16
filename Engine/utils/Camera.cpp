@@ -255,7 +255,10 @@ void Camera::controlInterface() {
 
 void Camera::setAspect(const float aspect) { this->aspect = aspect; }
 
-void Camera::update(float dt) { attributes.update(dt); }
+void Camera::update(float dt) {
+  attributes.update(dt);
+  circleOrbit(dt);
+}
 
 void Camera::jump() {
   if (attributes.isGrounded)

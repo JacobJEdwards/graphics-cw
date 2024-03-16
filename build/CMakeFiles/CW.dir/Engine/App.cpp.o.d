@@ -942,28 +942,82 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
   /usr/local/include/glm/ext/matrix_float4x4.hpp \
-  /usr/local/include/glfw/glfw3.h \
-  /usr/local/include/glm/ext/matrix_transform.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
+  /usr/local/include/assimp/scene.h /usr/local/include/assimp/types.h \
+  /usr/local/include/assimp/defs.h /usr/local/include/assimp/config.h \
+  /usr/local/include/assimp/vector2.h \
+  /usr/local/include/assimp/vector3.h /usr/local/include/assimp/color4.h \
+  /usr/local/include/assimp/matrix3x3.h \
+  /usr/local/include/assimp/matrix4x4.h \
+  /usr/local/include/assimp/quaternion.h \
+  /usr/local/include/assimp/vector2.inl \
+  /usr/local/include/assimp/vector3.inl \
+  /usr/local/include/assimp/color4.inl \
+  /usr/local/include/assimp/matrix3x3.inl \
+  /usr/local/include/assimp/matrix4x4.inl \
+  /usr/local/include/assimp/MathFunctions.h \
+  /usr/local/include/assimp/quaternion.inl \
+  /usr/local/include/assimp/texture.h \
+  /usr/local/include/assimp/./Compiler/pushpack1.h \
+  /usr/local/include/assimp/./Compiler/poppack1.h \
+  /usr/local/include/assimp/mesh.h /usr/local/include/assimp/aabb.h \
+  /usr/local/include/assimp/light.h /usr/local/include/assimp/camera.h \
+  /usr/local/include/assimp/material.h \
+  /usr/local/include/assimp/material.inl \
+  /usr/local/include/assimp/anim.h /usr/local/include/assimp/metadata.h \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
+  /usr/local/include/glm/gtc/../mat4x4.hpp \
+  /usr/local/include/glm/gtc/../vec2.hpp \
+  /usr/local/include/glm/gtc/../vec3.hpp \
+  /usr/local/include/glm/gtc/../vec4.hpp \
+  /usr/local/include/glm/gtc/../ext/matrix_projection.hpp \
   /usr/local/include/glm/./ext/../gtc/constants.hpp \
-  /usr/local/include/glm/./ext/../gtc/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/gtc/../ext/scalar_constants.hpp \
   /usr/local/include/glm/./ext/scalar_constants.inl \
-  /usr/local/include/glm/./ext/../gtc/constants.inl \
+  /usr/local/include/glm/gtc/constants.inl \
   /usr/local/include/glm/./ext/../geometric.hpp \
   /usr/local/include/glm/./ext/../trigonometric.hpp \
   /usr/local/include/glm/./ext/../matrix.hpp \
-  /usr/local/include/glm/./ext/matrix_transform.inl \
-  /usr/local/include/glm/gtc/matrix_transform.hpp \
-  /usr/local/include/glm/./ext/../gtc/../mat4x4.hpp \
-  /usr/local/include/glm/./ext/../gtc/../vec2.hpp \
-  /usr/local/include/glm/./ext/../gtc/../vec3.hpp \
-  /usr/local/include/glm/./ext/../gtc/../vec4.hpp \
-  /usr/local/include/glm/./ext/../gtc/../ext/matrix_projection.hpp \
   /usr/local/include/glm/./ext/matrix_projection.inl \
-  /usr/local/include/glm/./ext/../gtc/../ext/matrix_clip_space.hpp \
+  /usr/local/include/glm/gtc/../ext/matrix_clip_space.hpp \
   /usr/local/include/glm/./ext/../ext/scalar_constants.hpp \
   /usr/local/include/glm/./ext/matrix_clip_space.inl \
-  /usr/local/include/glm/./ext/../gtc/../ext/matrix_transform.hpp \
-  /usr/local/include/glm/./ext/../gtc/matrix_transform.inl \
-  /usr/local/include/glm/./ext/../gtc/../geometric.hpp \
-  /usr/local/include/glm/./ext/../gtc/../trigonometric.hpp \
-  /usr/local/include/glm/./ext/../gtc/../matrix.hpp
+  /usr/local/include/glm/gtc/../ext/matrix_transform.hpp \
+  /usr/local/include/glm/./ext/matrix_transform.inl \
+  /usr/local/include/glm/gtc/matrix_transform.inl \
+  /usr/local/include/glm/gtc/../geometric.hpp \
+  /usr/local/include/glm/gtc/../trigonometric.hpp \
+  /usr/local/include/glm/gtc/../matrix.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/span \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__fwd/span.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/filesystem \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/file_status.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/file_type.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/perms.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/file_time_type.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__chrono/file_clock.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/filesystem_error.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/path.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/iomanip \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/operations.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/perm_options.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/space_info.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/directory_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/directory_options.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__filesystem/u8path.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.h \
+  /usr/local/include/assimp/Importer.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/memory.h \
+  /usr/local/include/glfw/glfw3.h \
+  /usr/local/include/glm/ext/matrix_transform.hpp

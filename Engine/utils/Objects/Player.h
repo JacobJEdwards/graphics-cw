@@ -16,26 +16,28 @@
 #include "utils/Camera.h"
 #include "utils/Shader.h"
 
-#include "App.h"
-
 class Player {
 public:
   Physics::Attributes attributes;
 
   Player() {
-    boundingBox = player.getBoundingBox();
-    player.setShader(shader);
+    boundingBox = model.getBoundingBox();
+    model.setShader(shader);
     camera->setMode(Camera::Mode::FPS);
-    App::cameras.addCamera("Player", camera);
     camera->setPosition(glm::vec3(0.0F, 20.0F, 3.0F));
     position = camera->getPosition();
   };
+
+  [[nodiscard]] auto getCamera() const -> std::shared_ptr<Camera> {
+    return camera;
+  }
 
   [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }
 
   void update(float dt) {
     position = camera->getPosition();
-    player.update(dt);
+    model.update(dt);
+    camera->update(dt);
   }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection) {
@@ -43,19 +45,16 @@ public:
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
-    auto model = Config::IDENTITY_MATRIX;
+    auto modelMat = Config::IDENTITY_MATRIX;
 
-    model = glm::translate(model, position);
-    model = glm::translate(model, glm::vec3(0.0F, -6.0F, 0.0F));
+    modelMat = glm::translate(modelMat, position);
+    modelMat = glm::translate(modelMat, glm::vec3(0.0F, -6.0F, 0.0F));
 
-    player.setModelMatrix(model);
+    model.setModelMatrix(modelMat);
     boundingBox.setPosition(position);
 
     // boundingBox.transform(model);
-
-    if (App::cameras.getActiveCamera() != camera) {
-      player.draw();
-    }
+    model.draw();
   }
 
   [[nodiscard]] auto getBoundingBox() const -> BoundingBox {
@@ -65,6 +64,8 @@ public:
   [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool {
     return boundingBox.isColliding(other);
   }
+
+  void jump() { camera->jump(); }
 
 private:
   glm::vec3 position;
@@ -76,7 +77,7 @@ private:
 
   std::shared_ptr<Shader> shader = std::make_shared<Shader>(
       "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
-  Model player = Model("../Assets/objects/person/person.obj");
+  Model model = Model("../Assets/objects/person/person.obj");
 };
 
 #endif // PLAYER_H

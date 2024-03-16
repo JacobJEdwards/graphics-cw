@@ -1033,6 +1033,9 @@ CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
   /usr/local/include/glm/ext/matrix_float4x4.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/memory.h \
   /usr/local/include/glfw/glfw3.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.h \
   /usr/local/include/glm/gtc/quaternion.hpp \

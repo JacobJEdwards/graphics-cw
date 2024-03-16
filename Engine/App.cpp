@@ -7,13 +7,15 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "utils/PlayerHolder.h"
+
 void setupGLFW();
 
 View App::view;
 bool App::paused = false;
 bool App::debug = false;
 
-CameraHolder App::cameras;
+PlayerHolder App::players;
 
 bool App::init() {
   setupGLFW();
@@ -36,7 +38,9 @@ bool App::window(const std::string &title, unsigned int width,
   if (!view.init(title, width, height)) {
     return false;
   }
-  cameras.setAspect(static_cast<float>(width) / static_cast<float>(height));
+
+  players.setAspect(static_cast<float>(width) / static_cast<float>(height));
+
   return true;
 }
 

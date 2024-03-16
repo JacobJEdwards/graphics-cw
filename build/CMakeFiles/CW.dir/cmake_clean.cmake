@@ -29,6 +29,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o"
+  "CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o"

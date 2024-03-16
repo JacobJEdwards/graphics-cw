@@ -489,6 +489,30 @@ Engine/utils/Objects/Sun.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.s
 .PHONY : Engine/utils/Objects/Sun.cpp.s
 
+Engine/utils/PlayerHolder.o: Engine/utils/PlayerHolder.cpp.o
+.PHONY : Engine/utils/PlayerHolder.o
+
+# target to build an object file
+Engine/utils/PlayerHolder.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o
+.PHONY : Engine/utils/PlayerHolder.cpp.o
+
+Engine/utils/PlayerHolder.i: Engine/utils/PlayerHolder.cpp.i
+.PHONY : Engine/utils/PlayerHolder.i
+
+# target to preprocess a source file
+Engine/utils/PlayerHolder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i
+.PHONY : Engine/utils/PlayerHolder.cpp.i
+
+Engine/utils/PlayerHolder.s: Engine/utils/PlayerHolder.cpp.s
+.PHONY : Engine/utils/PlayerHolder.s
+
+# target to generate assembly for a file
+Engine/utils/PlayerHolder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s
+.PHONY : Engine/utils/PlayerHolder.cpp.s
+
 Engine/utils/Shader.o: Engine/utils/Shader.cpp.o
 .PHONY : Engine/utils/Shader.o
 
@@ -783,6 +807,9 @@ help:
 	@echo "... Engine/utils/Objects/Sun.o"
 	@echo "... Engine/utils/Objects/Sun.i"
 	@echo "... Engine/utils/Objects/Sun.s"
+	@echo "... Engine/utils/PlayerHolder.o"
+	@echo "... Engine/utils/PlayerHolder.i"
+	@echo "... Engine/utils/PlayerHolder.s"
 	@echo "... Engine/utils/Shader.o"
 	@echo "... Engine/utils/Shader.i"
 	@echo "... Engine/utils/Shader.s"

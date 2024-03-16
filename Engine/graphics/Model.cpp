@@ -222,6 +222,14 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
 }
 
 void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
+  auto newModelMatrix = modelMatrix;
+
+  auto transform = newModelMatrix * glm::inverse(this->modelMatrix);
+
+  for (auto &mesh : meshes) {
+    mesh->transform(transform);
+  }
+
   this->modelMatrix = modelMatrix;
 
   attributes.transform = modelMatrix;

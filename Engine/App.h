@@ -10,6 +10,7 @@
 #include "Config.h"
 #include "View.h"
 #include "utils/CameraHolder.h"
+#include "utils/PlayerHolder.h"
 
 #include <GL/glew.h>
 #include <glfw/glfw3.h>
@@ -18,7 +19,7 @@ namespace App {
 
 extern View view;
 
-extern CameraHolder cameras;
+extern PlayerHolder players;
 
 extern bool paused;
 

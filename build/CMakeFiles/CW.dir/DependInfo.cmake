@@ -23,6 +23,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp" "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp" "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.cpp" "CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o.d"
+  "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.cpp" "CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.cpp" "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.cpp" "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp" "CMakeFiles/CW.dir/external/imgui/imgui.cpp.o" "gcc" "CMakeFiles/CW.dir/external/imgui/imgui.cpp.o.d"
