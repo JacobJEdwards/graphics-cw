@@ -11,6 +11,7 @@ void setupGLFW();
 
 View App::view;
 bool App::paused = false;
+bool App::debug = false;
 
 CameraHolder App::cameras;
 

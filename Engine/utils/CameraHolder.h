@@ -24,6 +24,15 @@ public:
 
   std::shared_ptr<Camera> getActiveCamera() { return activeCamera; }
 
+  std::string getActiveCameraName() {
+    for (auto &camera : cameras) {
+      if (camera.second == activeCamera) {
+        return camera.first;
+      }
+    }
+    return "";
+  }
+
   std::shared_ptr<Camera> getCamera(const std::string &name) {
     return cameras[name];
   }

@@ -29,8 +29,10 @@ public:
   void draw(const glm::mat4 &view, const glm::mat4 &projection) {
     glDepthFunc(GL_LEQUAL);
 
+    const auto newView = glm::mat4(glm::mat3(view));
+
     shader->use();
-    shader->setUniform("view", view);
+    shader->setUniform("view", newView);
     shader->setUniform("projection", projection);
 
     auto model = Config::IDENTITY_MATRIX;

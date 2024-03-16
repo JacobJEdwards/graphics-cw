@@ -799,11 +799,29 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__fwd/span.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.h \
+  /usr/local/include/assimp/scene.h /usr/local/include/assimp/types.h \
+  /usr/local/include/assimp/defs.h /usr/local/include/assimp/config.h \
+  /usr/local/include/assimp/vector2.h \
+  /usr/local/include/assimp/vector3.h /usr/local/include/assimp/color4.h \
+  /usr/local/include/assimp/matrix3x3.h \
   /usr/local/include/assimp/matrix4x4.h \
-  /usr/local/include/assimp/vector3.h /usr/local/include/assimp/defs.h \
-  /usr/local/include/assimp/config.h \
-  /usr/local/include/assimp/quaternion.h /usr/local/include/glm/glm.hpp \
+  /usr/local/include/assimp/quaternion.h \
+  /usr/local/include/assimp/vector2.inl \
+  /usr/local/include/assimp/vector3.inl \
+  /usr/local/include/assimp/color4.inl \
+  /usr/local/include/assimp/matrix3x3.inl \
+  /usr/local/include/assimp/matrix4x4.inl \
+  /usr/local/include/assimp/MathFunctions.h \
+  /usr/local/include/assimp/quaternion.inl \
+  /usr/local/include/assimp/texture.h \
+  /usr/local/include/assimp/./Compiler/pushpack1.h \
+  /usr/local/include/assimp/./Compiler/poppack1.h \
+  /usr/local/include/assimp/mesh.h /usr/local/include/assimp/aabb.h \
+  /usr/local/include/assimp/light.h /usr/local/include/assimp/camera.h \
+  /usr/local/include/assimp/material.h \
+  /usr/local/include/assimp/material.inl \
+  /usr/local/include/assimp/anim.h /usr/local/include/assimp/metadata.h \
+  /usr/local/include/glm/glm.hpp \
   /usr/local/include/glm/detail/_fixes.hpp \
   /usr/local/include/glm/detail/setup.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cassert \
@@ -956,18 +974,16 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: \
   /usr/local/include/glm/vector_relational.hpp \
   /usr/local/include/glm/integer.hpp \
   /usr/local/include/glm/detail/func_integer.inl \
-  /usr/local/include/glm/gtc/quaternion.hpp \
-  /usr/local/include/glm/gtc/../gtc/constants.hpp \
-  /usr/local/include/glm/gtc/../ext/scalar_constants.hpp \
-  /usr/local/include/glm/./ext/scalar_constants.inl \
-  /usr/local/include/glm/gtc/constants.inl \
-  /usr/local/include/glm/gtc/../gtc/matrix_transform.hpp \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
   /usr/local/include/glm/gtc/../mat4x4.hpp \
   /usr/local/include/glm/gtc/../vec2.hpp \
   /usr/local/include/glm/gtc/../vec3.hpp \
   /usr/local/include/glm/gtc/../vec4.hpp \
   /usr/local/include/glm/gtc/../ext/matrix_projection.hpp \
   /usr/local/include/glm/./ext/../gtc/constants.hpp \
+  /usr/local/include/glm/gtc/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/./ext/scalar_constants.inl \
+  /usr/local/include/glm/gtc/constants.inl \
   /usr/local/include/glm/./ext/../geometric.hpp \
   /usr/local/include/glm/./ext/../trigonometric.hpp \
   /usr/local/include/glm/./ext/../matrix.hpp \
@@ -981,75 +997,6 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: \
   /usr/local/include/glm/gtc/../geometric.hpp \
   /usr/local/include/glm/gtc/../trigonometric.hpp \
   /usr/local/include/glm/gtc/../matrix.hpp \
-  /usr/local/include/glm/gtc/../ext/vector_relational.hpp \
-  /usr/local/include/glm/./ext/../detail/qualifier.hpp \
-  /usr/local/include/glm/./ext/vector_relational.inl \
-  /usr/local/include/glm/./ext/../vector_relational.hpp \
-  /usr/local/include/glm/./ext/../common.hpp \
-  /usr/local/include/glm/./ext/../detail/type_float.hpp \
-  /usr/local/include/glm/gtc/../ext/quaternion_common.hpp \
-  /usr/local/include/glm/./ext/../ext/quaternion_geometric.hpp \
-  /usr/local/include/glm/./ext/../exponential.hpp \
-  /usr/local/include/glm/./ext/../ext/vector_relational.hpp \
-  /usr/local/include/glm/./ext/quaternion_geometric.inl \
-  /usr/local/include/glm/./ext/quaternion_common.inl \
-  /usr/local/include/glm/gtc/../ext/quaternion_float.hpp \
-  /usr/local/include/glm/./ext/../detail/type_quat.hpp \
-  /usr/local/include/glm/detail/../detail/type_mat3x3.hpp \
-  /usr/local/include/glm/detail/../detail/type_mat4x4.hpp \
-  /usr/local/include/glm/detail/../detail/type_vec3.hpp \
-  /usr/local/include/glm/detail/../detail/type_vec4.hpp \
-  /usr/local/include/glm/detail/../ext/vector_relational.hpp \
-  /usr/local/include/glm/detail/../ext/quaternion_relational.hpp \
-  /usr/local/include/glm/./ext/quaternion_relational.inl \
-  /usr/local/include/glm/detail/../gtc/constants.hpp \
-  /usr/local/include/glm/detail/../gtc/matrix_transform.hpp \
-  /usr/local/include/glm/detail/type_quat.inl \
-  /usr/local/include/glm/detail/../trigonometric.hpp \
-  /usr/local/include/glm/detail/../ext/quaternion_common.hpp \
-  /usr/local/include/glm/detail/../ext/quaternion_geometric.hpp \
-  /usr/local/include/glm/gtc/../ext/quaternion_float_precision.hpp \
-  /usr/local/include/glm/gtc/../ext/quaternion_double.hpp \
-  /usr/local/include/glm/gtc/../ext/quaternion_double_precision.hpp \
-  /usr/local/include/glm/gtc/../ext/quaternion_relational.hpp \
-  /usr/local/include/glm/gtc/../ext/quaternion_geometric.hpp \
-  /usr/local/include/glm/gtc/../ext/quaternion_trigonometric.hpp \
-  /usr/local/include/glm/./ext/scalar_constants.hpp \
-  /usr/local/include/glm/./ext/vector_relational.hpp \
-  /usr/local/include/glm/./ext/quaternion_trigonometric.inl \
-  /usr/local/include/glm/gtc/../ext/quaternion_transform.hpp \
-  /usr/local/include/glm/./ext/quaternion_transform.inl \
-  /usr/local/include/glm/gtc/../detail/type_mat3x3.hpp \
-  /usr/local/include/glm/gtc/../detail/type_mat4x4.hpp \
-  /usr/local/include/glm/gtc/../detail/type_vec3.hpp \
-  /usr/local/include/glm/gtc/../detail/type_vec4.hpp \
-  /usr/local/include/glm/gtc/quaternion.inl \
-  /usr/local/include/glm/gtc/../exponential.hpp \
-  /usr/local/include/glm/gtc/epsilon.hpp \
-  /usr/local/include/glm/gtc/../detail/setup.hpp \
-  /usr/local/include/glm/gtc/../detail/qualifier.hpp \
-  /usr/local/include/glm/gtc/epsilon.inl \
-  /usr/local/include/glm/gtc/../vector_relational.hpp \
-  /usr/local/include/glm/gtc/../common.hpp \
-  /usr/local/include/assimp/scene.h /usr/local/include/assimp/types.h \
-  /usr/local/include/assimp/vector2.h /usr/local/include/assimp/color4.h \
-  /usr/local/include/assimp/matrix3x3.h \
-  /usr/local/include/assimp/vector2.inl \
-  /usr/local/include/assimp/vector3.inl \
-  /usr/local/include/assimp/color4.inl \
-  /usr/local/include/assimp/matrix3x3.inl \
-  /usr/local/include/assimp/matrix4x4.inl \
-  /usr/local/include/assimp/MathFunctions.h \
-  /usr/local/include/assimp/quaternion.inl \
-  /usr/local/include/assimp/texture.h \
-  /usr/local/include/assimp/./Compiler/pushpack1.h \
-  /usr/local/include/assimp/./Compiler/poppack1.h \
-  /usr/local/include/assimp/mesh.h /usr/local/include/assimp/aabb.h \
-  /usr/local/include/assimp/light.h /usr/local/include/assimp/camera.h \
-  /usr/local/include/assimp/material.h \
-  /usr/local/include/assimp/material.inl \
-  /usr/local/include/assimp/anim.h /usr/local/include/assimp/metadata.h \
-  /usr/local/include/glm/gtc/matrix_transform.hpp \
   /usr/local/include/GLFW/glfw3.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \

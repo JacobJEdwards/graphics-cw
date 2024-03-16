@@ -978,19 +978,16 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__fwd/span.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.h \
-  /usr/local/include/glm/gtc/quaternion.hpp \
-  /usr/local/include/glm/gtc/../gtc/constants.hpp \
-  /usr/local/include/glm/gtc/../ext/scalar_constants.hpp \
-  /usr/local/include/glm/./ext/scalar_constants.inl \
-  /usr/local/include/glm/gtc/constants.inl \
-  /usr/local/include/glm/gtc/../gtc/matrix_transform.hpp \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
   /usr/local/include/glm/gtc/../mat4x4.hpp \
   /usr/local/include/glm/gtc/../vec2.hpp \
   /usr/local/include/glm/gtc/../vec3.hpp \
   /usr/local/include/glm/gtc/../vec4.hpp \
   /usr/local/include/glm/gtc/../ext/matrix_projection.hpp \
   /usr/local/include/glm/./ext/../gtc/constants.hpp \
+  /usr/local/include/glm/gtc/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/./ext/scalar_constants.inl \
+  /usr/local/include/glm/gtc/constants.inl \
   /usr/local/include/glm/./ext/../geometric.hpp \
   /usr/local/include/glm/./ext/../trigonometric.hpp \
   /usr/local/include/glm/./ext/../matrix.hpp \
@@ -1004,6 +1001,15 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: \
   /usr/local/include/glm/gtc/../geometric.hpp \
   /usr/local/include/glm/gtc/../trigonometric.hpp \
   /usr/local/include/glm/gtc/../matrix.hpp \
+  /usr/local/include/GLFW/glfw3.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
+  /usr/local/include/glm/gtc/type_ptr.hpp \
+  /usr/local/include/glm/gtc/../gtc/quaternion.hpp \
+  /usr/local/include/glm/gtc/../gtc/constants.hpp \
+  /usr/local/include/glm/gtc/../gtc/matrix_transform.hpp \
   /usr/local/include/glm/gtc/../ext/vector_relational.hpp \
   /usr/local/include/glm/./ext/../detail/qualifier.hpp \
   /usr/local/include/glm/./ext/vector_relational.inl \
@@ -1054,14 +1060,6 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: \
   /usr/local/include/glm/gtc/epsilon.inl \
   /usr/local/include/glm/gtc/../vector_relational.hpp \
   /usr/local/include/glm/gtc/../common.hpp \
-  /usr/local/include/glm/gtc/matrix_transform.hpp \
-  /usr/local/include/GLFW/glfw3.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
-  /usr/local/include/glm/gtc/type_ptr.hpp \
-  /usr/local/include/glm/gtc/../gtc/quaternion.hpp \
   /usr/local/include/glm/gtc/../gtc/vec1.hpp \
   /usr/local/include/glm/gtc/../ext/vector_bool1.hpp \
   /usr/local/include/glm/./ext/../detail/type_vec1.hpp \

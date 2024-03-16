@@ -34,6 +34,7 @@ add_executable(CW main.cpp
         Engine/View.cpp
         Engine/graphics/Color.cpp
         Engine/utils/Buffer.cpp
+        Engine/utils/BoundingBox.cpp
         Engine/physics/ModelAttributes.cpp
         Engine/physics/Gravity.cpp
         Engine/physics/Collisions.cpp

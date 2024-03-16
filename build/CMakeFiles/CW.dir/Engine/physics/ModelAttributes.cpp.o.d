@@ -1,6 +1,7 @@
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h \
   /usr/local/include/glm/glm.hpp \
   /usr/local/include/glm/detail/_fixes.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cmath \
@@ -373,4 +374,111 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: \
   /usr/local/include/glm/vector_relational.hpp \
   /usr/local/include/glm/integer.hpp \
   /usr/local/include/glm/detail/func_integer.inl \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
+  /usr/local/include/glm/gtc/../mat4x4.hpp \
+  /usr/local/include/glm/gtc/../vec2.hpp \
+  /usr/local/include/glm/gtc/../vec3.hpp \
+  /usr/local/include/glm/gtc/../vec4.hpp \
+  /usr/local/include/glm/gtc/../ext/matrix_projection.hpp \
+  /usr/local/include/glm/./ext/../gtc/constants.hpp \
+  /usr/local/include/glm/gtc/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/./ext/scalar_constants.inl \
+  /usr/local/include/glm/gtc/constants.inl \
+  /usr/local/include/glm/./ext/../geometric.hpp \
+  /usr/local/include/glm/./ext/../trigonometric.hpp \
+  /usr/local/include/glm/./ext/../matrix.hpp \
+  /usr/local/include/glm/./ext/matrix_projection.inl \
+  /usr/local/include/glm/gtc/../ext/matrix_clip_space.hpp \
+  /usr/local/include/glm/./ext/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/./ext/matrix_clip_space.inl \
+  /usr/local/include/glm/gtc/../ext/matrix_transform.hpp \
+  /usr/local/include/glm/./ext/matrix_transform.inl \
+  /usr/local/include/glm/gtc/matrix_transform.inl \
+  /usr/local/include/glm/gtc/../geometric.hpp \
+  /usr/local/include/glm/gtc/../trigonometric.hpp \
+  /usr/local/include/glm/gtc/../matrix.hpp \
+  /usr/local/include/glm/gtc/type_ptr.hpp \
+  /usr/local/include/glm/gtc/../gtc/quaternion.hpp \
+  /usr/local/include/glm/gtc/../gtc/constants.hpp \
+  /usr/local/include/glm/gtc/../gtc/matrix_transform.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_relational.hpp \
+  /usr/local/include/glm/./ext/../detail/qualifier.hpp \
+  /usr/local/include/glm/./ext/vector_relational.inl \
+  /usr/local/include/glm/./ext/../vector_relational.hpp \
+  /usr/local/include/glm/./ext/../common.hpp \
+  /usr/local/include/glm/./ext/../detail/type_float.hpp \
+  /usr/local/include/glm/gtc/../ext/quaternion_common.hpp \
+  /usr/local/include/glm/./ext/../ext/quaternion_geometric.hpp \
+  /usr/local/include/glm/./ext/../exponential.hpp \
+  /usr/local/include/glm/./ext/../ext/vector_relational.hpp \
+  /usr/local/include/glm/./ext/quaternion_geometric.inl \
+  /usr/local/include/glm/./ext/quaternion_common.inl \
+  /usr/local/include/glm/gtc/../ext/quaternion_float.hpp \
+  /usr/local/include/glm/./ext/../detail/type_quat.hpp \
+  /usr/local/include/glm/detail/../detail/type_mat3x3.hpp \
+  /usr/local/include/glm/detail/../detail/type_mat4x4.hpp \
+  /usr/local/include/glm/detail/../detail/type_vec3.hpp \
+  /usr/local/include/glm/detail/../detail/type_vec4.hpp \
+  /usr/local/include/glm/detail/../ext/vector_relational.hpp \
+  /usr/local/include/glm/detail/../ext/quaternion_relational.hpp \
+  /usr/local/include/glm/./ext/quaternion_relational.inl \
+  /usr/local/include/glm/detail/../gtc/constants.hpp \
+  /usr/local/include/glm/detail/../gtc/matrix_transform.hpp \
+  /usr/local/include/glm/detail/type_quat.inl \
+  /usr/local/include/glm/detail/../trigonometric.hpp \
+  /usr/local/include/glm/detail/../ext/quaternion_common.hpp \
+  /usr/local/include/glm/detail/../ext/quaternion_geometric.hpp \
+  /usr/local/include/glm/gtc/../ext/quaternion_float_precision.hpp \
+  /usr/local/include/glm/gtc/../ext/quaternion_double.hpp \
+  /usr/local/include/glm/gtc/../ext/quaternion_double_precision.hpp \
+  /usr/local/include/glm/gtc/../ext/quaternion_relational.hpp \
+  /usr/local/include/glm/gtc/../ext/quaternion_geometric.hpp \
+  /usr/local/include/glm/gtc/../ext/quaternion_trigonometric.hpp \
+  /usr/local/include/glm/./ext/scalar_constants.hpp \
+  /usr/local/include/glm/./ext/vector_relational.hpp \
+  /usr/local/include/glm/./ext/quaternion_trigonometric.inl \
+  /usr/local/include/glm/gtc/../ext/quaternion_transform.hpp \
+  /usr/local/include/glm/./ext/quaternion_transform.inl \
+  /usr/local/include/glm/gtc/../detail/type_mat3x3.hpp \
+  /usr/local/include/glm/gtc/../detail/type_mat4x4.hpp \
+  /usr/local/include/glm/gtc/../detail/type_vec3.hpp \
+  /usr/local/include/glm/gtc/../detail/type_vec4.hpp \
+  /usr/local/include/glm/gtc/quaternion.inl \
+  /usr/local/include/glm/gtc/../exponential.hpp \
+  /usr/local/include/glm/gtc/epsilon.hpp \
+  /usr/local/include/glm/gtc/../detail/setup.hpp \
+  /usr/local/include/glm/gtc/../detail/qualifier.hpp \
+  /usr/local/include/glm/gtc/epsilon.inl \
+  /usr/local/include/glm/gtc/../vector_relational.hpp \
+  /usr/local/include/glm/gtc/../common.hpp \
+  /usr/local/include/glm/gtc/../gtc/vec1.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_bool1.hpp \
+  /usr/local/include/glm/./ext/../detail/type_vec1.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_bool1_precision.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_float1.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_float1_precision.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_double1.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_double1_precision.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_int1.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_int1_sized.hpp \
+  /usr/local/include/glm/./ext/../ext/vector_int1.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_uint1.hpp \
+  /usr/local/include/glm/gtc/../ext/vector_uint1_sized.hpp \
+  /usr/local/include/glm/./ext/../ext/vector_uint1.hpp \
+  /usr/local/include/glm/gtc/../mat2x2.hpp \
+  /usr/local/include/glm/gtc/../mat2x3.hpp \
+  /usr/local/include/glm/gtc/../mat2x4.hpp \
+  /usr/local/include/glm/gtc/../mat3x2.hpp \
+  /usr/local/include/glm/gtc/../mat3x3.hpp \
+  /usr/local/include/glm/gtc/../mat3x4.hpp \
+  /usr/local/include/glm/gtc/../mat4x2.hpp \
+  /usr/local/include/glm/gtc/../mat4x3.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cstring \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/_types/_rsize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/_types/_errno_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/_types/_ssize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/strings.h \
+  /usr/local/include/glm/gtc/type_ptr.inl \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.h

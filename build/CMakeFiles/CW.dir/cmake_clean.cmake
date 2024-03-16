@@ -19,6 +19,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o"
   "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o"
+  "CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o"

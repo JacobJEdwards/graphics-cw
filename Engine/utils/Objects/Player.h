@@ -33,24 +33,29 @@ public:
 
   [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }
 
-  void update() { position = camera->getPosition(); }
+  void update(float dt) {
+    position = camera->getPosition();
+    player.update(dt);
+  }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection) {
+
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
     auto model = Config::IDENTITY_MATRIX;
+
     model = glm::translate(model, position);
-    model = glm::translate(model, glm::vec3(0.0F, -7.0F, 0.0F));
-    // translate back a bit
-    model = glm::translate(model, glm::vec3(0.0F, 0.0F, -1.3F));
+    model = glm::translate(model, glm::vec3(0.0F, -6.0F, 0.0F));
 
     player.setModelMatrix(model);
     boundingBox.setPosition(position);
 
     // boundingBox.transform(model);
 
-    player.draw();
+    if (App::cameras.getActiveCamera() != camera) {
+      player.draw();
+    }
   }
 
   [[nodiscard]] auto getBoundingBox() const -> BoundingBox {

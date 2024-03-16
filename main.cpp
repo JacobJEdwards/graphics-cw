@@ -15,6 +15,8 @@
 #include "Config.h"
 
 #include "App.h"
+#include "physics/Constants.h"
+#include "physics/Gravity.h"
 #include "utils/Camera.h"
 
 #include "graphics/Color.h"
@@ -120,10 +122,8 @@ auto main() -> int {
 
   auto model = glm::mat4(1.0F);
   glm::vec3 newPosition = App::cameras.getActiveCamera()->getPosition() +
-                          glm::vec3(0.0F, 8.0F, 5.0F);
-  const glm::mat4 helicopterModel =
-      translate(model, newPosition) *
-      rotate(model, glm::radians(90.0F), glm::vec3(1.0F, 0.0F, 0.0F));
+                          glm::vec3(0.0F, 15.0F, 10.0F);
+  const glm::mat4 helicopterModel = translate(model, newPosition);
 
   // newModel.scale(glm::vec3(0.1F, 0.1F, 0.1F));
   // newModel.translate(newPosition);
@@ -131,7 +131,7 @@ auto main() -> int {
 
   model = Config::IDENTITY_MATRIX;
   newPosition = App::cameras.getActiveCamera()->getPosition() +
-                glm::vec3(5.0F, 3.0F, 0.45F);
+                glm::vec3(5.0F, 2.0F, 0.45F);
   const glm::mat4 backpackModel = translate(model, newPosition);
 
   model2.transform(backpackModel);
@@ -143,6 +143,8 @@ auto main() -> int {
     const auto projectionMatrix =
         App::cameras.getActiveCamera()->getProjectionMatrix();
 
+    const auto viewMatrix = App::cameras.getActiveCamera()->getViewMatrix();
+
     View::clearTarget(Color::BLACK);
 
     ourShader->use();
@@ -151,16 +153,14 @@ auto main() -> int {
 
     ourShader->setUniform("light.position", glm::vec3(sun.getPosition(), 1.0F));
     // view/projection transformations
-    glm::mat4 view = App::cameras.getActiveCamera()->getViewMatrix();
-    ourShader->setUniform("view", view);
+    ourShader->setUniform("view", viewMatrix);
+
     ourShader->setUniform("viewPos",
                           App::cameras.getActiveCamera()->getPosition());
 
     newModel.draw();
 
-    // go upwards
-    // newModel.attributes.applyForce(glm::vec3(0.0F, 1.0F, 0.0F));
-
+    /*
     if (newModel.detectCollisions(
             App::cameras.getActiveCamera()->getPosition())) {
       Physics::Collisions::resolve(newModel.attributes,
@@ -186,20 +186,57 @@ auto main() -> int {
     } else {
       App::cameras.getActiveCamera()->attributes.isGrounded = false;
     }
+    */
 
-    view =
-        glm::mat4(glm::mat3(App::cameras.getActiveCamera()->getViewMatrix()));
-    skybox.draw(projectionMatrix, view, sun.getPosition().y);
-    sun.draw(view, projectionMatrix);
+    model2.draw();
+    terrain.draw(viewMatrix, projectionMatrix,
+                 glm::vec3(sun.getPosition(), 1.0F),
+                 App::cameras.getActiveCamera()->getPosition());
 
-    person.draw(App::cameras.getActiveCamera()->getViewMatrix(),
-                projectionMatrix);
+    if (person.isColliding(newModel.getBoundingBox())) {
+      Physics::Collisions::resolve(App::cameras.getActiveCamera()->attributes,
+                                   newModel.attributes);
+    }
+
+    if (person.isColliding(model2.getBoundingBox())) {
+      Physics::Collisions::resolve(App::cameras.getActiveCamera()->attributes,
+                                   model2.attributes);
+    }
+
+    if (person.isColliding(terrain.getBoundingBox())) {
+      Physics::Collisions::resolve(App::cameras.getActiveCamera()->attributes,
+                                   Physics::FLOOR_NORMAL);
+      App::cameras.getActiveCamera()->attributes.isGrounded = true;
+      App::cameras.getActiveCamera()->attributes.applyForce(
+          -Physics::GRAVITY_VECTOR);
+    } else {
+      App::cameras.getActiveCamera()->attributes.isGrounded = false;
+    }
+
+    if (newModel.isColliding(terrain.getBoundingBox())) {
+      Physics::Collisions::resolve(newModel.attributes, Physics::FLOOR_NORMAL);
+      newModel.attributes.applyForce(-Physics::GRAVITY_VECTOR);
+      newModel.attributes.isGrounded = true;
+    } else {
+      newModel.attributes.isGrounded = false;
+    }
+
+    newModel.attributes.applyDrag(0.5F);
+    newModel.attributes.applyGravity();
+
+    skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
+    sun.draw(viewMatrix, projectionMatrix);
+    person.draw(viewMatrix, projectionMatrix);
   });
 
   App::view.setInterface([&]() {
     if (App::paused) {
       App::cameras.getActiveCamera()->controlInterface();
       App::cameras.interface();
+
+      ImGui::Begin("Debug");
+      ImGui::Checkbox("Debug Mode", &App::debug);
+      ImGui::End();
     }
   });
 
@@ -208,7 +245,7 @@ auto main() -> int {
       sun.update(App::view.getDeltaTime());
       App::cameras.getActiveCamera()->circleOrbit(App::view.getDeltaTime());
       App::cameras.getActiveCamera()->update(App::view.getDeltaTime());
-      person.update();
+      person.update(App::view.getDeltaTime());
       newModel.update(App::view.getDeltaTime());
     });
   } catch (const std::exception &e) {
@@ -273,5 +310,19 @@ void processInput() {
   if (!moved) {
     App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::NONE,
                                                     App::view.getDeltaTime());
+  }
+
+  if (App::view.getKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+    App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::UP,
+                                                    App::view.getDeltaTime());
+  }
+
+  if (App::view.getKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+    App::cameras.getActiveCamera()->processKeyboard(Camera::Direction::DOWN,
+                                                    App::view.getDeltaTime());
+  }
+
+  if (App::view.getKey(GLFW_KEY_J) == GLFW_PRESS) {
+    App::cameras.getActiveCamera()->jump();
   }
 }

@@ -22,6 +22,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
+#include "App.h"
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
 #include "helpers/AssimpGLMHelpers.h"
@@ -32,9 +33,13 @@ Model::Model(const std::string &path) { loadModel(path); }
 
 void Model::draw() const {
   shader->use();
-  shader->setUniform("model", modelMatrix);
+  shader->setUniform("model", attributes.transform);
   for (const auto &mesh : meshes) {
     mesh->draw(shader);
+  }
+
+  if (App::debug) {
+    boundingBox.draw();
   }
 }
 
@@ -219,6 +224,8 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
 void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
   this->modelMatrix = modelMatrix;
 
+  attributes.transform = modelMatrix;
+
   attributes.position =
       glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 }
@@ -235,6 +242,8 @@ void Model::rotate(const glm::vec3 &axis, float angle) {
 
   attributes.position =
       glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
+
+  attributes.transform = modelMatrix;
 }
 
 void Model::translate(const glm::vec3 &translation) {
@@ -245,6 +254,7 @@ void Model::translate(const glm::vec3 &translation) {
 
   attributes.position =
       glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
+  attributes.transform = modelMatrix;
 }
 
 void Model::scale(const glm::vec3 &scale) {
@@ -255,6 +265,8 @@ void Model::scale(const glm::vec3 &scale) {
 
   attributes.position =
       glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
+
+  attributes.transform = modelMatrix;
 }
 
 void Model::transform(const glm::mat4 &transform) {
@@ -266,6 +278,8 @@ void Model::transform(const glm::mat4 &transform) {
 
   attributes.position =
       glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
+
+  attributes.transform = modelMatrix;
 }
 
 auto Model::getBoundingBox() const -> BoundingBox {

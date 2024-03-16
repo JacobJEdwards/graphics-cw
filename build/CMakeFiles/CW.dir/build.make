@@ -363,10 +363,24 @@ CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp -o CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s
 
+CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp
+CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp
+
+CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp > CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i
+
+CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp -o CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s
+
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: CMakeFiles/CW.dir/flags.make
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp
 
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.i: cmake_force
@@ -380,7 +394,7 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s: cmake_force
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o: CMakeFiles/CW.dir/flags.make
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp
 
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.i: cmake_force
@@ -394,7 +408,7 @@ CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.s: cmake_force
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: CMakeFiles/CW.dir/flags.make
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp
 
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.i: cmake_force
@@ -428,6 +442,7 @@ CW_OBJECTS = \
 "CMakeFiles/CW.dir/Engine/View.cpp.o" \
 "CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o" \
 "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o" \
+"CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o" \
 "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o" \
 "CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o" \
 "CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o"
@@ -456,6 +471,7 @@ CW: CMakeFiles/CW.dir/Engine/App.cpp.o
 CW: CMakeFiles/CW.dir/Engine/View.cpp.o
 CW: CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o
 CW: CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o
+CW: CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o
@@ -468,7 +484,7 @@ CW: /usr/local/lib/libassimp.5.3.0.dylib
 CW: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/lib/macosx/libsoil2.dylib
 CW: /usr/local/lib/libzlibstatic.a
 CW: CMakeFiles/CW.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX executable CW"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX executable CW"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CW.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

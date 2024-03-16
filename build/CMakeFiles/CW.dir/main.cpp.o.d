@@ -952,6 +952,8 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
   /usr/local/include/glfw/glfw3.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Constants.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.h \
   /usr/local/include/assimp/Importer.hpp \
   /usr/local/include/assimp/types.h /usr/local/include/assimp/defs.h \
@@ -999,10 +1001,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__fwd/span.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.h \
-  /usr/local/include/glm/gtc/quaternion.hpp \
-  /usr/local/include/glm/ext/../gtc/../gtc/constants.hpp \
-  /usr/local/include/glm/ext/../gtc/../gtc/matrix_transform.hpp \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
   /usr/local/include/glm/ext/../gtc/../mat4x4.hpp \
   /usr/local/include/glm/ext/../gtc/../vec2.hpp \
   /usr/local/include/glm/ext/../gtc/../vec3.hpp \
@@ -1017,6 +1016,18 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../gtc/../geometric.hpp \
   /usr/local/include/glm/ext/../gtc/../trigonometric.hpp \
   /usr/local/include/glm/ext/../gtc/../matrix.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/InfinitePlane.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.h \
+  /usr/local/include/glm/gtc/type_ptr.hpp \
+  /usr/local/include/glm/ext/../gtc/../gtc/quaternion.hpp \
+  /usr/local/include/glm/ext/../gtc/../gtc/constants.hpp \
+  /usr/local/include/glm/ext/../gtc/../gtc/matrix_transform.hpp \
   /usr/local/include/glm/ext/../gtc/../ext/vector_relational.hpp \
   /usr/local/include/glm/ext/vector_relational.inl \
   /usr/local/include/glm/ext/../vector_relational.hpp \
@@ -1063,17 +1074,6 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/glm/ext/../gtc/epsilon.inl \
   /usr/local/include/glm/ext/../gtc/../vector_relational.hpp \
   /usr/local/include/glm/ext/../gtc/../common.hpp \
-  /usr/local/include/glm/gtc/matrix_transform.hpp \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/InfinitePlane.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.h \
-  /usr/local/include/glm/gtc/type_ptr.hpp \
-  /usr/local/include/glm/ext/../gtc/../gtc/quaternion.hpp \
   /usr/local/include/glm/ext/../gtc/../gtc/vec1.hpp \
   /usr/local/include/glm/ext/../gtc/../ext/vector_bool1.hpp \
   /usr/local/include/glm/ext/../gtc/../ext/vector_bool1_precision.hpp \

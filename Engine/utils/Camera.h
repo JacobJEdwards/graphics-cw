@@ -27,7 +27,7 @@ class Camera {
 public:
   Physics::Attributes attributes;
 
-  enum class Direction { FORWARD, BACKWARD, LEFT, RIGHT, NONE };
+  enum class Direction { FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN };
 
   enum class Mode { FPS, FREE, ORBIT, FIXED, PATH };
 
@@ -92,8 +92,12 @@ public:
 
   void update(float dt);
 
+  void jump();
+
 private:
   Mode mode = Mode::FREE;
+
+  float jumpForce = 100.0F;
 
   glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
   glm::vec3 up{};

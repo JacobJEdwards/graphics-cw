@@ -22,6 +22,8 @@ extern CameraHolder cameras;
 
 extern bool paused;
 
+extern bool debug;
+
 auto init() -> bool;
 
 auto window(const std::string &title,

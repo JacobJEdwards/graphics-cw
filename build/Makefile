@@ -369,6 +369,30 @@ Engine/physics/ModelAttributes.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s
 .PHONY : Engine/physics/ModelAttributes.cpp.s
 
+Engine/utils/BoundingBox.o: Engine/utils/BoundingBox.cpp.o
+.PHONY : Engine/utils/BoundingBox.o
+
+# target to build an object file
+Engine/utils/BoundingBox.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o
+.PHONY : Engine/utils/BoundingBox.cpp.o
+
+Engine/utils/BoundingBox.i: Engine/utils/BoundingBox.cpp.i
+.PHONY : Engine/utils/BoundingBox.i
+
+# target to preprocess a source file
+Engine/utils/BoundingBox.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i
+.PHONY : Engine/utils/BoundingBox.cpp.i
+
+Engine/utils/BoundingBox.s: Engine/utils/BoundingBox.cpp.s
+.PHONY : Engine/utils/BoundingBox.s
+
+# target to generate assembly for a file
+Engine/utils/BoundingBox.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s
+.PHONY : Engine/utils/BoundingBox.cpp.s
+
 Engine/utils/Buffer.o: Engine/utils/Buffer.cpp.o
 .PHONY : Engine/utils/Buffer.o
 
@@ -744,6 +768,9 @@ help:
 	@echo "... Engine/physics/ModelAttributes.o"
 	@echo "... Engine/physics/ModelAttributes.i"
 	@echo "... Engine/physics/ModelAttributes.s"
+	@echo "... Engine/utils/BoundingBox.o"
+	@echo "... Engine/utils/BoundingBox.i"
+	@echo "... Engine/utils/BoundingBox.s"
 	@echo "... Engine/utils/Buffer.o"
 	@echo "... Engine/utils/Buffer.i"
 	@echo "... Engine/utils/Buffer.s"
