@@ -17,6 +17,8 @@
 
 #include "graphics/Color.h"
 
+#include "graphics/FrameBuffer.h"
+
 class View {
   using Handle = std::function<void()>;
   using ErrorHandle = std::function<void(int, const char *)>;
@@ -69,6 +71,11 @@ public:
 
   [[nodiscard]] auto getWindow() const -> GLFWwindow * { return window; }
 
+  // framebuffer opts
+  [[nodiscard]] auto getFrameBuffer() const -> FrameBuffer & {
+    return *frameBuffer.get();
+  }
+
   void close() const;
 
   int getKey(int key) const;
@@ -81,6 +88,8 @@ private:
   std::string title;
 
   ImGuiIO io;
+
+  std::unique_ptr<FrameBuffer> frameBuffer;
 
   bool showInterface = true;
   bool showMenu = true;
@@ -110,6 +119,7 @@ private:
 
   Handle resize = [&]() {
     glViewport(0, 0, static_cast<GLsizei>(WIDTH), static_cast<GLsizei>(HEIGHT));
+    frameBuffer->resize(WIDTH, HEIGHT);
   };
 
   bool setup = false;

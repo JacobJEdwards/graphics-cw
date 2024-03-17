@@ -22,6 +22,7 @@
 #include "graphics/Model.h"
 #include "graphics/Texture.h"
 #include "physics/Collisions.h"
+#include "shapes/Plane.h"
 #include "utils/Objects/InfinitePlane.h"
 #include "utils/Objects/Player.h"
 #include "utils/Objects/Skybox.h"
@@ -52,6 +53,8 @@ auto main() -> int {
                            App::view.getHeight());
     glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
                static_cast<GLsizei>(App::view.getHeight()));
+    App::view.getFrameBuffer().resize(App::view.getWidth(),
+                                      App::view.getHeight());
   });
 
   App::view.setMenu([&] {
@@ -108,8 +111,14 @@ auto main() -> int {
 
   InfinitePlane terrain;
 
+  Plane postProcessingPlane;
+
   auto ourShader = std::make_shared<Shader>("../assets/shaders/backpack.vert",
                                             "../assets/shaders/backpack.frag");
+
+  auto postProcessingShader =
+      std::make_shared<Shader>("../assets/shaders/postProcessing.vert",
+                               "../assets/shaders/postProcessing.frag");
 
   newModel.setShader(ourShader);
   model2.setShader(ourShader);
@@ -146,13 +155,14 @@ auto main() -> int {
   sun.setPosition(App::players.getCurrent()->getCamera().getPosition());
 
   App::view.setPipeline([&]() {
+    App::view.getFrameBuffer().bind();
+    glEnable(GL_DEPTH_TEST);
+    View::clearTarget(Color::BLACK);
     auto player = App::players.getCurrent();
 
     const auto projectionMatrix = player->getCamera().getProjectionMatrix();
 
     const auto viewMatrix = player->getCamera().getViewMatrix();
-
-    View::clearTarget(Color::BLACK);
 
     ourShader->use();
 
@@ -172,6 +182,23 @@ auto main() -> int {
     skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
     sun.draw(viewMatrix, projectionMatrix);
     App::players.draw(viewMatrix, projectionMatrix);
+
+    App::view.getFrameBuffer().unbind();
+
+    // disabled depth test
+    glDisable(GL_DEPTH_TEST);
+    View::clearTarget(Color::BLACK);
+    const auto texture = App::view.getFrameBuffer().getTexture();
+
+    postProcessingShader->use();
+    postProcessingPlane.bind();
+    // bind texture manually
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    postProcessingShader->setUniform("screenTexture", 0);
+    postProcessingPlane.draw();
+
+    glEnable(GL_DEPTH_TEST);
   });
 
   App::view.setInterface([&]() {

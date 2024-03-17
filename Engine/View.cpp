@@ -8,9 +8,11 @@
 #include <cstdlib>
 #include <glm/ext/vector_float3.hpp>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <utility>
 
+#include "graphics/FrameBuffer.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -98,6 +100,8 @@ auto View::init(const std::string &title, int width, int height) -> bool {
   ImGui_ImplOpenGL3_Init("#version 410");
   ImGui::StyleColorsDark();
   setup = true;
+
+  frameBuffer = std::make_unique<FrameBuffer>(width, height);
 
   return true;
 }

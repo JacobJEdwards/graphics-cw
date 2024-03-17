@@ -13,7 +13,6 @@
 #include <GLFW/glfw3.h>
 
 #include "utils/Buffer.h"
-#include "utils/Shader.h"
 
 class BoundingBox {
 public:
