@@ -5,8 +5,6 @@
 #ifndef CW_CAMERA_H
 #define CW_CAMERA_H
 
-#include "physics/ModelAttributes.h"
-
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float3.hpp>
 
@@ -25,8 +23,6 @@ constexpr float MINPITCH = -89.0F;
 
 class Camera {
 public:
-  Physics::Attributes attributes;
-
   enum class Direction { FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN };
 
   enum class Mode { FPS, FREE, ORBIT, FIXED, PATH };
@@ -39,8 +35,6 @@ public:
          float yaw, float pitch);
 
   [[nodiscard]] auto getViewMatrix() const -> glm::mat4;
-
-  void processKeyboard(Direction direction, float deltaTime);
 
   void processMouseMovement(float xOffset, float yOffset,
                             GLboolean constrainPitch = 1U);
@@ -76,28 +70,18 @@ public:
 
   [[nodiscard]] auto getYaw() const -> float;
 
-  auto getVelocity() -> glm::vec3 { return attributes.velocity; }
-
-  void setVelocity(const glm::vec3 &velocity) {
-    attributes.velocity = velocity;
-  }
-
   void setPosition(const glm::vec3 &position);
 
   void circleOrbit(float deltaTime);
 
   void setAspect(float aspect);
 
-  void controlInterface();
+  void interface();
 
   void update(float dt);
 
-  void jump();
-
 private:
   Mode mode = Mode::FREE;
-
-  float jumpForce = 100.0F;
 
   glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
   glm::vec3 up{};
@@ -134,8 +118,6 @@ private:
   void updateOrbitPosition();
 
   void adjustOrbitPosition(glm::vec3 &newPos) const;
-
-  void applyFPSModeEffects();
 };
 
 #endif // CW_CAMERA_H

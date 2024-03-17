@@ -940,6 +940,9 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: \
   /usr/local/include/glm/ext/vector_float4.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
+  /usr/local/include/glm/ext/matrix_float4x4.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
   /usr/local/include/glm/gtc/matrix_transform.hpp \
   /usr/local/include/glm/gtc/../mat4x4.hpp \
@@ -964,9 +967,6 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: \
   /usr/local/include/glm/gtc/../geometric.hpp \
   /usr/local/include/glm/gtc/../trigonometric.hpp \
   /usr/local/include/glm/gtc/../matrix.hpp \
-  /usr/local/include/glm/ext/matrix_float4x4.hpp \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
   /usr/local/include/assimp/scene.h /usr/local/include/assimp/types.h \
   /usr/local/include/assimp/defs.h /usr/local/include/assimp/config.h \

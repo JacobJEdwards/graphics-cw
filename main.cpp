@@ -16,7 +16,6 @@
 
 #include "App.h"
 #include "physics/Constants.h"
-#include "physics/Gravity.h"
 #include "utils/Camera.h"
 
 #include "graphics/Color.h"
@@ -79,7 +78,7 @@ auto main() -> int {
   newModel.attributes.mass = 50.0F;
   Texture::Loader::setFlip(true);
   Model model2("../Assets/objects/backpack/backpack.obj");
-  model2.attributes.mass = 0.5F;
+  model2.attributes.mass = 0.1F;
   Texture::Loader::setFlip(false);
 
   auto orbit = std::make_shared<Player>();
@@ -90,19 +89,19 @@ auto main() -> int {
 
   auto free = std::make_shared<Player>();
   free->setDrawModel(true);
-  free->getCamera().setMode(Camera::Mode::FREE);
+  free->setMode(Player::Mode::FREE);
   App::players.add("Free", free);
 
   auto fps = std::make_shared<Player>();
   fps->setDrawModel(true);
-  fps->getCamera().setMode(Camera::Mode::FPS);
+  fps->setMode(Player::Mode::FPS);
   App::players.add("FPS", fps);
 
   auto fixed = std::make_shared<Player>();
   fixed->setDrawModel(true);
   fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
                               glm::vec3(4.0F, 3.0F, 6.0F));
-  fixed->getCamera().setMode(Camera::Mode::FIXED);
+  fixed->setMode(Player::Mode::FIXED);
   App::players.add("Fixed", fixed);
 
   App::players.setCurrent("Orbit");
@@ -177,9 +176,9 @@ auto main() -> int {
 
   App::view.setInterface([&]() {
     if (App::paused) {
-      App::players.getCurrent()->getCamera().controlInterface();
-
+      App::players.getCurrent()->getCamera().interface();
       App::players.interface();
+      App::players.getCurrent()->interface();
 
       ImGui::Begin("Debug");
       ImGui::Checkbox("Debug Mode", &App::debug);
@@ -192,12 +191,12 @@ auto main() -> int {
       auto player = App::players.getCurrent();
       if (Physics::Collisions::check(player->getBoundingBox(),
                                      terrain.getBoundingBox())) {
-        Physics::Collisions::resolve(player->getCamera().attributes,
+        Physics::Collisions::resolve(player->getAttributes(),
                                      Physics::FLOOR_NORMAL);
-        player->getCamera().attributes.isGrounded = true;
+        player->getAttributes().isGrounded = true;
 
       } else {
-        player->getCamera().attributes.isGrounded = false;
+        player->getAttributes().isGrounded = false;
       }
 
       if (Physics::Collisions::check(newModel.getBoundingBox(),
@@ -224,15 +223,16 @@ auto main() -> int {
 
       if (Physics::Collisions::check(player->getBoundingBox(),
                                      newModel.getBoundingBox())) {
-        Physics::Collisions::resolve(player->getCamera().attributes,
+        Physics::Collisions::resolve(player->getAttributes(),
                                      newModel.attributes);
       }
 
       if (Physics::Collisions::check(player->getBoundingBox(),
                                      model2.getBoundingBox())) {
-        Physics::Collisions::resolve(player->getCamera().attributes,
+        Physics::Collisions::resolve(player->getAttributes(),
                                      model2.attributes);
       }
+
       sun.update(App::view.getDeltaTime());
       App::players.getCurrent()->update(App::view.getDeltaTime());
       newModel.update(App::view.getDeltaTime());
@@ -275,45 +275,49 @@ void processInput() {
 
   if (App::view.getKey(GLFW_KEY_W) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera().processKeyboard(
-        Camera::Direction::FORWARD, App::view.getDeltaTime());
+    App::players.getCurrent()->processKeyboard(Player::Direction::FORWARD,
+                                               App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_S) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera().processKeyboard(
-        Camera::Direction::BACKWARD, App::view.getDeltaTime());
+    App::players.getCurrent()->processKeyboard(Player::Direction::BACKWARD,
+                                               App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_A) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera().processKeyboard(
-        Camera::Direction::LEFT, App::view.getDeltaTime());
+    App::players.getCurrent()->processKeyboard(Player::Direction::LEFT,
+                                               App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_D) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera().processKeyboard(
-        Camera::Direction::RIGHT, App::view.getDeltaTime());
+    App::players.getCurrent()->processKeyboard(Player::Direction::RIGHT,
+                                               App::view.getDeltaTime());
   }
 
   if (!moved) {
-    App::players.getCurrent()->getCamera().processKeyboard(
-        Camera::Direction::NONE, App::view.getDeltaTime());
+    App::players.getCurrent()->processKeyboard(Player::Direction::NONE,
+                                               App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-    App::players.getCurrent()->getCamera().processKeyboard(
-        Camera::Direction::UP, App::view.getDeltaTime());
+    App::players.getCurrent()->processKeyboard(Player::Direction::UP,
+                                               App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-    App::players.getCurrent()->getCamera().processKeyboard(
-        Camera::Direction::DOWN, App::view.getDeltaTime());
+    App::players.getCurrent()->processKeyboard(Player::Direction::DOWN,
+                                               App::view.getDeltaTime());
+  }
+
+  if (App::view.getKey(GLFW_KEY_N) == GLFW_PRESS) {
+    App::players.getCurrent()->nitro();
   }
 
   if (App::view.getKey(GLFW_KEY_J) == GLFW_PRESS) {
-    if (App::players.getCurrent()->getCamera().attributes.isGrounded) {
+    if (App::players.getCurrent()->getAttributes().isGrounded) {
       App::players.getCurrent()->jump();
     }
   }

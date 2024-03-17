@@ -18,7 +18,11 @@ void Physics::Attributes::update(float dt) {
 
   force = glm::vec3(0.0f);
 
-  applyDrag(Physics::AIR_RESISTANCE);
+  applyDrag(Physics::AIR_RESISTANCE * glm::length(velocity));
+
+  if (isGrounded) {
+    applyFriction(Physics::FRICTION);
+  }
 }
 
 void Physics::Attributes::applyForce(const glm::vec3 &f) { force += f; }
@@ -36,6 +40,10 @@ void Physics::Attributes::applyDrag(float drag) {
 }
 
 void Physics::Attributes::applyImpulse(const glm::vec3 &impulse) {
+  if (mass == 0.0F) {
+    return;
+  }
+
   velocity += impulse / mass;
 }
 

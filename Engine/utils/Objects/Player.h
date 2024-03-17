@@ -11,69 +11,49 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
 
-#include "Config.h"
 #include "graphics/Model.h"
 #include "utils/Camera.h"
 #include "utils/Shader.h"
 
 class Player {
 public:
-  Player() {
-    boundingBox = model.getBoundingBox();
-    model.setShader(shader);
-    camera->setMode(Camera::Mode::FPS);
-    camera->setPosition(glm::vec3(0.0F, 20.0F, 3.0F));
-    position = camera->getPosition();
-  };
+  Player();
 
-  [[nodiscard]] auto getCamera() const -> Camera & { return *camera.get(); }
+  enum class Mode { FPS, FREE, ORBIT, FIXED, PATH };
+  enum class Direction { FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN };
 
-  [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }
+  void processKeyboard(Direction direction, float deltaTime);
 
-  void update(float dt) {
-    position = camera->getPosition();
-    model.attributes.position = position;
-    model.update(dt);
-    camera->update(dt);
-  }
+  [[nodiscard]] auto getCamera() const -> Camera &;
+  [[nodiscard]] auto getPosition() const -> glm::vec3;
+
+  void update(float dt);
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection,
-            bool show = true) {
+            bool show = true);
 
-    boundingBox.setPosition(position);
+  [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
-    auto modelMat = Config::IDENTITY_MATRIX;
-    modelMat = glm::translate(modelMat, position);
-    modelMat = glm::translate(modelMat, glm::vec3(0.0F, -6.0F, 0.0F));
+  void jump();
 
-    model.setModelMatrix(modelMat);
+  void setDrawModel(bool draw);
 
-    if (show && drawModel) {
-      shader->use();
-      shader->setUniform("view", view);
-      shader->setUniform("projection", projection);
-      // boundingBox.transform(modelMat);
-      model.draw();
-    }
-  }
+  auto getAttributes() -> Physics::Attributes &;
 
-  [[nodiscard]] auto getBoundingBox() const -> BoundingBox {
-    return boundingBox;
-  }
+  void setMode(Mode mode);
 
-  [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool {
-    return boundingBox.isColliding(other);
-  }
+  void interface();
 
-  void jump() { camera->jump(); }
+  void debug() const;
 
-  void setDrawModel(bool draw) { drawModel = draw; }
+  void nitro();
 
 private:
+  Mode mode = Mode::FPS;
+
   bool drawModel = true;
-  glm::vec3 position;
-  BoundingBox boundingBox =
-      BoundingBox(glm::vec3(-0.5F, -0.5F, -0.5F), glm::vec3(0.5F, 0.5F, 0.5F));
+
+  float jumpForce = 100.0F;
 
   std::unique_ptr<Camera> camera =
       std::make_unique<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));

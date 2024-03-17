@@ -441,6 +441,30 @@ Engine/utils/Camera.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Camera.cpp.s
 .PHONY : Engine/utils/Camera.cpp.s
 
+Engine/utils/Objects/Player.o: Engine/utils/Objects/Player.cpp.o
+.PHONY : Engine/utils/Objects/Player.o
+
+# target to build an object file
+Engine/utils/Objects/Player.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o
+.PHONY : Engine/utils/Objects/Player.cpp.o
+
+Engine/utils/Objects/Player.i: Engine/utils/Objects/Player.cpp.i
+.PHONY : Engine/utils/Objects/Player.i
+
+# target to preprocess a source file
+Engine/utils/Objects/Player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.i
+.PHONY : Engine/utils/Objects/Player.cpp.i
+
+Engine/utils/Objects/Player.s: Engine/utils/Objects/Player.cpp.s
+.PHONY : Engine/utils/Objects/Player.s
+
+# target to generate assembly for a file
+Engine/utils/Objects/Player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.s
+.PHONY : Engine/utils/Objects/Player.cpp.s
+
 Engine/utils/Objects/Skybox.o: Engine/utils/Objects/Skybox.cpp.o
 .PHONY : Engine/utils/Objects/Skybox.o
 
@@ -801,6 +825,9 @@ help:
 	@echo "... Engine/utils/Camera.o"
 	@echo "... Engine/utils/Camera.i"
 	@echo "... Engine/utils/Camera.s"
+	@echo "... Engine/utils/Objects/Player.o"
+	@echo "... Engine/utils/Objects/Player.i"
+	@echo "... Engine/utils/Objects/Player.s"
 	@echo "... Engine/utils/Objects/Skybox.o"
 	@echo "... Engine/utils/Objects/Skybox.i"
 	@echo "... Engine/utils/Objects/Skybox.s"

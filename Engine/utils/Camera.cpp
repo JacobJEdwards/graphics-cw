@@ -20,7 +20,6 @@
 Camera::Camera(glm::vec3 position, glm::vec3 worldUp, float yaw, float pitch)
     : position(position), worldUp(worldUp), yaw(yaw), pitch(pitch) {
 
-  attributes.position = position;
   updateCameraVectors();
 }
 
@@ -29,7 +28,6 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
                float upZ, float yaw, float pitch)
     : position(glm::vec3(posX, posY, posZ)), worldUp(glm::vec3(upX, upY, upZ)),
       yaw(yaw), pitch(pitch) {
-  attributes.position = position;
   updateCameraVectors();
 }
 
@@ -38,9 +36,9 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
   case Mode::ORBIT:
     return lookAt(position, target, worldUp);
   case Mode::FPS:
-    return lookAt(attributes.position, attributes.position + front, up);
+    return lookAt(position, position + front, up);
   case Mode::FREE:
-    return lookAt(attributes.position, attributes.position + front, up);
+    return lookAt(position, position + front, up);
   case Mode::FIXED:
     return lookAt(position, target, up);
 
@@ -57,52 +55,15 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
   return glm::perspective(glm::radians(zoom), aspect, 0.1F, renderDistance);
 }
 
-void Camera::processKeyboard(const Direction direction, const float deltaTime) {
-  switch (direction) {
-  case Direction::FORWARD:
-    attributes.applyForce(front * 10.0F);
-
-    if (mode == Mode::ORBIT) {
-      target += glm::vec3(0.0F, 0.1F, 0.0F);
-    }
-    break;
-  case Direction::BACKWARD:
-    attributes.applyForce(-front * 10.0F);
-    if (mode == Mode::ORBIT) {
-      target += glm::vec3(0.0F, -0.1F, 0.0F);
-      target.y = std::max(target.y, 0.0F);
-    }
-    break;
-  case Direction::LEFT:
-    attributes.applyForce(-right * 10.0F);
-    break;
-  case Direction::RIGHT:
-    attributes.applyForce(right * 10.0F);
-    break;
-  case Direction::NONE:
-    attributes.applyDrag(0.5F);
-    break;
-  case Direction::UP:
-    attributes.applyForce(up * 10.0F);
-    break;
-  case Direction::DOWN:
-    attributes.applyForce(-up * 10.0F);
-    break;
-  }
-
-  if (mode == Mode::FPS) {
-    applyFPSModeEffects();
-  }
-}
-
 void Camera::circleOrbit(const float deltaTime) {
   orbitAngle += deltaTime * orbitSpeed;
   updateOrbitPosition();
 }
 
+/*
 void Camera::applyFPSModeEffects() {
   if (!attributes.isGrounded) {
-    attributes.applyGravity();
+    attributes.applyForce(Physics::GRAVITY_VECTOR * attributes.mass);
   }
   downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
 
@@ -114,6 +75,7 @@ void Camera::applyFPSModeEffects() {
     downwards = false;
   }
 }
+*/
 
 void Camera::processMouseMovement(float xOffset, float yOffset,
                                   const GLboolean constrainPitch) {
@@ -179,9 +141,7 @@ void Camera::setFixed(glm::vec3 target, glm::vec3 position) {
 
 [[nodiscard]] auto Camera::getZoom() const -> float { return zoom; }
 
-[[nodiscard]] auto Camera::getPosition() const -> glm::vec3 {
-  return attributes.position;
-}
+[[nodiscard]] auto Camera::getPosition() const -> glm::vec3 { return position; }
 
 [[nodiscard]] auto Camera::getFront() const -> glm::vec3 { return front; }
 
@@ -194,7 +154,7 @@ void Camera::setFixed(glm::vec3 target, glm::vec3 position) {
 [[nodiscard]] auto Camera::getYaw() const -> float { return yaw; }
 
 void Camera::setPosition(const glm::vec3 &position) {
-  attributes.position = position;
+  Camera::position = position;
   updateCameraVectors();
 }
 
@@ -212,7 +172,6 @@ void Camera::updateCameraVectors() {
   if (mode == Mode::ORBIT) {
     updateOrbitPosition();
   }
-
   // update attributes transform
 }
 
@@ -222,7 +181,7 @@ void Camera::updateOrbitPosition() {
   position.y = target.y + orbitHeight;
 }
 
-void Camera::controlInterface() {
+void Camera::interface() {
   ImGui::Begin("Camera Options");
   ImGui::SeparatorText("General");
   ImGui::SliderFloat("Zoom", &zoom, MINZOOM, MAXZOOM);
@@ -244,21 +203,18 @@ void Camera::controlInterface() {
     position.z = target.z + distance * sin(glm::radians(yaw));
   }
 
+  /*
   if (mode == Mode::FPS) {
     ImGui::SeparatorText("FPS");
     ImGui::SliderFloat("Jump Force", &jumpForce, 10.0F, 10000.0F);
   }
+  */
   ImGui::End();
 }
 
 void Camera::setAspect(const float aspect) { this->aspect = aspect; }
 
 void Camera::update(float dt) {
-  attributes.update(dt);
-  circleOrbit(dt);
-}
-
-void Camera::jump() {
-  if (attributes.isGrounded)
-    attributes.applyForce(glm::vec3(0.0F, jumpForce, 0.0F));
+  if (mode == Mode::ORBIT)
+    circleOrbit(dt);
 }

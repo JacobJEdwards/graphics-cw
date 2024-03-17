@@ -26,6 +26,7 @@
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
 #include "helpers/AssimpGLMHelpers.h"
+#include "physics/Gravity.h"
 #include "utils/BoundingBox.h"
 #include "utils/Vertex.h"
 
@@ -311,11 +312,13 @@ auto Model::getBoundingBox() const -> BoundingBox {
   return modelBoundingBox;
 }
 
-void Model::update(float dt) {
+void Model::update(float dt, bool gravity) {
   attributes.update(dt);
-  if (!attributes.isGrounded) {
-    attributes.applyGravity();
+
+  if (!attributes.isGrounded && gravity) {
+    attributes.applyForce(Physics::GRAVITY_VECTOR * attributes.mass);
   }
+
   glm::vec3 newPosition = attributes.position;
 
   glm::mat4 newMatrix = modelMatrix;

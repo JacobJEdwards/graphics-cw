@@ -25,6 +25,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o"
+  "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o"

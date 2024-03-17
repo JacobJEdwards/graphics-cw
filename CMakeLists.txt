@@ -39,6 +39,7 @@ add_executable(CW main.cpp
         Engine/physics/Gravity.cpp
         Engine/physics/Collisions.cpp
         Engine/utils/PlayerHolder.cpp
+        Engine/utils/Objects/Player.cpp
 )
 
 # Link libraries
