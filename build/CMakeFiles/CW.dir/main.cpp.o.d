@@ -951,6 +951,21 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
+  /usr/local/include/glm/gtc/matrix_transform.hpp \
+  /usr/local/include/glm/ext/../gtc/../mat4x4.hpp \
+  /usr/local/include/glm/ext/../gtc/../vec2.hpp \
+  /usr/local/include/glm/ext/../gtc/../vec3.hpp \
+  /usr/local/include/glm/ext/../gtc/../vec4.hpp \
+  /usr/local/include/glm/ext/../gtc/../ext/matrix_projection.hpp \
+  /usr/local/include/glm/ext/matrix_projection.inl \
+  /usr/local/include/glm/ext/../gtc/../ext/matrix_clip_space.hpp \
+  /usr/local/include/glm/ext/../ext/scalar_constants.hpp \
+  /usr/local/include/glm/ext/matrix_clip_space.inl \
+  /usr/local/include/glm/ext/../gtc/../ext/matrix_transform.hpp \
+  /usr/local/include/glm/ext/../gtc/matrix_transform.inl \
+  /usr/local/include/glm/ext/../gtc/../geometric.hpp \
+  /usr/local/include/glm/ext/../gtc/../trigonometric.hpp \
+  /usr/local/include/glm/ext/../gtc/../matrix.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
@@ -976,21 +991,6 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /usr/local/include/assimp/material.h \
   /usr/local/include/assimp/material.inl \
   /usr/local/include/assimp/anim.h /usr/local/include/assimp/metadata.h \
-  /usr/local/include/glm/gtc/matrix_transform.hpp \
-  /usr/local/include/glm/ext/../gtc/../mat4x4.hpp \
-  /usr/local/include/glm/ext/../gtc/../vec2.hpp \
-  /usr/local/include/glm/ext/../gtc/../vec3.hpp \
-  /usr/local/include/glm/ext/../gtc/../vec4.hpp \
-  /usr/local/include/glm/ext/../gtc/../ext/matrix_projection.hpp \
-  /usr/local/include/glm/ext/matrix_projection.inl \
-  /usr/local/include/glm/ext/../gtc/../ext/matrix_clip_space.hpp \
-  /usr/local/include/glm/ext/../ext/scalar_constants.hpp \
-  /usr/local/include/glm/ext/matrix_clip_space.inl \
-  /usr/local/include/glm/ext/../gtc/../ext/matrix_transform.hpp \
-  /usr/local/include/glm/ext/../gtc/matrix_transform.inl \
-  /usr/local/include/glm/ext/../gtc/../geometric.hpp \
-  /usr/local/include/glm/ext/../gtc/../trigonometric.hpp \
-  /usr/local/include/glm/ext/../gtc/../matrix.hpp \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/span \

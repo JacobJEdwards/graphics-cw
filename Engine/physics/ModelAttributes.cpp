@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "physics/Constants.h"
 #include "physics/Gravity.h"
 
 void Physics::Attributes::update(float dt) {
@@ -16,6 +17,8 @@ void Physics::Attributes::update(float dt) {
   transform[3][2] = position.z;
 
   force = glm::vec3(0.0f);
+
+  applyDrag(Physics::AIR_RESISTANCE);
 }
 
 void Physics::Attributes::applyForce(const glm::vec3 &f) { force += f; }

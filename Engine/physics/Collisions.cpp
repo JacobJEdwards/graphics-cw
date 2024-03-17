@@ -1,4 +1,5 @@
 #include "Collisions.h"
+#include "physics/Constants.h"
 #include "physics/ModelAttributes.h"
 
 namespace {
@@ -17,6 +18,7 @@ void resolve(Attributes &a, const glm::vec3 &normal) {
   float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
 
   if (relativeVelocityAlongNormal > 0) {
+    a.applyFriction(Physics::FRICTION);
     return;
   }
 

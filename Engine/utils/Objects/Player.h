@@ -28,9 +28,7 @@ public:
     position = camera->getPosition();
   };
 
-  [[nodiscard]] auto getCamera() const -> std::shared_ptr<Camera> {
-    return camera;
-  }
+  [[nodiscard]] auto getCamera() const -> Camera & { return *camera.get(); }
 
   [[nodiscard]] auto getPosition() const -> glm::vec3 { return position; }
 
@@ -38,23 +36,28 @@ public:
     position = camera->getPosition();
     model.update(dt);
     camera->update(dt);
+    attributes.position = position;
+    attributes.update(dt);
   }
 
-  void draw(const glm::mat4 &view, const glm::mat4 &projection) {
+  void draw(const glm::mat4 &view, const glm::mat4 &projection,
+            bool show = true) {
 
-    shader->use();
-    shader->setUniform("view", view);
-    shader->setUniform("projection", projection);
+    boundingBox.setPosition(position);
+
     auto modelMat = Config::IDENTITY_MATRIX;
-
     modelMat = glm::translate(modelMat, position);
     modelMat = glm::translate(modelMat, glm::vec3(0.0F, -6.0F, 0.0F));
 
     model.setModelMatrix(modelMat);
-    boundingBox.setPosition(position);
 
-    // boundingBox.transform(model);
-    model.draw();
+    if (show && drawModel) {
+      shader->use();
+      shader->setUniform("view", view);
+      shader->setUniform("projection", projection);
+      // boundingBox.transform(modelMat);
+      model.draw();
+    }
   }
 
   [[nodiscard]] auto getBoundingBox() const -> BoundingBox {
@@ -67,16 +70,20 @@ public:
 
   void jump() { camera->jump(); }
 
+  void setDrawModel(bool draw) { drawModel = draw; }
+
 private:
+  bool drawModel = true;
   glm::vec3 position;
   BoundingBox boundingBox =
       BoundingBox(glm::vec3(-0.5F, -0.5F, -0.5F), glm::vec3(0.5F, 0.5F, 0.5F));
 
-  std::shared_ptr<Camera> camera =
-      std::make_shared<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
+  std::unique_ptr<Camera> camera =
+      std::make_unique<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
 
   std::shared_ptr<Shader> shader = std::make_shared<Shader>(
       "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+
   Model model = Model("../Assets/objects/person/person.obj");
 };
 

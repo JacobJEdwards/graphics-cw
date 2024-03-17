@@ -38,19 +38,19 @@ auto main() -> int {
   App::view.setKey(processInput);
   App::view.setMouse([&] {
     if (!App::paused) {
-      App::players.getCurrent()->getCamera()->processMouseMovement(
+      App::players.getCurrent()->getCamera().processMouseMovement(
           App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
     }
   });
 
   App::view.setScroll([&] {
-    App::players.getCurrent()->getCamera()->processMouseScroll(
+    App::players.getCurrent()->getCamera().processMouseScroll(
         App::view.getScrollY());
   });
 
   App::view.setResize([&] {
-    App::players.getCurrent()->getCamera()->setAspect(
-        static_cast<float>(App::view.getWidth()) / App::view.getHeight());
+    App::players.setAspect(static_cast<float>(App::view.getWidth()) /
+                           App::view.getHeight());
     glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
                static_cast<GLsizei>(App::view.getHeight()));
   });
@@ -81,23 +81,26 @@ auto main() -> int {
   Texture::Loader::setFlip(false);
 
   auto orbit = std::make_shared<Player>();
-  auto camera = orbit->getCamera();
-  camera->setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 10.0F, 5.0F, 5.0F);
-  camera->setMode(Camera::Mode::ORBIT);
+  orbit->setDrawModel(false);
+  orbit->getCamera().setMode(Camera::Mode::ORBIT);
+  orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F);
   App::players.add("Orbit", orbit);
 
   auto free = std::make_shared<Player>();
-  free->getCamera()->setMode(Camera::Mode::FREE);
+  free->setDrawModel(true);
+  free->getCamera().setMode(Camera::Mode::FREE);
   App::players.add("Free", free);
 
   auto fps = std::make_shared<Player>();
-  fps->getCamera()->setMode(Camera::Mode::FPS);
+  fps->setDrawModel(true);
+  fps->getCamera().setMode(Camera::Mode::FPS);
   App::players.add("FPS", fps);
 
   auto fixed = std::make_shared<Player>();
-  fixed->getCamera()->setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
-                               glm::vec3(0.0F, 1.0F, 0.0F));
-  fixed->getCamera()->setMode(Camera::Mode::FIXED);
+  fixed->setDrawModel(true);
+  fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
+                              glm::vec3(4.0F, 3.0F, 6.0F));
+  fixed->getCamera().setMode(Camera::Mode::FIXED);
   App::players.add("Fixed", fixed);
 
   App::players.setCurrent("Orbit");
@@ -121,9 +124,8 @@ auto main() -> int {
 
   auto model = glm::mat4(1.0F);
 
-  glm::vec3 newPosition =
-      App::players.getCurrent()->getCamera()->getPosition() +
-      glm::vec3(0.0F, 15.0F, 10.0F);
+  glm::vec3 newPosition = App::players.getCurrent()->getCamera().getPosition() +
+                          glm::vec3(0.0F, 15.0F, 10.0F);
 
   const glm::mat4 helicopterModel = translate(model, newPosition);
 
@@ -132,7 +134,7 @@ auto main() -> int {
   newModel.transform(helicopterModel);
 
   model = Config::IDENTITY_MATRIX;
-  newPosition = App::players.getCurrent()->getCamera()->getPosition() +
+  newPosition = App::players.getCurrent()->getCamera().getPosition() +
                 glm::vec3(5.0F, 2.0F, 0.45F);
 
   const glm::mat4 backpackModel = translate(model, newPosition);
@@ -140,14 +142,14 @@ auto main() -> int {
   model2.transform(backpackModel);
   // scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
 
-  sun.setPosition(App::players.getCurrent()->getCamera()->getPosition());
+  sun.setPosition(App::players.getCurrent()->getCamera().getPosition());
 
   App::view.setPipeline([&]() {
     auto player = App::players.getCurrent();
 
-    const auto projectionMatrix = player->getCamera()->getProjectionMatrix();
+    const auto projectionMatrix = player->getCamera().getProjectionMatrix();
 
-    const auto viewMatrix = player->getCamera()->getViewMatrix();
+    const auto viewMatrix = player->getCamera().getViewMatrix();
 
     View::clearTarget(Color::BLACK);
 
@@ -156,70 +158,32 @@ auto main() -> int {
     ourShader->setUniform("projection", projectionMatrix);
 
     ourShader->setUniform("light.position", glm::vec3(sun.getPosition(), 1.0F));
-    // view/projection transformations
     ourShader->setUniform("view", viewMatrix);
 
-    ourShader->setUniform("viewPos", player->getCamera()->getPosition());
+    ourShader->setUniform("viewPos", player->getCamera().getPosition());
 
     newModel.draw();
-
-    /*
-    if (newModel.detectCollisions(
-            App::cameras.getActiveCamera()->getPosition())) {
-      Physics::Collisions::resolve(newModel.attributes,
-                                   App::cameras.getActiveCamera()->attributes);
-    }
-
-    model2.draw();
-
-    if (model2.detectCollisions(
-            App::cameras.getActiveCamera()->getPosition())) {
-      Physics::Collisions::resolve(model2.attributes,
-                                   App::cameras.getActiveCamera()->attributes);
-    }
-
-    terrain.draw(view, projectionMatrix, glm::vec3(sun.getPosition(), 1.0F),
-                 App::cameras.getActiveCamera()->getPosition());
-
-    if (terrain.detectCollisions(
-            App::cameras.getActiveCamera()->getPosition())) {
-      Physics::Collisions::resolve(App::cameras.getActiveCamera()->attributes,
-                                   terrain.attributes, true);
-      App::cameras.getActiveCamera()->attributes.isGrounded = true;
-    } else {
-      App::cameras.getActiveCamera()->attributes.isGrounded = false;
-    }
-    */
-
     model2.draw();
     terrain.draw(viewMatrix, projectionMatrix,
                  glm::vec3(sun.getPosition(), 1.0F),
-                 player->getCamera()->getPosition());
+                 player->getCamera().getPosition());
 
-    if (player->isColliding(newModel.getBoundingBox())) {
-      Physics::Collisions::resolve(player->getCamera()->attributes,
-                                   newModel.attributes);
-    }
-
-    if (player->isColliding(model2.getBoundingBox())) {
-      Physics::Collisions::resolve(player->getCamera()->attributes,
-                                   model2.attributes);
-    }
-
-    if (player->isColliding(terrain.getBoundingBox())) {
-      Physics::Collisions::resolve(player->getCamera()->attributes,
+    if (Physics::Collisions::check(player->getBoundingBox(),
+                                   terrain.getBoundingBox())) {
+      Physics::Collisions::resolve(player->getCamera().attributes,
                                    Physics::FLOOR_NORMAL);
-      player->getCamera()->attributes.applyForce(-Physics::GRAVITY_VECTOR);
-      player->getCamera()->attributes.isGrounded = true;
+      player->getCamera().attributes.applyForce(-Physics::GRAVITY_VECTOR);
+      player->getCamera().attributes.isGrounded = true;
 
       player->attributes.applyForce(-Physics::GRAVITY_VECTOR);
       player->attributes.isGrounded = true;
     } else {
-      player->getCamera()->attributes.isGrounded = false;
+      player->getCamera().attributes.isGrounded = false;
       player->attributes.isGrounded = false;
     }
 
-    if (newModel.isColliding(terrain.getBoundingBox())) {
+    if (Physics::Collisions::check(newModel.getBoundingBox(),
+                                   terrain.getBoundingBox())) {
       Physics::Collisions::resolve(newModel.attributes, Physics::FLOOR_NORMAL);
       newModel.attributes.applyForce(-Physics::GRAVITY_VECTOR);
       newModel.attributes.isGrounded = true;
@@ -227,8 +191,31 @@ auto main() -> int {
       newModel.attributes.isGrounded = false;
     }
 
-    newModel.attributes.applyDrag(0.5F);
-    newModel.attributes.applyGravity();
+    if (Physics::Collisions::check(model2.getBoundingBox(),
+                                   terrain.getBoundingBox())) {
+      Physics::Collisions::resolve(model2.attributes, Physics::FLOOR_NORMAL);
+      model2.attributes.applyForce(-Physics::GRAVITY_VECTOR);
+      model2.attributes.isGrounded = true;
+    } else {
+      model2.attributes.isGrounded = false;
+    }
+
+    if (Physics::Collisions::check(newModel.getBoundingBox(),
+                                   model2.getBoundingBox())) {
+      Physics::Collisions::resolve(newModel.attributes, model2.attributes);
+    }
+
+    if (Physics::Collisions::check(player->getBoundingBox(),
+                                   newModel.getBoundingBox())) {
+      Physics::Collisions::resolve(player->getCamera().attributes,
+                                   newModel.attributes);
+    }
+
+    if (Physics::Collisions::check(player->getBoundingBox(),
+                                   model2.getBoundingBox())) {
+      Physics::Collisions::resolve(player->getCamera().attributes,
+                                   model2.attributes);
+    }
 
     skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
     sun.draw(viewMatrix, projectionMatrix);
@@ -237,7 +224,7 @@ auto main() -> int {
 
   App::view.setInterface([&]() {
     if (App::paused) {
-      App::players.getCurrent()->getCamera()->controlInterface();
+      App::players.getCurrent()->getCamera().controlInterface();
 
       App::players.interface();
 
@@ -284,47 +271,47 @@ void processInput() {
     App::setPaused(!App::paused);
   }
 
-  if (App::paused && App::players.getCurrent()->getCamera()->getMode() !=
-                         Camera::Mode::ORBIT) {
+  if (App::paused &&
+      App::players.getCurrent()->getCamera().getMode() != Camera::Mode::ORBIT) {
     return;
   }
 
   if (App::view.getKey(GLFW_KEY_W) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera()->processKeyboard(
+    App::players.getCurrent()->getCamera().processKeyboard(
         Camera::Direction::FORWARD, App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_S) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera()->processKeyboard(
+    App::players.getCurrent()->getCamera().processKeyboard(
         Camera::Direction::BACKWARD, App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_A) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera()->processKeyboard(
+    App::players.getCurrent()->getCamera().processKeyboard(
         Camera::Direction::LEFT, App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_D) == GLFW_PRESS) {
     moved = true;
-    App::players.getCurrent()->getCamera()->processKeyboard(
+    App::players.getCurrent()->getCamera().processKeyboard(
         Camera::Direction::RIGHT, App::view.getDeltaTime());
   }
 
   if (!moved) {
-    App::players.getCurrent()->getCamera()->processKeyboard(
+    App::players.getCurrent()->getCamera().processKeyboard(
         Camera::Direction::NONE, App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-    App::players.getCurrent()->getCamera()->processKeyboard(
+    App::players.getCurrent()->getCamera().processKeyboard(
         Camera::Direction::UP, App::view.getDeltaTime());
   }
 
   if (App::view.getKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-    App::players.getCurrent()->getCamera()->processKeyboard(
+    App::players.getCurrent()->getCamera().processKeyboard(
         Camera::Direction::DOWN, App::view.getDeltaTime());
   }
 
