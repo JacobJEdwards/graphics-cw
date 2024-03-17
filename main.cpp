@@ -15,6 +15,7 @@
 #include "Config.h"
 
 #include "App.h"
+#include "graphics/FrameBuffer.h"
 #include "physics/Constants.h"
 #include "utils/Camera.h"
 
@@ -63,6 +64,8 @@ auto main() -> int {
   });
 
   App::view.setShowMenu(false);
+
+  App::view.resize();
 
   const std::array<std::string, 6> skyboxFaces{
       "../Assets/textures/skybox/right.jpg",
@@ -120,6 +123,9 @@ auto main() -> int {
       std::make_shared<Shader>("../assets/shaders/postProcessing.vert",
                                "../assets/shaders/postProcessing.frag");
 
+  postProcessingShader->use();
+  postProcessingShader->setUniform("screenTexture", 0);
+
   newModel.setShader(ourShader);
   model2.setShader(ourShader);
 
@@ -154,6 +160,30 @@ auto main() -> int {
 
   sun.setPosition(App::players.getCurrent()->getCamera().getPosition());
 
+  // obviously clean this up
+
+  float quadVertices[] = {// vertex attributes for a quad that fills the entire
+                          // screen in Normalized Device Coordinates.
+                          // positions   // texCoords
+                          -1.0f, 1.0f, 0.0f, 1.0f,  -1.0f, -1.0f,
+                          0.0f,  0.0f, 1.0f, -1.0f, 1.0f,  0.0f,
+
+                          -1.0f, 1.0f, 0.0f, 1.0f,  1.0f,  -1.0f,
+                          1.0f,  0.0f, 1.0f, 1.0f,  1.0f,  1.0f};
+  // screen quad VAO
+  unsigned int quadVAO, quadVBO;
+  glGenVertexArrays(1, &quadVAO);
+  glGenBuffers(1, &quadVBO);
+  glBindVertexArray(quadVAO);
+  glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices,
+               GL_STATIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
+                        (void *)(2 * sizeof(float)));
+
   App::view.setPipeline([&]() {
     App::view.getFrameBuffer().bind();
     glEnable(GL_DEPTH_TEST);
@@ -185,20 +215,22 @@ auto main() -> int {
 
     App::view.getFrameBuffer().unbind();
 
-    // disabled depth test
-    glDisable(GL_DEPTH_TEST);
-    View::clearTarget(Color::BLACK);
-    const auto texture = App::view.getFrameBuffer().getTexture();
+    glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't
+                              // discarded due to depth test.
+    // clear all relevant buffers
+    glClearColor(
+        1.0f, 1.0f, 1.0f,
+        1.0f); // set clear color to white (not really necessary actually, since
+               // we won't be able to see behind the quad anyways)
+    glClear(GL_COLOR_BUFFER_BIT);
 
     postProcessingShader->use();
-    postProcessingPlane.bind();
-    // bind texture manually
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    postProcessingShader->setUniform("screenTexture", 0);
-    postProcessingPlane.draw();
-
-    glEnable(GL_DEPTH_TEST);
+    glBindVertexArray(quadVAO);
+    glBindTexture(GL_TEXTURE_2D,
+                  App::view.getFrameBuffer()
+                      .getTexture()); // use the color attachment texture as the
+                                      // texture of the quad plane
+    glDrawArrays(GL_TRIANGLES, 0, 6);
   });
 
   App::view.setInterface([&]() {

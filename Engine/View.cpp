@@ -101,7 +101,7 @@ auto View::init(const std::string &title, int width, int height) -> bool {
   ImGui::StyleColorsDark();
   setup = true;
 
-  frameBuffer = std::make_unique<FrameBuffer>(width, height);
+  frameBuffer = std::make_unique<FrameBuffer>(WIDTH, HEIGHT);
 
   return true;
 }

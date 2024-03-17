@@ -9,6 +9,8 @@
 
 #include "utils/PlayerHolder.h"
 
+#include "Config.h"
+
 void setupGLFW();
 
 View App::view;
@@ -19,7 +21,8 @@ PlayerHolder App::players;
 
 bool App::init() {
   setupGLFW();
-  if (!view.isSetup() && !view.init("App", 800, 600)) {
+  if (!view.isSetup() &&
+      !view.init("App", Config::DEFAULT_WIDTH, Config::DEFAULT_HEIGHT)) {
     return false;
   }
 

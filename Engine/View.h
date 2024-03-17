@@ -80,6 +80,11 @@ public:
 
   int getKey(int key) const;
 
+  Handle resize = [&]() {
+    glViewport(0, 0, static_cast<GLsizei>(WIDTH), static_cast<GLsizei>(HEIGHT));
+    frameBuffer->resize(WIDTH, HEIGHT);
+  };
+
 private:
   GLFWwindow *window = nullptr;
 
@@ -115,11 +120,6 @@ private:
 
   ErrorHandle error = [](int err, const char *description) {
     std::cerr << "Error: " << err << " - " << description << std::endl;
-  };
-
-  Handle resize = [&]() {
-    glViewport(0, 0, static_cast<GLsizei>(WIDTH), static_cast<GLsizei>(HEIGHT));
-    frameBuffer->resize(WIDTH, HEIGHT);
   };
 
   bool setup = false;
