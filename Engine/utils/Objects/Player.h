@@ -18,8 +18,6 @@
 
 class Player {
 public:
-  Physics::Attributes attributes;
-
   Player() {
     boundingBox = model.getBoundingBox();
     model.setShader(shader);
@@ -34,10 +32,9 @@ public:
 
   void update(float dt) {
     position = camera->getPosition();
+    model.attributes.position = position;
     model.update(dt);
     camera->update(dt);
-    attributes.position = position;
-    attributes.update(dt);
   }
 
   void draw(const glm::mat4 &view, const glm::mat4 &projection,

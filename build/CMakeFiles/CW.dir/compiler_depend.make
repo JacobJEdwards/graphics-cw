@@ -6257,6 +6257,7 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: /Users/jacobedwards/Universit
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Constants.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.h \
@@ -7076,6 +7077,7 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: /Users/jacobedwards/Univ
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/Config.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Constants.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
   /usr/local/include/glm/common.hpp \
@@ -9970,20 +9972,7 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: /Users/jacobedwards/University/Year
   /usr/local/include/glm/ext/vector_uint3.hpp \
   /usr/local/include/glm/ext/vector_uint4.hpp \
   /usr/local/include/glm/geometric.hpp \
-  /usr/local/include/glm/ext/matrix_clip_space.hpp \
-  /usr/local/include/glm/ext/matrix_projection.hpp \
-  /usr/local/include/glm/ext/matrix_transform.hpp \
-  /usr/local/include/glm/ext/scalar_constants.hpp \
-  /usr/local/include/glm/geometric.hpp \
-  /usr/local/include/glm/mat4x4.hpp \
-  /usr/local/include/glm/matrix.hpp \
-  /usr/local/include/glm/trigonometric.hpp \
-  /usr/local/include/glm/vec2.hpp \
-  /usr/local/include/glm/vec3.hpp \
-  /usr/local/include/glm/vec4.hpp \
   /usr/local/include/glm/gtc/constants.hpp \
-  /usr/local/include/glm/gtc/constants.inl \
-  /usr/local/include/glm/gtc/matrix_transform.inl \
   /usr/local/include/glm/matrix.hpp \
   /usr/local/include/glm/trigonometric.hpp \
   /usr/local/include/glm/ext/matrix_clip_space.inl \
@@ -10105,7 +10094,20 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: /Users/jacobedwards/University/Year
   /usr/local/include/glm/fwd.hpp \
   /usr/local/include/glm/geometric.hpp \
   /usr/local/include/glm/glm.hpp \
+  /usr/local/include/glm/ext/matrix_clip_space.hpp \
+  /usr/local/include/glm/ext/matrix_projection.hpp \
+  /usr/local/include/glm/ext/matrix_transform.hpp \
+  /usr/local/include/glm/ext/scalar_constants.hpp \
+  /usr/local/include/glm/geometric.hpp \
+  /usr/local/include/glm/mat4x4.hpp \
+  /usr/local/include/glm/matrix.hpp \
+  /usr/local/include/glm/trigonometric.hpp \
+  /usr/local/include/glm/vec2.hpp \
+  /usr/local/include/glm/vec3.hpp \
+  /usr/local/include/glm/vec4.hpp \
+  /usr/local/include/glm/gtc/constants.inl \
   /usr/local/include/glm/gtc/matrix_transform.hpp \
+  /usr/local/include/glm/gtc/matrix_transform.inl \
   /usr/local/include/glm/integer.hpp \
   /usr/local/include/glm/mat2x2.hpp \
   /usr/local/include/glm/mat2x3.hpp \
@@ -18213,8 +18215,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 
 /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/InfinitePlane.h:
 
-/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Constants.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/dlfcn.h:
 
 /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp:
@@ -18350,6 +18350,8 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/i386/kern_return.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/i386/fp_reg.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/i386/boolean.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/host_special_ports.h:
 
@@ -19871,6 +19873,8 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/_types/_fd_set.h:
 
+/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Constants.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__errc:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/sys/_types/_fd_def.h:
@@ -20150,8 +20154,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Gra
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/stdint.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__utility/as_const.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/mach/i386/boolean.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__undef_macros:
 

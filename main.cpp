@@ -76,8 +76,10 @@ auto main() -> int {
 
   Texture::Loader::setFlip(false);
   Model newModel("../Assets/objects/helecopter/chopper.obj");
+  newModel.attributes.mass = 50.0F;
   Texture::Loader::setFlip(true);
   Model model2("../Assets/objects/backpack/backpack.obj");
+  model2.attributes.mass = 0.5F;
   Texture::Loader::setFlip(false);
 
   auto orbit = std::make_shared<Player>();
@@ -168,55 +170,6 @@ auto main() -> int {
                  glm::vec3(sun.getPosition(), 1.0F),
                  player->getCamera().getPosition());
 
-    if (Physics::Collisions::check(player->getBoundingBox(),
-                                   terrain.getBoundingBox())) {
-      Physics::Collisions::resolve(player->getCamera().attributes,
-                                   Physics::FLOOR_NORMAL);
-      player->getCamera().attributes.applyForce(-Physics::GRAVITY_VECTOR);
-      player->getCamera().attributes.isGrounded = true;
-
-      player->attributes.applyForce(-Physics::GRAVITY_VECTOR);
-      player->attributes.isGrounded = true;
-    } else {
-      player->getCamera().attributes.isGrounded = false;
-      player->attributes.isGrounded = false;
-    }
-
-    if (Physics::Collisions::check(newModel.getBoundingBox(),
-                                   terrain.getBoundingBox())) {
-      Physics::Collisions::resolve(newModel.attributes, Physics::FLOOR_NORMAL);
-      newModel.attributes.applyForce(-Physics::GRAVITY_VECTOR);
-      newModel.attributes.isGrounded = true;
-    } else {
-      newModel.attributes.isGrounded = false;
-    }
-
-    if (Physics::Collisions::check(model2.getBoundingBox(),
-                                   terrain.getBoundingBox())) {
-      Physics::Collisions::resolve(model2.attributes, Physics::FLOOR_NORMAL);
-      model2.attributes.applyForce(-Physics::GRAVITY_VECTOR);
-      model2.attributes.isGrounded = true;
-    } else {
-      model2.attributes.isGrounded = false;
-    }
-
-    if (Physics::Collisions::check(newModel.getBoundingBox(),
-                                   model2.getBoundingBox())) {
-      Physics::Collisions::resolve(newModel.attributes, model2.attributes);
-    }
-
-    if (Physics::Collisions::check(player->getBoundingBox(),
-                                   newModel.getBoundingBox())) {
-      Physics::Collisions::resolve(player->getCamera().attributes,
-                                   newModel.attributes);
-    }
-
-    if (Physics::Collisions::check(player->getBoundingBox(),
-                                   model2.getBoundingBox())) {
-      Physics::Collisions::resolve(player->getCamera().attributes,
-                                   model2.attributes);
-    }
-
     skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
     sun.draw(viewMatrix, projectionMatrix);
     App::players.draw(viewMatrix, projectionMatrix);
@@ -236,6 +189,50 @@ auto main() -> int {
 
   try {
     App::loop([&] {
+      auto player = App::players.getCurrent();
+      if (Physics::Collisions::check(player->getBoundingBox(),
+                                     terrain.getBoundingBox())) {
+        Physics::Collisions::resolve(player->getCamera().attributes,
+                                     Physics::FLOOR_NORMAL);
+        player->getCamera().attributes.isGrounded = true;
+
+      } else {
+        player->getCamera().attributes.isGrounded = false;
+      }
+
+      if (Physics::Collisions::check(newModel.getBoundingBox(),
+                                     terrain.getBoundingBox())) {
+        Physics::Collisions::resolve(newModel.attributes,
+                                     Physics::FLOOR_NORMAL);
+        newModel.attributes.isGrounded = true;
+      } else {
+        newModel.attributes.isGrounded = false;
+      }
+
+      if (Physics::Collisions::check(model2.getBoundingBox(),
+                                     terrain.getBoundingBox())) {
+        Physics::Collisions::resolve(model2.attributes, Physics::FLOOR_NORMAL);
+        model2.attributes.isGrounded = true;
+      } else {
+        model2.attributes.isGrounded = false;
+      }
+
+      if (Physics::Collisions::check(newModel.getBoundingBox(),
+                                     model2.getBoundingBox())) {
+        Physics::Collisions::resolve(newModel.attributes, model2.attributes);
+      }
+
+      if (Physics::Collisions::check(player->getBoundingBox(),
+                                     newModel.getBoundingBox())) {
+        Physics::Collisions::resolve(player->getCamera().attributes,
+                                     newModel.attributes);
+      }
+
+      if (Physics::Collisions::check(player->getBoundingBox(),
+                                     model2.getBoundingBox())) {
+        Physics::Collisions::resolve(player->getCamera().attributes,
+                                     model2.attributes);
+      }
       sun.update(App::view.getDeltaTime());
       App::players.getCurrent()->update(App::view.getDeltaTime());
       newModel.update(App::view.getDeltaTime());
@@ -316,7 +313,7 @@ void processInput() {
   }
 
   if (App::view.getKey(GLFW_KEY_J) == GLFW_PRESS) {
-    if (App::players.getCurrent()->attributes.isGrounded) {
+    if (App::players.getCurrent()->getCamera().attributes.isGrounded) {
       App::players.getCurrent()->jump();
     }
   }

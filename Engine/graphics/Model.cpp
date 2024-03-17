@@ -313,7 +313,9 @@ auto Model::getBoundingBox() const -> BoundingBox {
 
 void Model::update(float dt) {
   attributes.update(dt);
-  attributes.applyGravity();
+  if (!attributes.isGrounded) {
+    attributes.applyGravity();
+  }
   glm::vec3 newPosition = attributes.position;
 
   glm::mat4 newMatrix = modelMatrix;
