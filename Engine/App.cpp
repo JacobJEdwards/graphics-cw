@@ -6,6 +6,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 #include "utils/PlayerHolder.h"
 
@@ -47,7 +48,16 @@ bool App::window(const std::string &title, unsigned int width,
   return true;
 }
 
+void App::finalise() {
+  int width, height;
+
+  glfwGetFramebufferSize(view.getWindow(), &width, &height);
+
+  view.setDimensions(width, height);
+}
+
 void App::loop() {
+  finalise();
   while (!view.shouldClose()) {
     view.pollEvents();
     view.render();

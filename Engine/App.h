@@ -25,6 +25,7 @@ extern bool paused;
 
 extern bool debug;
 
+// query retina display !!!!!!!
 auto init() -> bool;
 
 auto window(const std::string &title,
@@ -45,6 +46,8 @@ template <typename F, typename... Args> void loop(F &&func, Args &&...args) {
     view.swapBuffers();
   }
 }
+
+void finalise();
 
 void loop();
 } // namespace App

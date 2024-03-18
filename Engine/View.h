@@ -76,6 +76,12 @@ public:
     return *frameBuffer.get();
   }
 
+  void setDimensions(int width, int height) {
+    WIDTH = width;
+    HEIGHT = height;
+    (resize)();
+  }
+
   void close() const;
 
   int getKey(int key) const;

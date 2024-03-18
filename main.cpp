@@ -160,33 +160,14 @@ auto main() -> int {
 
   sun.setPosition(App::players.getCurrent()->getCamera().getPosition());
 
+  std::cout << "main" << std::endl;
+  std::cout << App::view.getWidth() << " " << App::view.getHeight()
+            << std::endl;
+
   // obviously clean this up
-
-  float quadVertices[] = {// vertex attributes for a quad that fills the entire
-                          // screen in Normalized Device Coordinates.
-                          // positions   // texCoords
-                          -1.0f, 1.0f, 0.0f, 1.0f,  -1.0f, -1.0f,
-                          0.0f,  0.0f, 1.0f, -1.0f, 1.0f,  0.0f,
-
-                          -1.0f, 1.0f, 0.0f, 1.0f,  1.0f,  -1.0f,
-                          1.0f,  0.0f, 1.0f, 1.0f,  1.0f,  1.0f};
-  // screen quad VAO
-  unsigned int quadVAO, quadVBO;
-  glGenVertexArrays(1, &quadVAO);
-  glGenBuffers(1, &quadVBO);
-  glBindVertexArray(quadVAO);
-  glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices,
-               GL_STATIC_DRAW);
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
-                        (void *)(2 * sizeof(float)));
 
   App::view.setPipeline([&]() {
     App::view.getFrameBuffer().bind();
-    glEnable(GL_DEPTH_TEST);
     View::clearTarget(Color::BLACK);
     auto player = App::players.getCurrent();
 
@@ -212,25 +193,15 @@ auto main() -> int {
     skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
     sun.draw(viewMatrix, projectionMatrix);
     App::players.draw(viewMatrix, projectionMatrix);
-
     App::view.getFrameBuffer().unbind();
 
-    glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't
-                              // discarded due to depth test.
-    // clear all relevant buffers
-    glClearColor(
-        1.0f, 1.0f, 1.0f,
-        1.0f); // set clear color to white (not really necessary actually, since
-               // we won't be able to see behind the quad anyways)
-    glClear(GL_COLOR_BUFFER_BIT);
+    glDisable(GL_DEPTH_TEST);
+    View::clearTarget(Color::BLACK, true, false);
 
     postProcessingShader->use();
-    glBindVertexArray(quadVAO);
-    glBindTexture(GL_TEXTURE_2D,
-                  App::view.getFrameBuffer()
-                      .getTexture()); // use the color attachment texture as the
-                                      // texture of the quad plane
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    postProcessingPlane.draw(App::view.getFrameBuffer().getTexture());
+    glEnable(GL_DEPTH_TEST);
   });
 
   App::view.setInterface([&]() {
