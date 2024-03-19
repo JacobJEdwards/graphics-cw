@@ -87,7 +87,7 @@ auto View::init(const std::string &title, int width, int height) -> bool {
   setCallbacks();
 
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-  glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
+  // glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();

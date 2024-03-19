@@ -5,16 +5,12 @@
 #include "BoundingBox.h"
 
 #include "helpers/AssimpGLMHelpers.h"
-#include <MacTypes.h>
 #include <assimp/scene.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <vector>
 
-#include "utils/Buffer.h"
 #include "utils/Vertex.h"
 
 BoundingBox::BoundingBox(glm::vec3 min, glm::vec3 max) : min(min), max(max) {
@@ -41,7 +37,7 @@ void BoundingBox::transform(const glm::mat4 &model) {
   max = glm::max(newMin, newMax);
 }
 
-bool BoundingBox::collides(const BoundingBox &other) const {
+auto BoundingBox::collides(const BoundingBox &other) const -> bool {
   for (int i = 0; i < 3; ++i) {
     if (max[i] < other.min[i] || min[i] > other.max[i]) {
       // No overlap on this axis, so no collision
@@ -51,16 +47,16 @@ bool BoundingBox::collides(const BoundingBox &other) const {
   return true;
 }
 
-bool BoundingBox::contains(const glm::vec3 &point) const {
+auto BoundingBox::contains(const glm::vec3 &point) const -> bool {
   return point.x >= min.x && point.x <= max.x && point.y >= min.y &&
          point.y <= max.y && point.z >= min.z && point.z <= max.z;
 }
 
-bool BoundingBox::contains(const BoundingBox &other) const {
+auto BoundingBox::contains(const BoundingBox &other) const -> bool {
   return contains(other.min) && contains(other.max);
 }
 
-bool BoundingBox::isColliding(const BoundingBox &other) const {
+auto BoundingBox::isColliding(const BoundingBox &other) const -> bool {
   return collides(other) || contains(other) || other.contains(*this);
 }
 
@@ -71,9 +67,9 @@ void BoundingBox::setPosition(const glm::vec3 &position) {
   translate(offset);
 }
 
-glm::vec3 BoundingBox::getCenter() const { return (min + max) / 2.0F; }
+auto BoundingBox::getCenter() const -> glm::vec3 { return (min + max) / 2.0F; }
 
-glm::vec3 BoundingBox::getSize() const { return max - min; }
+auto BoundingBox::getSize() const -> glm::vec3 { return max - min; }
 
 void BoundingBox::translate(const glm::vec3 &translation) {
   min += translation;
@@ -107,37 +103,37 @@ auto BoundingBox::getOffset(const glm::vec3 &point) const -> glm::vec3 {
   if (distanceToXMin < distanceToXMax && distanceToXMin < distanceToYMin &&
       distanceToXMin < distanceToYMax && distanceToXMin < distanceToZMin &&
       distanceToXMin < distanceToZMax) {
-    return glm::vec3(-distanceToXMin, 0.0F, 0.0F);
+    return {-distanceToXMin, 0.0F, 0.0F};
   }
 
   if (distanceToXMax < distanceToXMin && distanceToXMax < distanceToYMin &&
       distanceToXMax < distanceToYMax && distanceToXMax < distanceToZMin &&
       distanceToXMax < distanceToZMax) {
-    return glm::vec3(distanceToXMax, 0.0F, 0.0F);
+    return {distanceToXMax, 0.0F, 0.0F};
   }
 
   if (distanceToYMin < distanceToXMin && distanceToYMin < distanceToXMax &&
       distanceToYMin < distanceToYMax && distanceToYMin < distanceToZMin &&
       distanceToYMin < distanceToZMax) {
-    return glm::vec3(0.0F, -distanceToYMin, 0.0F);
+    return {0.0F, -distanceToYMin, 0.0F};
   }
 
   if (distanceToYMax < distanceToXMin && distanceToYMax < distanceToXMax &&
       distanceToYMax < distanceToYMin && distanceToYMax < distanceToZMin &&
       distanceToYMax < distanceToZMax) {
-    return glm::vec3(0.0F, distanceToYMax, 0.0F);
+    return {0.0F, distanceToYMax, 0.0F};
   }
 
   if (distanceToZMin < distanceToXMin && distanceToZMin < distanceToXMax &&
       distanceToZMin < distanceToYMin && distanceToZMin < distanceToYMax &&
       distanceToZMin < distanceToZMax) {
-    return glm::vec3(0.0F, 0.0F, -distanceToZMin);
+    return {0.0F, 0.0F, -distanceToZMin};
   }
 
   if (distanceToZMax < distanceToXMin && distanceToZMax < distanceToXMax &&
       distanceToZMax < distanceToYMin && distanceToZMax < distanceToYMax &&
       distanceToZMax < distanceToZMin) {
-    return glm::vec3(0.0F, 0.0F, distanceToZMax);
+    return {0.0F, 0.0F, distanceToZMax};
   }
 
   return glm::vec3(0.0F);
@@ -147,14 +143,14 @@ auto BoundingBox::getOffset(const BoundingBox &other) const -> glm::vec3 {
   glm::vec3 overlap = glm::min(max, other.max) - glm::max(min, other.min);
 
   if (overlap.x < 0 || overlap.y < 0 || overlap.z < 0) {
-    return glm::vec3(0.0f);
+    return glm::vec3(0.0F);
   }
 
   float minOverlap = std::min(std::min(overlap.x, overlap.y), overlap.z);
 
   if (overlap.x == minOverlap) {
-    return glm::vec3(overlap.x, 0.0f, 0.0f);
-  } else if (overlap.y == minOverlap) {
+    return {overlap.x, 0.0F, 0.0F};
+  } if (overlap.y == minOverlap) {
     return glm::vec3(0.0f, overlap.y, 0.0f);
   } else {
     return glm::vec3(0.0f, 0.0f, overlap.z);

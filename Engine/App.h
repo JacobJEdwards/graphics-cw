@@ -45,7 +45,7 @@ void debugInterface();
 template <typename F, typename... Args> void loop(F &&func, Args &&...args) {
   finalise();
   while (!view.shouldClose()) {
-    view.pollEvents();
+    View::pollEvents();
     if (!paused) {
       func(std::forward<Args>(args)...);
     }

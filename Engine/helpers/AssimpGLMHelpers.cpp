@@ -7,7 +7,6 @@
 #include <assimp/matrix4x4.h>
 #include <assimp/quaternion.h>
 #include <assimp/vector3.h>
-#include <glm/fwd.hpp>
 
 auto AssimpGLMHelpers::getGLMMatrix4x4(const aiMatrix4x4& from) -> glm::mat4
 {

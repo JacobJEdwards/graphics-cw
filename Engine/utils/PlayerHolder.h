@@ -15,14 +15,14 @@ public:
   void draw(const glm::mat4 &view, const glm::mat4 &projection);
   void update(float dt);
 
-  void add(std::string name, std::shared_ptr<Player> player);
-  std::shared_ptr<Player> get(std::string name);
+  void add(const std::string& name, std::shared_ptr<Player> player);
+  std::shared_ptr<Player> get(const std::string& name);
   std::shared_ptr<Player> getCurrent();
-  void setCurrent(std::string name);
+  void setCurrent(const std::string& name);
   void setCurrent(std::shared_ptr<Player> player);
   std::string getCurrentName();
-  void remove(std::string name);
-  void remove(std::shared_ptr<Player> player);
+  void remove(const std::string& name);
+  void remove(const std::shared_ptr<Player>& player);
   void clear();
 
   void setAspect(float aspect);

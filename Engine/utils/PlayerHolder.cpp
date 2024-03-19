@@ -3,6 +3,7 @@
 #include "imgui/imgui.h"
 #include <algorithm>
 #include <glm/glm.hpp>
+#include <utility>
 
 PlayerHolder::~PlayerHolder() { players.clear(); }
 
@@ -19,23 +20,23 @@ void PlayerHolder::update(float dt) {
   }
 }
 
-void PlayerHolder::add(std::string name, std::shared_ptr<Player> player) {
-  players[name] = player;
+void PlayerHolder::add(const std::string& name, std::shared_ptr<Player> player) {
+  players[name] = std::move(player);
 
   if (players.size() == 1) {
     setCurrent(name);
   }
 }
 
-std::shared_ptr<Player> PlayerHolder::get(std::string name) {
+auto PlayerHolder::get(const std::string& name) -> std::shared_ptr<Player> {
   auto it = players.find(name);
 
   return it != players.end() ? it->second : nullptr;
 }
 
-std::shared_ptr<Player> PlayerHolder::getCurrent() { return currentPlayer; }
+auto PlayerHolder::getCurrent() -> std::shared_ptr<Player> { return currentPlayer; }
 
-void PlayerHolder::setCurrent(std::string name) {
+void PlayerHolder::setCurrent(const std::string& name) {
   auto it = players.find(name);
   if (it != players.end()) {
     currentPlayer = it->second;
@@ -43,10 +44,10 @@ void PlayerHolder::setCurrent(std::string name) {
 }
 
 void PlayerHolder::setCurrent(std::shared_ptr<Player> player) {
-  currentPlayer = player;
+  currentPlayer = std::move(player);
 }
 
-std::string PlayerHolder::getCurrentName() {
+auto PlayerHolder::getCurrentName() -> std::string {
   auto it =
       std::find_if(players.begin(), players.end(), [this](const auto &pair) {
         return pair.second == currentPlayer;
@@ -55,9 +56,9 @@ std::string PlayerHolder::getCurrentName() {
   return it != players.end() ? it->first : "";
 }
 
-void PlayerHolder::remove(std::string name) { players.erase(name); }
+void PlayerHolder::remove(const std::string& name) { players.erase(name); }
 
-void PlayerHolder::remove(std::shared_ptr<Player> player) {
+void PlayerHolder::remove(const std::shared_ptr<Player>& player) {
   players.erase(
       std::find_if(players.begin(), players.end(), [player](const auto &pair) {
         return pair.second == player;

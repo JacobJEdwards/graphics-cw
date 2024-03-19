@@ -888,7 +888,6 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/allocator_destructor.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stdexcept \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/uses_allocator_construction.h \
-  /opt/homebrew/include/glm/common.hpp \
   /opt/homebrew/include/glm/ext/matrix_clip_space.hpp \
   /opt/homebrew/include/glm/ext/../ext/scalar_constants.hpp \
   /opt/homebrew/include/glm/ext/scalar_constants.inl \
@@ -903,19 +902,6 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: \
   /opt/homebrew/include/glm/ext/../matrix.hpp \
   /opt/homebrew/include/glm/ext/matrix_transform.inl \
   /opt/homebrew/include/glm/geometric.hpp \
-  /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../vec2.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../vec3.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../vec4.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_projection.hpp \
-  /opt/homebrew/include/glm/ext/matrix_projection.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_clip_space.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_transform.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/matrix_transform.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../geometric.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../matrix.hpp \
   /opt/homebrew/include/glm/trigonometric.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \

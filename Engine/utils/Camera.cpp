@@ -6,13 +6,10 @@
 #include <cmath>
 
 #include <algorithm>
-#include <glm/common.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
 #include "imgui/imgui.h"
@@ -215,6 +212,7 @@ void Camera::interface() {
 void Camera::setAspect(const float aspect) { this->aspect = aspect; }
 
 void Camera::update(float dt) {
-  if (mode == Mode::ORBIT)
+  if (mode == Mode::ORBIT) {
     circleOrbit(dt);
+}
 }

@@ -10,7 +10,7 @@ find_package(assimp CONFIG REQUIRED)
 find_package(assimp REQUIRED)
 
 # find_library(SOIL2_LIB soil2 REQUIRED PATHS external/SOIL2/lib/macosx)
-include_directories(external/SOIL2/src external Engine)
+include_directories(external Engine)
 
 # Add executable
 add_executable(CW main.cpp

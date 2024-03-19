@@ -1,8 +1,7 @@
 #include "physics/ModelAttributes.h"
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
 #include "physics/Constants.h"
 #include "physics/Gravity.h"
@@ -16,7 +15,7 @@ void Physics::Attributes::update(float dt) {
   transform[3][1] = position.y;
   transform[3][2] = position.z;
 
-  force = glm::vec3(0.0f);
+  force = glm::vec3(0.0F);
 
   applyDrag(Physics::AIR_RESISTANCE * glm::length(velocity));
 
@@ -57,15 +56,31 @@ void Physics::Attributes::applySpring(const glm::vec3 &springAnchor,
   applyForce(springForce);
 }
 
-auto Physics::Attributes::calculateForce(const Spline &spline, float t,
-                                         float dt) -> glm::vec3 {
-  auto nextPos = spline.getPoint(t + dt);
-  auto currentPoint = position;
+auto Physics::Attributes::calculateForce(const glm::vec3 &point, float dt)
+    -> glm::vec3 {
+  if (dt == 0.0F) {
+    return glm::vec3(0.0F);
+  }
 
-  auto distance = nextPos - currentPoint;
+  if (mass == 0.0F) {
+    return glm::vec3(0.0F);
+  }
 
-  auto velocityRequired = distance / dt;
-  velocity += velocityRequired;
+  if (point == position) {
+    return glm::vec3(0.0F);
+  }
 
-  return glm::vec3(0.0F);
+  // Calculate initial velocity
+  glm::vec3 initialVelocity = velocity;
+
+  // Calculate final velocity
+  glm::vec3 finalVelocity = (point - position) / dt;
+
+  // Calculate acceleration required
+  glm::vec3 acceleration = (finalVelocity - initialVelocity) / dt;
+
+  // Calculate force
+  glm::vec3 force = mass * acceleration;
+
+  return force;
 }

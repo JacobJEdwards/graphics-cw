@@ -17,7 +17,7 @@ struct Data {
     glm::vec3 bitangent;
 
     Data() = default;
-    Data(const glm::vec3& position)
+    explicit Data(const glm::vec3& position)
         : position(position)
         , normal(glm::vec3(0.0F))
         , texCoords(glm::vec2(0.0F))

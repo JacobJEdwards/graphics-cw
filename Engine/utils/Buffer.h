@@ -14,9 +14,9 @@
 
 class Buffer {
 public:
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
+    GLuint VAO = 0;
+    GLuint VBO = 0;
+    GLuint EBO = 0;
 
     struct Data {
         std::vector<Vertex::Data> vertices;

@@ -38,7 +38,7 @@ struct Attributes {
 
   void applyImpulse(const glm::vec3 &impulse);
 
-  auto calculateForce(const Spline &spline, float t, float dt) -> glm::vec3;
+  auto calculateForce(const glm::vec3 &point, float dt) -> glm::vec3;
 };
 } // namespace Physics
 

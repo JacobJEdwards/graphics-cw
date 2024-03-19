@@ -21,12 +21,12 @@ public:
 private:
   Buffer buffer;
   std::vector<Vertex::Data> vertices{
-      Vertex::Data{glm::vec3(-1.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)},
-      Vertex::Data{glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec2(0.0f, 0.0f)},
-      Vertex::Data{glm::vec3(1.0f, -1.0f, 0.0f), glm::vec2(1.0f, 0.0f)},
-      Vertex::Data{glm::vec3(-1.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)},
-      Vertex::Data{glm::vec3(1.0f, -1.0f, 0.0f), glm::vec2(1.0f, 0.0f)},
-      Vertex::Data{glm::vec3(1.0f, 1.0f, 0.0f), glm::vec2(1.0f, 1.0f)}};
+      Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},
+      Vertex::Data{glm::vec3(-1.0F, -1.0F, 0.0F), glm::vec2(0.0F, 0.0F)},
+      Vertex::Data{glm::vec3(1.0F, -1.0F, 0.0F), glm::vec2(1.0F, 0.0F)},
+      Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},
+      Vertex::Data{glm::vec3(1.0F, -1.0F, 0.0F), glm::vec2(1.0F, 0.0F)},
+      Vertex::Data{glm::vec3(1.0F, 1.0F, 0.0F), glm::vec2(1.0F, 1.0F)}};
 };
 
 #endif

@@ -1141,9 +1141,4 @@ CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: \
   /opt/homebrew/include/glm/gtc/../detail/qualifier.hpp \
   /opt/homebrew/include/glm/gtc/epsilon.inl \
   /opt/homebrew/include/glm/gtc/../vector_relational.hpp \
-  /opt/homebrew/include/glm/gtc/../common.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/MacTypes.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ConditionalMacros.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/TargetConditionals.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stdbool.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdbool.h
+  /opt/homebrew/include/glm/gtc/../common.hpp

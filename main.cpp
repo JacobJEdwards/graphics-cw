@@ -1,6 +1,7 @@
 #include <exception>
 #include <glm/ext/matrix_float3x3.hpp>
-#include <glm/ext/matrix_float4x4.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/spline.hpp>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -52,7 +53,7 @@ auto main() -> int {
 
   App::view.setResize([&] {
     App::players.setAspect(static_cast<float>(App::view.getWidth()) /
-                           App::view.getHeight());
+                           static_cast<float>(App::view.getHeight()));
     glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
                static_cast<GLsizei>(App::view.getHeight()));
   });
@@ -131,12 +132,10 @@ auto main() -> int {
   auto model = glm::mat4(1.0F);
 
   glm::vec3 newPosition = App::players.getCurrent()->getCamera().getPosition() +
-                          glm::vec3(0.0F, 15.0F, 10.0F);
+                          glm::vec3(20.0F, 10.0F, 8.0F);
 
   const glm::mat4 helicopterModel = translate(model, newPosition);
 
-  // newModel.scale(glm::vec3(0.1F, 0.1F, 0.1F));
-  // newModel.translate(newPosition);
   newModel.transform(helicopterModel);
 
   model = Config::IDENTITY_MATRIX;
@@ -151,6 +150,21 @@ auto main() -> int {
   sun.setPosition(App::players.getCurrent()->getCamera().getPosition());
 
   // obviously clean this up
+
+  int numPoints = 100;
+  std::vector<glm::vec3> points(numPoints);
+
+  // generate a circle
+  for (int i = 0; i < numPoints; i++) {
+    float angle = 2.0F * glm::pi<float>() * i / numPoints;
+    auto pos = glm::vec3(20.0F * cos(angle), 5.0F, 20.0F * sin(angle));
+    points[i] = pos;
+  }
+
+  int p0Index = 0;
+  int p1Index = 1;
+  int p2Index = 2;
+  int p3Index = 3;
 
   App::view.setPipeline([&]() {
     View::clearTarget(Color::BLACK);
@@ -195,6 +209,7 @@ auto main() -> int {
     }
   });
 
+  float t = 0.0F; // spline parameter
   try {
     App::loop([&] {
       auto player = App::players.getCurrent();
@@ -240,6 +255,41 @@ auto main() -> int {
                                      model2.getBoundingBox())) {
         Physics::Collisions::resolve(player->getAttributes(),
                                      model2.attributes);
+      }
+
+      if (p3Index == numPoints) {
+        p3Index = 0;
+      }
+
+      if (p2Index == numPoints) {
+        p2Index = 0;
+      }
+
+      if (p1Index == numPoints) {
+        p1Index = 0;
+      }
+
+      if (p0Index == numPoints) {
+        p0Index = 0;
+      }
+
+      glm::vec3 interpolatedPoint =
+          glm::catmullRom(points[p0Index], points[p1Index], points[p2Index],
+                          points[p3Index], t);
+
+      auto forceNeeded =
+          newModel.attributes.calculateForce(interpolatedPoint, 0.1F);
+
+      newModel.attributes.applyForce(forceNeeded);
+
+      t += 0.1F;
+
+      if (t > 1.0F) {
+        t = 0.0F;
+        p0Index++;
+        p1Index++;
+        p2Index++;
+        p3Index++;
       }
 
       sun.update(App::view.getDeltaTime());
