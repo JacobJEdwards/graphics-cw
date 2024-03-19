@@ -38,17 +38,7 @@ struct Attributes {
 
   void applyImpulse(const glm::vec3 &impulse);
 
-  auto calculateForce(const Spline &spline, float t, float dt) -> glm::vec3 {
-    glm::vec3 tangent = spline.getTangent(t);
-
-    glm::vec3 positionOnSpline = spline.getPoint(t);
-
-    glm::vec3 force = positionOnSpline - position;
-
-    force += tangent * glm::dot(velocity, tangent);
-
-    return force;
-  }
+  auto calculateForce(const Spline &spline, float t, float dt) -> glm::vec3;
 };
 } // namespace Physics
 

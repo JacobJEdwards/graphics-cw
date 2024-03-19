@@ -152,20 +152,6 @@ auto main() -> int {
 
   // obviously clean this up
 
-  float t = 0.0F;
-  // generate circle of points
-  std::vector<glm::vec3> points;
-  glm::vec3 center = glm::vec3(0.0F, 0.0F, 0.0F);
-  float radius = 10.0F;
-  for (int i = 0; i < 100; i++) {
-    float angle = 2.0F * glm::pi<float>() * i / 100;
-    float x = center.x + radius * cos(angle);
-    float z = center.z + radius * sin(angle);
-    points.push_back(glm::vec3(x, 0.0F, z));
-  }
-
-  Physics::Spline spline(points);
-
   App::view.setPipeline([&]() {
     View::clearTarget(Color::BLACK);
     auto player = App::players.getCurrent();
@@ -188,18 +174,6 @@ auto main() -> int {
     terrain.draw(viewMatrix, projectionMatrix,
                  glm::vec3(sun.getPosition(), 1.0F),
                  player->getCamera().getPosition());
-    glm::vec3 force =
-        newModel.attributes.calculateForce(spline, t, App::view.getDeltaTime());
-    std::cout << force.x << " " << force.y << " " << force.z << std::endl;
-
-    newModel.attributes.applyForce(force);
-
-    t += App::view.getDeltaTime();
-
-    // move t in a circle
-    if (t > 1.0F) {
-      t = 0.0F;
-    }
 
     skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
     sun.draw(viewMatrix, projectionMatrix);

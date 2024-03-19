@@ -56,3 +56,16 @@ void Physics::Attributes::applySpring(const glm::vec3 &springAnchor,
                                 glm::normalize(springVector);
   applyForce(springForce);
 }
+
+auto Physics::Attributes::calculateForce(const Spline &spline, float t,
+                                         float dt) -> glm::vec3 {
+  auto nextPos = spline.getPoint(t + dt);
+  auto currentPoint = position;
+
+  auto distance = nextPos - currentPoint;
+
+  auto velocityRequired = distance / dt;
+  velocity += velocityRequired;
+
+  return glm::vec3(0.0F);
+}
