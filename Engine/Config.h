@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 
 namespace Config {
-constexpr auto DEFAULT_WIDTH = 900;
+constexpr auto DEFAULT_WIDTH = 1200;
 constexpr auto DEFAULT_HEIGHT = 900;
 constexpr auto DEFAULT_TITLE = "CW";
 constexpr auto DEFAULT_ASPECT =

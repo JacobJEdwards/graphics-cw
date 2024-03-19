@@ -12,7 +12,7 @@
 #include <string>
 #include <utility>
 
-#include "graphics/FrameBuffer.h"
+#include "graphics/PostProcessor.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -102,7 +102,11 @@ auto View::init(const std::string &title, int width, int height) -> bool {
   ImGui::StyleColorsDark();
   setup = true;
 
-  frameBuffer = std::make_unique<FrameBuffer>(WIDTH, HEIGHT);
+  auto postProcessingShader =
+      std::make_shared<Shader>("../assets/shaders/postProcessing.vert",
+                               "../assets/shaders/postProcessing.frag");
+  postProcessor = std::make_unique<PostProcess>(
+      WIDTH, HEIGHT, postProcessingShader, multiSample);
 
   return true;
 }
@@ -169,6 +173,8 @@ void View::errorCallback(const int err, const char *description) {
 void View::resizeCallback(GLFWwindow * /*window*/, int width, int height) {
   WIDTH = width;
   HEIGHT = height;
+  postProcessor->resize(width, height);
+  glViewport(0, 0, width, height);
 
   (resize)();
 }
@@ -190,15 +196,20 @@ void View::render() {
   deltaTime = currentFrame - lastFrame;
   lastFrame = currentFrame;
 
-  if (showMenu) {
-    menuLoop();
-  } else {
-    keyLoop();
-    (pipeline)();
+  keyLoop();
 
-    if (showInterface) {
-      interfaceLoop();
-    }
+  if (postProcessorEnabled) {
+    postProcessor->begin();
+    (pipeline)();
+    postProcessor->end();
+
+    postProcessor->render();
+  } else {
+    (pipeline)();
+  }
+
+  if (showInterface) {
+    interfaceLoop();
   }
 }
 
@@ -227,3 +238,24 @@ void View::setError(ErrorHandle handle) { error = std::move(handle); }
 void View::close() const { glfwSetWindowShouldClose(window, GLFW_TRUE); }
 
 auto View::getKey(int key) const -> int { return glfwGetKey(window, key); }
+
+void View::optionsInterface() {
+  ImGui::Begin("View Options");
+  ImGui::Checkbox("Post Processing", &postProcessorEnabled);
+
+  if (postProcessorEnabled) {
+    bool sample = multiSample;
+    ImGui::Checkbox("Multi Sample", &sample);
+    if (sample != multiSample) {
+      multiSample = sample;
+      postProcessor = std::make_unique<PostProcess>(
+          WIDTH, HEIGHT, postProcessor->getShader(), multiSample);
+    }
+  }
+
+  if (ImGui::Button("Close")) {
+    close();
+  }
+
+  ImGui::End();
+}

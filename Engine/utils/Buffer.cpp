@@ -3,7 +3,6 @@
 //
 
 #include "Buffer.h"
-#include <iostream>
 
 Buffer::Buffer() {
   glGenVertexArrays(1, &VAO);

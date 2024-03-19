@@ -11,12 +11,13 @@
 #include <string>
 
 #include <glm/ext/matrix_transform.hpp>
+#include <vector>
 
 #include "Config.h"
 
 #include "App.h"
-#include "graphics/FrameBuffer.h"
 #include "physics/Constants.h"
+#include "physics/Spline.h"
 #include "utils/Camera.h"
 
 #include "graphics/Color.h"
@@ -54,18 +55,7 @@ auto main() -> int {
                            App::view.getHeight());
     glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
                static_cast<GLsizei>(App::view.getHeight()));
-    App::view.getFrameBuffer().resize(App::view.getWidth(),
-                                      App::view.getHeight());
   });
-
-  App::view.setMenu([&] {
-    glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    View::clearTarget(Color::BLACK);
-  });
-
-  App::view.setShowMenu(false);
-
-  App::view.resize();
 
   const std::array<std::string, 6> skyboxFaces{
       "../Assets/textures/skybox/right.jpg",
@@ -160,14 +150,23 @@ auto main() -> int {
 
   sun.setPosition(App::players.getCurrent()->getCamera().getPosition());
 
-  std::cout << "main" << std::endl;
-  std::cout << App::view.getWidth() << " " << App::view.getHeight()
-            << std::endl;
-
   // obviously clean this up
 
+  float t = 0.0F;
+  // generate circle of points
+  std::vector<glm::vec3> points;
+  glm::vec3 center = glm::vec3(0.0F, 0.0F, 0.0F);
+  float radius = 10.0F;
+  for (int i = 0; i < 100; i++) {
+    float angle = 2.0F * glm::pi<float>() * i / 100;
+    float x = center.x + radius * cos(angle);
+    float z = center.z + radius * sin(angle);
+    points.push_back(glm::vec3(x, 0.0F, z));
+  }
+
+  Physics::Spline spline(points);
+
   App::view.setPipeline([&]() {
-    App::view.getFrameBuffer().bind();
     View::clearTarget(Color::BLACK);
     auto player = App::players.getCurrent();
 
@@ -189,19 +188,22 @@ auto main() -> int {
     terrain.draw(viewMatrix, projectionMatrix,
                  glm::vec3(sun.getPosition(), 1.0F),
                  player->getCamera().getPosition());
+    glm::vec3 force =
+        newModel.attributes.calculateForce(spline, t, App::view.getDeltaTime());
+    std::cout << force.x << " " << force.y << " " << force.z << std::endl;
+
+    newModel.attributes.applyForce(force);
+
+    t += App::view.getDeltaTime();
+
+    // move t in a circle
+    if (t > 1.0F) {
+      t = 0.0F;
+    }
 
     skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
     sun.draw(viewMatrix, projectionMatrix);
     App::players.draw(viewMatrix, projectionMatrix);
-    App::view.getFrameBuffer().unbind();
-
-    glDisable(GL_DEPTH_TEST);
-    View::clearTarget(Color::BLACK, true, false);
-
-    postProcessingShader->use();
-
-    postProcessingPlane.draw(App::view.getFrameBuffer().getTexture());
-    glEnable(GL_DEPTH_TEST);
   });
 
   App::view.setInterface([&]() {
@@ -209,10 +211,13 @@ auto main() -> int {
       App::players.getCurrent()->getCamera().interface();
       App::players.interface();
       App::players.getCurrent()->interface();
+      App::view.optionsInterface();
 
-      ImGui::Begin("Debug");
-      ImGui::Checkbox("Debug Mode", &App::debug);
-      ImGui::End();
+      App::debugInterface();
+    }
+
+    if (App::debug) {
+      App::players.getCurrent()->debug();
     }
   });
 

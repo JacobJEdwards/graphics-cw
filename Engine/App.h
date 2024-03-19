@@ -25,6 +25,8 @@ extern bool paused;
 
 extern bool debug;
 
+extern bool wireframe;
+
 // query retina display !!!!!!!
 auto init() -> bool;
 
@@ -36,7 +38,12 @@ void quit();
 
 void setPaused(bool value);
 
+void finalise();
+
+void debugInterface();
+
 template <typename F, typename... Args> void loop(F &&func, Args &&...args) {
+  finalise();
   while (!view.shouldClose()) {
     view.pollEvents();
     if (!paused) {
@@ -46,8 +53,6 @@ template <typename F, typename... Args> void loop(F &&func, Args &&...args) {
     view.swapBuffers();
   }
 }
-
-void finalise();
 
 void loop();
 } // namespace App

@@ -2,6 +2,7 @@
 #define PHYSICSATTRIBUTES_H
 
 #include "Config.h"
+#include "physics/Spline.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -36,6 +37,18 @@ struct Attributes {
                    float springLength);
 
   void applyImpulse(const glm::vec3 &impulse);
+
+  auto calculateForce(const Spline &spline, float t, float dt) -> glm::vec3 {
+    glm::vec3 tangent = spline.getTangent(t);
+
+    glm::vec3 positionOnSpline = spline.getPoint(t);
+
+    glm::vec3 force = positionOnSpline - position;
+
+    force += tangent * glm::dot(velocity, tangent);
+
+    return force;
+  }
 };
 } // namespace Physics
 

@@ -8,6 +8,7 @@
 #include <functional>
 #include <glm/ext/vector_float3.hpp>
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include <GL/glew.h>
@@ -17,7 +18,7 @@
 
 #include "graphics/Color.h"
 
-#include "graphics/FrameBuffer.h"
+#include "graphics/PostProcessor.h"
 
 class View {
   using Handle = std::function<void()>;
@@ -71,25 +72,19 @@ public:
 
   [[nodiscard]] auto getWindow() const -> GLFWwindow * { return window; }
 
-  // framebuffer opts
-  [[nodiscard]] auto getFrameBuffer() const -> FrameBuffer & {
-    return *frameBuffer.get();
-  }
-
   void setDimensions(int width, int height) {
     WIDTH = width;
     HEIGHT = height;
     (resize)();
   }
 
+  auto getPostProcessor() -> PostProcess & { return *postProcessor.get(); }
+
   void close() const;
 
   int getKey(int key) const;
 
-  Handle resize = [&]() {
-    glViewport(0, 0, static_cast<GLsizei>(WIDTH), static_cast<GLsizei>(HEIGHT));
-    frameBuffer->resize(WIDTH, HEIGHT);
-  };
+  void optionsInterface();
 
 private:
   GLFWwindow *window = nullptr;
@@ -100,7 +95,9 @@ private:
 
   ImGuiIO io;
 
-  std::unique_ptr<FrameBuffer> frameBuffer;
+  std::unique_ptr<PostProcess> postProcessor;
+  bool multiSample = true;
+  bool postProcessorEnabled = true;
 
   bool showInterface = true;
   bool showMenu = true;
@@ -123,6 +120,8 @@ private:
   Handle pipeline = []() {};
 
   Handle scroll = []() {};
+
+  Handle resize = [&]() {};
 
   ErrorHandle error = [](int err, const char *description) {
     std::cerr << "Error: " << err << " - " << description << std::endl;

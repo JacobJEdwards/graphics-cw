@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
+#include "imgui/imgui.h"
 #include "utils/PlayerHolder.h"
 
 #include "Config.h"
@@ -17,6 +18,7 @@ void setupGLFW();
 View App::view;
 bool App::paused = false;
 bool App::debug = false;
+bool App::wireframe = false;
 
 PlayerHolder App::players;
 
@@ -53,7 +55,7 @@ void App::finalise() {
 
   glfwGetFramebufferSize(view.getWindow(), &width, &height);
 
-  view.setDimensions(width, height);
+  view.setDimensions(view.getWidth(), view.getHeight());
 }
 
 void App::loop() {
@@ -81,4 +83,23 @@ void setupGLFW() {
     std::cerr << "Failed to initialize GLFW" << std::endl;
     exit(EXIT_FAILURE);
   }
+}
+
+void App::debugInterface() {
+  ImGui::Begin("Debug");
+  ImGui::Checkbox("Debug Mode", &debug);
+
+  if (debug) {
+    ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+  }
+
+  ImGui::Checkbox("Wireframe", &wireframe);
+
+  if (wireframe) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  } else {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  }
+
+  ImGui::End();
 }

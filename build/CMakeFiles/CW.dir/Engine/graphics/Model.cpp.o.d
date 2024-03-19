@@ -1005,32 +1005,7 @@ CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/numeric \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/accumulate.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/exclusive_scan.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/gcd_lcm.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/inclusive_scan.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/inner_product.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/iota.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/midpoint.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/partial_sum.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/reduce.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/transform_exclusive_scan.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/transform_inclusive_scan.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/transform_reduce.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/stack \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/deque \
-  /usr/local/include/assimp/postprocess.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.h \
-  /usr/local/include/glm/ext/vector_float3.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/iostream \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.h \
-  /usr/local/include/glm/ext/vector_float4.hpp \
-  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/FrameBuffer.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Spline.h \
   /usr/local/include/glm/gtc/type_ptr.hpp \
   /usr/local/include/glm/gtc/../gtc/quaternion.hpp \
   /usr/local/include/glm/gtc/../gtc/constants.hpp \
@@ -1108,6 +1083,34 @@ CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: \
   /usr/local/include/glm/gtc/../mat4x2.hpp \
   /usr/local/include/glm/gtc/../mat4x3.hpp \
   /usr/local/include/glm/gtc/type_ptr.inl \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/numeric \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/accumulate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/gcd_lcm.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/inclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/inner_product.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/iota.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/midpoint.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/partial_sum.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/transform_exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/transform_inclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__numeric/transform_reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/stack \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/deque \
+  /usr/local/include/assimp/postprocess.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.h \
+  /usr/local/include/glm/ext/vector_float3.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/iostream \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imconfig.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.h \
+  /usr/local/include/glm/ext/vector_float4.hpp \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/PostProcessor.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/FrameBuffer.h \
+  /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/shapes/Plane.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/CameraHolder.h \
   /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.h \
   /usr/local/include/glm/ext/matrix_float4x4.hpp \

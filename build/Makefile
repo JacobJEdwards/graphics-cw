@@ -249,6 +249,30 @@ Engine/graphics/Model.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Model.cpp.s
 .PHONY : Engine/graphics/Model.cpp.s
 
+Engine/graphics/PostProcessor.o: Engine/graphics/PostProcessor.cpp.o
+.PHONY : Engine/graphics/PostProcessor.o
+
+# target to build an object file
+Engine/graphics/PostProcessor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o
+.PHONY : Engine/graphics/PostProcessor.cpp.o
+
+Engine/graphics/PostProcessor.i: Engine/graphics/PostProcessor.cpp.i
+.PHONY : Engine/graphics/PostProcessor.i
+
+# target to preprocess a source file
+Engine/graphics/PostProcessor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.i
+.PHONY : Engine/graphics/PostProcessor.cpp.i
+
+Engine/graphics/PostProcessor.s: Engine/graphics/PostProcessor.cpp.s
+.PHONY : Engine/graphics/PostProcessor.s
+
+# target to generate assembly for a file
+Engine/graphics/PostProcessor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s
+.PHONY : Engine/graphics/PostProcessor.cpp.s
+
 Engine/graphics/Texture.o: Engine/graphics/Texture.cpp.o
 .PHONY : Engine/graphics/Texture.o
 
@@ -801,6 +825,9 @@ help:
 	@echo "... Engine/graphics/Model.o"
 	@echo "... Engine/graphics/Model.i"
 	@echo "... Engine/graphics/Model.s"
+	@echo "... Engine/graphics/PostProcessor.o"
+	@echo "... Engine/graphics/PostProcessor.i"
+	@echo "... Engine/graphics/PostProcessor.s"
 	@echo "... Engine/graphics/Texture.o"
 	@echo "... Engine/graphics/Texture.i"
 	@echo "... Engine/graphics/Texture.s"
