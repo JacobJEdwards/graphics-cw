@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.28.3/bin/cmake
+CMAKE_COMMAND = /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.28.3/bin/cmake -E rm -f
+RM = /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework
+CMAKE_SOURCE_DIR = /Users/jacobedwards/University/Year2/Graphics/graphics-cw
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build
+CMAKE_BINARY_DIR = /Users/jacobedwards/University/Year2/Graphics/graphics-cw/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/CW.dir/depend.make
@@ -70,396 +70,396 @@ include CMakeFiles/CW.dir/progress.make
 include CMakeFiles/CW.dir/flags.make
 
 CMakeFiles/CW.dir/main.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/main.cpp
+CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/main.cpp
 CMakeFiles/CW.dir/main.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CW.dir/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/main.cpp.o -MF CMakeFiles/CW.dir/main.cpp.o.d -o CMakeFiles/CW.dir/main.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CW.dir/main.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/main.cpp.o -MF CMakeFiles/CW.dir/main.cpp.o.d -o CMakeFiles/CW.dir/main.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/main.cpp
 
 CMakeFiles/CW.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/main.cpp > CMakeFiles/CW.dir/main.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/main.cpp > CMakeFiles/CW.dir/main.cpp.i
 
 CMakeFiles/CW.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/main.cpp -o CMakeFiles/CW.dir/main.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/main.cpp -o CMakeFiles/CW.dir/main.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.cpp
+CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.cpp
 CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.cpp
 
 CMakeFiles/CW.dir/Engine/utils/Shader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/Shader.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.cpp > CMakeFiles/CW.dir/Engine/utils/Shader.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.cpp > CMakeFiles/CW.dir/Engine/utils/Shader.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/Shader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Shader.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Shader.cpp -o CMakeFiles/CW.dir/Engine/utils/Shader.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.cpp -o CMakeFiles/CW.dir/Engine/utils/Shader.cpp.s
 
 CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.cpp
+CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.cpp
 CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.cpp
 
 CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.cpp > CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.cpp > CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.i
 
 CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Texture.cpp -o CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.cpp -o CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp
+CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.cpp
 CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.cpp
 
 CMakeFiles/CW.dir/Engine/utils/Camera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/Camera.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp > CMakeFiles/CW.dir/Engine/utils/Camera.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.cpp > CMakeFiles/CW.dir/Engine/utils/Camera.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/Camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Camera.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Camera.cpp -o CMakeFiles/CW.dir/Engine/utils/Camera.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.cpp -o CMakeFiles/CW.dir/Engine/utils/Camera.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.cpp
+CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.cpp
 CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.cpp
 
 CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.cpp > CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.cpp > CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Vertex.cpp -o CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.cpp -o CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.s
 
 CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.cpp
+CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.cpp
 CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.cpp
 
 CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.cpp > CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.cpp > CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.i
 
 CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Mesh.cpp -o CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.cpp -o CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.s
 
 CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.cpp
+CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.cpp
 CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.cpp
 
 CMakeFiles/CW.dir/Engine/graphics/Model.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/Model.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.cpp > CMakeFiles/CW.dir/Engine/graphics/Model.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.cpp > CMakeFiles/CW.dir/Engine/graphics/Model.cpp.i
 
 CMakeFiles/CW.dir/Engine/graphics/Model.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/Model.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Model.cpp -o CMakeFiles/CW.dir/Engine/graphics/Model.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.cpp -o CMakeFiles/CW.dir/Engine/graphics/Model.cpp.s
 
 CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp
+CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/helpers/AssimpGLMHelpers.cpp
 CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o -MF CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o.d -o CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o -MF CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o.d -o CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/helpers/AssimpGLMHelpers.cpp
 
 CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp > CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/helpers/AssimpGLMHelpers.cpp > CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.i
 
 CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/helpers/AssimpGLMHelpers.cpp -o CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/helpers/AssimpGLMHelpers.cpp -o CMakeFiles/CW.dir/Engine/helpers/AssimpGLMHelpers.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp
+CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.cpp
 CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.cpp
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp > CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.cpp > CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Skybox.cpp -o CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.cpp -o CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.cpp
+CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Sun.cpp
 CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Sun.cpp
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.cpp > CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Sun.cpp > CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Sun.cpp -o CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Sun.cpp -o CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.s
 
 CMakeFiles/CW.dir/external/imgui/imgui.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/external/imgui/imgui.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp
+CMakeFiles/CW.dir/external/imgui/imgui.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.cpp
 CMakeFiles/CW.dir/external/imgui/imgui.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.cpp
 
 CMakeFiles/CW.dir/external/imgui/imgui.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp > CMakeFiles/CW.dir/external/imgui/imgui.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.cpp > CMakeFiles/CW.dir/external/imgui/imgui.cpp.i
 
 CMakeFiles/CW.dir/external/imgui/imgui.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui.cpp -o CMakeFiles/CW.dir/external/imgui/imgui.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.cpp -o CMakeFiles/CW.dir/external/imgui/imgui.cpp.s
 
 CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_widgets.cpp
 CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_widgets.cpp
 
 CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp > CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_widgets.cpp > CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.i
 
 CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_widgets.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_widgets.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_widgets.cpp.s
 
 CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_demo.cpp
 CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_demo.cpp
 
 CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp > CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_demo.cpp > CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.i
 
 CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_demo.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_demo.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.s
 
 CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_draw.cpp
 CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_draw.cpp
 
 CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp > CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_draw.cpp > CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.i
 
 CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_draw.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_draw.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_draw.cpp.s
 
 CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_tables.cpp
 CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_tables.cpp
 
 CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp > CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_tables.cpp > CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.i
 
 CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_tables.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_tables.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_tables.cpp.s
 
 CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_glfw.cpp
 CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_glfw.cpp
 
 CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp > CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_glfw.cpp > CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.i
 
 CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_glfw.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_glfw.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_impl_glfw.cpp.s
 
 CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp
+CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_opengl3.cpp
 CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o -MF CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o.d -o CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_opengl3.cpp
 
 CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp > CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_opengl3.cpp > CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.i
 
 CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/imgui/imgui_impl_opengl3.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_opengl3.cpp -o CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.s
 
 CMakeFiles/CW.dir/Engine/App.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/App.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.cpp
+CMakeFiles/CW.dir/Engine/App.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.cpp
 CMakeFiles/CW.dir/Engine/App.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/CW.dir/Engine/App.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/App.cpp.o -MF CMakeFiles/CW.dir/Engine/App.cpp.o.d -o CMakeFiles/CW.dir/Engine/App.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/CW.dir/Engine/App.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/App.cpp.o -MF CMakeFiles/CW.dir/Engine/App.cpp.o.d -o CMakeFiles/CW.dir/Engine/App.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.cpp
 
 CMakeFiles/CW.dir/Engine/App.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/App.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.cpp > CMakeFiles/CW.dir/Engine/App.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.cpp > CMakeFiles/CW.dir/Engine/App.cpp.i
 
 CMakeFiles/CW.dir/Engine/App.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/App.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/App.cpp -o CMakeFiles/CW.dir/Engine/App.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.cpp -o CMakeFiles/CW.dir/Engine/App.cpp.s
 
 CMakeFiles/CW.dir/Engine/View.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/View.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.cpp
+CMakeFiles/CW.dir/Engine/View.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.cpp
 CMakeFiles/CW.dir/Engine/View.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/CW.dir/Engine/View.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/View.cpp.o -MF CMakeFiles/CW.dir/Engine/View.cpp.o.d -o CMakeFiles/CW.dir/Engine/View.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/CW.dir/Engine/View.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/View.cpp.o -MF CMakeFiles/CW.dir/Engine/View.cpp.o.d -o CMakeFiles/CW.dir/Engine/View.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.cpp
 
 CMakeFiles/CW.dir/Engine/View.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/View.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.cpp > CMakeFiles/CW.dir/Engine/View.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.cpp > CMakeFiles/CW.dir/Engine/View.cpp.i
 
 CMakeFiles/CW.dir/Engine/View.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/View.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/View.cpp -o CMakeFiles/CW.dir/Engine/View.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.cpp -o CMakeFiles/CW.dir/Engine/View.cpp.s
 
 CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.cpp
+CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.cpp
 CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.cpp
 
 CMakeFiles/CW.dir/Engine/graphics/Color.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/Color.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.cpp > CMakeFiles/CW.dir/Engine/graphics/Color.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.cpp > CMakeFiles/CW.dir/Engine/graphics/Color.cpp.i
 
 CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/Color.cpp -o CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.cpp -o CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp
+CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.cpp
 CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.cpp
 
 CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp > CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.cpp > CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Buffer.cpp -o CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.cpp -o CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp
+CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.cpp
 CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.cpp
 
 CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp > CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.cpp > CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/BoundingBox.cpp -o CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.cpp -o CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s
 
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp
+CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.cpp
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.cpp
 
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp > CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.cpp > CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.i
 
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/ModelAttributes.cpp -o CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.cpp -o CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s
 
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp
+CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Gravity.cpp
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Gravity.cpp
 
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp > CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Gravity.cpp > CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.i
 
 CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Gravity.cpp -o CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Gravity.cpp -o CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.s
 
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp
+CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.cpp
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o -MF CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o.d -o CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.cpp
 
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp > CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.cpp > CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.i
 
 CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/physics/Collisions.cpp -o CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.cpp -o CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.cpp
+CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp
 CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp
 
 CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.cpp > CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp > CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/PlayerHolder.cpp -o CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp -o CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.cpp
+CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.cpp
 CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.cpp
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.cpp > CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.cpp > CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.i
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/utils/Objects/Player.cpp -o CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.cpp -o CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.s
 
 CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/PostProcessor.cpp
+CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.cpp
 CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o -c /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/PostProcessor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.cpp
 
 CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/PostProcessor.cpp > CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.cpp > CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.i
 
 CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine/graphics/PostProcessor.cpp -o CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.cpp -o CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s
 
 # Object files for target CW
 CW_OBJECTS = \
@@ -524,15 +524,14 @@ CW: CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o
 CW: CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o
 CW: CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o
 CW: CMakeFiles/CW.dir/build.make
-CW: /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework
-CW: /usr/local/lib/libGLEW.2.2.0.dylib
-CW: /usr/local/lib/libglfw.3.4.dylib
-CW: /usr/local/lib/libglm.dylib
-CW: /usr/local/lib/libassimp.5.3.0.dylib
-CW: /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/lib/macosx/libsoil2.dylib
-CW: /usr/local/lib/libzlibstatic.a
+CW: /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework
+CW: /opt/homebrew/lib/libGLEW.2.2.0.dylib
+CW: /opt/homebrew/lib/libglfw.3.4.dylib
+CW: /opt/homebrew/lib/libglm.dylib
+CW: /opt/homebrew/lib/libassimp.5.3.0.dylib
+CW: /opt/homebrew/lib/libzlibstatic.a
 CW: CMakeFiles/CW.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable CW"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable CW"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CW.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -544,6 +543,6 @@ CMakeFiles/CW.dir/clean:
 .PHONY : CMakeFiles/CW.dir/clean
 
 CMakeFiles/CW.dir/depend:
-	cd /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build /Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/build/CMakeFiles/CW.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /Users/jacobedwards/University/Year2/Graphics/graphics-cw/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/jacobedwards/University/Year2/Graphics/graphics-cw /Users/jacobedwards/University/Year2/Graphics/graphics-cw /Users/jacobedwards/University/Year2/Graphics/graphics-cw/build /Users/jacobedwards/University/Year2/Graphics/graphics-cw/build /Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles/CW.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/CW.dir/depend
 

@@ -4,7 +4,9 @@
 
 #include "Texture.h"
 
-#include "SOIL2/SOIL2.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "graphics/stb_image.h"
+
 #include <GL/glew.h>
 #include <filesystem>
 #include <iostream>
@@ -16,62 +18,130 @@ namespace Texture {
 namespace Loader {
     unsigned int flipImage = 0;
 
-    auto load(const std::string& filename, const std::filesystem::path& directory) -> GLuint
+    auto load(const std::string& filename, const std::filesystem::path& directory, const GLint wrapS, const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint
     {
-        return load(directory / filename);
+        return load(directory / filename, wrapS, wrapT, minFilter, magFilter);
     }
 
-    auto load(const std::filesystem::path& path) -> GLuint
+    auto load(const std::filesystem::path& path, const GLint wrapS, const GLint wrapT, const GLint minFilter, const GLint magFilter) -> GLuint
     {
-        const GLuint texture = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
-            SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT | flipImage);
+        GLuint texture;
+        glGenTextures(1, &texture);
 
-        if (texture == 0) {
-            std::cerr << "Failed to load texture: " << SOIL_last_result() << std::endl;
-            throw std::runtime_error("Failed to load texture");
+        int width;
+        int height;
+        int nrChannels;
+
+        unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+        if (data != nullptr) {
+            const GLint format = getFormat(nrChannels);
+
+            glBindTexture(GL_TEXTURE_2D, texture);
+            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+        } else {
+            const char* failureReason = stbi_failure_reason();
+            std::cerr << "Failed to load texture: " << failureReason << std::endl;
         }
+
+        stbi_image_free(data);
 
         return texture;
     }
 
     auto loadCubemap(const std::filesystem::path& path) -> GLuint
     {
-        const GLuint texture = SOIL_load_OGL_single_cubemap(path.c_str(), SOIL_DDS_CUBEMAP_FACE_ORDER, SOIL_LOAD_AUTO,
-            SOIL_CREATE_NEW_ID,
-            SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+        GLuint texture;
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
 
-        if (texture == 0) {
-            std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
-            throw std::runtime_error("Failed to load cubemap");
+        int width;
+        int height;
+        int nrChannels;
+
+        stbi_uc* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+
+        if (data != nullptr) {
+            const GLint format = getFormat(nrChannels);
+
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        } else {
+            const char* failureReason = stbi_failure_reason();
+            std::cerr << "Failed to load texture: " << failureReason << std::endl;
         }
+
+        stbi_image_free(data);
+
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
         return texture;
     }
 
     auto loadCubemap(std::span<const std::string, CUBE_MAP_FACES> faces) -> GLuint
     {
-        if (faces.size() != CUBE_MAP_FACES) {
-            throw std::runtime_error("Invalid number of faces for cubemap");
-        }
-        const GLuint texture = SOIL_load_OGL_cubemap(faces[0].c_str(), faces[1].c_str(), faces[2].c_str(),
-            faces[3].c_str(), faces[4].c_str(), faces[5].c_str(), SOIL_LOAD_RGB,
-            SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+        GLuint texture;
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
 
-        if (texture == 0) {
-            std::cerr << "Failed to load cubemap: " << SOIL_last_result() << std::endl;
-            throw std::runtime_error("Failed to load cubemap");
+        int width;
+        int height;
+        int nrChannels;
+
+        for (unsigned int i = 0; i < faces.size(); i++) {
+            stbi_uc* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+            if (data != nullptr) {
+                const GLint format = getFormat(nrChannels);
+
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            } else {
+                const char* failureReason = stbi_failure_reason();
+                std::cerr << "Failed to load texture: " << failureReason << std::endl;
+            }
+
+            stbi_image_free(data);
         }
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
         return texture;
     }
 
+    auto getFormat(const int nrChannels) -> GLint
+    {
+        switch (nrChannels) {
+        case 1:
+            return GL_RED;
+        case 2:
+            return GL_RG;
+        case 3:
+            return GL_RGB;
+        case 4:
+            return GL_RGBA;
+        default:
+            throw std::runtime_error("Error loading texture");
+        }
+    }
+
     void setFlip(const bool flip)
     {
-        if (flip) {
-            flipImage = SOIL_FLAG_INVERT_Y;
-        } else {
-            flipImage = 0;
-        }
+        stbi_set_flip_vertically_on_load(static_cast<int>(flip));
     }
 }
 

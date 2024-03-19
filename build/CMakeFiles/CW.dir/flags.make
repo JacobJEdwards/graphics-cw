@@ -4,7 +4,9 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/external -I/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include
+CXX_INCLUDES = -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/SOIL2/src -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks -isystem /opt/homebrew/include
 
-CXX_FLAGS =  -std=c++20 -g -std=gnu++20 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks 
+CXX_FLAGSarm64 =  -std=c++20 -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks 
+
+CXX_FLAGS =  -std=c++20 -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks 
 

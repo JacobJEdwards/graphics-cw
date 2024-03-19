@@ -1,3 +1,0 @@
-/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles/CW.dir
-/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles/edit_cache.dir
-/Users/jacobedwards/University/Year2/Semester2/Graphics/coursework/CMakeFiles/rebuild_cache.dir
