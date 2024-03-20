@@ -1,7 +1,6 @@
 #include "physics/ModelAttributes.h"
 
 #include <glm/glm.hpp>
-#include <iostream>
 
 #include "physics/Constants.h"
 #include "physics/Gravity.h"

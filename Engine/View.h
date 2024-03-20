@@ -72,7 +72,7 @@ public:
 
   [[nodiscard]] auto getWindow() const -> GLFWwindow * { return window; }
 
-  void setDimensions(int width, int height) {
+  void setDimensions(unsigned int width, unsigned int height) {
     WIDTH = width;
     HEIGHT = height;
     (resize)();

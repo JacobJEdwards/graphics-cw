@@ -3,13 +3,10 @@
 //
 #include "App.h"
 
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 #include "imgui/imgui.h"
-#include "utils/PlayerHolder.h"
+#include "utils/PlayerManager.h"
 
 #include "Config.h"
 
@@ -20,16 +17,14 @@ bool App::paused = false;
 bool App::debug = false;
 bool App::wireframe = false;
 
-PlayerHolder App::players;
-
-bool App::init() {
+auto App::init() -> bool {
   setupGLFW();
   if (!view.isSetup() &&
       !view.init("App", Config::DEFAULT_WIDTH, Config::DEFAULT_HEIGHT)) {
     return false;
   }
 
-  glViewport(0, 0, view.getWidth(), view.getHeight());
+  glViewport(0, 0, static_cast<GLsizei>(view.getWidth()), static_cast<GLsizei>(view.getHeight()));
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
   glEnable(GL_BLEND);
@@ -39,19 +34,20 @@ bool App::init() {
   return true;
 }
 
-bool App::window(const std::string &title, unsigned int width,
-                 unsigned int height) {
+auto App::window(const std::string &title, int width,
+                 int height) -> bool {
   if (!view.init(title, width, height)) {
     return false;
   }
 
-  players.setAspect(static_cast<float>(width) / static_cast<float>(height));
+  PlayerManager::SetAspect(static_cast<float>(width) / static_cast<float>(height));
 
   return true;
 }
 
 void App::finalise() {
-  int width, height;
+  int width;
+    int height;
 
   glfwGetFramebufferSize(view.getWindow(), &width, &height);
 
@@ -61,7 +57,7 @@ void App::finalise() {
 void App::loop() {
   finalise();
   while (!view.shouldClose()) {
-    view.pollEvents();
+    View::pollEvents();
     view.render();
     view.swapBuffers();
   }

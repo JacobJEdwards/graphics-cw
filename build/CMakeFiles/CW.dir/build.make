@@ -419,19 +419,19 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.cpp -o CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.s
 
-CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp
-CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp
+CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.cpp
+CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.cpp
 
-CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp > CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i
+CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.cpp > CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.i
 
-CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.cpp -o CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s
+CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.cpp -o CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: CMakeFiles/CW.dir/flags.make
 CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.cpp
@@ -461,6 +461,20 @@ CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.cpp -o CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s
 
+CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.cpp
+CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o -MF CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o.d -o CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.cpp
+
+CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.cpp > CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.i
+
+CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.cpp -o CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s
+
 # Object files for target CW
 CW_OBJECTS = \
 "CMakeFiles/CW.dir/main.cpp.o" \
@@ -488,9 +502,10 @@ CW_OBJECTS = \
 "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o" \
 "CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o" \
 "CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o" \
-"CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o" \
+"CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o" \
 "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o" \
-"CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o"
+"CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o" \
+"CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o"
 
 # External object files for target CW
 CW_EXTERNAL_OBJECTS =
@@ -520,9 +535,10 @@ CW: CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o
-CW: CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o
+CW: CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o
 CW: CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o
 CW: CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o
+CW: CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o
 CW: CMakeFiles/CW.dir/build.make
 CW: /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework
 CW: /opt/homebrew/lib/libGLEW.2.2.0.dylib
@@ -531,7 +547,7 @@ CW: /opt/homebrew/lib/libglm.dylib
 CW: /opt/homebrew/lib/libassimp.5.3.0.dylib
 CW: /opt/homebrew/lib/libzlibstatic.a
 CW: CMakeFiles/CW.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable CW"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Linking CXX executable CW"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CW.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

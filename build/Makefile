@@ -537,29 +537,29 @@ Engine/utils/Objects/Sun.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.s
 .PHONY : Engine/utils/Objects/Sun.cpp.s
 
-Engine/utils/PlayerHolder.o: Engine/utils/PlayerHolder.cpp.o
-.PHONY : Engine/utils/PlayerHolder.o
+Engine/utils/PlayerManager.o: Engine/utils/PlayerManager.cpp.o
+.PHONY : Engine/utils/PlayerManager.o
 
 # target to build an object file
-Engine/utils/PlayerHolder.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.o
-.PHONY : Engine/utils/PlayerHolder.cpp.o
+Engine/utils/PlayerManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o
+.PHONY : Engine/utils/PlayerManager.cpp.o
 
-Engine/utils/PlayerHolder.i: Engine/utils/PlayerHolder.cpp.i
-.PHONY : Engine/utils/PlayerHolder.i
+Engine/utils/PlayerManager.i: Engine/utils/PlayerManager.cpp.i
+.PHONY : Engine/utils/PlayerManager.i
 
 # target to preprocess a source file
-Engine/utils/PlayerHolder.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.i
-.PHONY : Engine/utils/PlayerHolder.cpp.i
+Engine/utils/PlayerManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.i
+.PHONY : Engine/utils/PlayerManager.cpp.i
 
-Engine/utils/PlayerHolder.s: Engine/utils/PlayerHolder.cpp.s
-.PHONY : Engine/utils/PlayerHolder.s
+Engine/utils/PlayerManager.s: Engine/utils/PlayerManager.cpp.s
+.PHONY : Engine/utils/PlayerManager.s
 
 # target to generate assembly for a file
-Engine/utils/PlayerHolder.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerHolder.cpp.s
-.PHONY : Engine/utils/PlayerHolder.cpp.s
+Engine/utils/PlayerManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.s
+.PHONY : Engine/utils/PlayerManager.cpp.s
 
 Engine/utils/Shader.o: Engine/utils/Shader.cpp.o
 .PHONY : Engine/utils/Shader.o
@@ -584,6 +584,30 @@ Engine/utils/Shader.s: Engine/utils/Shader.cpp.s
 Engine/utils/Shader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Shader.cpp.s
 .PHONY : Engine/utils/Shader.cpp.s
+
+Engine/utils/ShaderManager.o: Engine/utils/ShaderManager.cpp.o
+.PHONY : Engine/utils/ShaderManager.o
+
+# target to build an object file
+Engine/utils/ShaderManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o
+.PHONY : Engine/utils/ShaderManager.cpp.o
+
+Engine/utils/ShaderManager.i: Engine/utils/ShaderManager.cpp.i
+.PHONY : Engine/utils/ShaderManager.i
+
+# target to preprocess a source file
+Engine/utils/ShaderManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.i
+.PHONY : Engine/utils/ShaderManager.cpp.i
+
+Engine/utils/ShaderManager.s: Engine/utils/ShaderManager.cpp.s
+.PHONY : Engine/utils/ShaderManager.s
+
+# target to generate assembly for a file
+Engine/utils/ShaderManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s
+.PHONY : Engine/utils/ShaderManager.cpp.s
 
 Engine/utils/Vertex.o: Engine/utils/Vertex.cpp.o
 .PHONY : Engine/utils/Vertex.o
@@ -861,12 +885,15 @@ help:
 	@echo "... Engine/utils/Objects/Sun.o"
 	@echo "... Engine/utils/Objects/Sun.i"
 	@echo "... Engine/utils/Objects/Sun.s"
-	@echo "... Engine/utils/PlayerHolder.o"
-	@echo "... Engine/utils/PlayerHolder.i"
-	@echo "... Engine/utils/PlayerHolder.s"
+	@echo "... Engine/utils/PlayerManager.o"
+	@echo "... Engine/utils/PlayerManager.i"
+	@echo "... Engine/utils/PlayerManager.s"
 	@echo "... Engine/utils/Shader.o"
 	@echo "... Engine/utils/Shader.i"
 	@echo "... Engine/utils/Shader.s"
+	@echo "... Engine/utils/ShaderManager.o"
+	@echo "... Engine/utils/ShaderManager.i"
+	@echo "... Engine/utils/ShaderManager.s"
 	@echo "... Engine/utils/Vertex.o"
 	@echo "... Engine/utils/Vertex.i"
 	@echo "... Engine/utils/Vertex.s"

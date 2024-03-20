@@ -21,6 +21,12 @@ public:
   BoundingBox(glm::vec3 min, glm::vec3 max);
   BoundingBox(const aiVector3D &min, const aiVector3D &max);
 
+  // destructor
+  ~BoundingBox() = default;
+
+  // copy constructor
+  BoundingBox(const BoundingBox &other) = default;
+
   [[nodiscard]] auto getMin() const -> glm::vec3;
 
   [[nodiscard]] auto getMax() const -> glm::vec3;
@@ -59,7 +65,7 @@ public:
 
   void expand(const BoundingBox &other);
 
-  void draw() const;
+  void draw(glm::mat4 model, glm::mat4 view, glm::mat4 projection) const;
 
 private:
   glm::vec3 min;

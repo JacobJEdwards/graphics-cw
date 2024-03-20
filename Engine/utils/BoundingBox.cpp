@@ -150,7 +150,8 @@ auto BoundingBox::getOffset(const BoundingBox &other) const -> glm::vec3 {
 
   if (overlap.x == minOverlap) {
     return {overlap.x, 0.0F, 0.0F};
-  } if (overlap.y == minOverlap) {
+  }
+  if (overlap.y == minOverlap) {
     return glm::vec3(0.0f, overlap.y, 0.0f);
   } else {
     return glm::vec3(0.0f, 0.0f, overlap.z);
@@ -187,7 +188,8 @@ void BoundingBox::initBuffer() {
   buffer.fill(vertices, indices);
 }
 
-void BoundingBox::draw() const {
+void BoundingBox::draw(glm::mat4 model, glm::mat4 view,
+                       glm::mat4 projection) const {
   buffer.bind();
   buffer.draw();
   buffer.unbind();

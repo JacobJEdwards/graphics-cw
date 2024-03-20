@@ -73,7 +73,7 @@ void Player::draw(const glm::mat4 &view, const glm::mat4 &projection,
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
     // boundingBox.transform(modelMat);
-    model.draw();
+    model.draw(view, projection);
   }
 }
 

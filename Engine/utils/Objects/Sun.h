@@ -41,7 +41,7 @@ public:
 
     sun.setModelMatrix(model);
 
-    sun.draw();
+    sun.draw(view, projection);
 
     glDepthFunc(GL_LESS);
   }

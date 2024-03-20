@@ -15,18 +15,19 @@ class Shader {
 public:
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    Shader(std::string vertexPath, std::string fragmentPath,
-        std::string geometryPath = "", std::string tessControlPath = "", std::string tessEvalPath = "");
+    Shader(std::filesystem::path vertexPath, std::filesystem::path fragmentPath,
+           std::filesystem::path geometryPath = "", std::filesystem::path tessControlPath = "",
+           std::filesystem::path tessEvalPath = "");
 
     ~Shader();
 
-    auto operator=(Shader&& other) noexcept -> Shader&;
+    auto operator=(Shader &&other) noexcept -> Shader &;
 
-    Shader(Shader&& other) noexcept;
+    Shader(Shader &&other) noexcept;
 
-    Shader(const Shader&) = delete;
+    Shader(const Shader &other) = delete;
 
-    auto operator=(const Shader&) -> Shader& = delete;
+    auto operator=(const Shader &other) -> Shader & = delete;
 
     [[nodiscard]] auto validateProgram() const -> bool;
 
@@ -36,8 +37,8 @@ public:
 
     [[nodiscard]] auto getProgramID() const -> GLuint;
 
-    template <typename T>
-    void setUniform(const std::string& name, T value) const;
+    template<typename T>
+    void setUniform(const std::string &name, T value) const;
 
 private:
     std::filesystem::path vertexPath;
@@ -62,8 +63,10 @@ private:
 
     void load();
 
-    static auto readShaderFile(const std::filesystem::path& path) -> std::string;
-    static auto compileShader(const std::string& shaderCode, GLenum shaderType) -> GLuint;
+    static auto readShaderFile(const std::filesystem::path &path) -> std::string;
+
+    static auto compileShader(const std::string &shaderCode, GLenum shaderType)
+    -> GLuint;
 };
 
 #endif // CW_SHADER_H

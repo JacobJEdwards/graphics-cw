@@ -9,8 +9,7 @@
 
 #include "Config.h"
 #include "View.h"
-#include "utils/CameraHolder.h"
-#include "utils/PlayerHolder.h"
+#include "utils/PlayerManager.h"
 
 #include <GL/glew.h>
 #include <glfw/glfw3.h>
@@ -18,8 +17,6 @@
 namespace App {
 
 extern View view;
-
-extern PlayerHolder players;
 
 extern bool paused;
 
@@ -31,8 +28,8 @@ extern bool wireframe;
 auto init() -> bool;
 
 auto window(const std::string &title,
-            unsigned int width = Config::DEFAULT_WIDTH,
-            unsigned int height = Config::DEFAULT_HEIGHT) -> bool;
+            int width = Config::DEFAULT_WIDTH,
+            int height = Config::DEFAULT_HEIGHT) -> bool;
 
 void quit();
 

@@ -1171,13 +1171,9 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/CameraHolder.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
-  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerHolder.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /opt/homebrew/include/assimp/scene.h \
   /opt/homebrew/include/assimp/types.h \
@@ -1211,6 +1207,7 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: \
   /opt/homebrew/include/assimp/Importer.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
+  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
-  /opt/homebrew/include/glfw/glfw3.h \
-  /opt/homebrew/include/glm/ext/matrix_transform.hpp
+  /opt/homebrew/include/glfw/glfw3.h
