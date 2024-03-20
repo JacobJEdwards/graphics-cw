@@ -18,6 +18,8 @@ public:
     GLuint VBO = 0;
     GLuint EBO = 0;
 
+    GLenum drawMode = GL_TRIANGLES;
+
     struct Data {
         std::vector<Vertex::Data> vertices;
         std::vector<GLuint> indices;
@@ -28,9 +30,11 @@ public:
     Buffer();
 
     void fill(std::initializer_list<Vertex::Data> vertices, std::initializer_list<GLuint> indices);
+
     void fill(std::span<const Vertex::Data> vertices, std::span<const GLuint> indices);
 
     void fill(std::initializer_list<Vertex::Data> vertices);
+
     void fill(std::span<const Vertex::Data> vertices);
 
     void bind() const;

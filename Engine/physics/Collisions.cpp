@@ -36,7 +36,7 @@ namespace Physics::Collisions {
         a.applyImpulse(impulse);
     }
 
-    void resolve(Attributes &a, Attributes &b) {
+    void resolve(Attributes &a, Attributes &b, const glm::vec3 &point) {
         // edge case
         if (a.mass == 0.0F && b.mass == 0.0F) {
             return;
@@ -66,6 +66,17 @@ namespace Physics::Collisions {
 
         glm::vec3 impulse = j * normal;
 
+
+        glm::vec3 rotationA = a.calculateRotation(point);
+        glm::vec3 rotationB = b.calculateRotation(point);
+
+        rotationA = glm::vec3(0.0F, rotationA.y, 0.0F);
+        rotationB = glm::vec3(0.0F, rotationB.y, 0.0F);
+
+        a.applyRotation(rotationA);
+        b.applyRotation(rotationB);
+
+        // apply the impulse
         if (a.mass != 0.0F) {
             a.applyImpulse(-impulse);
         }
@@ -80,5 +91,9 @@ namespace Physics::Collisions {
     }
 
     auto check(const BoundingBox &a, const glm::vec3 &b) -> bool { return a.contains(b); }
+
+    auto getCollisionPoint(const BoundingBox &a, const BoundingBox &b) -> glm::vec3 {
+        return a.getCollisionPoint(b);
+    }
 } // namespace Physics::Collisions
 

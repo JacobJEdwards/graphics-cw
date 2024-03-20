@@ -236,6 +236,181 @@ void Shader::setUniform(const std::string &name,
                          value_ptr(value));
 }
 
+template<typename T>
+T Shader::getUniform(const std::string &name) const {
+    std::string error = "Invalid type for uniform " + name;
+    throw std::runtime_error(error);
+}
+
+template<>
+glm::mat4 Shader::getUniform(const std::string &name) const {
+    glm::mat4 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat3 Shader::getUniform(const std::string &name) const {
+    glm::mat3 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::vec4 Shader::getUniform(const std::string &name) const {
+    glm::vec4 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::vec3 Shader::getUniform(const std::string &name) const {
+    glm::vec3 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::vec2 Shader::getUniform(const std::string &name) const {
+    glm::vec2 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+float Shader::getUniform(const std::string &name) const {
+    float value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    return value;
+}
+
+template<>
+int Shader::getUniform(const std::string &name) const {
+    int value;
+    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    return value;
+}
+
+template<>
+unsigned int Shader::getUniform(const std::string &name) const {
+    unsigned int value;
+    glGetUniformuiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    return value;
+}
+
+template<>
+bool Shader::getUniform(const std::string &name) const {
+    int value;
+    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    return static_cast<bool>(value);
+}
+
+template<>
+glm::ivec2 Shader::getUniform(const std::string &name) const {
+    glm::ivec2 value;
+    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::ivec3 Shader::getUniform(const std::string &name) const {
+    glm::ivec3 value;
+    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::ivec4 Shader::getUniform(const std::string &name) const {
+    glm::ivec4 value;
+    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::uvec2 Shader::getUniform(const std::string &name) const {
+    glm::uvec2 value;
+    glGetUniformuiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::uvec3 Shader::getUniform(const std::string &name) const {
+    glm::uvec3 value;
+    glGetUniformuiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::uvec4 Shader::getUniform(const std::string &name) const {
+    glm::uvec4 value;
+    glGetUniformuiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat2 Shader::getUniform(const std::string &name) const {
+    glm::mat2 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat2x3 Shader::getUniform(const std::string &name) const {
+    glm::mat2x3 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat2x4 Shader::getUniform(const std::string &name) const {
+    glm::mat2x4 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat3x2 Shader::getUniform(const std::string &name) const {
+    glm::mat3x2 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat3x4 Shader::getUniform(const std::string &name) const {
+    glm::mat3x4 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat4x2 Shader::getUniform(const std::string &name) const {
+    glm::mat4x2 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::mat4x3 Shader::getUniform(const std::string &name) const {
+    glm::mat4x3 value;
+    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::dmat2 Shader::getUniform(const std::string &name) const {
+    glm::dmat2 value;
+    glGetUniformdv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+template<>
+glm::dmat3 Shader::getUniform(const std::string &name) const {
+    glm::dmat3 value;
+    glGetUniformdv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    return value;
+}
+
+
 void Shader::checkCompileErrors(const GLuint shader, const bool isProgram) {
     GLint success;
     std::array<GLchar, BUFFER_SIZE> infoLog{};
@@ -266,6 +441,7 @@ void Shader::deleteProgram() const {
         }
     }
 }
+
 
 // read shader file and process includes
 auto Shader::readShaderFile(const std::filesystem::path &path) -> std::string {
@@ -333,17 +509,17 @@ void Shader::load() {
     GLuint fragment = compileShader(fragmentCode, GL_FRAGMENT_SHADER);
 
     // if geometry shader is given, compile geometry shader
-    GLuint geometry;
+    GLuint geometry = 0;
     if (!geometryPath.empty()) {
         geometry = compileShader(geometryCode, GL_GEOMETRY_SHADER);
     }
 
-    GLuint tessControl;
+    GLuint tessControl = 0;
     if (!tessControlPath.empty()) {
         tessControl = compileShader(tessControlCode, GL_TESS_CONTROL_SHADER);
     }
 
-    GLuint tessEval;
+    GLuint tessEval = 0;
     if (!tessEvalPath.empty()) {
         tessEval = compileShader(tessEvalCode, GL_TESS_EVALUATION_SHADER);
     }

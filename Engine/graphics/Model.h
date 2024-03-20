@@ -34,6 +34,18 @@ public:
 
     [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool;
 
+    [[nodiscard]] auto isColliding(const Model &other) const -> bool {
+        // check every permutation of meshes
+        for (const auto &mesh: meshes) {
+            for (const auto &otherMesh: other.meshes) {
+                if (mesh->isColliding(otherMesh->getBoundingBox())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     auto getCentre() const -> glm::vec3;
 
     auto getOffset(const glm::vec3 &point) const -> glm::vec3;

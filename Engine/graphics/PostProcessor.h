@@ -8,26 +8,35 @@
 
 class PostProcess {
 public:
-  PostProcess(int width, int height, std::shared_ptr<Shader> shader,
-              bool multisampled = true);
-  void render();
-  void begin();
-  void end();
-  void setShader(std::shared_ptr<Shader> shader);
-  std::shared_ptr<Shader> getShader();
-  std::shared_ptr<FrameBuffer> getFrameBuffer();
-  void setWidth(int width);
-  void setHeight(int height);
-  void resize(int width, int height);
+    PostProcess(int width, int height, const std::shared_ptr<Shader> &shader,
+                bool multisampled = true);
+
+    void render();
+
+    void begin();
+
+    void end();
+
+    void setShader(std::shared_ptr<Shader> shader);
+
+    auto getShader() -> std::shared_ptr<Shader>;
+
+    auto getFrameBuffer() -> std::shared_ptr<FrameBuffer>;
+
+    void setWidth(int width);
+
+    void setHeight(int height);
+
+    void resize(int width, int height);
 
 private:
-  std::shared_ptr<Shader> shader;
-  std::shared_ptr<FrameBuffer> frameBuffer;
+    std::shared_ptr<Shader> shader;
+    std::shared_ptr<FrameBuffer> frameBuffer;
 
-  Plane renderPlane;
+    Plane renderPlane;
 
-  int width;
-  int height;
+    int width;
+    int height;
 };
 
 #endif // POSTPROCESS_H

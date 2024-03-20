@@ -15,51 +15,53 @@
 #include <memory>
 
 #include "utils/Shader.h"
+#include "utils/ShaderManager.h"
 
 class Sun {
 public:
-  Sun() { sun.setShader(shader); };
+    Sun() {
+        auto shader = ShaderManager::Get("Sun");
+        model.setShader(shader);
+        auto transform = Config::IDENTITY_MATRIX;
+        transform = glm::scale(transform, glm::vec3(scale));
+        model.transform(transform);
+        model.attributes.position.z = -50.0F; // Sun typically appears farther away
+    };
 
-  void update(const float dt) {
-    angle += 0.5F * dt;
-    position.x = 10.0F * std::cos(angle);
-    position.y = 10.0F * std::sin(angle);
-  }
+    void update(const float dt) {
+        angle += 0.05F * dt;
+        float orbitRadius = 100.0F;
+        float height = 20.0F;
+        float x = orbitRadius * std::cos(angle);
+        float y = orbitRadius * std::sin(angle);
+        float z = height * std::sin(0.5 * angle);
 
-  void draw(const glm::mat4 &view, const glm::mat4 &projection) {
-    glDepthFunc(GL_LEQUAL);
+        model.attributes.position.x = x;
+        model.attributes.position.y = y;
+        model.attributes.position.z = z;
+        model.update(dt);
+    }
 
-    const auto newView = glm::mat4(glm::mat3(view));
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) {
+        glDepthFunc(GL_LEQUAL);
 
-    shader->use();
-    shader->setUniform("view", newView);
-    shader->setUniform("projection", projection);
+        const auto newView = glm::mat4(glm::mat3(view));
+        model.draw(view, projection);
 
-    auto model = Config::IDENTITY_MATRIX;
-    model = glm::translate(model, glm::vec3(position, -10.0F));
-    model = glm::scale(model, glm::vec3(scale));
+        glDepthFunc(GL_LESS);
+    }
 
-    sun.setModelMatrix(model);
+    void setPosition(const glm::vec3 &pos) { model.attributes.position = pos; }
 
-    sun.draw(view, projection);
+    void setScale(const float newScale) { scale = newScale; }
 
-    glDepthFunc(GL_LESS);
-  }
-
-  void setPosition(const glm::vec2 &pos) { position = pos; }
-
-  void setScale(const float newScale) { scale = newScale; }
-
-  [[nodiscard]] auto getPosition() const -> glm::vec2 { return position; }
+    [[nodiscard]] auto getPosition() const -> glm::vec3 { return model.attributes.position; }
 
 private:
-  std::shared_ptr<Shader> shader = std::make_shared<Shader>(
-      "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
-  Model sun = Model("../Assets/objects/sun/sun.obj");
+    Model model = Model("../Assets/objects/sun/sun.obj");
 
-  glm::vec2 position = glm::vec2(0.0F, 0.0F);
-  float scale = 0.001F;
-  float angle = 0.0F;
+    float scale = 0.01F; // Increase scale to make it more visible
+    float angle = 0.0F;
 };
 
 #endif // SUN_H

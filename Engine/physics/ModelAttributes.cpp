@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/detail/type_quat.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <iostream>
 
 #include "physics/Constants.h"
 #include "physics/Gravity.h"
@@ -86,7 +87,6 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point, float dt) const
     return force;
 }
 
-// calculate minimum rotation needed to rotate the object to face the point
 auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
     glm::vec3 direction = glm::normalize(point - position);
     glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
@@ -103,10 +103,35 @@ auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3
     return rotation;
 }
 
+// calculate minimum rotation needed to rotate the object to face the point
+auto Physics::Attributes::calculateTorque(const glm::vec3 &point) -> glm::vec3 {
+    glm::vec3 direction = glm::normalize(point - position);
+    glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
+
+    glm::vec3 torque = glm::vec3(0.0f);
+
+    if (direction != forward) {
+        // Calculate the axis of rotation (cross product of forward and direction vectors)
+        glm::vec3 axis = glm::cross(forward, direction);
+
+        // Determine the angle of rotation needed to align forward with direction
+        float angle = glm::acos(glm::dot(forward, direction));
+
+        // Calculate the torque vector
+        torque = axis * angle;
+    }
+
+    return torque;
+}
+
 void Physics::Attributes::applyRotation(const glm::vec3 &rotation) {
     glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0F), rotation.x, glm::vec3(1.0F, 0.0F, 0.0F));
     rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0F, 1.0F, 0.0F));
     rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0F, 0.0F, 1.0F));
 
     transform = rotationMatrix * transform;
+}
+
+void Physics::Attributes::applyTorque(const glm::vec3 &torque) {
+    this->torque += torque;
 }

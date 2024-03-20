@@ -16,64 +16,67 @@
 
 class BoundingBox {
 public:
-  BoundingBox() = default;
+    BoundingBox() = default;
 
-  BoundingBox(glm::vec3 min, glm::vec3 max);
-  BoundingBox(const aiVector3D &min, const aiVector3D &max);
+    BoundingBox(glm::vec3 min, glm::vec3 max);
 
-  // destructor
-  ~BoundingBox() = default;
+    BoundingBox(const aiVector3D &min, const aiVector3D &max);
 
-  // copy constructor
-  BoundingBox(const BoundingBox &other) = default;
+    // destructor
+    ~BoundingBox() = default;
 
-  [[nodiscard]] auto getMin() const -> glm::vec3;
+    // copy constructor
+    BoundingBox(const BoundingBox &other) = default;
 
-  [[nodiscard]] auto getMax() const -> glm::vec3;
+    [[nodiscard]] auto getMin() const -> glm::vec3;
 
-  void setMin(const glm::vec3 &min);
+    [[nodiscard]] auto getMax() const -> glm::vec3;
 
-  void setMax(const glm::vec3 &max);
+    void setMin(const glm::vec3 &min);
 
-  void transform(const glm::mat4 &model);
+    void setMax(const glm::vec3 &max);
 
-  bool collides(const BoundingBox &other) const;
+    void transform(const glm::mat4 &model);
 
-  bool contains(const glm::vec3 &point) const;
+    [[nodiscard]] auto collides(const BoundingBox &other) const -> bool;
 
-  bool contains(const BoundingBox &other) const;
+    [[nodiscard]] auto contains(const glm::vec3 &point) const -> bool;
 
-  bool isColliding(const BoundingBox &other) const;
+    [[nodiscard]] auto contains(const BoundingBox &other) const -> bool;
 
-  void setPosition(const glm::vec3 &position);
+    [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool;
 
-  glm::vec3 getCenter() const;
+    void setPosition(const glm::vec3 &position);
 
-  glm::vec3 getSize() const;
+    [[nodiscard]] auto getCenter() const -> glm::vec3;
 
-  void translate(const glm::vec3 &translation);
+    [[nodiscard]] auto getSize() const -> glm::vec3;
 
-  void scale(const glm::vec3 &scale);
+    void translate(const glm::vec3 &translation);
 
-  void rotate(const glm::vec3 &axis, float angle);
+    void scale(const glm::vec3 &scale);
 
-  auto getOffset(const glm::vec3 &point) const -> glm::vec3;
+    void rotate(const glm::vec3 &axis, float angle);
 
-  auto getOffset(const BoundingBox &other) const -> glm::vec3;
+    [[nodiscard]] auto getOffset(const glm::vec3 &point) const -> glm::vec3;
 
-  void expand(const glm::vec3 &amount);
+    [[nodiscard]] auto getOffset(const BoundingBox &other) const -> glm::vec3;
 
-  void expand(const BoundingBox &other);
+    void expand(const glm::vec3 &amount);
 
-  void draw(glm::mat4 model, glm::mat4 view, glm::mat4 projection) const;
+    void expand(const BoundingBox &other);
+
+    void draw(glm::mat4 model, glm::mat4 view, glm::mat4 projection) const;
+
+    [[nodiscard]] auto getCollisionPoint(const BoundingBox &box) const -> glm::vec3;
 
 private:
-  glm::vec3 min;
-  glm::vec3 max;
+    glm::vec3 min;
+    glm::vec3 max;
 
-  Buffer buffer;
+    Buffer buffer;
 
-  void initBuffer();
+    void initBuffer();
 };
 
 #endif // BOUNDINGBOX_H

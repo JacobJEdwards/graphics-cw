@@ -42,6 +42,10 @@ add_executable(CW main.cpp
         Engine/utils/Objects/Player.cpp
         Engine/graphics/PostProcessor.cpp
         Engine/utils/ShaderManager.cpp
+        Engine/graphics/DepthBuffer.cpp
+        Engine/graphics/DepthBuffer.h
+        Engine/graphics/ShadowBuffer.cpp
+        Engine/graphics/ShadowBuffer.h
 )
 
 # Link libraries

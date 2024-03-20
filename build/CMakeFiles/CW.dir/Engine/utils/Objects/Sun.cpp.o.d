@@ -1194,4 +1194,5 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: \
   /opt/homebrew/include/glm/gtc/../mat3x4.hpp \
   /opt/homebrew/include/glm/gtc/../mat4x2.hpp \
   /opt/homebrew/include/glm/gtc/../mat4x3.hpp \
-  /opt/homebrew/include/glm/gtc/type_ptr.inl
+  /opt/homebrew/include/glm/gtc/type_ptr.inl \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h

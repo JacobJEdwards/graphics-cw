@@ -475,6 +475,34 @@ CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.cpp -o CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s
 
+CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/DepthBuffer.cpp
+CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/DepthBuffer.cpp
+
+CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/DepthBuffer.cpp > CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.i
+
+CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/DepthBuffer.cpp -o CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.s
+
+CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/ShadowBuffer.cpp
+CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/ShadowBuffer.cpp
+
+CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/ShadowBuffer.cpp > CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.i
+
+CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/ShadowBuffer.cpp -o CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.s
+
 # Object files for target CW
 CW_OBJECTS = \
 "CMakeFiles/CW.dir/main.cpp.o" \
@@ -505,7 +533,9 @@ CW_OBJECTS = \
 "CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o" \
 "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o" \
 "CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o" \
-"CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o"
+"CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o" \
+"CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o" \
+"CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o"
 
 # External object files for target CW
 CW_EXTERNAL_OBJECTS =
@@ -539,6 +569,8 @@ CW: CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o
 CW: CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o
 CW: CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o
 CW: CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o
+CW: CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o
+CW: CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o
 CW: CMakeFiles/CW.dir/build.make
 CW: /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework
 CW: /opt/homebrew/lib/libGLEW.2.2.0.dylib
@@ -547,7 +579,7 @@ CW: /opt/homebrew/lib/libglm.dylib
 CW: /opt/homebrew/lib/libassimp.5.3.0.dylib
 CW: /opt/homebrew/lib/libzlibstatic.a
 CW: CMakeFiles/CW.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Linking CXX executable CW"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Linking CXX executable CW"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CW.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

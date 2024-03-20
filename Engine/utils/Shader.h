@@ -40,6 +40,9 @@ public:
     template<typename T>
     void setUniform(const std::string &name, T value) const;
 
+    template<typename T>
+    T getUniform(const std::string &name) const;
+
 private:
     std::filesystem::path vertexPath;
     std::filesystem::path fragmentPath;

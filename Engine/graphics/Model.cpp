@@ -26,17 +26,25 @@
 #include "physics/Gravity.h"
 #include "utils/BoundingBox.h"
 #include "utils/Vertex.h"
+#include "App.h"
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 
 void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) {
     shader->use();
     shader->setUniform("model", attributes.transform);
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
+
     for (const auto &mesh: meshes) {
+        if (App::debug) {
+            shader->use();
+            shader->setUniform("model", attributes.transform);
+        }
         mesh->draw(shader);
     }
 
-    // boundingBox.draw(attributes.transform, view, projection);
+    // getBoundingBox().draw(attributes.transform, view, projection);
 }
 
 void Model::setShader(std::shared_ptr<Shader> shader) {
@@ -217,7 +225,6 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
             meshes, [&](const auto &mesh) { return mesh->isColliding(other); });
 }
 
-
 void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
     auto newModelMatrix = modelMatrix;
 
@@ -257,6 +264,7 @@ void Model::translate(const glm::vec3 &translation) {
 
 void Model::scale(const glm::vec3 &scale) {
     attributes.transform = glm::scale(attributes.transform, scale);
+    modelMatrix = glm::scale(modelMatrix, scale);
 
     for (auto &mesh: meshes) {
         mesh->scale(scale);
@@ -296,6 +304,8 @@ auto Model::getBoundingBox() const -> BoundingBox {
                     glm::min(modelBoundingBox.getMin(), meshBoundingBox.getMin()));
             modelBoundingBox.setMax(
                     glm::max(modelBoundingBox.getMin(), meshBoundingBox.getMax()));
+
+            modelBoundingBox.expand(meshBoundingBox);
         }
     }
 
@@ -306,7 +316,7 @@ void Model::update(float dt, bool gravity) {
     attributes.update(dt);
 
     if (!attributes.isGrounded && gravity) {
-        attributes.applyForce(Physics::GRAVITY_VECTOR * attributes.mass);
+        attributes.applyGravity();
     }
 
     glm::vec3 newPosition = attributes.position;

@@ -102,6 +102,12 @@
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h">
 			<Option target="CW"/>
 		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/DepthBuffer.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/DepthBuffer.h">
+			<Option target="CW"/>
+		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.cpp">
 			<Option target="CW"/>
 		</Unit>
@@ -118,6 +124,12 @@
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/ShadowBuffer.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/ShadowBuffer.h">
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.cpp">

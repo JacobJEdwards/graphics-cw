@@ -17,51 +17,59 @@
 
 class Player {
 public:
-  Player();
+    Player();
 
-  enum class Mode { FPS, FREE, ORBIT, FIXED, PATH };
-  enum class Direction { FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN };
+    enum class Mode {
+        FPS, FREE, ORBIT, FIXED, PATH
+    };
+    enum class Direction {
+        FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN
+    };
 
-  void processKeyboard(Direction direction, float deltaTime);
+    void processKeyboard(Direction direction, float deltaTime);
 
-  [[nodiscard]] auto getCamera() const -> Camera &;
-  [[nodiscard]] auto getPosition() const -> glm::vec3;
+    [[nodiscard]] auto getCamera() const -> Camera &;
 
-  void update(float dt);
+    [[nodiscard]] auto getPosition() const -> glm::vec3;
 
-  void draw(const glm::mat4 &view, const glm::mat4 &projection,
-            bool show = true);
+    void update(float dt);
 
-  [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
+    void draw(const glm::mat4 &view, const glm::mat4 &projection,
+              bool show = true);
 
-  void jump();
+    [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
-  void setDrawModel(bool draw);
+    void jump();
 
-  auto getAttributes() -> Physics::Attributes &;
+    void setDrawModel(bool draw);
 
-  void setMode(Mode mode);
+    auto getAttributes() -> Physics::Attributes &;
 
-  void interface();
+    void setMode(Mode mode);
 
-  void debug() const;
+    void interface();
 
-  void nitro();
+    void debug() const;
+
+    void nitro();
+
+    [[nodiscard]] auto getModel() const -> const Model &;
 
 private:
-  Mode mode = Mode::FPS;
+    Mode mode = Mode::FPS;
 
-  bool drawModel = true;
+    bool drawModel = true;
 
-  float jumpForce = 100.0F;
+    float jumpForce = 100.0F;
 
-  std::unique_ptr<Camera> camera =
-      std::make_unique<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
+    std::unique_ptr<Camera> camera =
+            std::make_unique<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
 
-  std::shared_ptr<Shader> shader = std::make_shared<Shader>(
-      "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    std::shared_ptr<Shader> shader = std::make_shared<Shader>(
+            "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
 
-  Model model = Model("../Assets/objects/person/person.obj");
+    Model model = Model("../Assets/objects/person/person.obj");
+
 };
 
 #endif // PLAYER_H

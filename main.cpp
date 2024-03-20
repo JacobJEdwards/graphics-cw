@@ -61,6 +61,14 @@ auto main() -> int {
                    static_cast<GLsizei>(App::view.getHeight()));
     });
 
+    ShaderManager::Add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
+    ShaderManager::Add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
+    ShaderManager::Add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
+    ShaderManager::Add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
+    ShaderManager::Add("Terrain", "../Assets/shaders/terrain.vert", "../Assets/shaders/terrain.frag");
+    ShaderManager::Add("Player", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    ShaderManager::Add("BoundingBox", "../Assets/shaders/boundingBox.vert", "../Assets/shaders/boundingBox.frag");
+
     const std::array<std::string, 6> skyboxFaces{
             "../Assets/textures/skybox/right.jpg",
             "../Assets/textures/skybox/left.jpg",
@@ -75,10 +83,10 @@ auto main() -> int {
 
     Texture::Loader::setFlip(false);
     Model newModel("../Assets/objects/helecopter/chopper.obj");
-    newModel.attributes.mass = 1.0F;
+    newModel.attributes.mass = 10.0F;
     Texture::Loader::setFlip(true);
     Model model2("../Assets/objects/backpack/backpack.obj");
-    model2.attributes.mass = 0.1F;
+    model2.attributes.mass = 2.0F;
     Texture::Loader::setFlip(false);
 
     auto orbit = std::make_shared<Player>();
@@ -106,15 +114,11 @@ auto main() -> int {
 
     PlayerManager::SetCurrent("Orbit");
 
-    InfinitePlane terrain;
 
+    InfinitePlane terrain;
     Plane postProcessingPlane;
 
-    ShaderManager::Add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
-    ShaderManager::Add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
-
     auto shader = ShaderManager::Get("PostProcess");
-
     shader->use();
     shader->setUniform("screenTexture", 0);
 
@@ -136,10 +140,11 @@ auto main() -> int {
     glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                             glm::vec3(20.0F, 10.0F, 8.0F);
 
-    // rotatoe by 180 degrees
+    // rotate by 180 degrees
     glm::mat4 helicopterModel = translate(model, newPosition);
+    // scale
+    // helicopterModel = scale(helicopterModel, glm::vec3(10.0F));
     helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
-
 
     newModel.transform(helicopterModel);
 
@@ -162,7 +167,7 @@ auto main() -> int {
     // generate a circle
     for (int i = 0; i < numPoints; i++) {
         float angle = 2.0F * glm::pi<float>() * i / numPoints;
-        auto pos = glm::vec3(20.0F * cos(angle), 5.0F, 20.0F * sin(angle));
+        auto pos = glm::vec3(30.0F * cos(angle), 5.0F, 30.0F * sin(angle));
         points[i] = pos;
     }
 
@@ -183,7 +188,7 @@ auto main() -> int {
 
         shader->setUniform("projection", projectionMatrix);
 
-        shader->setUniform("light.position", glm::vec3(sun.getPosition(), 1.0F));
+        shader->setUniform("light.position", glm::vec3(sun.getPosition()));
         shader->setUniform("view", viewMatrix);
 
         shader->setUniform("viewPos", player->getCamera().getPosition());
@@ -191,7 +196,7 @@ auto main() -> int {
         newModel.draw(viewMatrix, projectionMatrix);
         model2.draw(viewMatrix, projectionMatrix);
         terrain.draw(viewMatrix, projectionMatrix,
-                     glm::vec3(sun.getPosition(), 1.0F),
+                     glm::vec3(sun.getPosition()),
                      player->getCamera().getPosition());
 
         skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
@@ -246,22 +251,54 @@ auto main() -> int {
                 model2.attributes.isGrounded = false;
             }
 
+            if (newModel.isColliding(model2)) {
+                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                        newModel.getBoundingBox(), model2.getBoundingBox());
+                Physics::Collisions::resolve(newModel.attributes, model2.attributes,
+                                             collisionPoint);
+            }
+
+            /*
             if (Physics::Collisions::check(newModel.getBoundingBox(),
                                            model2.getBoundingBox())) {
-                Physics::Collisions::resolve(newModel.attributes, model2.attributes);
+                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                        newModel.getBoundingBox(), model2.getBoundingBox());
+                Physics::Collisions::resolve(newModel.attributes, model2.attributes, collisionPoint);
             }
+             */
 
+            if (player->getModel().isColliding(newModel)) {
+                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                        player->getBoundingBox(), newModel.getBoundingBox());
+                Physics::Collisions::resolve(player->getAttributes(),
+                                             newModel.attributes, collisionPoint);
+            }
+            /*
             if (Physics::Collisions::check(player->getBoundingBox(),
                                            newModel.getBoundingBox())) {
+                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                        player->getBoundingBox(), newModel.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
-                                             newModel.attributes);
+                                             newModel.attributes, collisionPoint);
+            }
+             */
+
+            if (player->getModel().isColliding(model2)) {
+                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                        player->getBoundingBox(), model2.getBoundingBox());
+                Physics::Collisions::resolve(player->getAttributes(),
+                                             model2.attributes, collisionPoint);
             }
 
+            /*
             if (Physics::Collisions::check(player->getBoundingBox(),
                                            model2.getBoundingBox())) {
+                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                        player->getBoundingBox(), model2.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
-                                             model2.attributes);
+                                             model2.attributes, collisionPoint);
             }
+             */
 
             if (p3Index == numPoints) {
                 p3Index = 0;
@@ -284,18 +321,18 @@ auto main() -> int {
                                     points[p3Index], t);
 
             auto forceNeeded =
-                    newModel.attributes.calculateForce(interpolatedPoint, .5F);
+                    newModel.attributes.calculateForce(interpolatedPoint, 0.5F);
 
             // ignore y component
             forceNeeded = glm::vec3(forceNeeded.x, 0.0F, forceNeeded.z);
 
-            auto rotation = newModel.attributes.calculateRotation(interpolatedPoint);
+            auto torque = newModel.attributes.calculateRotation(interpolatedPoint);
             // ignore x and z component
-            rotation = glm::vec3(0.0F, rotation.y, 0.0F);
+            torque = glm::vec3(0.0F, torque.y, 0.0F);
 
             // flip by 180 degrees
 
-            newModel.attributes.applyRotation(rotation);
+            newModel.attributes.applyRotation(torque);
             newModel.attributes.applyForce(forceNeeded);
 
             t += 0.5F;
