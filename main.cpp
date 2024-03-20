@@ -75,7 +75,7 @@ auto main() -> int {
 
     Texture::Loader::setFlip(false);
     Model newModel("../Assets/objects/helecopter/chopper.obj");
-    newModel.attributes.mass = 50.0F;
+    newModel.attributes.mass = 1.0F;
     Texture::Loader::setFlip(true);
     Model model2("../Assets/objects/backpack/backpack.obj");
     model2.attributes.mass = 0.1F;
@@ -136,7 +136,10 @@ auto main() -> int {
     glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                             glm::vec3(20.0F, 10.0F, 8.0F);
 
-    const glm::mat4 helicopterModel = translate(model, newPosition);
+    // rotatoe by 180 degrees
+    glm::mat4 helicopterModel = translate(model, newPosition);
+    helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+
 
     newModel.transform(helicopterModel);
 
@@ -281,13 +284,21 @@ auto main() -> int {
                                     points[p3Index], t);
 
             auto forceNeeded =
-                    newModel.attributes.calculateForce(interpolatedPoint, 0.1F);
+                    newModel.attributes.calculateForce(interpolatedPoint, .5F);
 
+            // ignore y component
             forceNeeded = glm::vec3(forceNeeded.x, 0.0F, forceNeeded.z);
 
+            auto rotation = newModel.attributes.calculateRotation(interpolatedPoint);
+            // ignore x and z component
+            rotation = glm::vec3(0.0F, rotation.y, 0.0F);
+
+            // flip by 180 degrees
+
+            newModel.attributes.applyRotation(rotation);
             newModel.attributes.applyForce(forceNeeded);
 
-            t += 0.1F;
+            t += 0.5F;
 
             if (t > 1.0F) {
                 t = 0.0F;

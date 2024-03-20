@@ -29,7 +29,7 @@
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 
-void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
+void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) {
     shader->use();
     shader->setUniform("model", attributes.transform);
     for (const auto &mesh: meshes) {
@@ -217,6 +217,7 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
             meshes, [&](const auto &mesh) { return mesh->isColliding(other); });
 }
 
+
 void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
     auto newModelMatrix = modelMatrix;
 
@@ -239,30 +240,24 @@ void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
 }
 
 void Model::rotate(const glm::vec3 &axis, float angle) {
-    modelMatrix = glm::rotate(modelMatrix, angle, axis);
+    attributes.applyRotation(axis * angle);
+
     for (auto &mesh: meshes) {
         mesh->rotate(axis, angle);
     }
-
-    attributes.position =
-            glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
-
-    attributes.transform = modelMatrix;
 }
 
 void Model::translate(const glm::vec3 &translation) {
-    modelMatrix = glm::translate(modelMatrix, translation);
+    attributes.position += translation;
+
     for (auto &mesh: meshes) {
         mesh->translate(translation);
     }
-
-    attributes.position =
-            glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
-    attributes.transform = modelMatrix;
 }
 
 void Model::scale(const glm::vec3 &scale) {
-    modelMatrix = glm::scale(modelMatrix, scale);
+    attributes.transform = glm::scale(attributes.transform, scale);
+
     for (auto &mesh: meshes) {
         mesh->scale(scale);
     }
@@ -327,5 +322,10 @@ void Model::update(float dt, bool gravity) {
 
     for (auto &mesh: meshes) {
         mesh->translate(translation);
+    }
+
+    auto rotation = modelMatrix * glm::inverse(attributes.transform);
+    for (auto &mesh: meshes) {
+        mesh->transform(rotation);
     }
 }
