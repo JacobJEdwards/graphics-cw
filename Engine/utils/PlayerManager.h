@@ -11,13 +11,15 @@ class PlayerManager {
 public:
     PlayerManager() = delete;
 
-    static void Draw(const glm::mat4 &view, const glm::mat4 &projection);
+    static void Draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false);
 
     static void Update(float dt);
 
     static void Add(const std::string &name, std::shared_ptr<Player> player);
 
     static auto Get(const std::string &name) -> std::shared_ptr<Player>;
+
+    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Player>> &;
 
     static auto GetCurrent() -> std::shared_ptr<Player>;
 

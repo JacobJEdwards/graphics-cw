@@ -25,7 +25,7 @@ public:
 
     void destroy();
 
-    [[nodiscard]] auto getTexture() const -> auto;
+    [[nodiscard]] auto getTexture() const -> GLuint;
 
 private:
     GLuint depthTexture = 0;

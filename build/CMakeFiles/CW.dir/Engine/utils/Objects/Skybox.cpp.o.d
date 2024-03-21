@@ -1057,4 +1057,6 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/type_half.inl \
   /opt/homebrew/include/glm/ext/../detail/../integer.hpp \
   /opt/homebrew/include/glm/ext/../detail/../detail/func_integer.inl \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /opt/homebrew/include/GLFW/glfw3.h

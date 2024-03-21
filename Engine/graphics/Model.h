@@ -28,7 +28,7 @@ public:
 
     explicit Model(const std::filesystem::path &path);
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection);
+    void draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false);
 
     [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
 

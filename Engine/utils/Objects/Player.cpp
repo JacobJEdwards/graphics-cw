@@ -10,8 +10,12 @@
 #include <glm/glm.hpp>
 
 #include "utils/Camera.h"
+#include "utils/Shader.h"
+#include "utils/ShaderManager.h"
 
 Player::Player() {
+    shader = ShaderManager::Get("Base");
+
     model.setShader(shader);
     auto modelMatrix = glm::mat4(1.0F);
     modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 0.0F));
@@ -73,13 +77,10 @@ void Player::update(float dt) {
 }
 
 void Player::draw(const glm::mat4 &view, const glm::mat4 &projection,
-                  bool show) {
+                  bool show, bool depthPass) {
 
-    if (show && drawModel) {
-        shader->use();
-        shader->setUniform("view", view);
-        shader->setUniform("projection", projection);
-        model.draw(view, projection);
+    if (show || drawModel || depthPass) {
+        model.draw(view, projection, depthPass);
     }
 }
 
@@ -143,4 +144,9 @@ void Player::interface() {
 
 void Player::nitro() {
     model.attributes.applyForce(camera->getFront() * 200.0F);
+}
+
+void Player::setShader(const std::shared_ptr<Shader> &shader) {
+    this->shader = shader;
+    model.setShader(shader);
 }

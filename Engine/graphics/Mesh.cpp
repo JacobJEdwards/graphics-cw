@@ -22,7 +22,7 @@ Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
     buffer.fill(std::move(vertices), std::move(indices));
 }
 
-void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
+void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
     GLuint diffuseNr = 1;
     GLuint specularNr = 1;
     GLuint normalNr = 1;
@@ -73,7 +73,7 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
     buffer.draw();
     buffer.unbind();
 
-    if (App::debug) {
+    if (App::debug && !depthPass) {
         box.draw(shader->getUniform<glm::mat4>("model"), shader->getUniform<glm::mat4>("view"),
                  shader->getUniform<glm::mat4>("projection"));
     }

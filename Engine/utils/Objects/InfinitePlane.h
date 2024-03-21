@@ -16,6 +16,7 @@
 
 #include "Config.h"
 #include "utils/Shader.h"
+#include "utils/ShaderManager.h"
 
 // TODO
 // REFACTOR THIS
@@ -25,25 +26,38 @@ public:
     Physics::Attributes attributes;
 
     InfinitePlane() {
-        load();
         attributes.mass = 0.0F;
+        shader = ShaderManager::Get("Terrain");
+        load();
+
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection,
-              const glm::vec3 &lightPos, const glm::vec3 &viewPos) const {
+              const glm::vec3 &lightPos, const glm::vec3 &viewPos, bool depthPass = false) const {
         buffer.bind();
 
-        shader.use();
-        shader.setUniform("view", view);
-        shader.setUniform("projection", projection);
-        shader.setUniform("light.position", lightPos);
-        shader.setUniform("viewPos", viewPos);
+        if (!depthPass) {
+            shader->use();
+            shader->setUniform("light.position", lightPos);
+            shader->setUniform("light.ambient", glm::vec3(1.0F));
+            shader->setUniform("light.diffuse", glm::vec3(1.0F));
+            shader->setUniform("light.specular", glm::vec3(0.5F));
+        }
+
+        shader->setUniform("view", view);
+        shader->setUniform("projection", projection);
+
+        shader->setUniform("viewPos", viewPos);
         auto model = Config::IDENTITY_MATRIX;
         // move model down by 2.0F
         model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));
-        shader.setUniform("model", model);
+        shader->setUniform("model", model);
         buffer.draw();
         buffer.unbind();
+    }
+
+    void setShader(const std::shared_ptr<Shader> &shader) {
+        this->shader = shader;
     }
 
     [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool {
@@ -81,16 +95,15 @@ private:
 
     Buffer buffer;
 
-    Shader shader{"../Assets/shaders/infinitePlane.vert",
-                  "../Assets/shaders/infinitePlane.frag"};
+    std::shared_ptr<Shader> shader;
 
     void load() {
         buffer.fill(vertices, indices);
 
-        shader.use();
-        shader.setUniform("light.ambient", glm::vec3(0.5F, 0.5F, 0.5F));
-        shader.setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-        shader.setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+        shader->use();
+        shader->setUniform("light.ambient", glm::vec3(0.5F, 0.5F, 0.5F));
+        shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+        shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
     }
 };
 

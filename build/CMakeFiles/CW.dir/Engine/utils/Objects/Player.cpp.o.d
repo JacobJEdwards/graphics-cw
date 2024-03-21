@@ -1122,4 +1122,5 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: \
   /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/ext/vector_float3.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h

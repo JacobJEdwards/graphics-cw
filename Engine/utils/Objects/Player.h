@@ -35,7 +35,7 @@ public:
     void update(float dt);
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection,
-              bool show = true);
+              bool show = true, bool depthPass = false);
 
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
@@ -53,6 +53,8 @@ public:
 
     void nitro();
 
+    void setShader(const std::shared_ptr<Shader> &shader);
+
     [[nodiscard]] auto getModel() const -> const Model &;
 
 private:
@@ -65,8 +67,7 @@ private:
     std::unique_ptr<Camera> camera =
             std::make_unique<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
 
-    std::shared_ptr<Shader> shader = std::make_shared<Shader>(
-            "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    std::shared_ptr<Shader> shader;
 
     Model model = Model("../Assets/objects/person/person.obj");
 

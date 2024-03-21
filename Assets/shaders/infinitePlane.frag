@@ -1,58 +1,103 @@
 #version 410 core
+
 struct Light {
     vec3 position;
-    vec3 direction;
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
 };
 
-vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3 surfaceColor, float shininess) {
-    // Normalize vectors
-    lightDirection = normalize(lightDirection);
-    viewDirection = normalize(viewDirection);
-    surfaceNormal = normalize(surfaceNormal);
 
-    // Halfway vector calculation
-    vec3 halfwayDir = normalize(lightDirection + viewDirection);
-
-    // Diffuse component
-    float diffuseFactor = max(dot(lightDirection, surfaceNormal), 0.0);
-
-    // Specular component
-    float specularFactor = 0.0;
-    if (diffuseFactor > 0.0) {
-        specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
-    }
-
-    // Final lighting calculation
-    vec3 ambient = 0.1 * lightColor; // Ambient term
-    vec3 diffuse = diffuseFactor * lightColor * surfaceColor; // Diffuse term
-    vec3 specular = specularFactor * lightColor; // Specular term
-
-    return ambient + diffuse + specular;
-}
-
-
+in vec2 TexCoord;
 in vec3 FragPos;
 in vec3 Normal;
+in vec4 FragPosLightSpace;
 
 out vec4 FragColor;
-in vec2 TexCoord;
+
+uniform sampler2D shadowMap;
 
 uniform Light light;
 uniform vec3 viewPos;
+uniform vec3 lightPos;
+
+
+
+float ShadowCalculation(vec4 fragPosLightSpace)
+{
+    float shadowBias = 0.005;
+
+    // Perform perspective divide
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+
+    // Transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+
+    // Get closest depth value from light's perspective
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+
+    // Compare to current fragment's depth
+    float currentDepth = projCoords.z;
+
+    // Shadow calculation
+    float shadow = currentDepth - shadowBias > closestDepth ? 1.0 : 0.0;
+
+    return shadow;
+}
+
+
+/*
+float ShadowCalculation(vec4 fragPosLightSpace) {
+    // perform perspective divide
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    // transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+    // get depth of current fragment from light's perspective
+    float currentDepth = projCoords.z;
+    // calculate bias (based on depth map resolution and slope)
+    vec3 normal = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+    // check whether current frag pos is in shadow
+    // float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+    // PCF
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for (int x = -1; x <= 1; ++x)
+    {
+        for (int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;
+        }
+    }
+    shadow /= 9.0;
+
+    // keep the shadow at 0.0 when outside the far_plane region of the light's frustum.
+    if (projCoords.z > 1.0)
+    shadow = 0.0;
+
+    return shadow;
+}
+*/
 
 void main() {
     int x = int(TexCoord.x * 5000);
     int y = int(TexCoord.y * 5000);
-    int color = (x + y) % 2;
+    float c = (x + y) % 2;
 
-    // lighting
-    vec3 lightDir = normalize(light.position - FragPos);
-    vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, Normal, light.diffuse, vec3(color), 128.0);
-    // FragColor = vec4(color, 1.0);
+    float shadow = ShadowCalculation(FragPosLightSpace);
 
-    FragColor = vec4(vec3(color), 1.0);
+    // If in shadow, apply darker color
+    vec3 lightColor = shadow > 0.5 ? vec3(0.2) : vec3(1.0);
+
+    // Apply lighting calculations as needed
+
+    FragColor = vec4(lightColor * c, 1.0);
+
 }
+
+// Lighting
+

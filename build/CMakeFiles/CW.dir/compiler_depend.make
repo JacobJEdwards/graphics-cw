@@ -15850,6 +15850,7 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o: /Users/jacobedwards/Univers
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
@@ -16969,8 +16970,10 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: /Users/jacobedwards/Univers
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
   /opt/homebrew/include/GL/glew.h \
+  /opt/homebrew/include/GLFW/glfw3.h \
   /opt/homebrew/include/glm/ext/matrix_double2x2.hpp \
   /opt/homebrew/include/glm/ext/matrix_double2x2_precision.hpp \
   /opt/homebrew/include/glm/ext/matrix_double2x3.hpp \
@@ -25052,6 +25055,7 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/ShadowBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Constants.h \

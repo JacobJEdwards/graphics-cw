@@ -63,6 +63,6 @@ void ShadowBuffer::destroy() {
     glDeleteTextures(1, &depthTexture);
 }
 
-[[nodiscard]] auto ShadowBuffer::getTexture() const -> auto {
+[[nodiscard]] auto ShadowBuffer::getTexture() const -> GLuint {
     return depthTexture;
 }

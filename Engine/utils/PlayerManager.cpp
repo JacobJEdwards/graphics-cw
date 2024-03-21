@@ -7,10 +7,10 @@
 std::unordered_map<std::string, std::shared_ptr<Player>> PlayerManager::Players;
 std::shared_ptr<Player> PlayerManager::CurrentPlayer;
 
-void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection) {
+void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) {
     for (const auto &[name, player]: Players) {
         bool isCurrent = player == CurrentPlayer;
-        player->draw(view, projection, !isCurrent);
+        player->draw(view, projection, !isCurrent || depthPass);
     }
 }
 
@@ -34,13 +34,25 @@ auto PlayerManager::Get(const std::string &name) -> std::shared_ptr<Player> {
     return it != Players.end() ? it->second : nullptr;
 }
 
+auto PlayerManager::GetAll() -> std::unordered_map<std::string, std::shared_ptr<Player>> & {
+    return Players;
+}
+
 auto PlayerManager::GetCurrent() -> std::shared_ptr<Player> { return CurrentPlayer; }
 
 void PlayerManager::SetCurrent(const std::string &name) {
+    if (CurrentPlayer) {
+        CurrentPlayer->setDrawModel(true);
+    }
+
     auto it = Players.find(name);
     if (it != Players.end()) {
         CurrentPlayer = it->second;
+        if (CurrentPlayer) {
+            CurrentPlayer->setDrawModel(false);
+        }
     }
+
 }
 
 void PlayerManager::SetCurrent(std::shared_ptr<Player> player) {

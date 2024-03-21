@@ -19,19 +19,19 @@ public:
     Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
          std::vector<Texture::Data> textures, const BoundingBox &box);
 
-    void draw(const std::shared_ptr<Shader> &shader) const;
+    void draw(const std::shared_ptr<Shader> &shader, bool depthPass = false) const;
 
-    auto detectCollisions(const glm::vec3 &position) const -> bool;
+    [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
 
-    glm::vec3 getCentre() const;
+    [[nodiscard]] auto getCentre() const -> glm::vec3;
 
-    glm::vec3 getOffset(const glm::vec3 &point) const;
+    [[nodiscard]] auto getOffset(const glm::vec3 &point) const -> glm::vec3;
 
-    glm::vec3 getOffset(const BoundingBox &other) const;
+    [[nodiscard]] auto getOffset(const BoundingBox &other) const -> glm::vec3;
 
-    auto isColliding(const BoundingBox &other) const -> bool;
+    [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool;
 
-    auto getBoundingBox() const -> BoundingBox;
+    [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
     void translate(const glm::vec3 &translation);
 

@@ -30,18 +30,25 @@
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 
-void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) {
-    shader->use();
+void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) {
+
+    if (!depthPass) {
+        shader->use();
+    }
+
     shader->setUniform("model", attributes.transform);
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
 
     for (const auto &mesh: meshes) {
         if (App::debug) {
-            shader->use();
+            if (!depthPass) {
+                shader->use();
+            }
             shader->setUniform("model", attributes.transform);
         }
-        mesh->draw(shader);
+
+        mesh->draw(shader, depthPass);
     }
 
     // getBoundingBox().draw(attributes.transform, view, projection);
