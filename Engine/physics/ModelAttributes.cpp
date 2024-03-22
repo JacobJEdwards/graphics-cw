@@ -13,11 +13,53 @@ void Physics::Attributes::update(float dt) {
     position += velocity * dt;
     acceleration = force / mass;
 
+    angularVelocity += angularAcceleration * dt;
+    rotation += angularVelocity * dt;
+    angularAcceleration = torque / mass;
+
+    if (glm::length(rotation) > 0.0F) {
+        float xRotation = 0.0F;
+        float yRotation = rotation.y < 0 ? -0.02F : 0.02F;
+        float zRotation = 0.0F;
+        // float zRotation = rotation.z < 0 ? -0.01F : 0.01F;
+
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0F), xRotation, glm::vec3(1.0F, 0.0F, 0.0F));
+        rotationMatrix = glm::rotate(rotationMatrix, yRotation, glm::vec3(0.0F, 1.0F, 0.0F));
+        rotationMatrix = glm::rotate(rotationMatrix, zRotation, glm::vec3(0.0F, 0.0F, 1.0F));
+
+        transform = rotationMatrix * transform;
+
+        if (xRotation < 0.0F) {
+            rotation.x <= 0.0F ? rotation.x = 0.0F : rotation.x -= xRotation;
+        } else {
+            rotation.x >= 0.0F ? rotation.x = 0.0F : rotation.x -= xRotation;
+
+        }
+
+        if (yRotation < 0.0F) {
+            rotation.y <= 0.0F ? rotation.y = 0.0F : rotation.y -= yRotation;
+        } else {
+            rotation.y >= 0.0F ? rotation.y = 0.0F : rotation.y -= yRotation;
+        }
+
+        if (zRotation < 0.0F) {
+            rotation.z <= 0.0F ? rotation.z = 0.0F : rotation.z -= zRotation;
+        } else {
+            rotation.z >= 0.0F ? rotation.z = 0.0F : rotation.z -= zRotation;
+        }
+    }
+
+
+    // applyRotation(rotation);
+
+    // rotation = glm::vec3(0.0F);
+
     transform[3][0] = position.x;
     transform[3][1] = position.y;
     transform[3][2] = position.z;
 
     force = glm::vec3(0.0F);
+    torque = glm::vec3(0.0F);
 
     applyDrag(Physics::AIR_RESISTANCE * glm::length(velocity));
 
@@ -72,16 +114,12 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point, float dt) const
         return glm::vec3(0.0F);
     }
 
-    // Calculate initial velocity
     glm::vec3 initialVelocity = velocity;
 
-    // Calculate final velocity
     glm::vec3 finalVelocity = (point - position) / dt;
 
-    // Calculate acceleration required
     glm::vec3 acceleration = (finalVelocity - initialVelocity) / dt;
 
-    // Calculate force
     glm::vec3 force = mass * acceleration;
 
     return force;
@@ -111,13 +149,8 @@ auto Physics::Attributes::calculateTorque(const glm::vec3 &point) -> glm::vec3 {
     glm::vec3 torque = glm::vec3(0.0f);
 
     if (direction != forward) {
-        // Calculate the axis of rotation (cross product of forward and direction vectors)
         glm::vec3 axis = glm::cross(forward, direction);
-
-        // Determine the angle of rotation needed to align forward with direction
         float angle = glm::acos(glm::dot(forward, direction));
-
-        // Calculate the torque vector
         torque = axis * angle;
     }
 
@@ -125,11 +158,7 @@ auto Physics::Attributes::calculateTorque(const glm::vec3 &point) -> glm::vec3 {
 }
 
 void Physics::Attributes::applyRotation(const glm::vec3 &rotation) {
-    glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0F), rotation.x, glm::vec3(1.0F, 0.0F, 0.0F));
-    rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0F, 1.0F, 0.0F));
-    rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0F, 0.0F, 1.0F));
-
-    transform = rotationMatrix * transform;
+    this->rotation += rotation;
 }
 
 void Physics::Attributes::applyTorque(const glm::vec3 &torque) {

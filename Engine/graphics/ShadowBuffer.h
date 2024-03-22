@@ -9,7 +9,7 @@
 
 class ShadowBuffer {
 public:
-    ShadowBuffer(int width, int height);
+    ShadowBuffer(unsigned int width, unsigned int height);
 
     ~ShadowBuffer();
 
@@ -31,8 +31,8 @@ private:
     GLuint depthTexture = 0;
     GLuint FBO = 0;
     GLint previousFBO = 0;
-    int width;
-    int height;
+    unsigned int width;
+    unsigned int height;
 };
 
 

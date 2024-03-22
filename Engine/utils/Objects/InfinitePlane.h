@@ -29,29 +29,31 @@ public:
         attributes.mass = 0.0F;
         shader = ShaderManager::Get("Terrain");
         load();
+        modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
 
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection,
               const glm::vec3 &lightPos, const glm::vec3 &viewPos, bool depthPass = false) const {
+
+        auto currentShader = depthPass ? ShaderManager::Get("Shadow") : shader;
+
+
         buffer.bind();
 
         if (!depthPass) {
-            shader->use();
-            shader->setUniform("light.position", lightPos);
-            shader->setUniform("light.ambient", glm::vec3(1.0F));
-            shader->setUniform("light.diffuse", glm::vec3(1.0F));
-            shader->setUniform("light.specular", glm::vec3(0.5F));
+            currentShader->use();
+            currentShader->setUniform("light.position", lightPos);
+            currentShader->setUniform("light.ambient", glm::vec3(1.0F));
+            currentShader->setUniform("light.diffuse", glm::vec3(1.0F));
+            currentShader->setUniform("light.specular", glm::vec3(0.5F));
+            currentShader->setUniform("viewPos", viewPos);
         }
 
-        shader->setUniform("view", view);
-        shader->setUniform("projection", projection);
+        currentShader->setUniform("view", view);
+        currentShader->setUniform("projection", projection);
+        currentShader->setUniform("model", modelMatrix);
 
-        shader->setUniform("viewPos", viewPos);
-        auto model = Config::IDENTITY_MATRIX;
-        // move model down by 2.0F
-        model = glm::translate(model, glm::vec3(0.0F, -0.5F, 0.0F));
-        shader->setUniform("model", model);
         buffer.draw();
         buffer.unbind();
     }
@@ -96,6 +98,8 @@ private:
     Buffer buffer;
 
     std::shared_ptr<Shader> shader;
+
+    glm::mat4 modelMatrix = Config::IDENTITY_MATRIX;
 
     void load() {
         buffer.fill(vertices, indices);

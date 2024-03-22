@@ -5629,6 +5629,7 @@ CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o: /Users/jacobedwards/University/Ye
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
@@ -26115,10 +26116,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
 
 /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.cpp:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/CodeFragments.h:
-
-/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/climits:
 
 /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.cpp:
@@ -26136,6 +26133,10 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/Security.framework/Headers/AuthorizationTags.h:
 
 /opt/homebrew/include/assimp/postprocess.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/CodeFragments.h:
+
+/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h:
 
 /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/helpers/AssimpGLMHelpers.h:
 

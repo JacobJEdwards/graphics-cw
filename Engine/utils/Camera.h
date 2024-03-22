@@ -23,101 +23,108 @@ constexpr float MINPITCH = -89.0F;
 
 class Camera {
 public:
-  enum class Direction { FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN };
+    enum class Direction {
+        FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN
+    };
 
-  enum class Mode { FPS, FREE, ORBIT, FIXED, PATH };
+    enum class Mode {
+        FPS, FREE, ORBIT, FIXED, PATH
+    };
 
-  explicit Camera(glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F),
-                  glm::vec3 worldUp = glm::vec3(0.0F, 1.0F, 0.0F),
-                  float yaw = YAW, float pitch = PITCH);
+    explicit Camera(glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F),
+                    glm::vec3 worldUp = glm::vec3(0.0F, 1.0F, 0.0F),
+                    float yaw = YAW, float pitch = PITCH);
 
-  Camera(float posX, float posY, float posZ, float upX, float upY, float upZ,
-         float yaw, float pitch);
+    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ,
+           float yaw, float pitch);
 
-  [[nodiscard]] auto getViewMatrix() const -> glm::mat4;
+    [[nodiscard]] auto getViewMatrix() const -> glm::mat4;
 
-  void processMouseMovement(float xOffset, float yOffset,
-                            GLboolean constrainPitch = 1U);
+    void processMouseMovement(float xOffset, float yOffset,
+                              GLboolean constrainPitch = 1U);
 
-  void processMouseScroll(float yOffset);
+    void processMouseScroll(float yOffset);
 
-  void setMode(Mode value);
+    void setMode(Mode value);
 
-  void setOrbit(glm::vec3 target, float radius, float angle, float speed);
+    void setOrbit(glm::vec3 target, float radius, float angle, float speed);
 
-  void setOrbit(glm::vec3 target, float radius, float angle, float speed,
-                float height);
+    void setOrbit(glm::vec3 target, float radius, float angle, float speed,
+                  float height);
 
-  void setFixed(glm::vec3 target, glm::vec3 position);
+    void setFixed(glm::vec3 target, glm::vec3 position);
 
-  [[nodiscard]] auto getMode() const -> Mode;
+    [[nodiscard]] auto getMode() const -> Mode;
 
-  [[nodiscard]] auto getZoom() const -> float;
+    [[nodiscard]] auto getZoom() const -> float;
 
-  [[nodiscard]] auto getPosition() const -> glm::vec3;
+    [[nodiscard]] auto getPosition() const -> glm::vec3;
 
-  [[nodiscard]] auto getFront() const -> glm::vec3;
+    [[nodiscard]] auto getFront() const -> glm::vec3;
 
-  [[nodiscard]] auto getUp() const -> glm::vec3;
+    [[nodiscard]] auto getUp() const -> glm::vec3;
 
-  [[nodiscard]] auto getRight() const -> glm::vec3;
+    [[nodiscard]] auto getRight() const -> glm::vec3;
 
-  [[nodiscard]] auto getWorldUp() const -> glm::vec3;
+    [[nodiscard]] auto getWorldUp() const -> glm::vec3;
 
-  [[nodiscard]] auto getRenderDistance() const -> float;
+    [[nodiscard]] auto getRenderDistance() const -> float;
 
-  [[nodiscard]] auto getProjectionMatrix() const -> glm::mat4;
+    [[nodiscard]] auto getProjectionMatrix() const -> glm::mat4;
 
-  [[nodiscard]] auto getYaw() const -> float;
+    [[nodiscard]] auto getYaw() const -> float;
 
-  void setPosition(const glm::vec3 &position);
+    [[nodiscard]] auto getPitch() const -> float;
 
-  void circleOrbit(float deltaTime);
+    void setPosition(const glm::vec3 &position);
 
-  void setAspect(float aspect);
+    void circleOrbit(float deltaTime);
 
-  void interface();
+    void setAspect(float aspect);
 
-  void update(float dt);
+    void interface();
+
+    void update(float dt);
 
 private:
-  Mode mode = Mode::FREE;
+    Mode mode = Mode::FREE;
 
-  glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
-  glm::vec3 up{};
-  glm::vec3 right{};
+    glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
+    glm::vec3 up{};
+    glm::vec3 right{};
 
-  glm::vec3 position;
-  glm::vec3 worldUp;
+    glm::vec3 position;
+    glm::vec3 worldUp;
 
-  float yaw;
-  float pitch;
+    float yaw;
+    float pitch;
 
-  float mouseSensitivity = SENSITIVITY;
-  float zoom = ZOOM;
+    float mouseSensitivity = SENSITIVITY;
+    float zoom = ZOOM;
+    float nearPlane = 0.1F;
 
-  glm::vec3 target = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 target = glm::vec3(0.0F, 0.0F, 0.0F);
 
-  float orbitRadius = 0.0F;
-  float orbitAngle = 0.0F;
-  float orbitSpeed = 0.0F;
-  float orbitHeight = 0.0F;
+    float orbitRadius = 0.0F;
+    float orbitAngle = 0.0F;
+    float orbitSpeed = 0.0F;
+    float orbitHeight = 0.0F;
 
-  float distance = 0.0F;
+    float distance = 0.0F;
 
-  float aspect = 1.0F;
+    float aspect = 1.0F;
 
-  float renderDistance = 100.0F;
+    float renderDistance = 100.0F;
 
-  float yPosition = 0.0F;
+    float yPosition = 0.0F;
 
-  bool downwards = false;
+    bool downwards = false;
 
-  void updateCameraVectors();
+    void updateCameraVectors();
 
-  void updateOrbitPosition();
+    void updateOrbitPosition();
 
-  void adjustOrbitPosition(glm::vec3 &newPos) const;
+    void adjustOrbitPosition(glm::vec3 &newPos) const;
 };
 
 #endif // CW_CAMERA_H

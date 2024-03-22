@@ -7,14 +7,15 @@
 #include <iostream>
 #include <array>
 
-ShadowBuffer::ShadowBuffer(int width, int height) {
+ShadowBuffer::ShadowBuffer(unsigned int width, unsigned int height) {
     glGenFramebuffers(1, &FBO);
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
     // Create depth texture
     glGenTextures(1, &depthTexture);
     glBindTexture(GL_TEXTURE_2D, depthTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0,
+                 GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -34,7 +35,6 @@ ShadowBuffer::ShadowBuffer(int width, int height) {
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-    // Store the dimensions
     this->width = width;
     this->height = height;
 }
@@ -46,7 +46,7 @@ ShadowBuffer::~ShadowBuffer() {
 void ShadowBuffer::bind() {
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &previousFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 

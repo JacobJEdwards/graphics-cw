@@ -27,28 +27,26 @@
 #include "utils/BoundingBox.h"
 #include "utils/Vertex.h"
 #include "App.h"
+#include "utils/ShaderManager.h"
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 
 void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) {
+    auto currentShader = depthPass ? ShaderManager::Get("Shadow") : shader;
 
-    if (!depthPass) {
-        shader->use();
-    }
+    currentShader->use();
 
-    shader->setUniform("model", attributes.transform);
-    shader->setUniform("view", view);
-    shader->setUniform("projection", projection);
+    currentShader->setUniform("model", attributes.transform);
+    currentShader->setUniform("view", view);
+    currentShader->setUniform("projection", projection);
 
     for (const auto &mesh: meshes) {
-        if (App::debug) {
-            if (!depthPass) {
-                shader->use();
-            }
-            shader->setUniform("model", attributes.transform);
+        if (App::debug && !depthPass) {
+            currentShader->use();
+            currentShader->setUniform("model", attributes.transform);
         }
 
-        mesh->draw(shader, depthPass);
+        mesh->draw(currentShader, depthPass);
     }
 
     // getBoundingBox().draw(attributes.transform, view, projection);

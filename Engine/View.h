@@ -21,130 +21,153 @@
 #include "graphics/PostProcessor.h"
 
 class View {
-  using Handle = std::function<void()>;
-  using ErrorHandle = std::function<void(int, const char *)>;
+    using Handle = std::function<void()>;
+    using ErrorHandle = std::function<void(int, const char *)>;
 
 public:
-  View() = default;
+    View() = default;
 
-  auto init(const std::string &title, int width, int height) -> bool;
-  void quit();
-  void render();
+    auto init(const std::string &title, int width, int height) -> bool;
 
-  void setMenu(Handle handle);
-  void setInterface(Handle handle);
-  void setKey(Handle handle);
-  void setPipeline(Handle handle);
-  void setMouse(Handle handle);
-  void setScroll(Handle handle);
-  void setResize(Handle handle);
-  void setError(ErrorHandle handle);
+    void quit();
 
-  static void clearTarget(const glm::vec3 &color = Color::BLACK,
-                          bool clearc = true, bool cleard = true);
+    void render();
 
-  auto shouldClose() -> bool;
-  void swapBuffers();
-  static void pollEvents();
+    void setMenu(Handle handle);
 
-  [[nodiscard]] auto getWidth() const -> unsigned int { return WIDTH; }
-  [[nodiscard]] auto getHeight() const -> unsigned int { return HEIGHT; }
+    void setInterface(Handle handle);
 
-  [[nodiscard]] auto getMouseX() const -> float { return lastX; }
-  [[nodiscard]] auto getMouseY() const -> float { return lastY; }
+    void setKey(Handle handle);
 
-  [[nodiscard]] auto getMouseOffsetX() const -> float { return xOffset; }
-  [[nodiscard]] auto getMouseOffsetY() const -> float { return yOffset; }
+    void setPipeline(Handle handle);
 
-  [[nodiscard]] auto getScrollX() const -> float { return scrollX; }
-  [[nodiscard]] auto getScrollY() const -> float { return scrollY; }
+    void setMouse(Handle handle);
 
-  [[nodiscard]] auto shouldShowInterface() const -> bool {
-    return showInterface;
-  }
+    void setScroll(Handle handle);
 
-  void setShowInterface(const bool show) { showInterface = show; }
-  void setShowMenu(const bool show) { showMenu = show; }
+    void setResize(Handle handle);
 
-  [[nodiscard]] auto getDeltaTime() const -> float { return deltaTime; }
+    void setError(ErrorHandle handle);
 
-  [[nodiscard]] auto isSetup() const -> bool { return setup; }
+    static void clearTarget(const glm::vec3 &color = Color::BLACK,
+                            bool clearc = true, bool cleard = true);
 
-  [[nodiscard]] auto getWindow() const -> GLFWwindow * { return window; }
+    auto shouldClose() -> bool;
 
-  void setDimensions(unsigned int width, unsigned int height) {
-    WIDTH = width;
-    HEIGHT = height;
-    (resize)();
-  }
+    void swapBuffers();
 
-  auto getPostProcessor() -> PostProcess & { return *postProcessor.get(); }
+    static void pollEvents();
 
-  void close() const;
+    [[nodiscard]] auto getWidth() const -> unsigned int { return WIDTH; }
 
-  int getKey(int key) const;
+    [[nodiscard]] auto getHeight() const -> unsigned int { return HEIGHT; }
 
-  void optionsInterface();
+    [[nodiscard]] auto getMouseX() const -> float { return lastX; }
+
+    [[nodiscard]] auto getMouseY() const -> float { return lastY; }
+
+    [[nodiscard]] auto getMouseOffsetX() const -> float { return xOffset; }
+
+    [[nodiscard]] auto getMouseOffsetY() const -> float { return yOffset; }
+
+    [[nodiscard]] auto getScrollX() const -> float { return scrollX; }
+
+    [[nodiscard]] auto getScrollY() const -> float { return scrollY; }
+
+    [[nodiscard]] auto shouldShowInterface() const -> bool {
+        return showInterface;
+    }
+
+    void setShowInterface(const bool show) { showInterface = show; }
+
+    void setShowMenu(const bool show) { showMenu = show; }
+
+    [[nodiscard]] auto getDeltaTime() const -> float { return deltaTime; }
+
+    [[nodiscard]] auto isSetup() const -> bool { return setup; }
+
+    [[nodiscard]] auto getWindow() const -> GLFWwindow * { return window; }
+
+    void setDimensions(unsigned int width, unsigned int height) {
+        WIDTH = width;
+        HEIGHT = height;
+        (resize)();
+    }
+
+    auto getPostProcessor() -> PostProcess & { return *postProcessor.get(); }
+
+    void close() const;
+
+    int getKey(int key) const;
+
+    void optionsInterface();
 
 private:
-  GLFWwindow *window = nullptr;
+    GLFWwindow *window = nullptr;
 
-  int WIDTH = 0;
-  int HEIGHT = 0;
-  std::string title;
+    int WIDTH = 0;
+    int HEIGHT = 0;
+    std::string title;
 
-  ImGuiIO io;
+    ImGuiIO io;
 
-  std::unique_ptr<PostProcess> postProcessor;
-  bool multiSample = true;
-  bool postProcessorEnabled = true;
+    std::unique_ptr<PostProcess> postProcessor;
+    bool multiSample = true;
+    bool postProcessorEnabled = true;
 
-  bool showInterface = true;
-  bool showMenu = true;
-  void interfaceLoop();
-  void menuLoop();
-  void keyLoop();
+    bool showInterface = true;
+    bool showMenu = true;
 
-  void setCallbacks();
+    void interfaceLoop();
 
-  void scrollCallback(GLFWwindow *, double x, double y);
-  void mouseCallback(GLFWwindow *, double x, double y);
-  void errorCallback(int error, const char *description);
-  void resizeCallback(GLFWwindow *, int width, int height);
+    void menuLoop();
 
-  Handle interface = []() {};
-  Handle menu = []() {};
+    void keyLoop();
 
-  Handle key = []() {};
-  Handle mouse = []() {};
-  Handle pipeline = []() {};
+    void setCallbacks();
 
-  Handle scroll = []() {};
+    void scrollCallback(GLFWwindow *, double x, double y);
 
-  Handle resize = [&]() {};
+    void mouseCallback(GLFWwindow *, double x, double y);
 
-  ErrorHandle error = [](int err, const char *description) {
-    std::cerr << "Error: " << err << " - " << description << std::endl;
-  };
+    void errorCallback(int error, const char *description);
 
-  bool setup = false;
+    void resizeCallback(GLFWwindow *, int width, int height);
 
-  // mouse
-  bool firstMouse = true;
+    Handle interface = []() {};
+    Handle menu = []() {};
 
-  float lastX = 0.0F;
-  float lastY = 0.0F;
+    Handle key = []() {};
+    Handle mouse = []() {};
+    Handle pipeline = []() {};
 
-  float xOffset = 0.0F;
-  float yOffset = 0.0F;
+    Handle scroll = []() {};
 
-  // scroll
-  float scrollX = 0.0F;
-  float scrollY = 0.0F;
+    Handle resize = [&]() {};
 
-  // time
-  float deltaTime = 0.0F;
-  float lastFrame = 0.0F;
+    ErrorHandle error = [](int err, const char *description) {
+        std::cerr << "Error: " << err << " - " << description << std::endl;
+    };
+
+    bool setup = false;
+
+    // mouse
+    bool firstMouse = true;
+
+    float lastX = 0.0F;
+    float lastY = 0.0F;
+
+    float xOffset = 0.0F;
+    float yOffset = 0.0F;
+
+    // scroll
+    float scrollX = 0.0F;
+    float scrollY = 0.0F;
+
+    // time
+    float deltaTime = 0.0F;
+    float lastFrame = 0.0F;
+    bool wireframe = false;
 };
 
 #endif // CW_VIEW_H

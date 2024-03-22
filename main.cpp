@@ -27,14 +27,13 @@
 #include "graphics/Model.h"
 #include "graphics/Texture.h"
 #include "physics/Collisions.h"
-#include "shapes/Plane.h"
 #include "utils/Objects/InfinitePlane.h"
 #include "utils/Objects/Player.h"
 #include "utils/Objects/Skybox.h"
 #include "utils/Objects/Sun.h"
-#include "utils/Shader.h"
 #include "utils/ShaderManager.h"
 #include "graphics/ShadowBuffer.h"
+#include "utils/Shader.h"
 
 void processInput();
 
@@ -181,7 +180,7 @@ auto main() -> int {
     int p2Index = 2;
     int p3Index = 3;
 
-    ShadowBuffer shadowBuffer = ShadowBuffer(1024, 1024);
+    ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
 
     App::view.setPipeline([&]() {
         View::clearTarget(Color::BLACK);
@@ -192,8 +191,13 @@ auto main() -> int {
         const auto viewMatrix = player->getCamera().getViewMatrix();
 
         shadowBuffer.bind();
+
+        GLenum previousCullFaceMode;
+        glGetIntegerv(GL_CULL_FACE_MODE, reinterpret_cast<GLint *>(&previousCullFaceMode));
+        // cull front faces
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_FRONT);
         // render to shadow buffer
-        glViewport(0, 0, 1024, 1024);
         View::clearTarget(Color::BLACK);
         auto lightPos = sun.getPosition();
         auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
@@ -201,43 +205,26 @@ auto main() -> int {
 
         shader = ShaderManager::Get("Shadow");
         shader->use();
-        shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
-        // render from light perspective
-        terrain.setShader(shader);
-        terrain.draw(lightView, lightProjection, sun.getPosition(), player->getCamera().getPosition());
-
-        newModel.setShader(shader);
-        newModel.draw(lightView, lightProjection);
-
-        model2.setShader(shader);
-        model2.draw(lightView, lightProjection);
-
-        for (const auto &[name, player]: PlayerManager::GetAll()) {
-            player->setShader(shader);
-        }
-
+        terrain.draw(lightView, lightProjection, sun.getPosition(), player->getCamera().getPosition(), true);
+        newModel.draw(lightView, lightProjection, true);
+        model2.draw(lightView, lightProjection, true);
         PlayerManager::Draw(lightView, lightProjection, true);
 
         shadowBuffer.unbind();
+        glCullFace(previousCullFaceMode);
 
-        glViewport(0, 0, App::view.getWidth(), App::view.getHeight());
+        glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()), static_cast<GLsizei>(App::view.getHeight()));
 
         View::clearTarget(Color::BLACK);
 
         shader = ShaderManager::Get("Base");
         shader->use();
         shader->setUniform("light.position", sun.getPosition());
-
-        shader->setUniform("projection", projectionMatrix);
-        shader->setUniform("view", viewMatrix);
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
         auto texture = shadowBuffer.getTexture();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
-
-        newModel.setShader(shader);
-        model2.setShader(shader);
 
         newModel.draw(viewMatrix, projectionMatrix);
         model2.draw(viewMatrix, projectionMatrix);
@@ -250,24 +237,14 @@ auto main() -> int {
         shader->setUniform("view", viewMatrix);
         shader->setUniform("shadowMap", 0);
         shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
-        terrain.setShader(shader);
 
         texture = shadowBuffer.getTexture();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
 
         terrain.draw(viewMatrix, projectionMatrix, sun.getPosition(), player->getCamera().getPosition());
-
         skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
-
         sun.draw(viewMatrix, projectionMatrix);
-
-
-        shader = ShaderManager::Get("Base");
-
-        for (const auto &[name, player]: PlayerManager::GetAll()) {
-            player->setShader(shader);
-        }
 
         PlayerManager::Draw(viewMatrix, projectionMatrix, false);
 
@@ -292,6 +269,11 @@ auto main() -> int {
     float t = 0.0F; // spline parameter
     try {
         App::loop([&] {
+            sun.update(App::view.getDeltaTime());
+            PlayerManager::GetCurrent()->update(App::view.getDeltaTime());
+            newModel.update(App::view.getDeltaTime());
+            model2.update(App::view.getDeltaTime());
+
             auto player = PlayerManager::GetCurrent();
             if (Physics::Collisions::check(player->getBoundingBox(),
                                            terrain.getBoundingBox())) {
@@ -395,7 +377,7 @@ auto main() -> int {
             // ignore y component
             forceNeeded = glm::vec3(forceNeeded.x, 0.0F, forceNeeded.z);
 
-            auto torque = newModel.attributes.calculateRotation(interpolatedPoint);
+            auto torque = newModel.attributes.calculateRotation(interpolatedPoint) * 2.0F;
             // ignore x and z component
             torque = glm::vec3(0.0F, torque.y, 0.0F);
 
@@ -414,11 +396,6 @@ auto main() -> int {
                 p3Index++;
             }
 
-            sun.update(App::view.getDeltaTime());
-
-            PlayerManager::GetCurrent()->update(App::view.getDeltaTime());
-            newModel.update(App::view.getDeltaTime());
-            model2.update(App::view.getDeltaTime());
         });
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;

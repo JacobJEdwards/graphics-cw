@@ -16,42 +16,41 @@
 
 namespace App {
 
-extern View view;
+    extern View view;
 
-extern bool paused;
+    extern bool paused;
 
-extern bool debug;
-
-extern bool wireframe;
+    extern bool debug;
 
 // query retina display !!!!!!!
-auto init() -> bool;
+    auto init() -> bool;
 
-auto window(const std::string &title,
-            int width = Config::DEFAULT_WIDTH,
-            int height = Config::DEFAULT_HEIGHT) -> bool;
+    auto window(const std::string &title,
+                int width = Config::DEFAULT_WIDTH,
+                int height = Config::DEFAULT_HEIGHT) -> bool;
 
-void quit();
+    void quit();
 
-void setPaused(bool value);
+    void setPaused(bool value);
 
-void finalise();
+    void finalise();
 
-void debugInterface();
+    void debugInterface();
 
-template <typename F, typename... Args> void loop(F &&func, Args &&...args) {
-  finalise();
-  while (!view.shouldClose()) {
-    View::pollEvents();
-    if (!paused) {
-      func(std::forward<Args>(args)...);
+    template<typename F, typename... Args>
+    void loop(F &&func, Args &&...args) {
+        finalise();
+        while (!view.shouldClose()) {
+            View::pollEvents();
+            if (!paused) {
+                func(std::forward<Args>(args)...);
+            }
+            view.render();
+            view.swapBuffers();
+        }
     }
-    view.render();
-    view.swapBuffers();
-  }
-}
 
-void loop();
+    void loop();
 } // namespace App
 
 #endif // CW_ENGINE_H

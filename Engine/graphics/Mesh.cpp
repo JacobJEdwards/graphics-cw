@@ -23,6 +23,13 @@ Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
 }
 
 void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
+    if (depthPass) {
+        buffer.bind();
+        buffer.draw();
+        buffer.unbind();
+        return;
+    }
+
     GLuint diffuseNr = 1;
     GLuint specularNr = 1;
     GLuint normalNr = 1;
@@ -69,6 +76,7 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
         shader->setUniform(("material.texture_" + toString(name) + number),
                            static_cast<GLint>(i));
     }
+
     buffer.bind();
     buffer.draw();
     buffer.unbind();
