@@ -21,8 +21,6 @@
 #include "utils/Shader.h"
 
 class Model {
-    using MeshPtr = std::unique_ptr<Mesh>;
-
 public:
     Physics::Attributes attributes;
 
@@ -35,7 +33,6 @@ public:
     [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool;
 
     [[nodiscard]] auto isColliding(const Model &other) const -> bool {
-        // check every permutation of meshes
         for (const auto &mesh: meshes) {
             for (const auto &otherMesh: other.meshes) {
                 if (mesh->isColliding(otherMesh->getBoundingBox())) {
@@ -46,11 +43,11 @@ public:
         return false;
     }
 
-    auto getCentre() const -> glm::vec3;
+    [[nodiscard]] auto getCentre() const -> glm::vec3;
 
-    auto getOffset(const glm::vec3 &point) const -> glm::vec3;
+    [[nodiscard]] auto getOffset(const glm::vec3 &point) const -> glm::vec3;
 
-    auto getOffset(const BoundingBox &other) const -> glm::vec3;
+    [[nodiscard]] auto getOffset(const BoundingBox &other) const -> glm::vec3;
 
     void setShader(std::shared_ptr<Shader> shader);
 
@@ -77,7 +74,7 @@ private:
 
     std::shared_ptr<Shader> shader;
 
-    BoundingBox boundingBox;
+    BoundingBox box;
     glm::mat4 modelMatrix = Config::IDENTITY_MATRIX;
 
     void loadModel(const std::filesystem::path &path);
@@ -89,6 +86,8 @@ private:
     auto loadMaterialTextures(const aiMaterial *mat, aiTextureType type,
                               Texture::Type texType)
     -> std::vector<Texture::Data>;
+
+    void calculateBoundingBox();
 };
 
 #endif // MODEL_H

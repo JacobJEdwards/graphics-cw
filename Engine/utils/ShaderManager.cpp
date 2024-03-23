@@ -29,3 +29,10 @@ void ShaderManager::Remove(const std::string &name) {
 void ShaderManager::Clear() {
     Shaders.clear();
 }
+
+auto ShaderManager::GetActiveShader() -> GLuint {
+    GLint currentProgram = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+
+    return static_cast<GLuint>(currentProgram);
+}

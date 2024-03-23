@@ -17,44 +17,15 @@ void Physics::Attributes::update(float dt) {
     rotation += angularVelocity * dt;
     angularAcceleration = torque / mass;
 
-    // clean this up proper !!!!!!!!!
-    if (glm::length(rotation) > 0.0F) {
-        float xRotation = 0.0F;
-        // float xRotation = rotation.x < 0 ? -0.02F : 0.02F;
-        float yRotation = rotation.y < 0 ? -0.02F : 0.02F;
-        float zRotation = 0.0F;
-        // float zRotation = rotation.z < 0 ? -0.02F : 0.02F;
+    glm::mat4 rotationMatrix = Config::IDENTITY_MATRIX;
 
-        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0F), xRotation, glm::vec3(1.0F, 0.0F, 0.0F));
-        rotationMatrix = glm::rotate(rotationMatrix, yRotation, glm::vec3(0.0F, 1.0F, 0.0F));
-        rotationMatrix = glm::rotate(rotationMatrix, zRotation, glm::vec3(0.0F, 0.0F, 1.0F));
+    float rotationDamping = 1.0F - Physics::ANGULAR_DAMPING;
+    rotation *= rotationDamping;
+    rotationMatrix = glm::rotate(rotationMatrix, rotation.x * dt, glm::vec3(1.0F, 0.0F, 0.0F));
+    rotationMatrix = glm::rotate(rotationMatrix, rotation.y * dt, glm::vec3(0.0F, 1.0F, 0.0F));
+    rotationMatrix = glm::rotate(rotationMatrix, rotation.z * dt, glm::vec3(0.0F, 0.0F, 1.0F));
 
-        transform = rotationMatrix * transform;
-
-        if (xRotation < 0.0F) {
-            rotation.x <= 0.0F ? rotation.x = 0.0F : rotation.x -= xRotation;
-        } else {
-            rotation.x >= 0.0F ? rotation.x = 0.0F : rotation.x -= xRotation;
-
-        }
-
-        if (yRotation < 0.0F) {
-            rotation.y <= 0.0F ? rotation.y = 0.0F : rotation.y -= yRotation;
-        } else {
-            rotation.y >= 0.0F ? rotation.y = 0.0F : rotation.y -= yRotation;
-        }
-
-        if (zRotation < 0.0F) {
-            rotation.z <= 0.0F ? rotation.z = 0.0F : rotation.z -= zRotation;
-        } else {
-            rotation.z >= 0.0F ? rotation.z = 0.0F : rotation.z -= zRotation;
-        }
-    }
-
-
-    // applyRotation(rotation);
-
-    // rotation = glm::vec3(0.0F);
+    transform = transform * rotationMatrix;
 
     transform[3][0] = position.x;
     transform[3][1] = position.y;
@@ -78,10 +49,12 @@ void Physics::Attributes::applyGravity() {
 
 void Physics::Attributes::applyFriction(float friction) {
     applyForce(-velocity * friction);
+    applyTorque(-angularVelocity * friction);
 }
 
 void Physics::Attributes::applyDrag(float drag) {
     applyForce(-velocity * drag);
+    applyTorque(-angularVelocity * drag);
 }
 
 void Physics::Attributes::applyImpulse(const glm::vec3 &impulse) {
@@ -148,7 +121,7 @@ auto Physics::Attributes::calculateTorque(const glm::vec3 &point) -> glm::vec3 {
     glm::vec3 direction = glm::normalize(point - position);
     glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
 
-    glm::vec3 torque = glm::vec3(0.0f);
+    auto torque = glm::vec3(0.0F);
 
     if (direction != forward) {
         glm::vec3 axis = glm::cross(forward, direction);

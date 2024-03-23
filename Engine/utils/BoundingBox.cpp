@@ -25,9 +25,13 @@ BoundingBox::BoundingBox(const aiVector3D &min, const aiVector3D &max)
     initBuffer();
 }
 
-[[nodiscard]] auto BoundingBox::getMin() const -> glm::vec3 { return min; }
+[[nodiscard]] auto BoundingBox::getMin() const -> glm::vec3 {
+    return glm::min(min, max);
+}
 
-[[nodiscard]] auto BoundingBox::getMax() const -> glm::vec3 { return max; }
+[[nodiscard]] auto BoundingBox::getMax() const -> glm::vec3 {
+    return glm::max(min, max);
+}
 
 void BoundingBox::setMin(const glm::vec3 &min) { BoundingBox::min = min; }
 
@@ -150,16 +154,17 @@ auto BoundingBox::getOffset(const BoundingBox &other) const -> glm::vec3 {
         return glm::vec3(0.0F);
     }
 
-    float minOverlap = std::min(std::min(overlap.x, overlap.y), overlap.z);
+    float minOverlap = std::min({overlap.x, overlap.y, overlap.z});
 
     if (overlap.x == minOverlap) {
         return {overlap.x, 0.0F, 0.0F};
     }
     if (overlap.y == minOverlap) {
-        return glm::vec3(0.0f, overlap.y, 0.0f);
-    } else {
-        return glm::vec3(0.0f, 0.0f, overlap.z);
+        return {0.0F, overlap.y, 0.0F};
     }
+
+    return {0.0F, 0.0F, overlap.z};
+
 }
 
 void BoundingBox::expand(const glm::vec3 &amount) {
@@ -197,14 +202,21 @@ void BoundingBox::initBuffer() {
 
 void BoundingBox::draw(glm::mat4 model, glm::mat4 view,
                        glm::mat4 projection) const {
-    ShaderManager::Get("BoundingBox")->use();
-    ShaderManager::Get("BoundingBox")->setUniform("model", model);
-    ShaderManager::Get("BoundingBox")->setUniform("view", view);
-    ShaderManager::Get("BoundingBox")->setUniform("projection", projection);
+
+    GLuint previousProgram = ShaderManager::GetActiveShader();
+
+    std::shared_ptr<Shader> shader = ShaderManager::Get("BoundingBox");
+
+    shader->use();
+    shader->setUniform("model", model);
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
 
     buffer.bind();
     buffer.draw();
     buffer.unbind();
+
+    glUseProgram(previousProgram);
 }
 
 auto BoundingBox::getCollisionPoint(const BoundingBox &box) const -> glm::vec3 {
@@ -226,4 +238,11 @@ auto BoundingBox::getCollisionPoint(const BoundingBox &box) const -> glm::vec3 {
 
     return {0.0F, 0.0F, overlap.z};
 
+}
+
+auto BoundingBox::getMinMax() const -> std::pair<glm::vec3, glm::vec3> {
+    return {
+            glm::min(min, max),
+            glm::max(min, max)
+    };
 }

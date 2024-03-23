@@ -23,6 +23,7 @@ Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
 }
 
 void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
+
     if (depthPass) {
         buffer.bind();
         buffer.draw();

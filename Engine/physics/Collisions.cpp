@@ -37,7 +37,6 @@ namespace Physics::Collisions {
     }
 
     void resolve(Attributes &a, Attributes &b, const glm::vec3 &point) {
-        // edge case
         if (a.mass == 0.0F && b.mass == 0.0F) {
             return;
         }
@@ -50,9 +49,7 @@ namespace Physics::Collisions {
             return;
         }
 
-        // eventually calculate this
-        // energy conservation -> how bouncy it is
-        float e = 0.5f;
+        float e = 0.5F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
 
         // clean this up

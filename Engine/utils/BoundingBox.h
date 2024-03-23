@@ -32,6 +32,8 @@ public:
 
     [[nodiscard]] auto getMax() const -> glm::vec3;
 
+    [[nodiscard]] auto getMinMax() const -> std::pair<glm::vec3, glm::vec3>;
+
     void setMin(const glm::vec3 &min);
 
     void setMax(const glm::vec3 &max);

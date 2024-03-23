@@ -26,7 +26,6 @@
 #include "physics/Gravity.h"
 #include "utils/BoundingBox.h"
 #include "utils/Vertex.h"
-#include "App.h"
 #include "utils/ShaderManager.h"
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
@@ -41,15 +40,10 @@ void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthP
     currentShader->setUniform("projection", projection);
 
     for (const auto &mesh: meshes) {
-        if (App::debug && !depthPass) {
-            currentShader->use();
-            currentShader->setUniform("model", attributes.transform);
-        }
-
         mesh->draw(currentShader, depthPass);
     }
 
-    // getBoundingBox().draw(attributes.transform, view, projection);
+    // box.draw(attributes.transform, view, projection);
 }
 
 void Model::setShader(std::shared_ptr<Shader> shader) {
@@ -72,6 +66,12 @@ void Model::loadModel(const std::filesystem::path &path) {
     directory = path.parent_path();
 
     processNode(scene->mRootNode, scene);
+
+    attributes.position = getCentre();
+    attributes.transform = glm::mat4(1.0F);
+    modelMatrix = glm::mat4(1.0F);
+
+    calculateBoundingBox();
 }
 
 void Model::processNode(const aiNode *const node, const aiScene *scene) {
@@ -240,6 +240,7 @@ void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
     }
 
     this->modelMatrix = modelMatrix;
+    this->box.transform(transform);
 
     attributes.transform = modelMatrix;
 
@@ -257,6 +258,8 @@ void Model::rotate(const glm::vec3 &axis, float angle) {
     for (auto &mesh: meshes) {
         mesh->rotate(axis, angle);
     }
+
+    box.rotate(axis, angle);
 }
 
 void Model::translate(const glm::vec3 &translation) {
@@ -265,6 +268,8 @@ void Model::translate(const glm::vec3 &translation) {
     for (auto &mesh: meshes) {
         mesh->translate(translation);
     }
+
+    box.translate(translation);
 }
 
 void Model::scale(const glm::vec3 &scale) {
@@ -279,6 +284,8 @@ void Model::scale(const glm::vec3 &scale) {
             glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 
     attributes.transform = modelMatrix;
+
+    box.scale(scale);
 }
 
 void Model::transform(const glm::mat4 &transform) {
@@ -292,29 +299,26 @@ void Model::transform(const glm::mat4 &transform) {
             glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
 
     attributes.transform = modelMatrix;
+
+    box.transform(transform);
 }
 
-auto Model::getBoundingBox() const -> BoundingBox {
-    BoundingBox modelBoundingBox;
-    bool first = true;
+void Model::calculateBoundingBox() {
+    auto min = glm::vec3(std::numeric_limits<float>::max());
+    auto max = glm::vec3(std::numeric_limits<float>::min());
 
     for (const auto &mesh: meshes) {
-        const auto &meshBoundingBox = mesh->getBoundingBox();
+        auto [meshMin, meshMax] = mesh->getBoundingBox().getMinMax();
 
-        if (first) {
-            modelBoundingBox = meshBoundingBox;
-            first = false;
-        } else {
-            modelBoundingBox.setMin(
-                    glm::min(modelBoundingBox.getMin(), meshBoundingBox.getMin()));
-            modelBoundingBox.setMax(
-                    glm::max(modelBoundingBox.getMin(), meshBoundingBox.getMax()));
-
-            modelBoundingBox.expand(meshBoundingBox);
-        }
+        min = glm::min(min, meshMin);
+        max = glm::max(max, meshMax);
     }
 
-    return modelBoundingBox;
+    box = BoundingBox(min, max);
+}
+
+[[nodiscard]] auto Model::getBoundingBox() const -> BoundingBox {
+    return box;
 }
 
 void Model::update(float dt, bool gravity) {

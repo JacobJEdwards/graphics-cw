@@ -22,6 +22,7 @@ public:
 
     static void Clear();
 
+    static GLuint GetActiveShader();
 
 private:
     ShaderManager() = default;
