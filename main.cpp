@@ -283,18 +283,6 @@ auto main() -> int {
             } else {
                 player->getAttributes().isGrounded = false;
             }
-            /*
-            if (Physics::Collisions::check(player->getBoundingBox(),
-                                           terrain.getBoundingBox())) {
-                std::cout << "Colliding with terrain" << std::endl;
-                Physics::Collisions::resolve(player->getAttributes(),
-                                             Physics::FLOOR_NORMAL);
-                player->getAttributes().isGrounded = true;
-
-            } else {
-                player->getAttributes().isGrounded = false;
-            }
-             */
 
             if (Physics::Collisions::check(newModel.getBoundingBox(),
                                            terrain.getBoundingBox())) {
@@ -320,30 +308,12 @@ auto main() -> int {
                                              collisionPoint);
             }
 
-            /*
-            if (Physics::Collisions::check(newModel.getBoundingBox(),
-                                           model2.getBoundingBox())) {
-                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
-                        newModel.getBoundingBox(), model2.getBoundingBox());
-                Physics::Collisions::resolve(newModel.attributes, model2.attributes, collisionPoint);
-            }
-             */
-
             if (player->getModel().isColliding(newModel)) {
                 glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         player->getBoundingBox(), newModel.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
                                              newModel.attributes, collisionPoint);
             }
-            /*
-            if (Physics::Collisions::check(player->getBoundingBox(),
-                                           newModel.getBoundingBox())) {
-                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
-                        player->getBoundingBox(), newModel.getBoundingBox());
-                Physics::Collisions::resolve(player->getAttributes(),
-                                             newModel.attributes, collisionPoint);
-            }
-             */
 
             if (player->getModel().isColliding(model2)) {
                 glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
@@ -351,16 +321,6 @@ auto main() -> int {
                 Physics::Collisions::resolve(player->getAttributes(),
                                              model2.attributes, collisionPoint);
             }
-
-            /*
-            if (Physics::Collisions::check(player->getBoundingBox(),
-                                           model2.getBoundingBox())) {
-                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
-                        player->getBoundingBox(), model2.getBoundingBox());
-                Physics::Collisions::resolve(player->getAttributes(),
-                                             model2.attributes, collisionPoint);
-            }
-             */
 
             if (p3Index == numPoints) {
                 p3Index = 0;

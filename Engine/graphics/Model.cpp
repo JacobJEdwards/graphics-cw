@@ -344,8 +344,12 @@ void Model::update(float dt, bool gravity) {
         mesh->translate(translation);
     }
 
+    box.translate(translation);
+
     auto rotation = modelMatrix * glm::inverse(attributes.transform);
     for (auto &mesh: meshes) {
         mesh->transform(rotation);
     }
+
+    box.transform(rotation);
 }

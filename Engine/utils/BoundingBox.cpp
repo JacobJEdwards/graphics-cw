@@ -177,7 +177,7 @@ void BoundingBox::expand(const BoundingBox &other) {
 }
 
 void BoundingBox::initBuffer() {
-    // buffer.drawMode = GL_LINES;
+    buffer.drawMode = GL_LINES;
 
     std::vector<Vertex::Data> vertices = {
             {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
