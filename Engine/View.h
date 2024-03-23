@@ -98,15 +98,15 @@ public:
 
     void close() const;
 
-    int getKey(int key) const;
+    [[nodiscard]] auto getKey(int key) const -> int;
 
     void optionsInterface();
 
 private:
     GLFWwindow *window = nullptr;
 
-    int WIDTH = 0;
-    int HEIGHT = 0;
+    unsigned int WIDTH = 0;
+    unsigned int HEIGHT = 0;
     std::string title;
 
     ImGuiIO io;

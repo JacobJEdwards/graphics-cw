@@ -77,17 +77,18 @@ void Player::update(float dt) {
     glm::vec3 front = camera->getFront();
     glm::vec3 modelForward = glm::normalize(glm::vec3(model.attributes.transform[2]));
 
-    glm::vec3 rotationRequired = glm::vec3(0.0f);
+    auto rotationRequired = glm::vec3(0.0F);
+
     float dotProduct = glm::dot(modelForward, front);
-    if (dotProduct < 0.99f) { // Check if not already facing the correct direction (adjust threshold as needed)
+    if (dotProduct < 0.99F) { // Check if not already facing the correct direction (adjust threshold as needed)
         float angle = acos(dotProduct);
         glm::vec3 axis = glm::normalize(glm::cross(modelForward, front));
         rotationRequired = axis * angle;
     }
 
-    if (glm::length(rotationRequired) > 0.01f) { // Adjust threshold as needed
-        rotationRequired.z = 0.0f; // Prevent rotation around z-axis
-        rotationRequired.x = 0.0f; // Prevent rotation around x-axis
+    if (glm::length(rotationRequired) > 0.01F) { // Adjust threshold as needed
+        rotationRequired.z = 0.0F; // Prevent rotation around z-axis
+        rotationRequired.x = 0.0F; // Prevent rotation around x-axis
         model.attributes.applyRotation(rotationRequired); //+= rotationRequired;
     }
 

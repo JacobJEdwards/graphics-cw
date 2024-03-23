@@ -275,6 +275,7 @@ auto main() -> int {
             model2.update(App::view.getDeltaTime());
 
             auto player = PlayerManager::GetCurrent();
+
             if (Physics::Collisions::check(player->getBoundingBox(),
                                            terrain.getBoundingBox())) {
                 Physics::Collisions::resolve(player->getAttributes(),

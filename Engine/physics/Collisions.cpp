@@ -1,6 +1,7 @@
 #include "Collisions.h"
 #include "physics/Constants.h"
 #include "physics/ModelAttributes.h"
+#include "graphics/Model.h"
 
 namespace {
     void resolveWithFloor(Physics::Attributes &a, float floorY) {
@@ -84,6 +85,10 @@ namespace Physics::Collisions {
     }
 
     auto check(const BoundingBox &a, const BoundingBox &b) -> bool {
+        return a.isColliding(b);
+    }
+
+    auto check(const Model &a, const Model &b) -> bool {
         return a.isColliding(b);
     }
 

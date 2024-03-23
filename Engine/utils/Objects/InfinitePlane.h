@@ -30,14 +30,12 @@ public:
         shader = ShaderManager::Get("Terrain");
         load();
         modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
-
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection,
               const glm::vec3 &lightPos, const glm::vec3 &viewPos, bool depthPass = false) const {
 
         auto currentShader = depthPass ? ShaderManager::Get("Shadow") : shader;
-
 
         buffer.bind();
 
@@ -56,6 +54,8 @@ public:
 
         buffer.draw();
         buffer.unbind();
+
+        box.draw(modelMatrix, view, projection);
     }
 
     void setShader(const std::shared_ptr<Shader> &shader) {
@@ -93,7 +93,7 @@ private:
 
     static constexpr std::array<GLuint, 6> indices = {0, 1, 2, 2, 3, 0};
 
-    BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, -0.5F, SIZE)};
+    BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, 0.0F, SIZE)};
 
     Buffer buffer;
 

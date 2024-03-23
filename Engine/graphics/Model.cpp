@@ -43,7 +43,7 @@ void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthP
         mesh->draw(currentShader, depthPass);
     }
 
-    // box.draw(attributes.transform, view, projection);
+    box.draw(attributes.transform, view, projection);
 }
 
 void Model::setShader(std::shared_ptr<Shader> shader) {
@@ -67,11 +67,12 @@ void Model::loadModel(const std::filesystem::path &path) {
 
     processNode(scene->mRootNode, scene);
 
+    calculateBoundingBox();
+
     attributes.position = getCentre();
     attributes.transform = glm::mat4(1.0F);
     modelMatrix = glm::mat4(1.0F);
 
-    calculateBoundingBox();
 }
 
 void Model::processNode(const aiNode *const node, const aiScene *scene) {
