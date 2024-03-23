@@ -82,7 +82,6 @@ auto main() -> int {
     Skybox skybox(skyboxFaces);
     Sun sun;
     InfinitePlane terrain;
-    // Plane postProcessingPlane;
 
     Texture::Loader::setFlip(false);
     Model newModel("../Assets/objects/helecopter/chopper.obj");
@@ -148,7 +147,7 @@ auto main() -> int {
     glm::mat4 helicopterModel = translate(model, newPosition);
     // scale
     // helicopterModel = scale(helicopterModel, glm::vec3(10.0F));
-    helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+    // helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
 
     newModel.transform(helicopterModel);
 
@@ -276,8 +275,18 @@ auto main() -> int {
 
             auto player = PlayerManager::GetCurrent();
 
+            if (Physics::Collisions::check(terrain.getBoundingBox(),
+                                           player->getBoundingBox())) {
+                Physics::Collisions::resolve(player->getAttributes(),
+                                             Physics::FLOOR_NORMAL);
+                player->getAttributes().isGrounded = true;
+            } else {
+                player->getAttributes().isGrounded = false;
+            }
+            /*
             if (Physics::Collisions::check(player->getBoundingBox(),
                                            terrain.getBoundingBox())) {
+                std::cout << "Colliding with terrain" << std::endl;
                 Physics::Collisions::resolve(player->getAttributes(),
                                              Physics::FLOOR_NORMAL);
                 player->getAttributes().isGrounded = true;
@@ -285,6 +294,7 @@ auto main() -> int {
             } else {
                 player->getAttributes().isGrounded = false;
             }
+             */
 
             if (Physics::Collisions::check(newModel.getBoundingBox(),
                                            terrain.getBoundingBox())) {

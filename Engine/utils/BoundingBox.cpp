@@ -48,7 +48,6 @@ void BoundingBox::transform(const glm::mat4 &model) {
 auto BoundingBox::collides(const BoundingBox &other) const -> bool {
     for (int i = 0; i < 3; ++i) {
         if (max[i] < other.min[i] || min[i] > other.max[i]) {
-            // No overlap on this axis, so no collision
             return false;
         }
     }
@@ -178,7 +177,7 @@ void BoundingBox::expand(const BoundingBox &other) {
 }
 
 void BoundingBox::initBuffer() {
-    buffer.drawMode = GL_LINES;
+    // buffer.drawMode = GL_LINES;
 
     std::vector<Vertex::Data> vertices = {
             {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},

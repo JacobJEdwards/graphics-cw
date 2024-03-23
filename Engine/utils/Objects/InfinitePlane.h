@@ -93,7 +93,7 @@ private:
 
     static constexpr std::array<GLuint, 6> indices = {0, 1, 2, 2, 3, 0};
 
-    BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, 0.0F, SIZE)};
+    BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, 1.0F, SIZE)};
 
     Buffer buffer;
 
