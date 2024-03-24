@@ -29,7 +29,7 @@ public:
         attributes.mass = 0.0F;
         shader = ShaderManager::Get("Terrain");
         load();
-        modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
+        // modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection,
@@ -93,7 +93,7 @@ private:
 
     static constexpr std::array<GLuint, 6> indices = {0, 1, 2, 2, 3, 0};
 
-    BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, 1.0F, SIZE)};
+    BoundingBox box{glm::vec3(-SIZE, -1.0F, -SIZE), glm::vec3(SIZE, 0.0F, SIZE)};
 
     Buffer buffer;
 

@@ -34,7 +34,7 @@ public:
 
     void update(float dt);
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false);
+    void draw(const glm::mat4 &view, const glm::mat4 &projection, bool show = true, bool depthPass = false);
 
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 

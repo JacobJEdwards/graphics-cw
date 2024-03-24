@@ -27,6 +27,7 @@
 #include "utils/BoundingBox.h"
 #include "utils/Vertex.h"
 #include "utils/ShaderManager.h"
+#include "App.h"
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 
@@ -43,7 +44,9 @@ void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthP
         mesh->draw(currentShader, depthPass);
     }
 
-    box.draw(attributes.transform, view, projection);
+    if (App::debug && !depthPass) {
+        box.draw(attributes.transform, view, projection);
+    }
 }
 
 void Model::setShader(std::shared_ptr<Shader> shader) {

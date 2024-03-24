@@ -4,7 +4,7 @@
 #include "utils/Shader.h"
 #include <memory>
 
-PostProcess::PostProcess(int width, int height, const std::shared_ptr<Shader> &shader,
+PostProcess::PostProcess(unsigned int width, unsigned int height, const std::shared_ptr<Shader> &shader,
                          bool multisampled)
         : width(width), height(height), shader(shader) {
     frameBuffer = std::make_shared<FrameBuffer>(width, height, multisampled);
@@ -15,7 +15,9 @@ PostProcess::PostProcess(int width, int height, const std::shared_ptr<Shader> &s
 void PostProcess::render() {
     glDisable(GL_DEPTH_TEST);
     shader->use();
-    renderPlane.draw(frameBuffer->getTexture());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, frameBuffer->getTexture());
+    renderPlane.draw();
     frameBuffer->unbind();
     glEnable(GL_DEPTH_TEST);
 }
@@ -36,17 +38,17 @@ auto PostProcess::getFrameBuffer() -> std::shared_ptr<FrameBuffer> {
     return frameBuffer;
 }
 
-void PostProcess::setWidth(int width) {
+void PostProcess::setWidth(unsigned int width) {
     this->width = width;
     frameBuffer->setWidth(width);
 }
 
-void PostProcess::setHeight(int height) {
+void PostProcess::setHeight(unsigned int height) {
     this->height = height;
     frameBuffer->setHeight(height);
 }
 
-void PostProcess::resize(int width, int height) {
+void PostProcess::resize(unsigned int width, unsigned int height) {
     this->width = width;
     this->height = height;
     frameBuffer->resize(width, height);

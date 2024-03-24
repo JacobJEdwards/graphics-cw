@@ -46,6 +46,10 @@ add_executable(CW main.cpp
         Engine/graphics/DepthBuffer.h
         Engine/graphics/ShadowBuffer.cpp
         Engine/graphics/ShadowBuffer.h
+        Engine/graphics/Renderable.cpp
+        Engine/graphics/Renderable.h
+        Engine/graphics/FrameBuffer.cpp
+        Engine/physics/Spline.h
 )
 
 # Link libraries

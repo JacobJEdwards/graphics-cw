@@ -252,6 +252,7 @@ void View::optionsInterface() {
                     WIDTH, HEIGHT, postProcessor->getShader(), multiSample);
         }
 
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     } else {
         ImGui::Checkbox("Wireframe", &wireframe);
 

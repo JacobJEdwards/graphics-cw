@@ -41,7 +41,7 @@ public:
     void setUniform(const std::string &name, T value) const;
 
     template<typename T>
-    T getUniform(const std::string &name) const;
+    auto getUniform(const std::string &name) const -> T;
 
 private:
     std::filesystem::path vertexPath;

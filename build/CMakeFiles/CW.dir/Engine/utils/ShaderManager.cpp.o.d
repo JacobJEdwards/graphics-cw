@@ -1009,4 +1009,6 @@ CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__hash_table \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__iterator/ranges_iterator_traits.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__node_handle \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/optional
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/optional \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h

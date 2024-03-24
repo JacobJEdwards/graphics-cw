@@ -1,59 +1,97 @@
 #ifndef SPLINE_H
 #define SPLINE_H
 
+#define GLM_ENABLE_EXPERIMENTAL
+
+#include <glm/gtx/spline.hpp>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <utility>
 #include <vector>
+#include <span>
 
 namespace Physics {
-class Spline {
-public:
-  Spline(std::vector<glm::vec3> points, float tension = 0.5f)
-      : points(std::move(points)), tension(tension) {}
-  auto getPoint(float t) const -> glm::vec3 {
-    int i = static_cast<int>(t);
-    t -= i;
-    return interpolate(t, i);
-  }
+    class Spline {
+    public:
+        enum class Type {
+            CATMULLROM,
+            HERMITE,
+            CUBIC
+        };
 
-  auto getTangent(float t) const -> glm::vec3 {
-    int i = static_cast<int>(t);
-    t -= i;
-    glm::vec3 p0 = i > 0 ? points[i - 1] : points[i];
-    glm::vec3 p1 = points[i];
-    glm::vec3 p2 = i < points.size() - 1 ? points[i + 1] : points[i];
-    glm::vec3 p3 = i < points.size() - 2 ? points[i + 2] : points[i];
-    return 0.5f * ((-p0 + p2) + (4.0f * p0 - 5.0f * p1 + 4.0f * p2 - p3) * t +
-                   (-3.0f * p0 + 3.0f * p1 - 3.0f * p2 + p3) * t * t);
-  }
-  auto getNormal(float t) const -> glm::vec3 {
-    glm::vec3 tangent = getTangent(t);
-    return glm::normalize(glm::cross(tangent, glm::vec3(0, 1, 0)));
-  }
+        explicit Spline(std::span<const glm::vec3> points, Type type = Type::CATMULLROM) : points(points.begin(),
+                                                                                                  points.end()),
+                                                                                           type(type),
+                                                                                           numPoints(points.size()) {}
 
-  auto getBinormal(float t) const -> glm::vec3 {
-    glm::vec3 tangent = getTangent(t);
-    glm::vec3 normal = getNormal(t);
-    return glm::cross(tangent, normal);
-  }
+        [[nodiscard]] auto getPoint() const -> glm::vec3 {
+            // float local_t = glm::fract(t);
+            switch (type) {
+                case Type::CATMULLROM:
+                    return glm::catmullRom(points[p0Index], points[p1Index], points[p2Index],
+                                           points[p3Index], t);
+                case Type::HERMITE:
+                    return glm::hermite(points[p0Index], points[p1Index], points[p2Index],
+                                        points[p3Index], t);
+                case Type::CUBIC:
+                    return glm::cubic(points[p0Index], points[p1Index], points[p2Index],
+                                      points[p3Index], t);
+            }
+        }
 
-private:
-  std::vector<glm::vec3> points;
-  float tension;
+        void update() {
+            /*
+            p0Index = glm::clamp<int>(t - 1, 0, points.size() - 1);
+            p1Index = glm::clamp<int>(t, 0, points.size() - 1);
+            p2Index = glm::clamp<int>(t + 1, 0, points.size() - 1);
+            p3Index = glm::clamp<int>(t + 2, 0, points.size() - 1);
+            t += dt;
+             */
 
-  auto interpolate(float t, int i) const -> glm::vec3 {
-    glm::vec3 p0 = i > 0 ? points[i - 1] : points[i];
-    glm::vec3 p1 = points[i];
-    glm::vec3 p2 = i < points.size() - 1 ? points[i + 1] : points[i];
-    glm::vec3 p3 = i < points.size() - 2 ? points[i + 2] : points[i];
-    return 0.5f * ((2.0f * p1) + (-p0 + p2) * t +
-                   (2.0f * p0 - 5.0f * p1 + 4.0f * p2 - p3) * t * t +
-                   (-p0 + 3.0f * p1 - 3.0f * p2 + p3) * t * t * t);
-  }
-};
+            if (p3Index == numPoints) {
+                p3Index = 0;
+            }
+
+            if (p2Index == numPoints) {
+                p2Index = 0;
+            }
+
+            if (p1Index == numPoints) {
+                p1Index = 0;
+            }
+
+            if (p0Index == numPoints) {
+                p0Index = 0;
+            }
+
+            t += dt;
+
+            if (t > 1.0F) {
+                t = 0.0F;
+                p0Index++;
+                p1Index++;
+                p2Index++;
+                p3Index++;
+            }
+
+        }
+
+    private:
+        std::vector<glm::vec3> points;
+        Type type;
+        size_t numPoints;
+
+        float dt = 0.5F;
+        float t = 0.0F;
+
+        int p0Index = 0;
+        int p1Index = 1;
+        int p2Index = 2;
+        int p3Index = 3;
+    };
 } // namespace Physics
 
 #endif

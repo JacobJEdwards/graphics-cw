@@ -10,7 +10,7 @@ std::shared_ptr<Player> PlayerManager::CurrentPlayer;
 void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) {
     for (const auto &[name, player]: Players) {
         bool isCurrent = player == CurrentPlayer;
-        player->draw(view, projection, !isCurrent || depthPass);
+        player->draw(view, projection, !isCurrent, depthPass);
     }
 }
 

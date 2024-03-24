@@ -27,6 +27,7 @@ auto Player::getModel() const -> const Model & {
     return model;
 }
 
+// possibly instead set up always as 0,1,0 ?
 void Player::processKeyboard(const Direction direction, const float deltaTime) {
     if (camera->getMode() == Camera::Mode::ORBIT) {
         return;
@@ -96,10 +97,10 @@ void Player::update(float dt) {
 }
 
 void Player::draw(const glm::mat4 &view, const glm::mat4 &projection,
-                  bool show) {
+                  bool show, bool depthPass) {
 
-    if (show || drawModel) {
-        model.draw(view, projection, show);
+    if (depthPass || (show && drawModel)) {
+        model.draw(view, projection, depthPass);
     }
 }
 

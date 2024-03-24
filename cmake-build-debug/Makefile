@@ -225,6 +225,30 @@ Engine/graphics/DepthBuffer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.s
 .PHONY : Engine/graphics/DepthBuffer.cpp.s
 
+Engine/graphics/FrameBuffer.o: Engine/graphics/FrameBuffer.cpp.o
+.PHONY : Engine/graphics/FrameBuffer.o
+
+# target to build an object file
+Engine/graphics/FrameBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/FrameBuffer.cpp.o
+.PHONY : Engine/graphics/FrameBuffer.cpp.o
+
+Engine/graphics/FrameBuffer.i: Engine/graphics/FrameBuffer.cpp.i
+.PHONY : Engine/graphics/FrameBuffer.i
+
+# target to preprocess a source file
+Engine/graphics/FrameBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/FrameBuffer.cpp.i
+.PHONY : Engine/graphics/FrameBuffer.cpp.i
+
+Engine/graphics/FrameBuffer.s: Engine/graphics/FrameBuffer.cpp.s
+.PHONY : Engine/graphics/FrameBuffer.s
+
+# target to generate assembly for a file
+Engine/graphics/FrameBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/FrameBuffer.cpp.s
+.PHONY : Engine/graphics/FrameBuffer.cpp.s
+
 Engine/graphics/Mesh.o: Engine/graphics/Mesh.cpp.o
 .PHONY : Engine/graphics/Mesh.o
 
@@ -296,6 +320,30 @@ Engine/graphics/PostProcessor.s: Engine/graphics/PostProcessor.cpp.s
 Engine/graphics/PostProcessor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s
 .PHONY : Engine/graphics/PostProcessor.cpp.s
+
+Engine/graphics/Renderable.o: Engine/graphics/Renderable.cpp.o
+.PHONY : Engine/graphics/Renderable.o
+
+# target to build an object file
+Engine/graphics/Renderable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.o
+.PHONY : Engine/graphics/Renderable.cpp.o
+
+Engine/graphics/Renderable.i: Engine/graphics/Renderable.cpp.i
+.PHONY : Engine/graphics/Renderable.i
+
+# target to preprocess a source file
+Engine/graphics/Renderable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.i
+.PHONY : Engine/graphics/Renderable.cpp.i
+
+Engine/graphics/Renderable.s: Engine/graphics/Renderable.cpp.s
+.PHONY : Engine/graphics/Renderable.s
+
+# target to generate assembly for a file
+Engine/graphics/Renderable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.s
+.PHONY : Engine/graphics/Renderable.cpp.s
 
 Engine/graphics/ShadowBuffer.o: Engine/graphics/ShadowBuffer.cpp.o
 .PHONY : Engine/graphics/ShadowBuffer.o
@@ -894,6 +942,9 @@ help:
 	@echo "... Engine/graphics/DepthBuffer.o"
 	@echo "... Engine/graphics/DepthBuffer.i"
 	@echo "... Engine/graphics/DepthBuffer.s"
+	@echo "... Engine/graphics/FrameBuffer.o"
+	@echo "... Engine/graphics/FrameBuffer.i"
+	@echo "... Engine/graphics/FrameBuffer.s"
 	@echo "... Engine/graphics/Mesh.o"
 	@echo "... Engine/graphics/Mesh.i"
 	@echo "... Engine/graphics/Mesh.s"
@@ -903,6 +954,9 @@ help:
 	@echo "... Engine/graphics/PostProcessor.o"
 	@echo "... Engine/graphics/PostProcessor.i"
 	@echo "... Engine/graphics/PostProcessor.s"
+	@echo "... Engine/graphics/Renderable.o"
+	@echo "... Engine/graphics/Renderable.i"
+	@echo "... Engine/graphics/Renderable.s"
 	@echo "... Engine/graphics/ShadowBuffer.o"
 	@echo "... Engine/graphics/ShadowBuffer.i"
 	@echo "... Engine/graphics/ShadowBuffer.s"

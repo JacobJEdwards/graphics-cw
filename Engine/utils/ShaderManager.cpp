@@ -6,6 +6,7 @@
 
 #include "utils/Shader.h"
 #include <memory>
+#include "imgui/imgui.h"
 
 std::unordered_map<std::string, std::shared_ptr<Shader>> ShaderManager::Shaders;
 
@@ -35,4 +36,15 @@ auto ShaderManager::GetActiveShader() -> GLuint {
     glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
 
     return static_cast<GLuint>(currentProgram);
+}
+
+void ShaderManager::Interface() {
+    ImGui::Begin("Shader Manager");
+    ImGui::Text("Current Shader: %d", GetActiveShader());
+    if (ImGui::Button("Reload all shaders")) {
+        for (const auto &[name, shader]: Shaders) {
+            shader->reload();
+        }
+    }
+    ImGui::End();
 }

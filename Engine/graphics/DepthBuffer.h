@@ -9,7 +9,7 @@
 
 class DepthBuffer {
 public:
-    DepthBuffer(int width, int height);
+    DepthBuffer(unsigned int width, unsigned int height);
 
     ~DepthBuffer();
 
@@ -24,12 +24,12 @@ public:
     [[nodiscard]] auto getDBO() const -> GLuint;
 
 private:
-    GLuint DBO;
-    GLuint RBO;
-    GLint previousFBO;
-    GLuint depthBuffer;
-    int width;
-    int height;
+    GLuint DBO = 0;
+    GLuint RBO = 0;
+    GLuint previousFBO = 0;
+    GLuint depthBuffer = 0;
+    unsigned int width;
+    unsigned int height;
 };
 
 

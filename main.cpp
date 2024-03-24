@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "Config.h"
+#include "physics/Spline.h"
 
 #include "App.h"
 #include "physics/Constants.h"
@@ -174,17 +175,12 @@ auto main() -> int {
         points[i] = pos;
     }
 
-    int p0Index = 0;
-    int p1Index = 1;
-    int p2Index = 2;
-    int p3Index = 3;
-
     ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
 
     App::view.setPipeline([&]() {
         View::clearTarget(Color::BLACK);
         auto player = PlayerManager::GetCurrent();
-        player->setDrawModel(false);
+        // player->setDrawModel(false);
 
         const auto projectionMatrix = player->getCamera().getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
@@ -247,7 +243,7 @@ auto main() -> int {
 
         PlayerManager::Draw(viewMatrix, projectionMatrix, false);
 
-        player->setDrawModel(true);
+        //player->setDrawModel(true);
     });
 
     App::view.setInterface([&]() {
@@ -258,14 +254,16 @@ auto main() -> int {
             App::view.optionsInterface();
 
             App::debugInterface();
+            sun.interface();
         }
 
         if (App::debug) {
             PlayerManager::GetCurrent()->debug();
+            ShaderManager::Interface();
         }
     });
 
-    float t = 0.0F; // spline parameter
+    Physics::Spline spline(points);
     try {
         App::loop([&] {
             sun.update(App::view.getDeltaTime());
@@ -322,25 +320,9 @@ auto main() -> int {
                                              model2.attributes, collisionPoint);
             }
 
-            if (p3Index == numPoints) {
-                p3Index = 0;
-            }
 
-            if (p2Index == numPoints) {
-                p2Index = 0;
-            }
-
-            if (p1Index == numPoints) {
-                p1Index = 0;
-            }
-
-            if (p0Index == numPoints) {
-                p0Index = 0;
-            }
-
-            glm::vec3 interpolatedPoint =
-                    glm::catmullRom(points[p0Index], points[p1Index], points[p2Index],
-                                    points[p3Index], t);
+            glm::vec3 interpolatedPoint = spline.getPoint();
+            spline.update();
 
             auto forceNeeded =
                     newModel.attributes.calculateForce(interpolatedPoint, 0.5F);
@@ -356,16 +338,6 @@ auto main() -> int {
 
             newModel.attributes.applyRotation(torque);
             newModel.attributes.applyForce(forceNeeded);
-
-            t += 0.5F;
-
-            if (t > 1.0F) {
-                t = 0.0F;
-                p0Index++;
-                p1Index++;
-                p2Index++;
-                p3Index++;
-            }
 
         });
     } catch (const std::exception &e) {

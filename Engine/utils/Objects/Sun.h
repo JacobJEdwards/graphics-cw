@@ -16,6 +16,7 @@
 
 #include "utils/Shader.h"
 #include "utils/ShaderManager.h"
+#include "imgui/imgui.h"
 
 class Sun {
 public:
@@ -29,6 +30,10 @@ public:
     };
 
     void update(const float dt) {
+        if (!move) {
+            return;
+        }
+
         angle += 0.05F * dt;
         float orbitRadius = 100.0F;
         float height = 20.0F;
@@ -57,11 +62,18 @@ public:
 
     [[nodiscard]] auto getPosition() const -> glm::vec3 { return model.attributes.position; }
 
+    void interface() {
+        ImGui::Begin("Sun");
+        ImGui::Checkbox("Update Position", &move);
+        ImGui::End();
+    }
+
 private:
     Model model = Model("../Assets/objects/sun/sun.obj");
 
     float scale = 0.01F; // Increase scale to make it more visible
     float angle = 0.0F;
+    bool move = true;
 };
 
 #endif // SUN_H

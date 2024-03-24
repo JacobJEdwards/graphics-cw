@@ -8,25 +8,23 @@
 
 class Plane {
 public:
-  Plane() { buffer.fill(vertices); }
+    Plane() { buffer.fill(vertices); }
 
-  void draw(GLuint texture) const {
-    buffer.bind();
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    buffer.draw();
-    buffer.unbind();
-  }
+    void draw() const {
+        buffer.bind();
+        buffer.draw();
+        buffer.unbind();
+    }
 
 private:
-  Buffer buffer;
-  std::vector<Vertex::Data> vertices{
-      Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},
-      Vertex::Data{glm::vec3(-1.0F, -1.0F, 0.0F), glm::vec2(0.0F, 0.0F)},
-      Vertex::Data{glm::vec3(1.0F, -1.0F, 0.0F), glm::vec2(1.0F, 0.0F)},
-      Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},
-      Vertex::Data{glm::vec3(1.0F, -1.0F, 0.0F), glm::vec2(1.0F, 0.0F)},
-      Vertex::Data{glm::vec3(1.0F, 1.0F, 0.0F), glm::vec2(1.0F, 1.0F)}};
+    Buffer buffer;
+    std::vector<Vertex::Data> vertices{
+            Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},
+            Vertex::Data{glm::vec3(-1.0F, -1.0F, 0.0F), glm::vec2(0.0F, 0.0F)},
+            Vertex::Data{glm::vec3(1.0F, -1.0F, 0.0F), glm::vec2(1.0F, 0.0F)},
+            Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},
+            Vertex::Data{glm::vec3(1.0F, -1.0F, 0.0F), glm::vec2(1.0F, 0.0F)},
+            Vertex::Data{glm::vec3(1.0F, 1.0F, 0.0F), glm::vec2(1.0F, 1.0F)}};
 };
 
 #endif

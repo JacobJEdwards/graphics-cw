@@ -30,7 +30,7 @@ public:
 private:
     GLuint depthTexture = 0;
     GLuint FBO = 0;
-    GLint previousFBO = 0;
+    GLuint previousFBO = 0;
     unsigned int width;
     unsigned int height;
 };

@@ -8,7 +8,7 @@
 
 class PostProcess {
 public:
-    PostProcess(int width, int height, const std::shared_ptr<Shader> &shader,
+    PostProcess(unsigned int width, unsigned int height, const std::shared_ptr<Shader> &shader,
                 bool multisampled = true);
 
     void render();
@@ -23,11 +23,11 @@ public:
 
     auto getFrameBuffer() -> std::shared_ptr<FrameBuffer>;
 
-    void setWidth(int width);
+    void setWidth(unsigned int width);
 
-    void setHeight(int height);
+    void setHeight(unsigned int height);
 
-    void resize(int width, int height);
+    void resize(unsigned int width, unsigned int height);
 
 private:
     std::shared_ptr<Shader> shader;
@@ -35,8 +35,8 @@ private:
 
     Plane renderPlane;
 
-    int width;
-    int height;
+    unsigned int width;
+    unsigned int height;
 };
 
 #endif // POSTPROCESS_H

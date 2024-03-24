@@ -6,13 +6,14 @@
 
 #include <iostream>
 
-DepthBuffer::DepthBuffer(int width, int height) {
+DepthBuffer::DepthBuffer(unsigned int width, unsigned int height) {
     glGenFramebuffers(1, &DBO);
     glBindFramebuffer(GL_FRAMEBUFFER, DBO);
 
     glGenRenderbuffers(1, &RBO);
     glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, static_cast<GLsizei>(width),
+                          static_cast<GLsizei>(height));
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBO);
 
     glDrawBuffer(GL_NONE);
@@ -34,10 +35,13 @@ DepthBuffer::~DepthBuffer() {
 }
 
 void DepthBuffer::bind() {
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &previousFBO);
+    GLint temp;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &temp);
     glBindFramebuffer(GL_FRAMEBUFFER, DBO);
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
     glClear(GL_DEPTH_BUFFER_BIT);
+
+    previousFBO = static_cast<GLuint>(temp);
 }
 
 void DepthBuffer::unbind() const {
