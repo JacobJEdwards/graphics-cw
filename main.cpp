@@ -1,9 +1,6 @@
 #include <exception>
 #include <glm/ext/matrix_float3x3.hpp>
 
-#define GLM_ENABLE_EXPERIMENTAL
-
-#include <glm/gtx/spline.hpp>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
