@@ -23,6 +23,8 @@ namespace Physics {
         float damping;
         bool isGrounded = false;
 
+        bool gravityAffected = true;
+
         Attributes()
                 : position(0.0F), velocity(0.0F), acceleration(0.0F), force(0.0F),
                   mass(1.0F), damping(0.99F), radius(1.0F),
@@ -44,7 +46,7 @@ namespace Physics {
 
         void applyImpulse(const glm::vec3 &impulse);
 
-        [[nodiscard]] auto calculateForce(const glm::vec3 &point, float dt) const -> glm::vec3;
+        [[nodiscard]] auto calculateForce(const glm::vec3 &point) const -> glm::vec3;
 
         [[nodiscard]] auto calculateTorque(const glm::vec3 &point) -> glm::vec3;
 

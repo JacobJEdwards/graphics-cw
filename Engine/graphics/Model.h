@@ -65,7 +65,7 @@ public:
 
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
-    void update(float dt, bool gravity = true);
+    void update(float dt);
 
 private:
     std::unordered_map<std::string, Texture::Data> textures_loaded;

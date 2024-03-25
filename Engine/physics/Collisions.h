@@ -11,6 +11,8 @@ namespace Physics::Collisions {
 
     void resolve(Attributes &a, Attributes &b, const glm::vec3 &point);
 
+    void resolve(Attributes &a, Attributes &b);
+
     auto check(const BoundingBox &a, const BoundingBox &b) -> bool;
 
     auto check(const BoundingBox &a, const glm::vec3 &b) -> bool;

@@ -325,12 +325,8 @@ void Model::calculateBoundingBox() {
     return box;
 }
 
-void Model::update(float dt, bool gravity) {
+void Model::update(float dt) {
     attributes.update(dt);
-
-    if (!attributes.isGrounded && gravity) {
-        attributes.applyGravity();
-    }
 
     glm::vec3 newPosition = attributes.position;
 

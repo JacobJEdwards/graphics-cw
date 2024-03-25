@@ -37,6 +37,41 @@ namespace Physics::Collisions {
         a.applyImpulse(impulse);
     }
 
+    void resolve(Attributes &a, Attributes &b) {
+        if (a.mass == 0.0F && b.mass == 0.0F) {
+            return;
+        }
+
+        glm::vec3 normal = glm::normalize(b.position - a.position);
+        glm::vec3 relativeVelocity = b.velocity - a.velocity;
+        float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
+
+        if (relativeVelocityAlongNormal > 0) {
+            return;
+        }
+
+        float e = 0.5F;
+        float j = -(1 + e) * relativeVelocityAlongNormal;
+
+        if (a.mass != 0.0F && b.mass != 0.0F) {
+            j /= 1 / a.mass + 1 / b.mass;
+        } else if (a.mass == 0.0F) {
+            j /= 1 / b.mass;
+        } else if (b.mass == 0.0F) {
+            j /= 1 / a.mass;
+        }
+
+        glm::vec3 impulse = j * normal;
+
+        if (a.mass != 0.0F) {
+            a.applyImpulse(-impulse);
+        }
+
+        if (b.mass != 0.0F) {
+            b.applyImpulse(impulse);
+        }
+    }
+
     void resolve(Attributes &a, Attributes &b, const glm::vec3 &point) {
         if (a.mass == 0.0F && b.mass == 0.0F) {
             return;

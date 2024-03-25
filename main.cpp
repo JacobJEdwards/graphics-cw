@@ -93,11 +93,13 @@ auto main() -> int {
     orbit->setDrawModel(false);
     orbit->getCamera().setMode(Camera::Mode::ORBIT);
     orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F);
+    orbit->getAttributes().gravityAffected = false;
     PlayerManager::Add("Orbit", orbit);
 
     auto free = std::make_shared<Player>();
     free->setDrawModel(true);
     free->setMode(Player::Mode::FREE);
+    free->getAttributes().gravityAffected = false;
     PlayerManager::Add("Free", free);
 
     auto fps = std::make_shared<Player>();
@@ -110,6 +112,7 @@ auto main() -> int {
     fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
                                 glm::vec3(4.0F, 3.0F, 6.0F));
     fixed->setMode(Player::Mode::FIXED);
+    fixed->getAttributes().gravityAffected = false;
     PlayerManager::Add("Fixed", fixed);
 
     PlayerManager::SetCurrent("Orbit");
@@ -143,6 +146,7 @@ auto main() -> int {
 
     // rotate by 180 degrees
     glm::mat4 helicopterModel = translate(model, newPosition);
+    // helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     // scale
     // helicopterModel = scale(helicopterModel, glm::vec3(10.0F));
     // helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
@@ -162,7 +166,7 @@ auto main() -> int {
 
     // obviously clean this up
 
-    int numPoints = 100;
+    int numPoints = 10;
     std::vector<glm::vec3> points(numPoints);
 
     // generate a circle
@@ -260,7 +264,8 @@ auto main() -> int {
         }
     });
 
-    Physics::Spline spline(points);
+    Physics::Spline spline(points, Physics::Spline::Type::CATMULLROM);
+
     try {
         App::loop([&] {
             sun.update(App::view.getDeltaTime());
@@ -318,20 +323,19 @@ auto main() -> int {
             }
 
 
+            spline.update(App::view.getDeltaTime());
             glm::vec3 interpolatedPoint = spline.getPoint();
-            spline.update();
 
             auto forceNeeded =
-                    newModel.attributes.calculateForce(interpolatedPoint, 0.5F);
+                    newModel.attributes.calculateForce(interpolatedPoint);
 
             // ignore y component
             forceNeeded = glm::vec3(forceNeeded.x, 0.0F, forceNeeded.z);
 
-            auto torque = newModel.attributes.calculateRotation(interpolatedPoint) * 2.0F;
+            glm::vec3 torque = newModel.attributes.calculateRotation(interpolatedPoint);
+            // rotate by 180 degrees
             // ignore x and z component
             torque = glm::vec3(0.0F, torque.y, 0.0F);
-
-            // flip by 180 degrees
 
             newModel.attributes.applyRotation(torque);
             newModel.attributes.applyForce(forceNeeded);
@@ -363,7 +367,7 @@ void processInput() {
         App::view.close();
     }
 
-    if (App::view.getKey(GLFW_KEY_SPACE) == GLFW_PRESS) {
+    if (App::view.getKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
         App::setPaused(!App::paused);
     }
 
@@ -402,22 +406,16 @@ void processInput() {
     }
 
     if (App::view.getKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::UP,
+        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::DOWN,
                                                      App::view.getDeltaTime());
     }
 
-    if (App::view.getKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::DOWN,
+    if (App::view.getKey(GLFW_KEY_SPACE) == GLFW_PRESS) {
+        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::UP,
                                                      App::view.getDeltaTime());
     }
 
     if (App::view.getKey(GLFW_KEY_N) == GLFW_PRESS) {
         PlayerManager::GetCurrent()->nitro();
-    }
-
-    if (App::view.getKey(GLFW_KEY_J) == GLFW_PRESS) {
-        if (PlayerManager::GetCurrent()->getAttributes().isGrounded) {
-            PlayerManager::GetCurrent()->jump();
-        }
     }
 }

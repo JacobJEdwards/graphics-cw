@@ -54,7 +54,11 @@ void Player::processKeyboard(const Direction direction, const float deltaTime) {
             model.attributes.applyDrag(0.5F);
             break;
         case Direction::UP:
-            model.attributes.applyForce(up * 10.0F);
+            if (mode == Mode::FPS) {
+                jump();
+            } else {
+                model.attributes.applyForce(up * 10.0F);
+            }
             break;
         case Direction::DOWN:
             model.attributes.applyForce(-up * 10.0F);
@@ -71,8 +75,7 @@ void Player::processKeyboard(const Direction direction, const float deltaTime) {
 }
 
 void Player::update(float dt) {
-    bool gravity = mode == Mode::FPS;
-    model.update(dt, gravity);
+    model.update(dt);
     camera->setPosition(model.attributes.position + glm::vec3(0.0F, 4.0F, 0.0F));
 
     glm::vec3 front = camera->getFront();
@@ -81,16 +84,17 @@ void Player::update(float dt) {
     auto rotationRequired = glm::vec3(0.0F);
 
     float dotProduct = glm::dot(modelForward, front);
-    if (dotProduct < 0.99F) { // Check if not already facing the correct direction (adjust threshold as needed)
+
+    if (dotProduct < 0.99F) {
         float angle = acos(dotProduct);
         glm::vec3 axis = glm::normalize(glm::cross(modelForward, front));
         rotationRequired = axis * angle;
     }
 
-    if (glm::length(rotationRequired) > 0.01F) { // Adjust threshold as needed
-        rotationRequired.z = 0.0F; // Prevent rotation around z-axis
-        rotationRequired.x = 0.0F; // Prevent rotation around x-axis
-        model.attributes.applyRotation(rotationRequired); //+= rotationRequired;
+    if (glm::length(rotationRequired) > 0.01F) {
+        rotationRequired.z = 0.0F;
+        rotationRequired.x = 0.0F;
+        model.attributes.applyRotation(rotationRequired);
     }
 
     camera->update(dt);

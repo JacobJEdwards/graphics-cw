@@ -18,7 +18,7 @@ FrameBuffer::FrameBuffer(unsigned int width,
 FrameBuffer::~FrameBuffer() {
     glDeleteFramebuffers(1, &FBO);
     glDeleteRenderbuffers(1, &RBO);
-    glDeleteTextures(1, &texture);
+    glDeleteTextures(1, &texture.id);
 
     if (multisample) {
         glDeleteFramebuffers(1, &MSFBO);
@@ -42,7 +42,7 @@ FrameBuffer::FrameBuffer(FrameBuffer &&other) noexcept {
 
     other.FBO = 0;
     other.RBO = 0;
-    other.texture = 0;
+    other.texture.id = 0;
     other.MSFBO = 0;
     other.MSRBO = 0;
     other.MSRBO_depth = 0;
@@ -56,7 +56,7 @@ auto FrameBuffer::operator=(FrameBuffer &&other) noexcept -> FrameBuffer & {
     if (this != &other) {
         glDeleteFramebuffers(1, &FBO);
         glDeleteRenderbuffers(1, &RBO);
-        glDeleteTextures(1, &texture);
+        glDeleteTextures(1, &texture.id);
         glDeleteFramebuffers(1, &MSFBO);
         glDeleteRenderbuffers(1, &MSRBO);
         glDeleteRenderbuffers(1, &MSRBO_depth);
@@ -74,7 +74,7 @@ auto FrameBuffer::operator=(FrameBuffer &&other) noexcept -> FrameBuffer & {
 
         other.FBO = 0;
         other.RBO = 0;
-        other.texture = 0;
+        other.texture.id = 0;
         other.MSFBO = 0;
         other.MSRBO = 0;
         other.MSRBO_depth = 0;
@@ -116,7 +116,7 @@ void FrameBuffer::unbind() const {
     glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
 }
 
-[[nodiscard]] auto FrameBuffer::getTexture() const -> GLuint { return texture; }
+[[nodiscard]] auto FrameBuffer::getTexture() const -> GLuint { return texture.id; }
 
 void FrameBuffer::setHeight(unsigned int height) {
     this->height = height;
@@ -143,14 +143,14 @@ void FrameBuffer::setup() {
                           static_cast<GLsizei>(height));
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
                               GL_RENDERBUFFER, RBO);
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glGenTextures(1, &texture.id);
+    glBindTexture(GL_TEXTURE_2D, texture.id);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, GL_RGB,
                  GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                           texture, 0);
+                           texture.id, 0);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         throw std::runtime_error("Framebuffer is not complete");
@@ -195,7 +195,7 @@ void FrameBuffer::resize() const {
     glBindRenderbuffer(GL_RENDERBUFFER, RBO);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(width),
                           static_cast<GLsizei>(height));
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, texture.id);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, GL_RGB,
                  GL_UNSIGNED_BYTE, nullptr);
 }

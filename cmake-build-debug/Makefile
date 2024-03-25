@@ -489,6 +489,30 @@ Engine/physics/ModelAttributes.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.s
 .PHONY : Engine/physics/ModelAttributes.cpp.s
 
+Engine/physics/Spline.o: Engine/physics/Spline.cpp.o
+.PHONY : Engine/physics/Spline.o
+
+# target to build an object file
+Engine/physics/Spline.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/Spline.cpp.o
+.PHONY : Engine/physics/Spline.cpp.o
+
+Engine/physics/Spline.i: Engine/physics/Spline.cpp.i
+.PHONY : Engine/physics/Spline.i
+
+# target to preprocess a source file
+Engine/physics/Spline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/Spline.cpp.i
+.PHONY : Engine/physics/Spline.cpp.i
+
+Engine/physics/Spline.s: Engine/physics/Spline.cpp.s
+.PHONY : Engine/physics/Spline.s
+
+# target to generate assembly for a file
+Engine/physics/Spline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/Spline.cpp.s
+.PHONY : Engine/physics/Spline.cpp.s
+
 Engine/utils/BoundingBox.o: Engine/utils/BoundingBox.cpp.o
 .PHONY : Engine/utils/BoundingBox.o
 
@@ -975,6 +999,9 @@ help:
 	@echo "... Engine/physics/ModelAttributes.o"
 	@echo "... Engine/physics/ModelAttributes.i"
 	@echo "... Engine/physics/ModelAttributes.s"
+	@echo "... Engine/physics/Spline.o"
+	@echo "... Engine/physics/Spline.i"
+	@echo "... Engine/physics/Spline.s"
 	@echo "... Engine/utils/BoundingBox.o"
 	@echo "... Engine/utils/BoundingBox.i"
 	@echo "... Engine/utils/BoundingBox.s"

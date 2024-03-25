@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <stdexcept>
+#include "graphics/Texture.h"
 
 class FrameBuffer {
 public:
@@ -44,7 +45,7 @@ protected:
 private:
     GLuint FBO = 0;
     GLuint RBO = 0;
-    GLuint texture = 0;
+    Texture::Data texture;
 
     // multi sample
     GLuint MSFBO = 0;

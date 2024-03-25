@@ -38,12 +38,18 @@ void Physics::Attributes::update(float dt) {
 
     if (isGrounded) {
         applyFriction(Physics::FRICTION);
+    } else {
+        applyGravity();
     }
 }
 
 void Physics::Attributes::applyForce(const glm::vec3 &f) { force += f; }
 
 void Physics::Attributes::applyGravity() {
+    if (!gravityAffected) {
+        return;
+    }
+
     applyForce(Physics::GRAVITY_VECTOR * mass);
 }
 
@@ -75,12 +81,8 @@ void Physics::Attributes::applySpring(const glm::vec3 &springAnchor,
     applyForce(springForce);
 }
 
-auto Physics::Attributes::calculateForce(const glm::vec3 &point, float dt) const
+auto Physics::Attributes::calculateForce(const glm::vec3 &point) const
 -> glm::vec3 {
-    if (dt == 0.0F) {
-        return glm::vec3(0.0F);
-    }
-
     if (mass == 0.0F) {
         return glm::vec3(0.0F);
     }
@@ -91,9 +93,9 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point, float dt) const
 
     glm::vec3 initialVelocity = velocity;
 
-    glm::vec3 finalVelocity = (point - position) / dt;
+    glm::vec3 finalVelocity = (point - position);;
 
-    glm::vec3 acceleration = (finalVelocity - initialVelocity) / dt;
+    glm::vec3 acceleration = (finalVelocity - initialVelocity);
 
     glm::vec3 force = mass * acceleration;
 
@@ -102,7 +104,7 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point, float dt) const
 
 auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
     glm::vec3 direction = glm::normalize(point - position);
-    glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
+    glm::vec3 forward = glm::normalize(glm::vec3(-transform[2]));
 
     auto rotation = glm::vec3(0.0F);
 
