@@ -14,6 +14,7 @@
 #include <span>
 #include <stdexcept>
 #include <string>
+#include <utility>
 
 namespace Texture {
     namespace Loader {
@@ -164,15 +165,75 @@ namespace Texture {
         }
     }
 
-    void bind(const Data &texture) {
-        glBindTexture(GL_TEXTURE_2D, texture.id);
+    /*
+    Data::Data() {
+        init();
     }
 
-    void unbind() {
-        glBindTexture(GL_TEXTURE_2D, 0);
+    Data::Data(GLuint id, Type type, std::string path) : id(id), type(type), path(std::move(path)) {
+        init();
     }
 
-    void del(const Data &texture) {
-        glDeleteTextures(1, &texture.id);
+    Data::Data(const Data &other) : id(other.id), type(other.type), path(other.path) {
+        init();
     }
+
+    Data::Data(Data &&other) noexcept: id(other.id), type(other.type), path(std::move(other.path)) {
+        other.id = 0;
+        other.type = Type::DIFFUSE;
+        other.path = "";
+    }
+
+    auto Data::operator=(const Data &other) -> Data & {
+        if (this != &other) {
+            id = other.id;
+            type = other.type;
+            path = other.path;
+            init();
+        }
+        return *this;
+    }
+
+    auto Data::operator=(Data &&other) noexcept -> Data & {
+        if (this != &other) {
+            id = other.id;
+            type = other.type;
+            path = std::move(other.path);
+            other.id = 0;
+            other.type = Type::DIFFUSE;
+            other.path = "";
+        }
+        return *this;
+    }
+
+    Data::~Data() {
+        glDeleteTextures(1, &id);
+    }
+
+    void Data::init() {
+        switch (type) {
+            case Type::DIFFUSE:
+            case Type::SPECULAR:
+            case Type::NORMAL:
+            case Type::HEIGHT:
+            case Type::EMISSIVE:
+            case Type::AMBIENT_OCCLUSION:
+                target = GL_TEXTURE_2D;
+                break;
+            case Type::CUBEMAP:
+                target = GL_TEXTURE_CUBE_MAP;
+                break;
+        }
+
+        glGenTextures(1, &id);
+    }
+
+    void Data::bind() const {
+        glBindTexture(target, id);
+    }
+
+    void Data::unbind() const {
+        glBindTexture(target, 0);
+    }
+        */
 }

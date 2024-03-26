@@ -17,8 +17,8 @@ ShadowBuffer::ShadowBuffer(unsigned int width, unsigned int height) {
                  GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     std::array<GLfloat, 4> borderColor{1.0, 1.0, 1.0, 1.0};
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor.data());
 
@@ -43,17 +43,25 @@ ShadowBuffer::~ShadowBuffer() {
 }
 
 void ShadowBuffer::bind() {
-    GLint temp;
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &temp);
-    previousFBO = static_cast<GLuint>(temp);
+    glGetIntegerv(GL_CULL_FACE_MODE, reinterpret_cast<GLint *>(&previousCullFace));
+    glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint *>(&previousDepthFunc));
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, reinterpret_cast<GLint *>(&previousFBO));
+    glGetIntegerv(GL_VIEWPORT, previousViewport.data());
 
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
     glClear(GL_DEPTH_BUFFER_BIT);
+
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
+    glDepthFunc(GL_LESS);
 }
 
 void ShadowBuffer::unbind() const {
     glBindFramebuffer(GL_FRAMEBUFFER, previousFBO);
+    glCullFace(previousCullFace);
+    glDepthFunc(previousDepthFunc);
+    glViewport(previousViewport[0], previousViewport[1], previousViewport[2], previousViewport[3]);
 }
 
 void ShadowBuffer::Clear() {

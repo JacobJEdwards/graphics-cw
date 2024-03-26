@@ -177,28 +177,20 @@ auto main() -> int {
     }
 
     ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
+    // ShadowBuffer shadowBuffer = ShadowBuffer(10000, 10000);
 
     App::view.setPipeline([&]() {
         View::clearTarget(Color::BLACK);
         auto player = PlayerManager::GetCurrent();
-        // player->setDrawModel(false);
 
         const auto projectionMatrix = player->getCamera().getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
 
         shadowBuffer.bind();
 
-        GLenum previousCullFaceMode;
-        glGetIntegerv(GL_CULL_FACE_MODE, reinterpret_cast<GLint *>(&previousCullFaceMode));
-        // cull front faces
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);
-        // render to shadow buffer
-        View::clearTarget(Color::BLACK);
         auto lightPos = sun.getPosition();
-
         auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
-        auto lightView = glm::lookAt(lightPos, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+        auto lightView = glm::lookAt(lightPos, player->getPosition(), glm::vec3(0.0F, 1.0F, 0.0F));
 
         shader = ShaderManager::Get("Shadow");
         shader->use();
@@ -208,12 +200,8 @@ auto main() -> int {
         PlayerManager::Draw(lightView, lightProjection, true);
 
         shadowBuffer.unbind();
-        glCullFace(previousCullFaceMode);
-
-        glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()), static_cast<GLsizei>(App::view.getHeight()));
 
         View::clearTarget(Color::BLACK);
-
         shader = ShaderManager::Get("Base");
         shader->use();
         shader->setUniform("light.position", sun.getPosition());

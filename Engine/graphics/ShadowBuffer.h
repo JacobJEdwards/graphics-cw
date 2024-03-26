@@ -6,6 +6,7 @@
 #define CW_SHADOWBUFFER_H
 
 #include <GL/glew.h>
+#include <array>
 
 class ShadowBuffer {
 public:
@@ -31,6 +32,13 @@ private:
     GLuint depthTexture = 0;
     GLuint FBO = 0;
     GLuint previousFBO = 0;
+
+    GLenum previousCullFace = GL_BACK;
+    GLenum previousDepthFunc = GL_LESS;
+
+    // previous viewport
+    std::array<GLint, 4> previousViewport{};
+
     unsigned int width;
     unsigned int height;
 };
