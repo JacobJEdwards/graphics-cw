@@ -42,7 +42,7 @@ public:
 
         buffer.bind();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, texture.id);
+        texture.bind();
         buffer.draw();
         buffer.unbind();
         glDepthFunc(GL_LESS);
@@ -109,8 +109,7 @@ private:
     }
 
     void loadTextures(std::span<const std::string, NUM_FACES> faces) {
-        texture.id = Texture::Loader::loadCubemap(faces);
-        texture.type = Texture::Type::CUBEMAP;
+        texture = Texture::Loader::loadCubemap(faces);
     }
 };
 

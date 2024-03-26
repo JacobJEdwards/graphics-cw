@@ -94,7 +94,7 @@ public:
         (resize)();
     }
 
-    auto getPostProcessor() -> PostProcess & { return *postProcessor.get(); }
+    auto getPostProcessor() -> PostProcess & { return *postProcessor; }
 
     void close() const;
 

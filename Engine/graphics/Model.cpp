@@ -190,8 +190,10 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat,
             continue;
         }
 
-        const Texture::Data texture{Texture::Loader::load(path, directory), texType,
-                                    str.C_Str()};
+        auto texture = Texture::Loader::load(path, directory);
+        texture.type = texType;
+        texture.path = str.C_Str();
+        texture.nativeType = GL_TEXTURE_2D;
 
         textures.push_back(texture);
         textures_loaded[path] = texture;

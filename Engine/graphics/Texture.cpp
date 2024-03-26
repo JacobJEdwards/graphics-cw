@@ -19,14 +19,14 @@ namespace Texture {
     namespace Loader {
         auto
         load(const std::string &filename, const std::filesystem::path &directory, const GLint wrapS, const GLint wrapT,
-             const GLint minFilter, const GLint magFilter) -> GLuint {
+             const GLint minFilter, const GLint magFilter) -> Data {
             return load(directory / filename, wrapS, wrapT, minFilter, magFilter);
         }
 
         auto load(const std::filesystem::path &path, const GLint wrapS, const GLint wrapT, const GLint minFilter,
-                  const GLint magFilter) -> GLuint {
-            GLuint texture;
-            glGenTextures(1, &texture);
+                  const GLint magFilter) -> Data {
+            Data texture(Type::DIFFUSE);
+            texture.bind();
 
             int width;
             int height;
@@ -36,7 +36,6 @@ namespace Texture {
             if (data != nullptr) {
                 const GLint format = getFormat(nrChannels);
 
-                glBindTexture(GL_TEXTURE_2D, texture);
                 glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
                 glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -54,10 +53,9 @@ namespace Texture {
             return texture;
         }
 
-        auto loadCubemap(const std::filesystem::path &path) -> GLuint {
-            GLuint texture;
-            glGenTextures(1, &texture);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+        auto loadCubemap(const std::filesystem::path &path) -> Data {
+            Data texture(Type::CUBEMAP);
+            texture.bind();
 
             int width;
             int height;
@@ -73,14 +71,6 @@ namespace Texture {
                                  GL_UNSIGNED_BYTE, data);
                 }
 
-                /*
-                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                */
             } else {
                 const char *failureReason = stbi_failure_reason();
                 std::cerr << "Failed to load texture: " << failureReason << std::endl;
@@ -97,10 +87,9 @@ namespace Texture {
             return texture;
         }
 
-        auto loadCubemap(std::span<const std::string, CUBE_MAP_FACES> faces) -> GLuint {
-            GLuint texture;
-            glGenTextures(1, &texture);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+        auto loadCubemap(std::span<const std::string, CUBE_MAP_FACES> faces) -> Data {
+            Data texture(Type::CUBEMAP);
+            texture.bind();
 
             int width;
             int height;
@@ -164,15 +153,39 @@ namespace Texture {
         }
     }
 
-    void bind(const Data &texture) {
-        glBindTexture(GL_TEXTURE_2D, texture.id);
+    Data::Data(Texture::Type type, const std::string &path) {
+        this->type = type;
+        this->path = path;
+        setup();
     }
 
-    void unbind() {
-        glBindTexture(GL_TEXTURE_2D, 0);
+    Data::~Data() {
+        glDeleteTextures(1, &id);
     }
 
-    void del(const Data &texture) {
-        glDeleteTextures(1, &texture.id);
+    void Data::setup() {
+        glGenTextures(1, &id);
+
+        switch (type) {
+            case Type::DIFFUSE:
+            case Type::SPECULAR:
+            case Type::NORMAL:
+            case Type::HEIGHT:
+            case Type::AMBIENT_OCCLUSION:
+            case Type::EMISSIVE:
+                nativeType = GL_TEXTURE_2D;
+                break;
+            case Type::CUBEMAP:
+                nativeType = GL_TEXTURE_CUBE_MAP;
+                break;
+        }
+    }
+
+    void Data::bind() const {
+        glBindTexture(nativeType, id);
+    }
+
+    void Data::unbind() const {
+        glBindTexture(nativeType, 0);
     }
 }

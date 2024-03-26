@@ -42,9 +42,9 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
         glActiveTexture(GL_TEXTURE0 + i);
 
         std::string number;
-        const Texture::Type name = textures[i].type;
+        const Texture::Type type = textures[i].type;
 
-        switch (name) {
+        switch (type) {
             case Texture::Type::DIFFUSE:
                 number = std::to_string(diffuseNr);
                 diffuseNr++;
@@ -73,8 +73,8 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
                 throw std::runtime_error("Unknown texture type");
         }
 
-        glBindTexture(GL_TEXTURE_2D, textures[i].id);
-        shader->setUniform(("material.texture_" + toString(name) + number),
+        textures[i].bind();
+        shader->setUniform(("material.texture_" + toString(type) + number),
                            static_cast<GLint>(i));
     }
 

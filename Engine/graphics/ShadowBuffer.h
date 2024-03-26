@@ -6,6 +6,7 @@
 #define CW_SHADOWBUFFER_H
 
 #include <GL/glew.h>
+#include "Texture.h"
 
 class ShadowBuffer {
 public:
@@ -25,10 +26,11 @@ public:
 
     void destroy();
 
-    [[nodiscard]] auto getTexture() const -> GLuint;
+    [[nodiscard]] auto getTexture() const -> Texture::Data;
 
 private:
     GLuint depthTexture = 0;
+    Texture::Data texture;
     GLuint FBO = 0;
     GLuint previousFBO = 0;
     unsigned int width;

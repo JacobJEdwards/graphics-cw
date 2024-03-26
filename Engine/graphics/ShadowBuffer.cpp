@@ -11,8 +11,7 @@ ShadowBuffer::ShadowBuffer(unsigned int width, unsigned int height) {
     glGenFramebuffers(1, &FBO);
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
-    glGenTextures(1, &depthTexture);
-    glBindTexture(GL_TEXTURE_2D, depthTexture);
+    texture.bind();
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0,
                  GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -23,7 +22,7 @@ ShadowBuffer::ShadowBuffer(unsigned int width, unsigned int height) {
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor.data());
 
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texture.id, 0);
 
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
@@ -65,6 +64,6 @@ void ShadowBuffer::destroy() {
     glDeleteTextures(1, &depthTexture);
 }
 
-[[nodiscard]] auto ShadowBuffer::getTexture() const -> GLuint {
-    return depthTexture;
+[[nodiscard]] auto ShadowBuffer::getTexture() const -> Texture::Data {
+    return texture;
 }

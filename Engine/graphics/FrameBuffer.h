@@ -29,7 +29,7 @@ public:
 
     void unbind() const;
 
-    [[nodiscard]] auto getTexture() const -> GLuint;
+    [[nodiscard]] auto getTexture() const -> Texture::Data;
 
     void setHeight(unsigned int height);
 

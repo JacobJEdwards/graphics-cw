@@ -16,7 +16,7 @@ void PostProcess::render() {
     glDisable(GL_DEPTH_TEST);
     shader->use();
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, frameBuffer->getTexture());
+    frameBuffer->getTexture().bind();
     renderPlane.draw();
     frameBuffer->unbind();
     glEnable(GL_DEPTH_TEST);

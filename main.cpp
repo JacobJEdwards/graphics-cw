@@ -218,9 +218,8 @@ auto main() -> int {
         shader->setUniform("light.position", sun.getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
-        auto texture = shadowBuffer.getTexture();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
+        shadowBuffer.getTexture().bind();
 
         newModel.draw(viewMatrix, projectionMatrix);
         model2.draw(viewMatrix, projectionMatrix);
@@ -234,9 +233,8 @@ auto main() -> int {
         shader->setUniform("shadowMap", 0);
         shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
 
-        texture = shadowBuffer.getTexture();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
+        shadowBuffer.getTexture().bind();
 
         terrain.draw(viewMatrix, projectionMatrix, sun.getPosition(), player->getCamera().getPosition());
         skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
