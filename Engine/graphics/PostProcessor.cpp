@@ -3,6 +3,7 @@
 #include "FrameBuffer.h"
 #include "utils/Shader.h"
 #include <memory>
+#include <iostream>
 
 PostProcess::PostProcess(unsigned int width, unsigned int height, const std::shared_ptr<Shader> &shader,
                          bool multisampled)
@@ -16,6 +17,7 @@ void PostProcess::render() {
     glDisable(GL_DEPTH_TEST);
     shader->use();
     glActiveTexture(GL_TEXTURE0);
+    std::cout << "here";
     frameBuffer->getTexture().bind();
     renderPlane.draw();
     frameBuffer->unbind();

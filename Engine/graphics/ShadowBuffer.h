@@ -29,7 +29,6 @@ public:
     [[nodiscard]] auto getTexture() const -> Texture::Data;
 
 private:
-    GLuint depthTexture = 0;
     Texture::Data texture;
     GLuint FBO = 0;
     GLuint previousFBO = 0;

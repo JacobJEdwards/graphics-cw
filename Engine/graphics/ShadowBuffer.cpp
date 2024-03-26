@@ -61,7 +61,6 @@ void ShadowBuffer::Clear() {
 
 void ShadowBuffer::destroy() {
     glDeleteFramebuffers(1, &FBO);
-    glDeleteTextures(1, &depthTexture);
 }
 
 [[nodiscard]] auto ShadowBuffer::getTexture() const -> Texture::Data {
