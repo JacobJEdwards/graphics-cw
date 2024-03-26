@@ -76,6 +76,8 @@ public:
 
     [[nodiscard]] auto getPitch() const -> float;
 
+    [[nodiscard]] auto getNear() const -> float;
+
     void setPosition(const glm::vec3 &position);
 
     void circleOrbit(float deltaTime);

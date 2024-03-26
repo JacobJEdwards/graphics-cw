@@ -201,12 +201,9 @@ void Camera::interface() {
         position.z = target.z + distance * sin(glm::radians(yaw));
     }
 
-    /*
-    if (mode == Mode::FPS) {
-      ImGui::SeparatorText("FPS");
-      ImGui::SliderFloat("Jump Force", &jumpForce, 10.0F, 10000.0F);
-    }
-    */
+    // check for changes
+    updateCameraVectors();
+
     ImGui::End();
 }
 
@@ -220,4 +217,8 @@ void Camera::update(float dt) {
 
 auto Camera::getPitch() const -> float {
     return pitch;
+}
+
+auto Camera::getNear() const -> float {
+    return nearPlane;
 }

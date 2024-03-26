@@ -196,6 +196,7 @@ auto main() -> int {
         // render to shadow buffer
         View::clearTarget(Color::BLACK);
         auto lightPos = sun.getPosition();
+
         auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
         auto lightView = glm::lookAt(lightPos, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
 
@@ -363,7 +364,7 @@ auto main() -> int {
 void processInput() {
     bool moved = false;
 
-    if (App::view.getKey(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    if (App::view.getKey(GLFW_KEY_ESCAPE) == GLFW_PRESS || App::view.getKey(GLFW_KEY_Q) == GLFW_PRESS) {
         App::view.close();
     }
 

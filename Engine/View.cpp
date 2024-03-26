@@ -116,6 +116,7 @@ void View::quit() {
     ImGui::DestroyContext();
     glfwDestroyWindow(window);
     glfwTerminate();
+    exit(EXIT_SUCCESS);
 }
 
 void View::interfaceLoop() {
