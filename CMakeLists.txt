@@ -47,6 +47,8 @@ add_executable(CW main.cpp
         Engine/graphics/Renderable.cpp
         Engine/graphics/FrameBuffer.cpp
         Engine/physics/Spline.cpp
+        Engine/Entity.cpp
+        Engine/Entity.h
 )
 
 # Link libraries

@@ -28,6 +28,15 @@ public:
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false);
 
+    void draw() const;
+
+    void draw(const std::shared_ptr<Shader> &shader, bool depthPass = false) const;
+
+    void draw(const std::shared_ptr<Shader> &shader, const glm::mat4 &view, const glm::mat4 &projection,
+              bool depthPass = false) const;
+
+    void draw(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false);
+
     [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
 
     [[nodiscard]] auto isColliding(const BoundingBox &other) const -> bool;

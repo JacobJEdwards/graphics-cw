@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <assimp/material.h>
 #include <assimp/mesh.h>
+#include <assimp/types.h>
 #include <memory>
 #include <numeric>
 #include <stack>
@@ -23,8 +24,8 @@
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
 #include "helpers/AssimpGLMHelpers.h"
-#include "physics/Gravity.h"
 #include "utils/BoundingBox.h"
+#include "utils/Shader.h"
 #include "utils/Vertex.h"
 #include "utils/ShaderManager.h"
 #include "App.h"
@@ -48,6 +49,73 @@ void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthP
         box.draw(attributes.transform, view, projection);
     }
 }
+
+void Model::draw() const {
+    if (shader == nullptr) {
+        throw std::runtime_error("Model shader is not set");
+    }
+
+    shader->use();
+    shader->setUniform("model", attributes.transform);
+
+    for (const auto &mesh: meshes) {
+        mesh->draw(shader);
+    }
+
+    if (App::debug) {
+        box.draw(attributes.transform);
+    }
+}
+
+void Model::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
+    shader->use();
+    shader->setUniform("model", attributes.transform);
+
+    for (const auto &mesh: meshes) {
+        mesh->draw(shader, depthPass);
+    }
+
+    if (App::debug && !depthPass) {
+        box.draw(attributes.transform);
+    }
+}
+
+void Model::draw(const std::shared_ptr<Shader> &shader, const glm::mat4 &view, const glm::mat4 &projection,
+                 bool depthPass) const {
+    shader->use();
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
+
+    for (const auto &mesh: meshes) {
+        mesh->draw(shader, depthPass);
+    }
+
+    if (App::debug && !depthPass) {
+        box.draw(attributes.transform, view, projection);
+    }
+
+}
+
+
+void Model::draw(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false) {
+    if (shader == nullptr) {
+        throw std::runtime_error("Model shader is not set");
+    }
+
+    shader->use();
+    shader->setUniform("model", model);
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
+
+    for (const auto &mesh: meshes) {
+        mesh->draw(shader, depthPass);
+    }
+
+    if (App::debug && !depthPass) {
+        box.draw(model, view, projection);
+    }
+}
+
 
 void Model::setShader(std::shared_ptr<Shader> shader) {
     this->shader = std::move(shader);
@@ -180,6 +248,7 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat,
 
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
         aiString str;
+
         mat->GetTexture(type, i, &str);
 
         const std::string path(str.C_Str());

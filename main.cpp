@@ -1,4 +1,5 @@
 #include <exception>
+#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float3x3.hpp>
 
 
@@ -180,7 +181,6 @@ auto main() -> int {
     // ShadowBuffer shadowBuffer = ShadowBuffer(10000, 10000);
 
     App::view.setPipeline([&]() {
-        View::clearTarget(Color::BLACK);
         auto player = PlayerManager::GetCurrent();
 
         const auto projectionMatrix = player->getCamera().getProjectionMatrix();
