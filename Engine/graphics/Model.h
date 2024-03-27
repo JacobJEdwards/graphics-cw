@@ -59,10 +59,6 @@ public:
 
     void rotate(const glm::vec3 &axis, float angle);
 
-    void setModelMatrix(const glm::mat4 &modelMatrix);
-
-    [[nodiscard]] auto getModelMatrix() const -> glm::mat4;
-
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
     void update(float dt);

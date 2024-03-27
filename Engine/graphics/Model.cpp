@@ -8,6 +8,7 @@
 #include <assimp/material.h>
 #include <assimp/mesh.h>
 #include <glm/common.hpp>
+#include <limits>
 #include <memory>
 #include <numeric>
 #include <stack>
@@ -235,25 +236,6 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
             meshes, [&](const auto &mesh) { return mesh->isColliding(other); });
 }
 
-void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
-    auto newModelMatrix = modelMatrix;
-    auto transform = newModelMatrix * glm::inverse(attributes.transform);
-
-    for (auto &mesh: meshes) {
-        mesh->transform(transform);
-    }
-
-    this->box.transform(transform);
-    attributes.transform = modelMatrix;
-
-    attributes.position =
-            glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
-}
-
-[[nodiscard]] auto Model::getModelMatrix() const -> glm::mat4 {
-    return attributes.transform;
-}
-
 void Model::rotate(const glm::vec3 &axis, float angle) {
     attributes.applyRotation(axis * angle);
 
@@ -316,16 +298,14 @@ void Model::calculateBoundingBox() {
 }
 
 void Model::update(float dt) {
-    const glm::mat4 oldTransform = attributes.transform;
+    glm::mat4 oldTransform = attributes.transform;
 
     attributes.update(dt);
-
-    const glm::mat4 newTransform = attributes.transform;
-    const glm::mat4 transform = newTransform * glm::inverse(oldTransform);
+    glm::mat4 newTransform = attributes.transform;
 
     for (auto &mesh: meshes) {
-        mesh->transform(transform);
+        mesh->transform(newTransform * glm::inverse(oldTransform));
     }
 
-    box.transform(transform);
+    box.transform(newTransform * glm::inverse(oldTransform));
 }

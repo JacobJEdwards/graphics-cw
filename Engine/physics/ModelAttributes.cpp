@@ -1,10 +1,12 @@
 #include "physics/ModelAttributes.h"
 
+#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/glm.hpp>
 #include <glm/detail/type_quat.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <iostream>
 
+#include "Config.h"
 #include "physics/Constants.h"
 #include "physics/Gravity.h"
 
@@ -19,7 +21,7 @@ void Physics::Attributes::update(float dt) {
 
     glm::mat4 rotationMatrix = Config::IDENTITY_MATRIX;
 
-    float rotationDamping = 1.0F - Physics::ANGULAR_DAMPING;
+    const float rotationDamping = 1.0F - Physics::ANGULAR_DAMPING;
     rotation *= rotationDamping;
     rotationMatrix = glm::rotate(rotationMatrix, rotation.x * dt, glm::vec3(1.0F, 0.0F, 0.0F));
     rotationMatrix = glm::rotate(rotationMatrix, rotation.y * dt, glm::vec3(0.0F, 1.0F, 0.0F));
