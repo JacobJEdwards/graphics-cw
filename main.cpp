@@ -256,6 +256,7 @@ auto main() -> int {
     Physics::Spline spline(points, Physics::Spline::Type::CATMULLROM);
 
     try {
+        int njm = 0;
         App::loop([&] {
             sun.update(App::view.getDeltaTime());
             PlayerManager::GetCurrent()->update(App::view.getDeltaTime());
@@ -291,14 +292,14 @@ auto main() -> int {
             }
 
             if (newModel.isColliding(model2)) {
-                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         newModel.getBoundingBox(), model2.getBoundingBox());
                 Physics::Collisions::resolve(newModel.attributes, model2.attributes,
                                              collisionPoint);
             }
 
             if (player->getModel().isColliding(newModel)) {
-                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+                const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         player->getBoundingBox(), newModel.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
                                              newModel.attributes, collisionPoint);
