@@ -301,6 +301,7 @@ void Model::update(float dt) {
     glm::mat4 oldTransform = attributes.transform;
 
     attributes.update(dt);
+
     glm::mat4 newTransform = attributes.transform;
 
     for (auto &mesh: meshes) {

@@ -326,8 +326,8 @@ auto main() -> int {
             // ignore x and z component
             torque = glm::vec3(0.0F, torque.y, 0.0F);
 
-            newModel.attributes.applyRotation(torque);
-            newModel.attributes.applyForce(forceNeeded);
+            //newModel.attributes.applyRotation(torque);
+            //newModel.attributes.applyForce(forceNeeded);
 
         });
     } catch (const std::exception &e) {
