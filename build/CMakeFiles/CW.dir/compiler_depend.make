@@ -9330,6 +9330,7 @@ CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.o: /Users/jacobedwards/Universi
   /opt/homebrew/include/glm/detail/type_vec4.hpp \
   /opt/homebrew/include/glm/detail/type_vec4.inl \
   /opt/homebrew/include/glm/exponential.hpp \
+  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/fwd.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
   /opt/homebrew/include/glm/glm.hpp \
@@ -12650,6 +12651,7 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: /Users/jacobedwards/Universit
   /opt/homebrew/include/glm/detail/type_vec4.hpp \
   /opt/homebrew/include/glm/detail/type_vec4.inl \
   /opt/homebrew/include/glm/exponential.hpp \
+  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/fwd.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
   /opt/homebrew/include/glm/glm.hpp \
@@ -14024,8 +14026,45 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: /Users/jacobedwards/Univ
   /opt/homebrew/include/glm/ext/quaternion_relational.hpp \
   /opt/homebrew/include/glm/ext/vector_relational.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
+  /opt/homebrew/include/glm/common.hpp \
+  /opt/homebrew/include/glm/detail/qualifier.hpp \
+  /opt/homebrew/include/glm/detail/setup.hpp \
+  /opt/homebrew/include/glm/detail/type_mat3x3.hpp \
+  /opt/homebrew/include/glm/detail/type_mat4x4.hpp \
+  /opt/homebrew/include/glm/detail/type_vec3.hpp \
+  /opt/homebrew/include/glm/detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/exponential.hpp \
+  /opt/homebrew/include/glm/ext/matrix_clip_space.hpp \
+  /opt/homebrew/include/glm/ext/matrix_projection.hpp \
+  /opt/homebrew/include/glm/ext/matrix_transform.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_common.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_double.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_double_precision.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_float.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_float_precision.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_geometric.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_relational.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_transform.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_trigonometric.hpp \
+  /opt/homebrew/include/glm/ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/ext/vector_relational.hpp \
+  /opt/homebrew/include/glm/geometric.hpp \
   /opt/homebrew/include/glm/gtc/constants.hpp \
   /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
+  /opt/homebrew/include/glm/mat4x4.hpp \
+  /opt/homebrew/include/glm/matrix.hpp \
+  /opt/homebrew/include/glm/trigonometric.hpp \
+  /opt/homebrew/include/glm/vec2.hpp \
+  /opt/homebrew/include/glm/vec3.hpp \
+  /opt/homebrew/include/glm/vec4.hpp \
+  /opt/homebrew/include/glm/vector_relational.hpp \
+  /opt/homebrew/include/glm/gtc/constants.hpp \
+  /opt/homebrew/include/glm/gtc/constants.inl \
+  /opt/homebrew/include/glm/gtc/epsilon.hpp \
+  /opt/homebrew/include/glm/gtc/epsilon.inl \
+  /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
+  /opt/homebrew/include/glm/gtc/matrix_transform.inl \
+  /opt/homebrew/include/glm/gtc/quaternion.inl \
   /opt/homebrew/include/glm/matrix.hpp \
   /opt/homebrew/include/glm/simd/platform.h \
   /opt/homebrew/include/glm/trigonometric.hpp \
@@ -14067,48 +14106,11 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: /Users/jacobedwards/Univ
   /opt/homebrew/include/glm/detail/type_vec4.hpp \
   /opt/homebrew/include/glm/detail/type_vec4.inl \
   /opt/homebrew/include/glm/exponential.hpp \
+  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/fwd.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
   /opt/homebrew/include/glm/glm.hpp \
-  /opt/homebrew/include/glm/common.hpp \
-  /opt/homebrew/include/glm/detail/qualifier.hpp \
-  /opt/homebrew/include/glm/detail/setup.hpp \
-  /opt/homebrew/include/glm/detail/type_mat3x3.hpp \
-  /opt/homebrew/include/glm/detail/type_mat4x4.hpp \
-  /opt/homebrew/include/glm/detail/type_vec3.hpp \
-  /opt/homebrew/include/glm/detail/type_vec4.hpp \
-  /opt/homebrew/include/glm/exponential.hpp \
-  /opt/homebrew/include/glm/ext/matrix_clip_space.hpp \
-  /opt/homebrew/include/glm/ext/matrix_projection.hpp \
-  /opt/homebrew/include/glm/ext/matrix_transform.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_common.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_double.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_double_precision.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_float.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_float_precision.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_geometric.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_relational.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_transform.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/scalar_constants.hpp \
-  /opt/homebrew/include/glm/ext/vector_relational.hpp \
-  /opt/homebrew/include/glm/geometric.hpp \
-  /opt/homebrew/include/glm/gtc/constants.hpp \
-  /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
-  /opt/homebrew/include/glm/mat4x4.hpp \
-  /opt/homebrew/include/glm/matrix.hpp \
-  /opt/homebrew/include/glm/trigonometric.hpp \
-  /opt/homebrew/include/glm/vec2.hpp \
-  /opt/homebrew/include/glm/vec3.hpp \
-  /opt/homebrew/include/glm/vec4.hpp \
-  /opt/homebrew/include/glm/vector_relational.hpp \
-  /opt/homebrew/include/glm/gtc/constants.inl \
-  /opt/homebrew/include/glm/gtc/epsilon.hpp \
-  /opt/homebrew/include/glm/gtc/epsilon.inl \
-  /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
-  /opt/homebrew/include/glm/gtc/matrix_transform.inl \
   /opt/homebrew/include/glm/gtc/quaternion.hpp \
-  /opt/homebrew/include/glm/gtc/quaternion.inl \
   /opt/homebrew/include/glm/integer.hpp \
   /opt/homebrew/include/glm/mat2x2.hpp \
   /opt/homebrew/include/glm/mat2x3.hpp \
@@ -21585,6 +21587,7 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: /Users/jacobedwards/University
   /opt/homebrew/include/glm/detail/type_vec4.hpp \
   /opt/homebrew/include/glm/detail/type_vec4.inl \
   /opt/homebrew/include/glm/exponential.hpp \
+  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/fwd.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
   /opt/homebrew/include/glm/glm.hpp \

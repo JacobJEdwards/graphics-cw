@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <assimp/material.h>
 #include <assimp/mesh.h>
+#include <glm/common.hpp>
 #include <memory>
 #include <numeric>
 #include <stack>
@@ -25,6 +26,7 @@
 #include "helpers/AssimpGLMHelpers.h"
 #include "physics/Gravity.h"
 #include "utils/BoundingBox.h"
+#include "utils/Shader.h"
 #include "utils/Vertex.h"
 #include "utils/ShaderManager.h"
 #include "App.h"
@@ -74,8 +76,6 @@ void Model::loadModel(const std::filesystem::path &path) {
 
     attributes.position = getCentre();
     attributes.transform = glm::mat4(1.0F);
-    modelMatrix = glm::mat4(1.0F);
-
 }
 
 void Model::processNode(const aiNode *const node, const aiScene *scene) {
@@ -102,8 +102,8 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     std::vector<GLuint> indices;
     std::vector<Texture::Data> textures;
 
-    BoundingBox box{AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMin),
-                    AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMax)};
+    const BoundingBox box{AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMin),
+                          AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMax)};
 
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex::Data vertex{};
@@ -185,6 +185,7 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat,
         const std::string path(str.C_Str());
 
         auto loaded = textures_loaded.find(path);
+
         if (loaded != textures_loaded.end()) {
             textures.push_back(loaded->second);
             continue;
@@ -236,16 +237,13 @@ auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
 
 void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
     auto newModelMatrix = modelMatrix;
-
-    auto transform = newModelMatrix * glm::inverse(this->modelMatrix);
+    auto transform = newModelMatrix * glm::inverse(attributes.transform);
 
     for (auto &mesh: meshes) {
         mesh->transform(transform);
     }
 
-    this->modelMatrix = modelMatrix;
     this->box.transform(transform);
-
     attributes.transform = modelMatrix;
 
     attributes.position =
@@ -253,7 +251,7 @@ void Model::setModelMatrix(const glm::mat4 &modelMatrix) {
 }
 
 [[nodiscard]] auto Model::getModelMatrix() const -> glm::mat4 {
-    return modelMatrix;
+    return attributes.transform;
 }
 
 void Model::rotate(const glm::vec3 &axis, float angle) {
@@ -278,31 +276,23 @@ void Model::translate(const glm::vec3 &translation) {
 
 void Model::scale(const glm::vec3 &scale) {
     attributes.transform = glm::scale(attributes.transform, scale);
-    modelMatrix = glm::scale(modelMatrix, scale);
 
     for (auto &mesh: meshes) {
         mesh->scale(scale);
     }
 
-    attributes.position =
-            glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
-
-    attributes.transform = modelMatrix;
-
     box.scale(scale);
 }
 
 void Model::transform(const glm::mat4 &transform) {
-    modelMatrix = transform * modelMatrix;
+    attributes.transform = transform * attributes.transform;
 
     for (auto &mesh: meshes) {
         mesh->transform(transform);
     }
 
     attributes.position =
-            glm::vec3(modelMatrix * glm::vec4(attributes.position, 1.0F));
-
-    attributes.transform = modelMatrix;
+            glm::vec3(attributes.transform * glm::vec4(attributes.position, 1.0F));
 
     box.transform(transform);
 }
@@ -326,29 +316,16 @@ void Model::calculateBoundingBox() {
 }
 
 void Model::update(float dt) {
+    const glm::mat4 oldTransform = attributes.transform;
+
     attributes.update(dt);
 
-    glm::vec3 newPosition = attributes.position;
-
-    glm::mat4 newMatrix = modelMatrix;
-    newMatrix[3][0] = newPosition.x;
-    newMatrix[3][1] = newPosition.y;
-    newMatrix[3][2] = newPosition.z;
-
-    glm::vec3 translation = newPosition - glm::vec3(modelMatrix[3]);
-
-    modelMatrix = newMatrix;
+    const glm::mat4 newTransform = attributes.transform;
+    const glm::mat4 transform = newTransform * glm::inverse(oldTransform);
 
     for (auto &mesh: meshes) {
-        mesh->translate(translation);
+        mesh->transform(transform);
     }
 
-    box.translate(translation);
-
-    auto rotation = modelMatrix * glm::inverse(attributes.transform);
-    for (auto &mesh: meshes) {
-        mesh->transform(rotation);
-    }
-
-    box.transform(rotation);
+    box.transform(transform);
 }

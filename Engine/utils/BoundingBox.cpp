@@ -38,8 +38,8 @@ void BoundingBox::setMin(const glm::vec3 &min) { BoundingBox::min = min; }
 void BoundingBox::setMax(const glm::vec3 &max) { BoundingBox::max = max; }
 
 void BoundingBox::transform(const glm::mat4 &model) {
-    glm::vec3 newMin = glm::vec3(model * glm::vec4(min, 1.0F));
-    glm::vec3 newMax = glm::vec3(model * glm::vec4(max, 1.0F));
+    const glm::vec3 newMin = glm::vec3(model * glm::vec4(min, 1.0F));
+    const glm::vec3 newMax = glm::vec3(model * glm::vec4(max, 1.0F));
 
     min = glm::min(newMin, newMax);
     max = glm::max(newMin, newMax);

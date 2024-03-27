@@ -8,12 +8,13 @@
 #include <glm/glm.hpp>
 
 namespace Config {
-constexpr auto DEFAULT_WIDTH = 1200;
-constexpr auto DEFAULT_HEIGHT = 900;
-constexpr auto DEFAULT_TITLE = "CW";
-constexpr auto DEFAULT_ASPECT =
-    static_cast<float>(DEFAULT_WIDTH) / static_cast<float>(DEFAULT_HEIGHT);
-constexpr auto IDENTITY_MATRIX = glm::mat4(1.0F);
+    constexpr auto DEFAULT_WIDTH = 1200;
+    constexpr auto DEFAULT_HEIGHT = 900;
+    constexpr auto DEFAULT_TITLE = "CW";
+    constexpr auto DEFAULT_ASPECT =
+            static_cast<float>(DEFAULT_WIDTH) / static_cast<float>(DEFAULT_HEIGHT);
+    constexpr auto IDENTITY_MATRIX = glm::mat4(1.0F);
+    constexpr auto ZERO_VECTOR = glm::vec3(0.0F);
 } // namespace Config
 
 #endif // CONFIG_H

@@ -2,34 +2,30 @@
 #define PHYSICSATTRIBUTES_H
 
 #include "Config.h"
+#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 namespace Physics {
     struct Attributes {
-        glm::vec3 position;
-        glm::vec3 velocity;
-        glm::vec3 acceleration;
-        glm::vec3 force;
+        glm::vec3 position = Config::ZERO_VECTOR;
+        glm::vec3 velocity = Config::ZERO_VECTOR;
+        glm::vec3 acceleration = Config::ZERO_VECTOR;
+        glm::vec3 force = Config::ZERO_VECTOR;
 
-        glm::vec3 rotation;
-        glm::vec3 angularVelocity;
-        glm::vec3 angularAcceleration;
-        glm::vec3 torque;
+        glm::vec3 rotation = Config::ZERO_VECTOR;
+        glm::vec3 angularVelocity = Config::ZERO_VECTOR;
+        glm::vec3 angularAcceleration = Config::ZERO_VECTOR;
+        glm::vec3 torque = Config::ZERO_VECTOR;
 
-        glm::mat4 transform;
-        float radius;
-        float mass;
-        float damping;
+        glm::mat4 transform = Config::IDENTITY_MATRIX;
+        float radius = 1.0F;
+        float mass = 1.0F;
+        float damping = 0.99F;
         bool isGrounded = false;
 
         bool gravityAffected = true;
 
-        Attributes()
-                : position(0.0F), velocity(0.0F), acceleration(0.0F), force(0.0F),
-                  mass(1.0F), damping(0.99F), radius(1.0F),
-                  transform(Config::IDENTITY_MATRIX), rotation(0.0F), torque(0.0F), angularVelocity(0.0F),
-                  angularAcceleration(0.0F) {}
+        Attributes() = default;
 
         void update(float dt);
 
@@ -54,7 +50,7 @@ namespace Physics {
 
         void applyTorque(const glm::vec3 &torque);
 
-        glm::vec3 calculateRotation(const glm::vec3 &point);
+        auto calculateRotation(const glm::vec3 &point) -> glm::vec3;
     };
 } // namespace Physics
 
