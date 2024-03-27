@@ -1,6 +1,4 @@
 #include <exception>
-#include <glm/ext/matrix_float3x3.hpp>
-
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -11,6 +9,7 @@
 #include <string>
 
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/glm.hpp>
 #include <vector>
 
 #include "Config.h"
@@ -31,7 +30,6 @@
 #include "utils/Objects/Sun.h"
 #include "utils/ShaderManager.h"
 #include "graphics/ShadowBuffer.h"
-#include "utils/Shader.h"
 
 void processInput();
 
@@ -256,7 +254,6 @@ auto main() -> int {
     Physics::Spline spline(points, Physics::Spline::Type::CATMULLROM);
 
     try {
-        int njm = 0;
         App::loop([&] {
             sun.update(App::view.getDeltaTime());
             PlayerManager::GetCurrent()->update(App::view.getDeltaTime());
@@ -291,44 +288,40 @@ auto main() -> int {
                 model2.attributes.isGrounded = false;
             }
 
-            if (newModel.isColliding(model2)) {
+            if (Physics::Collisions::check(newModel, model2)) {
                 const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         newModel.getBoundingBox(), model2.getBoundingBox());
                 Physics::Collisions::resolve(newModel.attributes, model2.attributes,
                                              collisionPoint);
             }
 
-            if (player->getModel().isColliding(newModel)) {
+            if (Physics::Collisions::check(player->getModel(), newModel)) {
                 const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         player->getBoundingBox(), newModel.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
                                              newModel.attributes, collisionPoint);
             }
 
-            if (player->getModel().isColliding(model2)) {
-                glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
+            if (Physics::Collisions::check(player->getModel(), model2)) {
+                const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         player->getBoundingBox(), model2.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
                                              model2.attributes, collisionPoint);
             }
 
-
             spline.update(App::view.getDeltaTime());
-            glm::vec3 interpolatedPoint = spline.getPoint();
+            const glm::vec3 interpolatedPoint = spline.getPoint();
 
             auto forceNeeded =
                     newModel.attributes.calculateForce(interpolatedPoint);
 
-            // ignore y component
             forceNeeded = glm::vec3(forceNeeded.x, 0.0F, forceNeeded.z);
 
             glm::vec3 torque = newModel.attributes.calculateRotation(interpolatedPoint);
-            // rotate by 180 degrees
-            // ignore x and z component
             torque = glm::vec3(0.0F, torque.y, 0.0F);
 
-            //newModel.attributes.applyRotation(torque);
-            //newModel.attributes.applyForce(forceNeeded);
+            newModel.attributes.applyRotation(torque);
+            newModel.attributes.applyForce(forceNeeded);
 
         });
     } catch (const std::exception &e) {
@@ -338,18 +331,6 @@ auto main() -> int {
     App::quit();
 }
 
-// move keys keys into function
-// could store array of key presses, flip to 1 if pressed 0 otherwise
-// then do update stuff based on that
-// might be better in a callback or something
-// prototype:
-
-/** def input(glEnum(?) key, std::function<void()> callback, keyAction =
- * GLFW_PRESS); */
-
-// might be cleaner, however need to change moved thing, unless keep App::camera
-// controls separate if in class namespace or something can keep window as
-// global save on fuzz
 void processInput() {
     bool moved = false;
 

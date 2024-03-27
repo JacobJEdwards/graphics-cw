@@ -3,6 +3,7 @@
 
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
+#include "graphics/Model.h"
 #include <glm/glm.hpp>
 
 
@@ -16,6 +17,8 @@ namespace Physics::Collisions {
     auto check(const BoundingBox &a, const BoundingBox &b) -> bool;
 
     auto check(const BoundingBox &a, const glm::vec3 &b) -> bool;
+
+    auto check(const Model &a, const Model &b) -> bool;
 
     auto getCollisionPoint(const BoundingBox &a, const BoundingBox &b) -> glm::vec3;
 } // namespace Physics::Collisions
