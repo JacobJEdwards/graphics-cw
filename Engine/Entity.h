@@ -7,13 +7,15 @@
 
 #include <glm/glm.hpp>
 #include <utility>
+#include <filesystem>
 #include "utils/Shader.h"
 #include "utils/BoundingBox.h"
 #include "utils/ShaderManager.h"
 #include "graphics/Model.h"
 #include "physics/ModelAttributes.h"
+#include "graphics/Renderable.h"
 
-class Entity {
+class Entity : public Renderable {
 public:
     Entity() = default;
 
@@ -30,15 +32,13 @@ public:
     auto operator=(Entity &&other) noexcept -> Entity & = default;
 
 
-    virtual void update(float deltaTime);
+    virtual void update(float deltaTime) override;
 
-    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) const;
+    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    virtual void draw(std::shared_ptr<Shader> shader) const;
+    virtual void draw(std::shared_ptr<Shader> shader) const override;
 
     [[nodiscard]] auto getModel() const -> const Model &;
-
-    [[nodiscard]] auto getShader() const -> std::shared_ptr<Shader>;
 
     [[nodiscard]] auto getBoundingBox() -> BoundingBox &;
 
@@ -47,8 +47,6 @@ public:
     void setBoundingBox(const BoundingBox &box);
 
     void setModel(std::unique_ptr<Model> model);
-
-    void setShader(const std::shared_ptr<Shader> &shader);
 
     void setAttributes(const Physics::Attributes &attributes);
 
@@ -64,13 +62,10 @@ public:
 
 protected:
     std::unique_ptr<Model> model;
-    std::shared_ptr<Shader> shader;
     BoundingBox box;
-
 
     std::vector<std::unique_ptr<Entity>> children = {};
     Entity *parent = nullptr;
-
 };
 
 

@@ -9,6 +9,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <filesystem>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -19,18 +20,19 @@
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
 #include "utils/Shader.h"
+#include "graphics/Renderable.h"
 
-class Model {
+class Model : public Renderable {
 public:
     Physics::Attributes attributes;
 
     explicit Model(const std::filesystem::path &path);
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false) const;
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    void draw(std::shared_ptr<Shader> shader) const;
+    void draw(std::shared_ptr<Shader> shader) const override;
 
-    void draw() const;
+    void update(float deltaTime) override;
 
     [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
 
@@ -53,7 +55,6 @@ public:
 
     [[nodiscard]] auto getOffset(const BoundingBox &other) const -> glm::vec3;
 
-    void setShader(std::shared_ptr<Shader> shader);
 
     void translate(const glm::vec3 &translation);
 
@@ -65,14 +66,11 @@ public:
 
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
-    void update(float dt);
 
 private:
     std::unordered_map<std::string, Texture::Data> textures_loaded;
     std::vector<std::unique_ptr<Mesh>> meshes;
     std::filesystem::path directory;
-
-    std::shared_ptr<Shader> shader;
 
     BoundingBox box;
 

@@ -5,27 +5,15 @@
 #include "Player.h"
 
 #include "imgui/imgui.h"
-#include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
 #include <glm/glm.hpp>
 
 #include "utils/Camera.h"
-#include "utils/Shader.h"
-#include "utils/ShaderManager.h"
+#include "Entity.h"
 
-Player::Player() {
-    shader = ShaderManager::Get("Base");
-
-    model.setShader(shader);
-    auto modelMatrix = glm::mat4(1.0F);
-    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 0.0F));
-    modelMatrix = glm::scale(modelMatrix, glm::vec3(0.8F));
-    model.transform(modelMatrix);
+Player::Player() : Entity("../Assets/objects/person/person.obj") {
 };
 
-auto Player::getModel() const -> const Model & {
-    return model;
-}
 
 // possibly instead set up always as 0,1,0 ?
 void Player::processKeyboard(const Direction direction, const float deltaTime) {
@@ -39,29 +27,29 @@ void Player::processKeyboard(const Direction direction, const float deltaTime) {
 
     switch (direction) {
         case Direction::FORWARD:
-            model.attributes.applyForce(front * 10.0F);
+            attributes.applyForce(front * 10.0F);
             break;
         case Direction::BACKWARD:
-            model.attributes.applyForce(-front * 10.0F);
+            attributes.applyForce(-front * 10.0F);
             break;
         case Direction::LEFT:
-            model.attributes.applyForce(-right * 10.0F);
+            attributes.applyForce(-right * 10.0F);
             break;
         case Direction::RIGHT:
-            model.attributes.applyForce(right * 10.0F);
+            attributes.applyForce(right * 10.0F);
             break;
         case Direction::NONE:
-            model.attributes.applyDrag(0.5F);
+            attributes.applyDrag(0.5F);
             break;
         case Direction::UP:
             if (mode == Mode::FPS) {
                 jump();
             } else {
-                model.attributes.applyForce(up * 10.0F);
+                attributes.applyForce(up * 10.0F);
             }
             break;
         case Direction::DOWN:
-            model.attributes.applyForce(-up * 10.0F);
+            attributes.applyForce(-up * 10.0F);
             break;
     }
 }
@@ -71,55 +59,48 @@ void Player::processKeyboard(const Direction direction, const float deltaTime) {
 }
 
 [[nodiscard]] auto Player::getPosition() const -> glm::vec3 {
-    return model.attributes.position;
+    return attributes.position;
 }
 
 void Player::update(float dt) {
-    model.update(dt);
-    camera->setPosition(model.attributes.position + glm::vec3(0.0F, 4.0F, 0.0F));
+    Entity::update(dt);
 
-    glm::vec3 front = camera->getFront();
-    glm::vec3 modelForward = glm::normalize(glm::vec3(model.attributes.transform[2]));
+    camera->setPosition(attributes.position + glm::vec3(0.0F, 4.0F, 0.0F));
+
+    const glm::vec3 front = camera->getFront();
+    const glm::vec3 modelForward = glm::normalize(glm::vec3(attributes.transform[2]));
 
     auto rotationRequired = glm::vec3(0.0F);
 
-    float dotProduct = glm::dot(modelForward, front);
+    const float dotProduct = glm::dot(modelForward, front);
 
     if (dotProduct < 0.99F) {
-        float angle = acos(dotProduct);
-        glm::vec3 axis = glm::normalize(glm::cross(modelForward, front));
+        const float angle = std::acos(dotProduct);
+        const glm::vec3 axis = glm::normalize(glm::cross(modelForward, front));
         rotationRequired = axis * angle;
     }
 
     if (glm::length(rotationRequired) > 0.01F) {
         rotationRequired.z = 0.0F;
         rotationRequired.x = 0.0F;
-        model.attributes.applyRotation(rotationRequired);
+        attributes.applyRotation(rotationRequired);
     }
+
 
     camera->update(dt);
 }
 
-void Player::draw(const glm::mat4 &view, const glm::mat4 &projection,
-                  bool show, bool depthPass) {
-
-    if (depthPass || (show && drawModel)) {
-        model.draw(view, projection, depthPass);
-    }
+[[nodiscard]] auto Player::shouldDraw() const -> bool {
+    return drawModel;
 }
 
-[[nodiscard]] auto Player::getBoundingBox() const -> BoundingBox {
-    return model.getBoundingBox();
-}
-
-void Player::setDrawModel(bool draw) { drawModel = draw; }
-
-auto Player::getAttributes() -> Physics::Attributes & {
-    return model.attributes;
+void Player::shouldDraw(bool draw) {
+    drawModel = draw;
 }
 
 void Player::setMode(Mode mode) {
     Player::mode = mode;
+
     switch (mode) {
         case Mode::FPS:
             camera->setMode(Camera::Mode::FPS);
@@ -140,32 +121,32 @@ void Player::setMode(Mode mode) {
 }
 
 void Player::jump() {
-    if (model.attributes.isGrounded) {
-        model.attributes.applyForce(glm::vec3(0.0F, jumpForce, 0.0F));
+    if (attributes.isGrounded) {
+        attributes.applyForce(glm::vec3(0.0F, jumpForce, 0.0F));
     }
 }
 
 void Player::debug() const {
     ImGui::Begin("Player Debug");
-    ImGui::Text("Position: (%.2f, %.2f, %.2f)", model.attributes.position.x,
-                model.attributes.position.y, model.attributes.position.z);
-    ImGui::Text("Velocity: (%.2f, %.2f, %.2f)", model.attributes.velocity.x,
-                model.attributes.velocity.y, model.attributes.velocity.z);
+    ImGui::Text("Position: (%.2f, %.2f, %.2f)", attributes.position.x,
+                attributes.position.y, attributes.position.z);
+    ImGui::Text("Velocity: (%.2f, %.2f, %.2f)", attributes.velocity.x,
+                attributes.velocity.y, attributes.velocity.z);
     ImGui::Text("Acceleration: (%.2f, %.2f, %.2f)",
-                model.attributes.acceleration.x, model.attributes.acceleration.y,
-                model.attributes.acceleration.z);
-    ImGui::Text("Force: (%.2f, %.2f, %.2f)", model.attributes.force.x,
-                model.attributes.force.y, model.attributes.force.z);
+                attributes.acceleration.x, attributes.acceleration.y,
+                attributes.acceleration.z);
+    ImGui::Text("Force: (%.2f, %.2f, %.2f)", attributes.force.x,
+                attributes.force.y, attributes.force.z);
     ImGui::End();
 }
 
 void Player::interface() {
     ImGui::Begin("Player");
     ImGui::SliderFloat("Jump Force", &jumpForce, 0.0F, 10000.0F);
-    ImGui::SliderFloat("Mass", &model.attributes.mass, 0.1F, 1000.0F);
+    ImGui::SliderFloat("Mass", &attributes.mass, 0.1F, 1000.0F);
     ImGui::End();
 }
 
 void Player::nitro() {
-    model.attributes.applyForce(camera->getFront() * 200.0F);
+    attributes.applyForce(camera->getFront() * 200.0F);
 }

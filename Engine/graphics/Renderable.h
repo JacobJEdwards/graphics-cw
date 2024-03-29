@@ -7,34 +7,26 @@
 
 #include <memory>
 #include "utils/Shader.h"
-#include "physics/ModelAttributes.h"
-#include "utils/BoundingBox.h"
+#include <glm/glm.hpp>
 
 class Renderable {
 public:
-    virtual void draw() const = 0;
+    virtual void draw(std::shared_ptr<Shader> shader) const = 0;
 
-    virtual void update(float dt) = 0;
+    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) const = 0;
 
-    virtual void setShader(const std::shared_ptr<Shader> &shader) = 0;
+    virtual void update(float deltaTime) = 0;
 
-    virtual ~Renderable() = default;
+    void setShader(std::shared_ptr<Shader> shader) {
+        Renderable::shader = shader;
+    }
 
-    Renderable(const Renderable &other) = delete;
-
-    virtual auto operator=(const Renderable &other) -> Renderable & = delete;
-
-    [[nodiscard]] auto getAttributes() -> Physics::Attributes & { return attributes; }
-
-    [[nodiscard]] auto getBoundingBox() const -> BoundingBox { return box; }
-
+    [[nodiscard]] auto getShader() const -> std::shared_ptr<Shader> {
+        return shader;
+    }
 
 protected:
     std::shared_ptr<Shader> shader;
-    Physics::Attributes attributes;
-    BoundingBox box;
-
-    explicit Renderable(std::shared_ptr<Shader> shader) : shader(std::move(shader)) {}
 };
 
 

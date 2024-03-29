@@ -14,8 +14,9 @@
 #include "graphics/Model.h"
 #include "utils/Camera.h"
 #include "utils/Shader.h"
+#include "Entity.h"
 
-class Player {
+class Player : public Entity {
 public:
     Player();
 
@@ -32,17 +33,13 @@ public:
 
     [[nodiscard]] auto getPosition() const -> glm::vec3;
 
-    void update(float dt);
-
-    void draw(const glm::mat4 &view, const glm::mat4 &projection, bool show = true, bool depthPass = false);
-
-    [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
+    void update(float dt) override;
 
     void jump();
 
-    void setDrawModel(bool draw);
+    [[nodiscard]] auto shouldDraw() const -> bool;
 
-    auto getAttributes() -> Physics::Attributes &;
+    void shouldDraw(bool draw);
 
     void setMode(Mode mode);
 
@@ -52,24 +49,13 @@ public:
 
     void nitro();
 
-    void setShader(const std::shared_ptr<Shader> &shader);
-
-    [[nodiscard]] auto getModel() const -> const Model &;
-
 private:
     Mode mode = Mode::FPS;
-
     bool drawModel = true;
-
     float jumpForce = 100.0F;
 
     std::unique_ptr<Camera> camera =
             std::make_unique<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
-
-    std::shared_ptr<Shader> shader;
-
-    Model model = Model("../Assets/objects/person/person.obj");
-
 };
 
 #endif // PLAYER_H

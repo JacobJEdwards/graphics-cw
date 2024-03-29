@@ -169,7 +169,6 @@ void Camera::updateCameraVectors() {
     if (mode == Mode::ORBIT) {
         updateOrbitPosition();
     }
-    // update attributes transform
 }
 
 void Camera::updateOrbitPosition() {

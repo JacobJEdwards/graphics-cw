@@ -57,10 +57,6 @@ void Entity::draw(std::shared_ptr<Shader> shader) const {
     return *model;
 }
 
-[[nodiscard]] auto Entity::getShader() const -> std::shared_ptr<Shader> {
-    return shader;
-}
-
 [[nodiscard]] auto Entity::getBoundingBox() -> BoundingBox & {
     return box;
 }
@@ -76,11 +72,6 @@ void Entity::setBoundingBox(const BoundingBox &box) {
 void Entity::setModel(std::unique_ptr<Model> model) {
     this->model = std::move(model);
     box = this->model->getBoundingBox();
-}
-
-void Entity::setShader(const std::shared_ptr<Shader> &shader) {
-    this->shader = shader;
-    model->setShader(shader);
 }
 
 void Entity::setAttributes(const Physics::Attributes &attributes) {

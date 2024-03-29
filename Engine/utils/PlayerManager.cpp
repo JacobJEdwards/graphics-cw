@@ -7,16 +7,27 @@
 std::unordered_map<std::string, std::shared_ptr<Player>> PlayerManager::Players;
 std::shared_ptr<Player> PlayerManager::CurrentPlayer;
 
-void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) {
+void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection) {
     for (const auto &[name, player]: Players) {
-        bool isCurrent = player == CurrentPlayer;
-        player->draw(view, projection, !isCurrent, depthPass);
+        const bool isCurrent = player == CurrentPlayer;
+
+        if (!isCurrent) {
+            player->draw(view, projection);
+        }
     }
 }
 
-void PlayerManager::Update(float dt) {
+void PlayerManager::Draw(std::shared_ptr<Shader> shader) {
     for (const auto &[name, player]: Players) {
-        player->update(dt);
+        player->draw(shader);
+    }
+
+
+}
+
+void PlayerManager::Update(float deltaTime) {
+    for (const auto &[name, player]: Players) {
+        player->update(deltaTime);
     }
 }
 
@@ -42,14 +53,15 @@ auto PlayerManager::GetCurrent() -> std::shared_ptr<Player> { return CurrentPlay
 
 void PlayerManager::SetCurrent(const std::string &name) {
     if (CurrentPlayer) {
-        CurrentPlayer->setDrawModel(true);
+        CurrentPlayer->shouldDraw(true);
     }
 
     auto it = Players.find(name);
+
     if (it != Players.end()) {
         CurrentPlayer = it->second;
         if (CurrentPlayer) {
-            CurrentPlayer->setDrawModel(false);
+            CurrentPlayer->shouldDraw(false);
         }
     }
 
@@ -86,7 +98,7 @@ void PlayerManager::Clear() { Players.clear(); }
 void PlayerManager::Interface() {
     ImGui::Begin("Players");
     for (const auto &[name, player]: Players) {
-        bool selected = CurrentPlayer == player;
+        const bool selected = CurrentPlayer == player;
         if (ImGui::RadioButton(name.c_str(), selected)) {
             CurrentPlayer = player;
         }

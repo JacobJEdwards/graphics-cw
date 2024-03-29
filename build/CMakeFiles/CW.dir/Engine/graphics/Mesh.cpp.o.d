@@ -1208,7 +1208,9 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: \
   /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
   /opt/homebrew/include/assimp/Importer.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
-  /opt/homebrew/include/glfw/glfw3.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h
+  /opt/homebrew/include/glfw/glfw3.h

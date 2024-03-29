@@ -43,15 +43,15 @@ namespace Physics::Collisions {
             return;
         }
 
-        glm::vec3 normal = glm::normalize(b.position - a.position);
-        glm::vec3 relativeVelocity = b.velocity - a.velocity;
-        float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
+        const glm::vec3 normal = glm::normalize(b.position - a.position);
+        const glm::vec3 relativeVelocity = b.velocity - a.velocity;
+        const float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
 
         if (relativeVelocityAlongNormal > 0) {
             return;
         }
 
-        float e = 0.5F;
+        const float e = 0.5F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
 
         if (a.mass != 0.0F && b.mass != 0.0F) {
@@ -62,7 +62,7 @@ namespace Physics::Collisions {
             j /= 1 / a.mass;
         }
 
-        glm::vec3 impulse = j * normal;
+        const glm::vec3 impulse = j * normal;
 
         if (a.mass != 0.0F) {
             a.applyImpulse(-impulse);
@@ -86,7 +86,7 @@ namespace Physics::Collisions {
             return;
         }
 
-        const float e = 0.9F;
+        const float e = 0.5F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
 
         if (a.mass != 0.0F && b.mass != 0.0F) {

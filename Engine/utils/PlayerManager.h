@@ -11,9 +11,11 @@ class PlayerManager {
 public:
     PlayerManager() = delete;
 
-    static void Draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false);
+    static void Draw(const glm::mat4 &view, const glm::mat4 &projection);
 
-    static void Update(float dt);
+    static void Draw(std::shared_ptr<Shader> shader);
+
+    static void Update(float deltaTime);
 
     static void Add(const std::string &name, std::shared_ptr<Player> player);
 

@@ -99,25 +99,25 @@ auto main() -> int {
     Texture::Loader::setFlip(false);
 
     auto orbit = std::make_shared<Player>();
-    orbit->setDrawModel(false);
+    orbit->shouldDraw(false);
     orbit->getCamera().setMode(Camera::Mode::ORBIT);
     orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F);
     orbit->getAttributes().gravityAffected = false;
     PlayerManager::Add("Orbit", orbit);
 
     auto free = std::make_shared<Player>();
-    free->setDrawModel(true);
+    free->shouldDraw(true);
     free->setMode(Player::Mode::FREE);
     free->getAttributes().gravityAffected = false;
     PlayerManager::Add("Free", free);
 
     auto fps = std::make_shared<Player>();
-    fps->setDrawModel(true);
+    fps->shouldDraw(true);
     fps->setMode(Player::Mode::FPS);
     PlayerManager::Add("FPS", fps);
 
     auto fixed = std::make_shared<Player>();
-    fixed->setDrawModel(true);
+    fixed->shouldDraw(true);
     fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
                                 glm::vec3(4.0F, 3.0F, 6.0F));
     fixed->setMode(Player::Mode::FIXED);
@@ -138,6 +138,10 @@ auto main() -> int {
     shader = ShaderManager::Get("Base");
     newModel.setShader(shader);
     model2.setShader(shader);
+    orbit->setShader(shader);
+    free->setShader(shader);
+    fps->setShader(shader);
+    fixed->setShader(shader);
 
     shader->use();
 
@@ -186,8 +190,6 @@ auto main() -> int {
     }
 
     ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
-    // ShadowBuffer shadowBuffer = ShadowBuffer(10000, 10000);
-
     App::view.setPipeline([&]() {
         View::clearTarget(Color::BLACK);
         auto player = PlayerManager::GetCurrent();
@@ -210,7 +212,7 @@ auto main() -> int {
         newModel.draw(shader);
         model2.draw(shader);
 
-        PlayerManager::Draw(lightView, lightProjection, true);
+        PlayerManager::Draw(shader);
 
         shadowBuffer.unbind();
 
@@ -244,9 +246,7 @@ auto main() -> int {
         skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
         sun.draw(viewMatrix, projectionMatrix);
 
-        PlayerManager::Draw(viewMatrix, projectionMatrix, false);
-
-        //player->setDrawModel(true);
+        PlayerManager::Draw(viewMatrix, projectionMatrix);
     });
 
     App::view.setInterface([&]() {
@@ -335,8 +335,9 @@ auto main() -> int {
             glm::vec3 torque = newModel.attributes.calculateRotation(interpolatedPoint);
             torque = glm::vec3(0.0F, torque.y, 0.0F);
 
-            // newModel.attributes.applyRotation(torque);
-            //newModel.attributes.applyForce(forceNeeded);
+            newModel.attributes.applyRotation(torque);
+            newModel.attributes.applyForce(forceNeeded);
+
 
         });
     } catch (const std::exception &e) {

@@ -40,32 +40,16 @@ void Model::draw(std::shared_ptr<Shader> shader) const {
     }
 }
 
-void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) const {
-    auto currentShader = depthPass ? ShaderManager::Get("Shadow") : shader;
+void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
+    shader->use();
 
-    currentShader->use();
-
-    currentShader->setUniform("model", attributes.transform);
-    currentShader->setUniform("view", view);
-    currentShader->setUniform("projection", projection);
+    shader->setUniform("model", attributes.transform);
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
 
     for (const auto &mesh: meshes) {
-        mesh->draw(currentShader);
+        mesh->draw(shader);
     }
-
-    if (App::debug) {
-        box.draw(attributes.transform, view, projection);
-    }
-}
-
-void Model::draw() const {
-    for (const auto &mesh: meshes) {
-        mesh->draw();
-    }
-}
-
-void Model::setShader(std::shared_ptr<Shader> shader) {
-    this->shader = std::move(shader);
 }
 
 void Model::loadModel(const std::filesystem::path &path) {
@@ -292,34 +276,33 @@ void Model::transform(const glm::mat4 &transform) {
 }
 
 void Model::calculateBoundingBox() {
-    BoundingBox newBox;
-
     auto min = glm::vec3(std::numeric_limits<float>::max());
     auto max = glm::vec3(std::numeric_limits<float>::min());
 
-    for (const auto &mesh: meshes) {
-        auto [meshMin, meshMax] = mesh->getBoundingBox().getMinMax();
+    std::vector<std::unique_ptr<BoundingBox>> children(meshes.size());
 
-        newBox.addChild(mesh->getBoundingBox());
+    for (const auto &mesh: meshes) {
+        auto meshBox = mesh->getBoundingBox();
+        auto [meshMin, meshMax] = meshBox.getMinMax();
+
+        children.push_back(std::make_unique<BoundingBox>(meshBox));
 
         min = glm::min(min, meshMin);
         max = glm::max(max, meshMax);
     }
 
-    newBox.setMin(min);
-    newBox.setMax(max);
-
-    this->box = newBox;
+    this->box = BoundingBox(min, max);
+    // this->box.addChildren(children);
 }
 
 [[nodiscard]] auto Model::getBoundingBox() const -> BoundingBox {
     return box;
 }
 
-void Model::update(float dt) {
+void Model::update(float deltaTime) {
     const glm::mat4 oldTransform = attributes.transform;
 
-    attributes.update(dt);
+    attributes.update(deltaTime);
 
     const glm::mat4 newTransform = attributes.transform;
 
