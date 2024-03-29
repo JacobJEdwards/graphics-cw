@@ -97,15 +97,9 @@ void BoundingBox::setMin(const glm::vec3 &min) { BoundingBox::min = min; }
 void BoundingBox::setMax(const glm::vec3 &max) { BoundingBox::max = max; }
 
 void BoundingBox::transform(const glm::mat4 &model) {
-    const glm::vec3 newMin = glm::vec3(model * glm::vec4(min, 1.0F));
-    const glm::vec3 newMax = glm::vec3(model * glm::vec4(max, 1.0F));
-
-    min = glm::min(newMin, newMax);
-    max = glm::max(newMin, newMax);
-
-    for (auto &child: children) {
-        child->transform(model);
-    }
+    // Transform the min and max points by the model
+    min = glm::vec3(model * glm::vec4(min, 1.0F));
+    max = glm::vec3(model * glm::vec4(max, 1.0F));
 }
 
 auto BoundingBox::collides(const BoundingBox &other) const -> bool {
@@ -156,6 +150,19 @@ void BoundingBox::scale(const glm::vec3 &scale) {
 
     for (auto &child: children) {
         child->scale(scale);
+    }
+}
+
+void BoundingBox::rotate(const glm::vec3 &rotation) {
+    auto center = getCenter();
+    auto rotationMatrix = glm::rotate(glm::mat4(1.0F), rotation.x, glm::vec3(1.0F, 0.0F, 0.0F));
+    rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0F, 1.0F, 0.0F));
+    rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0F, 0.0F, 1.0F));
+    min = glm::vec3(rotationMatrix * glm::vec4(min - center, 1.0F)) + center;
+    max = glm::vec3(rotationMatrix * glm::vec4(max - center, 1.0F)) + center;
+
+    for (auto &child: children) {
+        child->rotate(rotation);
     }
 }
 
@@ -260,6 +267,7 @@ void BoundingBox::expand(const BoundingBox &other) {
 }
 
 void BoundingBox::initBuffer() {
+    buffer = Buffer();
     buffer.drawMode = GL_LINES;
 
     std::vector<Vertex::Data> vertices = {
@@ -282,15 +290,19 @@ void BoundingBox::initBuffer() {
 }
 
 
-void BoundingBox::draw(glm::mat4 model, glm::mat4 view,
-                       glm::mat4 projection) const {
+void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
+                       const glm::mat4 &projection) {
 
     const GLuint previousProgram = ShaderManager::GetActiveShader();
 
+    initBuffer();
+
     const std::shared_ptr<Shader> shader = ShaderManager::Get("BoundingBox");
 
+
     shader->use();
-    shader->setUniform("model", model);
+    //shader->setUniform("model", model);
+    shader->setUniform("model", glm::mat4(1.0F));
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
 
@@ -298,9 +310,11 @@ void BoundingBox::draw(glm::mat4 model, glm::mat4 view,
     buffer.draw();
     buffer.unbind();
 
+    /*
     for (const auto &child: children) {
         child->draw();
     }
+     */
 
     glUseProgram(previousProgram);
 }

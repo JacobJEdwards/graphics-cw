@@ -24,15 +24,15 @@ Entity::Entity(const std::filesystem::path &path) {
 
 void Entity::update(float deltaTime) {
     const glm::mat4 oldTransform = attributes.transform;
-
     attributes.update(deltaTime);
-
     const glm::mat4 newTransform = attributes.transform;
 
-    box.transform(newTransform * glm::inverse(oldTransform));
+    auto translation = glm::vec3(newTransform[3]) - glm::vec3(oldTransform[3]);
+
+    box.translate(translation);
 }
 
-void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
+void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) {
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);

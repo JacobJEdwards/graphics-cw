@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <utility>
 #include <vector>
 #include <memory>
 
@@ -73,6 +74,8 @@ public:
 
     void rotate(const glm::vec3 &axis, float angle);
 
+    void rotate(const glm::vec3 &rotation);
+
     [[nodiscard]] auto getOffset(const glm::vec3 &point) const -> glm::vec3;
 
     [[nodiscard]] auto getOffset(const BoundingBox &other) const -> glm::vec3;
@@ -81,7 +84,7 @@ public:
 
     void expand(const BoundingBox &other);
 
-    void draw(glm::mat4 model, glm::mat4 view, glm::mat4 projection) const;
+    void draw(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection);
 
     void draw() const;
 

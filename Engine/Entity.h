@@ -32,9 +32,9 @@ public:
     auto operator=(Entity &&other) noexcept -> Entity & = default;
 
 
-    virtual void update(float deltaTime) override;
+    void update(float deltaTime) override;
 
-    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
+    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) override;
 
     virtual void draw(std::shared_ptr<Shader> shader) const override;
 

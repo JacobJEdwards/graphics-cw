@@ -33,7 +33,7 @@ public:
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection,
-              const glm::vec3 &lightPos, const glm::vec3 &viewPos, bool depthPass = false) const {
+              const glm::vec3 &lightPos, const glm::vec3 &viewPos, bool depthPass = false) {
 
         auto currentShader = depthPass ? ShaderManager::Get("Shadow") : shader;
 

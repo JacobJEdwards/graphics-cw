@@ -28,7 +28,7 @@ public:
 
     explicit Model(const std::filesystem::path &path);
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) override;
 
     void draw(std::shared_ptr<Shader> shader) const override;
 

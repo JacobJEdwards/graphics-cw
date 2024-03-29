@@ -40,7 +40,7 @@ void Model::draw(std::shared_ptr<Shader> shader) const {
     }
 }
 
-void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
+void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) {
     shader->use();
 
     shader->setUniform("model", attributes.transform);

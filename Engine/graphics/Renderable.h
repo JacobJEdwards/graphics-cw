@@ -13,7 +13,7 @@ class Renderable {
 public:
     virtual void draw(std::shared_ptr<Shader> shader) const = 0;
 
-    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) const = 0;
+    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) = 0;
 
     virtual void update(float deltaTime) = 0;
 
