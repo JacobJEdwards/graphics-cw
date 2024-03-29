@@ -34,7 +34,13 @@
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 
-void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) {
+void Model::draw(std::shared_ptr<Shader> shader) const {
+    for (const auto &mesh: meshes) {
+        mesh->draw(shader);
+    }
+}
+
+void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass) const {
     auto currentShader = depthPass ? ShaderManager::Get("Shadow") : shader;
 
     currentShader->use();
@@ -44,11 +50,17 @@ void Model::draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthP
     currentShader->setUniform("projection", projection);
 
     for (const auto &mesh: meshes) {
-        mesh->draw(currentShader, depthPass);
+        mesh->draw(currentShader);
     }
 
-    if (App::debug && !depthPass) {
+    if (App::debug) {
         box.draw(attributes.transform, view, projection);
+    }
+}
+
+void Model::draw() const {
+    for (const auto &mesh: meshes) {
+        mesh->draw();
     }
 }
 
@@ -280,17 +292,24 @@ void Model::transform(const glm::mat4 &transform) {
 }
 
 void Model::calculateBoundingBox() {
+    BoundingBox newBox;
+
     auto min = glm::vec3(std::numeric_limits<float>::max());
     auto max = glm::vec3(std::numeric_limits<float>::min());
 
     for (const auto &mesh: meshes) {
         auto [meshMin, meshMax] = mesh->getBoundingBox().getMinMax();
 
+        newBox.addChild(mesh->getBoundingBox());
+
         min = glm::min(min, meshMin);
         max = glm::max(max, meshMax);
     }
 
-    box = BoundingBox(min, max);
+    newBox.setMin(min);
+    newBox.setMax(max);
+
+    this->box = newBox;
 }
 
 [[nodiscard]] auto Model::getBoundingBox() const -> BoundingBox {
@@ -298,11 +317,11 @@ void Model::calculateBoundingBox() {
 }
 
 void Model::update(float dt) {
-    glm::mat4 oldTransform = attributes.transform;
+    const glm::mat4 oldTransform = attributes.transform;
 
     attributes.update(dt);
 
-    glm::mat4 newTransform = attributes.transform;
+    const glm::mat4 newTransform = attributes.transform;
 
     for (auto &mesh: meshes) {
         mesh->transform(newTransform * glm::inverse(oldTransform));

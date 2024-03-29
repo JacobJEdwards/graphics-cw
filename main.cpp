@@ -30,8 +30,19 @@
 #include "utils/Objects/Sun.h"
 #include "utils/ShaderManager.h"
 #include "graphics/ShadowBuffer.h"
+#include "Entity.h"
 
 void processInput();
+
+/* TODO
+ * eneity class rather than all responsibilities in model
+ * player extends from entity
+ * entity contains model, attributes, bounding box ?
+ * entity has update, draw, interface
+ * entity has physics
+ * entity has collision detection
+ * entity has shader
+ */
 
 auto main() -> int {
     App::window("Coursework", Config::DEFAULT_WIDTH, Config::DEFAULT_HEIGHT);
@@ -80,11 +91,11 @@ auto main() -> int {
     InfinitePlane terrain;
 
     Texture::Loader::setFlip(false);
-    Model newModel("../Assets/objects/helecopter/chopper.obj");
-    newModel.attributes.mass = 10.0F;
+    Entity newModel("../Assets/objects/helecopter/chopper.obj");
+    newModel.getAttributes().mass = 2.0F;
     Texture::Loader::setFlip(true);
-    Model model2("../Assets/objects/backpack/backpack.obj");
-    model2.attributes.mass = 2.0F;
+    Entity model2("../Assets/objects/backpack/backpack.obj");
+    model2.getAttributes().mass = 2.0F;
     Texture::Loader::setFlip(false);
 
     auto orbit = std::make_shared<Player>();
@@ -164,7 +175,7 @@ auto main() -> int {
 
     // obviously clean this up
 
-    int numPoints = 10;
+    const int numPoints = 10;
     std::vector<glm::vec3> points(numPoints);
 
     // generate a circle
@@ -192,9 +203,13 @@ auto main() -> int {
 
         shader = ShaderManager::Get("Shadow");
         shader->use();
+        shader->setUniform("view", lightView);
+        shader->setUniform("projection", lightProjection);
         terrain.draw(lightView, lightProjection, sun.getPosition(), player->getCamera().getPosition(), true);
-        newModel.draw(lightView, lightProjection, true);
-        model2.draw(lightView, lightProjection, true);
+
+        newModel.draw(shader);
+        model2.draw(shader);
+
         PlayerManager::Draw(lightView, lightProjection, true);
 
         shadowBuffer.unbind();
@@ -288,21 +303,21 @@ auto main() -> int {
                 model2.attributes.isGrounded = false;
             }
 
-            if (Physics::Collisions::check(newModel, model2)) {
+            if (Physics::Collisions::check(newModel.getBoundingBox(), model2.getBoundingBox())) {
                 const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         newModel.getBoundingBox(), model2.getBoundingBox());
                 Physics::Collisions::resolve(newModel.attributes, model2.attributes,
                                              collisionPoint);
             }
 
-            if (Physics::Collisions::check(player->getModel(), newModel)) {
+            if (Physics::Collisions::check(player->getBoundingBox(), newModel.getBoundingBox())) {
                 const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         player->getBoundingBox(), newModel.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
                                              newModel.attributes, collisionPoint);
             }
 
-            if (Physics::Collisions::check(player->getModel(), model2)) {
+            if (Physics::Collisions::check(player->getBoundingBox(), model2.getBoundingBox())) {
                 const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
                         player->getBoundingBox(), model2.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
@@ -320,8 +335,8 @@ auto main() -> int {
             glm::vec3 torque = newModel.attributes.calculateRotation(interpolatedPoint);
             torque = glm::vec3(0.0F, torque.y, 0.0F);
 
-            newModel.attributes.applyRotation(torque);
-            newModel.attributes.applyForce(forceNeeded);
+            // newModel.attributes.applyRotation(torque);
+            //newModel.attributes.applyForce(forceNeeded);
 
         });
     } catch (const std::exception &e) {

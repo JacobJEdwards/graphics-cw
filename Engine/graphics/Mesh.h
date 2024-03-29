@@ -6,6 +6,7 @@
 #define CW_MESH_H
 
 #include <GL/glew.h>
+#include <memory>
 #include <vector>
 
 #include "graphics/Texture.h"
@@ -19,7 +20,9 @@ public:
     Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
          std::vector<Texture::Data> textures, const BoundingBox &box);
 
-    void draw(const std::shared_ptr<Shader> &shader, bool depthPass = false) const;
+    void draw(const std::shared_ptr<Shader> &shader) const;
+
+    void draw() const;
 
     [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
 

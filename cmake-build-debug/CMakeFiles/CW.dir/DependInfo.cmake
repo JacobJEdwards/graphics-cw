@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.cpp" "CMakeFiles/CW.dir/Engine/App.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/App.cpp.o.d"
+  "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.cpp" "CMakeFiles/CW.dir/Engine/Entity.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/Entity.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.cpp" "CMakeFiles/CW.dir/Engine/View.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/View.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.cpp" "CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/DepthBuffer.cpp" "CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o.d"

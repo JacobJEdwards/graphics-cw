@@ -26,7 +26,11 @@ public:
 
     explicit Model(const std::filesystem::path &path);
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false);
+    void draw(const glm::mat4 &view, const glm::mat4 &projection, bool depthPass = false) const;
+
+    void draw(std::shared_ptr<Shader> shader) const;
+
+    void draw() const;
 
     [[nodiscard]] auto detectCollisions(const glm::vec3 &position) const -> bool;
 
@@ -71,7 +75,6 @@ private:
     std::shared_ptr<Shader> shader;
 
     BoundingBox box;
-    glm::mat4 modelMatrix = Config::IDENTITY_MATRIX;
 
     void loadModel(const std::filesystem::path &path);
 

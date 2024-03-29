@@ -6,6 +6,7 @@
 
 #include "utils/Shader.h"
 
+#include <memory>
 #include <unordered_map>
 #include <filesystem>
 #include <string>
@@ -17,6 +18,8 @@ public:
                     const std::filesystem::path &tessControlPath = "", const std::filesystem::path &tessEvalPath = "");
 
     static auto Get(const std::string &name) -> std::shared_ptr<Shader>;
+
+    static auto Get(GLuint id) -> std::shared_ptr<Shader>;
 
     static void Remove(const std::string &name);
 

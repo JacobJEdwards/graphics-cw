@@ -4,12 +4,19 @@
 
 #include "BoundingBox.h"
 
+#include "Shader.h"
 #include "helpers/AssimpGLMHelpers.h"
 #include <assimp/scene.h>
+#include <assimp/vector3.h>
+#include <cstdlib>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <utility>
 #include <vector>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <memory>
 
 #include "utils/Vertex.h"
 #include "utils/ShaderManager.h"
@@ -24,6 +31,58 @@ BoundingBox::BoundingBox(const aiVector3D &min, const aiVector3D &max)
           max(AssimpGLMHelpers::getGLMVec(max)) {
     initBuffer();
 }
+
+BoundingBox::BoundingBox(const BoundingBox &other) {
+    min = other.min;
+    max = other.max;
+    buffer = other.buffer;
+    children.clear();
+    for (const auto &child: other.children) {
+        children.push_back(std::make_unique<BoundingBox>(*child));
+    }
+    if (other.parent != nullptr) {
+        parent = other.parent;
+    }
+}
+
+// copy assignment
+auto BoundingBox::operator=(const BoundingBox &other) -> BoundingBox & {
+    if (this != &other) {
+        min = other.min;
+        max = other.max;
+        buffer = other.buffer;
+
+        children.clear();
+        for (const auto &child: other.children) {
+            children.push_back(std::make_unique<BoundingBox>(*child));
+        }
+        if (other.parent != nullptr) {
+            parent = other.parent;
+        }
+
+    }
+    return *this;
+}
+
+BoundingBox::BoundingBox(BoundingBox &&other) noexcept {
+    min = other.min;
+    max = other.max;
+    buffer = std::move(other.buffer);
+    children = std::move(other.children);
+    parent = other.parent;
+}
+
+auto BoundingBox::operator=(BoundingBox &&other) noexcept -> BoundingBox & {
+    if (this != &other) {
+        min = other.min;
+        max = other.max;
+        buffer = std::move(other.buffer);
+        children = std::move(other.children);
+        parent = other.parent;
+    }
+    return *this;
+}
+
 
 [[nodiscard]] auto BoundingBox::getMin() const -> glm::vec3 {
     return glm::min(min, max);
@@ -43,6 +102,10 @@ void BoundingBox::transform(const glm::mat4 &model) {
 
     min = glm::min(newMin, newMax);
     max = glm::max(newMin, newMax);
+
+    for (auto &child: children) {
+        child->transform(model);
+    }
 }
 
 auto BoundingBox::collides(const BoundingBox &other) const -> bool {
@@ -81,11 +144,19 @@ auto BoundingBox::getSize() const -> glm::vec3 { return max - min; }
 void BoundingBox::translate(const glm::vec3 &translation) {
     min += translation;
     max += translation;
+
+    for (auto &child: children) {
+        child->translate(translation);
+    }
 }
 
 void BoundingBox::scale(const glm::vec3 &scale) {
     min *= scale;
     max *= scale;
+
+    for (auto &child: children) {
+        child->scale(scale);
+    }
 }
 
 void BoundingBox::rotate(const glm::vec3 &axis, float angle) {
@@ -93,6 +164,10 @@ void BoundingBox::rotate(const glm::vec3 &axis, float angle) {
     auto rotationMatrix = glm::rotate(glm::mat4(1.0F), angle, axis);
     min = glm::vec3(rotationMatrix * glm::vec4(min - center, 1.0F)) + center;
     max = glm::vec3(rotationMatrix * glm::vec4(max - center, 1.0F)) + center;
+
+    for (auto &child: children) {
+        child->rotate(axis, angle);
+    }
 }
 
 auto BoundingBox::getOffset(const glm::vec3 &point) const -> glm::vec3 {
@@ -100,12 +175,12 @@ auto BoundingBox::getOffset(const glm::vec3 &point) const -> glm::vec3 {
         return glm::vec3(0.0F);
     }
 
-    float distanceToXMin = std::abs(point.x - min.x);
-    float distanceToXMax = std::abs(point.x - max.x);
-    float distanceToYMin = std::abs(point.y - min.y);
-    float distanceToYMax = std::abs(point.y - max.y);
-    float distanceToZMin = std::abs(point.z - min.z);
-    float distanceToZMax = std::abs(point.z - max.z);
+    const float distanceToXMin = std::abs(point.x - min.x);
+    const float distanceToXMax = std::abs(point.x - max.x);
+    const float distanceToYMin = std::abs(point.y - min.y);
+    const float distanceToYMax = std::abs(point.y - max.y);
+    const float distanceToZMin = std::abs(point.z - min.z);
+    const float distanceToZMax = std::abs(point.z - max.z);
 
     if (distanceToXMin < distanceToXMax && distanceToXMin < distanceToYMin &&
         distanceToXMin < distanceToYMax && distanceToXMin < distanceToZMin &&
@@ -147,13 +222,13 @@ auto BoundingBox::getOffset(const glm::vec3 &point) const -> glm::vec3 {
 }
 
 auto BoundingBox::getOffset(const BoundingBox &other) const -> glm::vec3 {
-    glm::vec3 overlap = glm::min(max, other.max) - glm::max(min, other.min);
+    const glm::vec3 overlap = glm::min(max, other.max) - glm::max(min, other.min);
 
     if (overlap.x < 0 || overlap.y < 0 || overlap.z < 0) {
         return glm::vec3(0.0F);
     }
 
-    float minOverlap = std::min({overlap.x, overlap.y, overlap.z});
+    const float minOverlap = std::min({overlap.x, overlap.y, overlap.z});
 
     if (overlap.x == minOverlap) {
         return {overlap.x, 0.0F, 0.0F};
@@ -169,11 +244,19 @@ auto BoundingBox::getOffset(const BoundingBox &other) const -> glm::vec3 {
 void BoundingBox::expand(const glm::vec3 &amount) {
     min -= amount;
     max += amount;
+
+    for (auto &child: children) {
+        child->expand(amount);
+    }
 }
 
 void BoundingBox::expand(const BoundingBox &other) {
     min = glm::min(min, other.min);
     max = glm::max(max, other.max);
+
+    for (auto &child: children) {
+        child->expand(other);
+    }
 }
 
 void BoundingBox::initBuffer() {
@@ -202,9 +285,9 @@ void BoundingBox::initBuffer() {
 void BoundingBox::draw(glm::mat4 model, glm::mat4 view,
                        glm::mat4 projection) const {
 
-    GLuint previousProgram = ShaderManager::GetActiveShader();
+    const GLuint previousProgram = ShaderManager::GetActiveShader();
 
-    std::shared_ptr<Shader> shader = ShaderManager::Get("BoundingBox");
+    const std::shared_ptr<Shader> shader = ShaderManager::Get("BoundingBox");
 
     shader->use();
     shader->setUniform("model", model);
@@ -215,17 +298,27 @@ void BoundingBox::draw(glm::mat4 model, glm::mat4 view,
     buffer.draw();
     buffer.unbind();
 
+    for (const auto &child: children) {
+        child->draw();
+    }
+
     glUseProgram(previousProgram);
 }
 
+void BoundingBox::draw() const {
+    buffer.bind();
+    buffer.draw();
+    buffer.unbind();
+}
+
 auto BoundingBox::getCollisionPoint(const BoundingBox &box) const -> glm::vec3 {
-    glm::vec3 overlap = glm::min(max, box.max) - glm::max(min, box.min);
+    const glm::vec3 overlap = glm::min(max, box.max) - glm::max(min, box.min);
 
     if (overlap.x < 0 || overlap.y < 0 || overlap.z < 0) {
         return glm::vec3(0.0F);
     }
 
-    float minOverlap = std::min(std::min(overlap.x, overlap.y), overlap.z);
+    const float minOverlap = std::min(std::min(overlap.x, overlap.y), overlap.z);
 
     if (overlap.x == minOverlap) {
         return {overlap.x, 0.0F, 0.0F};
@@ -245,3 +338,32 @@ auto BoundingBox::getMinMax() const -> std::pair<glm::vec3, glm::vec3> {
             glm::max(min, max)
     };
 }
+
+void BoundingBox::addChildren(std::vector<std::unique_ptr<BoundingBox>> &children) {
+    for (auto &child: children) {
+        addChild(child);
+    }
+}
+
+void BoundingBox::addChild(std::unique_ptr<BoundingBox> &child) {
+    children.push_back(std::move(child));
+    children.back()->setParent(this);
+}
+
+void BoundingBox::addChild(const BoundingBox &box) {
+    children.push_back(std::make_unique<BoundingBox>(box));
+    children.back()->setParent(this);
+}
+
+[[nodiscard]] auto BoundingBox::getChildren() const -> const std::vector<std::unique_ptr<BoundingBox>> & {
+    return children;
+}
+
+[[nodiscard]] auto BoundingBox::getParent() const -> BoundingBox * {
+    return parent;
+}
+
+void BoundingBox::setParent(BoundingBox *parent) {
+    BoundingBox::parent = parent;
+}
+

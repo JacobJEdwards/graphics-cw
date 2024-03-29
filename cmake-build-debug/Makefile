@@ -153,6 +153,30 @@ Engine/App.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/App.cpp.s
 .PHONY : Engine/App.cpp.s
 
+Engine/Entity.o: Engine/Entity.cpp.o
+.PHONY : Engine/Entity.o
+
+# target to build an object file
+Engine/Entity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/Entity.cpp.o
+.PHONY : Engine/Entity.cpp.o
+
+Engine/Entity.i: Engine/Entity.cpp.i
+.PHONY : Engine/Entity.i
+
+# target to preprocess a source file
+Engine/Entity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/Entity.cpp.i
+.PHONY : Engine/Entity.cpp.i
+
+Engine/Entity.s: Engine/Entity.cpp.s
+.PHONY : Engine/Entity.s
+
+# target to generate assembly for a file
+Engine/Entity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/Entity.cpp.s
+.PHONY : Engine/Entity.cpp.s
+
 Engine/View.o: Engine/View.cpp.o
 .PHONY : Engine/View.o
 
@@ -957,6 +981,9 @@ help:
 	@echo "... Engine/App.o"
 	@echo "... Engine/App.i"
 	@echo "... Engine/App.s"
+	@echo "... Engine/Entity.o"
+	@echo "... Engine/Entity.i"
+	@echo "... Engine/Entity.s"
 	@echo "... Engine/View.o"
 	@echo "... Engine/View.i"
 	@echo "... Engine/View.s"

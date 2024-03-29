@@ -15,6 +15,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "utils/ShaderManager.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
            std::vector<Texture::Data> textures, const BoundingBox &box)
@@ -22,14 +23,7 @@ Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
     buffer.fill(std::move(vertices), std::move(indices));
 }
 
-void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
-
-    if (depthPass) {
-        buffer.bind();
-        buffer.draw();
-        buffer.unbind();
-        return;
-    }
+void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
 
     GLuint diffuseNr = 1;
     GLuint specularNr = 1;
@@ -82,12 +76,13 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader, bool depthPass) const {
     buffer.draw();
     buffer.unbind();
 
-    if (App::debug && !depthPass) {
-        box.draw(shader->getUniform<glm::mat4>("model"), shader->getUniform<glm::mat4>("view"),
-                 shader->getUniform<glm::mat4>("projection"));
-    }
-
     glActiveTexture(GL_TEXTURE0);
+}
+
+void Mesh::draw() const {
+    buffer.bind();
+    buffer.draw();
+    buffer.unbind();
 }
 
 auto Mesh::detectCollisions(const glm::vec3 &position) const -> bool {

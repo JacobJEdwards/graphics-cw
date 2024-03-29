@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/App.cpp.o"
   "CMakeFiles/CW.dir/Engine/App.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/Entity.cpp.o"
+  "CMakeFiles/CW.dir/Engine/Entity.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/View.cpp.o"
   "CMakeFiles/CW.dir/Engine/View.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o"

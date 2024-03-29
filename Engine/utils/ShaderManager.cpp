@@ -23,6 +23,16 @@ auto ShaderManager::Get(const std::string &name) -> std::shared_ptr<Shader> {
     return it != Shaders.end() ? it->second : nullptr;
 }
 
+auto ShaderManager::Get(GLuint id) -> std::shared_ptr<Shader> {
+    for (const auto &[name, shader]: Shaders) {
+        if (shader->getProgramID() == id) {
+            return shader;
+        }
+    }
+
+    return nullptr;
+}
+
 void ShaderManager::Remove(const std::string &name) {
     Shaders.erase(name);
 }

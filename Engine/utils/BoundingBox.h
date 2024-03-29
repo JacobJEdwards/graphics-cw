@@ -8,6 +8,10 @@
 #include <assimp/scene.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <vector>
+#include <memory>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -26,7 +30,16 @@ public:
     ~BoundingBox() = default;
 
     // copy constructor
-    BoundingBox(const BoundingBox &other) = default;
+    BoundingBox(const BoundingBox &other);
+
+    // copy assignment
+    auto operator=(const BoundingBox &other) -> BoundingBox &;
+
+    // move constructor
+    BoundingBox(BoundingBox &&other) noexcept;
+
+    // move assignment
+    auto operator=(BoundingBox &&other) noexcept -> BoundingBox &;
 
     [[nodiscard]] auto getMin() const -> glm::vec3;
 
@@ -70,13 +83,30 @@ public:
 
     void draw(glm::mat4 model, glm::mat4 view, glm::mat4 projection) const;
 
+    void draw() const;
+
     [[nodiscard]] auto getCollisionPoint(const BoundingBox &box) const -> glm::vec3;
+
+    void addChildren(std::vector<std::unique_ptr<BoundingBox>> &children);
+
+    void addChild(std::unique_ptr<BoundingBox> &child);
+
+    void addChild(const BoundingBox &box);
+
+    void setParent(BoundingBox *parent);
+
+    [[nodiscard]] auto getChildren() const -> const std::vector<std::unique_ptr<BoundingBox>> &;
+
+    [[nodiscard]] auto getParent() const -> BoundingBox *;
 
 private:
     glm::vec3 min;
     glm::vec3 max;
 
     Buffer buffer;
+
+    std::vector<std::unique_ptr<BoundingBox>> children = {};
+    BoundingBox *parent = nullptr;
 
     void initBuffer();
 };
