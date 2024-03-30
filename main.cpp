@@ -88,14 +88,14 @@ auto main() -> int {
     };
 
     Skybox skybox(skyboxFaces);
-    Sun sun;
+    Skydome skydome;
     InfinitePlane terrain;
 
     Texture::Loader::setFlip(false);
-    Entity newModel("../Assets/objects/helecopter/chopper.obj");
+    Entity newModel("../Assets/objects/bumpercar1/bumper-car.obj");
     newModel.getAttributes().mass = 2.0F;
     Texture::Loader::setFlip(true);
-    Entity model2("../Assets/objects/backpack/backpack.obj");
+    Entity model2("../Assets/objects/bumpercar2/bumper-car.obj");
     model2.getAttributes().mass = 2.0F;
     Texture::Loader::setFlip(false);
 
@@ -143,6 +143,7 @@ auto main() -> int {
     free->setShader(shader);
     fps->setShader(shader);
     fixed->setShader(shader);
+    // skydome.setShader(shader);
 
     shader->use();
 
@@ -157,13 +158,8 @@ auto main() -> int {
 
     glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                             glm::vec3(20.0F, 10.0F, 8.0F);
-
-    // rotate by 180 degrees
-    const glm::mat4 helicopterModel = translate(model, newPosition);
-    // helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
-    // scale
-    // helicopterModel = scale(helicopterModel, glm::vec3(10.0F));
-    // helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+    glm::mat4 helicopterModel = translate(model, newPosition);
+    helicopterModel = scale(helicopterModel, glm::vec3(4.0F));
 
     newModel.transform(helicopterModel);
 
@@ -171,14 +167,10 @@ auto main() -> int {
     newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                   glm::vec3(5.0F, 2.0F, 0.45F);
 
-    const glm::mat4 backpackModel = translate(model, newPosition);
+    glm::mat4 backpackModel = translate(model, newPosition);
+    backpackModel = scale(backpackModel, glm::vec3(4.0F));
 
     model2.transform(backpackModel);
-    // scale(glm::mat4(1.0F), glm::vec3(0.1F, 0.1F, 0.1F));
-
-    sun.setPosition(PlayerManager::GetCurrent()->getCamera().getPosition());
-
-    // obviously clean this up
 
     const int numPoints = 10;
     std::vector<glm::vec3> points(numPoints);
@@ -220,7 +212,7 @@ auto main() -> int {
         View::clearTarget(Color::BLACK);
         shader = ShaderManager::Get("Base");
         shader->use();
-        shader->setUniform("light.position", sun.getPosition());
+        shader->setUniform("light.position", skydome.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
         auto texture = shadowBuffer.getTexture();
@@ -232,7 +224,7 @@ auto main() -> int {
 
         shader = ShaderManager::Get("Terrain");
         shader->use();
-        shader->setUniform("light.position", sun.getPosition());
+        shader->setUniform("light.position", skydome.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform("projection", projectionMatrix);
         shader->setUniform("view", viewMatrix);
@@ -245,16 +237,19 @@ auto main() -> int {
 
         shader = terrain.getShader();
         shader->use();
-        shader->setUniform("light.position", sun.getPosition());
+
+        texture = shadowBuffer.getTexture();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        shader->setUniform("light.position", skydome.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
-        shader = skybox.getShader();
-        shader->use();
-        shader->setUniform("intensity", sun.getPosition().y);
-
+        // skydome.draw(viewMatrix, projectionMatrix);
         terrain.draw(viewMatrix, projectionMatrix);
         skybox.draw(viewMatrix, projectionMatrix);
         PlayerManager::Draw(viewMatrix, projectionMatrix);
+
 
     });
 
@@ -283,6 +278,7 @@ auto main() -> int {
             newModel.update(App::view.getDeltaTime());
             model2.update(App::view.getDeltaTime());
             skybox.update(App::view.getDeltaTime());
+            // skydome.update(App::view.getDeltaTime());
 
             auto player = PlayerManager::GetCurrent();
 
@@ -343,6 +339,7 @@ auto main() -> int {
 
             glm::vec3 torque = newModel.attributes.calculateRotation(interpolatedPoint);
             torque = glm::vec3(0.0F, torque.y, 0.0F);
+            torque.y -= glm::radians(90.0F);
 
             newModel.attributes.applyRotation(torque);
             newModel.attributes.applyForce(forceNeeded);

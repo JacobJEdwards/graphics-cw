@@ -2,6 +2,7 @@
 
 #include "imgui/imgui.h"
 #include <algorithm>
+#include <unordered_map>
 #include <utility>
 
 std::unordered_map<std::string, std::shared_ptr<Player>> PlayerManager::Players;
@@ -11,7 +12,7 @@ void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection) {
     for (const auto &[name, player]: Players) {
         const bool isCurrent = player == CurrentPlayer;
 
-        if (!isCurrent) {
+        if (!isCurrent && player->shouldDraw()) {
             player->draw(view, projection);
         }
     }
@@ -19,7 +20,9 @@ void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection) {
 
 void PlayerManager::Draw(std::shared_ptr<Shader> shader) {
     for (const auto &[name, player]: Players) {
-        player->draw(shader);
+        if (player->shouldDraw()) {
+            player->draw(shader);
+        }
     }
 
 

@@ -80,7 +80,6 @@ void Entity::setAttributes(const Physics::Attributes &attributes) {
 }
 
 void Entity::translate(const glm::vec3 &translation) {
-    attributes.position += translation;
     attributes.transform = glm::translate(attributes.transform, translation);
 
     box.translate(translation);

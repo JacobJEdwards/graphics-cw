@@ -51,6 +51,8 @@ add_executable(CW main.cpp
         Engine/Entity.h
         Engine/ImmovableObject.cpp
         Engine/ImmovableObject.h
+        Engine/graphics/Particle.cpp
+        Engine/graphics/Particle.h
 )
 
 # Link libraries

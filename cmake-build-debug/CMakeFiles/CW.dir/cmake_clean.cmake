@@ -17,6 +17,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o"
   "CMakeFiles/CW.dir/Engine/graphics/Model.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o"
+  "CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o"
   "CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.o"

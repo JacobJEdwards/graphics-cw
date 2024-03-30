@@ -40,9 +40,9 @@ public:
             return;
         }
 
-        attributes.update(deltaTime * 10);
+        attributes.update(deltaTime * speed);
 
-        angle += 0.05F * deltaTime * 10;
+        angle += 0.05F * deltaTime * speed;
         const float orbitRadius = 100.0F;
         const float height = 20.0F;
         const float x = orbitRadius * std::cos(angle);
@@ -88,6 +88,86 @@ public:
 
     void interface() {
         ImGui::Begin("Sun");
+        ImGui::Checkbox("Update Position", &move);
+        ImGui::SliderFloat("Speed", &speed, 0.0F, 20.0F);
+        ImGui::End();
+    }
+
+private:
+    float scale = 0.005F;
+    float angle = 0.0F;
+    bool move = true;
+    float speed = 3.0F;
+};
+
+class Moon : public Entity {
+    // opposite of sun
+public:
+    Moon() : Entity("../Assets/objects/moon.obj") {
+        shader = ShaderManager::Get("Sun");
+
+        auto transform = Config::IDENTITY_MATRIX;
+        transform = glm::scale(transform, glm::vec3(scale));
+
+        Entity::transform(transform);
+
+        attributes.position.x = 0.0F;
+        attributes.position.y = 0.0F;
+        attributes.position.z = 50.0F;
+    };
+
+    void update(float deltaTime) override {
+
+        if (!move) {
+            return;
+        }
+
+        attributes.update(deltaTime * 10);
+
+        angle += 0.05F * deltaTime * 10;
+        const float orbitRadius = 100.0F;
+        const float height = 20.0F;
+        const float x = orbitRadius * std::cos(angle);
+        const float y = orbitRadius * std::sin(angle);
+        const float z = height * std::sin(0.5 * angle);
+
+        attributes.position.x = x;
+        attributes.position.y = y;
+        attributes.position.z = z;
+
+        // if y pos near horizon, increase scale
+        if (y < 1.0F) {
+            scale = scale + 0.0001F;
+        } else {
+            scale = 0.005F;
+        }
+
+    }
+
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override {
+
+        GLenum prevDepthFunc;
+        glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint *>(&prevDepthFunc));
+
+        glDepthFunc(GL_LEQUAL);
+
+        const auto newView = glm::mat4(glm::mat3(view));
+
+        Entity::draw(newView, projection);
+
+        glDepthFunc(prevDepthFunc);
+    }
+
+    void setPosition(const glm::vec3 &pos) { attributes.position = pos; }
+
+    [[nodiscard]] auto getDirection() const -> glm::vec3 { return glm::normalize(attributes.position); }
+
+    void setScale(const float newScale) { scale = newScale; }
+
+    [[nodiscard]] auto getPosition() const -> glm::vec3 { return attributes.position; }
+
+    void interface() {
+        ImGui::Begin("Moon");
         ImGui::Checkbox("Update Position", &move);
         ImGui::End();
     }

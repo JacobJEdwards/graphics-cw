@@ -345,6 +345,30 @@ Engine/graphics/Model.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Model.cpp.s
 .PHONY : Engine/graphics/Model.cpp.s
 
+Engine/graphics/Particle.o: Engine/graphics/Particle.cpp.o
+.PHONY : Engine/graphics/Particle.o
+
+# target to build an object file
+Engine/graphics/Particle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o
+.PHONY : Engine/graphics/Particle.cpp.o
+
+Engine/graphics/Particle.i: Engine/graphics/Particle.cpp.i
+.PHONY : Engine/graphics/Particle.i
+
+# target to preprocess a source file
+Engine/graphics/Particle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.i
+.PHONY : Engine/graphics/Particle.cpp.i
+
+Engine/graphics/Particle.s: Engine/graphics/Particle.cpp.s
+.PHONY : Engine/graphics/Particle.s
+
+# target to generate assembly for a file
+Engine/graphics/Particle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.s
+.PHONY : Engine/graphics/Particle.cpp.s
+
 Engine/graphics/PostProcessor.o: Engine/graphics/PostProcessor.cpp.o
 .PHONY : Engine/graphics/PostProcessor.o
 
@@ -1029,6 +1053,9 @@ help:
 	@echo "... Engine/graphics/Model.o"
 	@echo "... Engine/graphics/Model.i"
 	@echo "... Engine/graphics/Model.s"
+	@echo "... Engine/graphics/Particle.o"
+	@echo "... Engine/graphics/Particle.i"
+	@echo "... Engine/graphics/Particle.s"
 	@echo "... Engine/graphics/PostProcessor.o"
 	@echo "... Engine/graphics/PostProcessor.i"
 	@echo "... Engine/graphics/PostProcessor.s"

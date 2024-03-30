@@ -41,7 +41,9 @@ void Physics::Attributes::update(float dt) {
     if (isGrounded) {
         applyFriction(Physics::FRICTION);
     } else {
-        applyGravity();
+        if (gravityAffected) {
+            applyGravity();
+        }
     }
 }
 
@@ -106,7 +108,7 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point) const
 
 auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
     glm::vec3 direction = glm::normalize(point - position);
-    glm::vec3 forward = glm::normalize(glm::vec3(-transform[2]));
+    glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
 
     auto rotation = glm::vec3(0.0F);
 

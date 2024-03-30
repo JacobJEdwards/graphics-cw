@@ -33,7 +33,6 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
         case Mode::ORBIT:
             return lookAt(position, target, worldUp);
         case Mode::FPS:
-            return lookAt(position, position + front, up);
         case Mode::FREE:
             return lookAt(position, position + front, up);
         case Mode::FIXED:
