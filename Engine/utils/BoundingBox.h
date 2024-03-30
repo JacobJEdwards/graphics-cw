@@ -84,7 +84,7 @@ public:
 
     void expand(const BoundingBox &other);
 
-    void draw(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection);
+    void draw(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection) const;
 
     void draw() const;
 

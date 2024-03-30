@@ -32,8 +32,9 @@ void Entity::update(float deltaTime) {
     box.translate(translation);
 }
 
-void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) {
+void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     shader->use();
+
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
     shader->setUniform("model", attributes.transform);

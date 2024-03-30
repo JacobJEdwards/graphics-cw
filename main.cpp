@@ -71,6 +71,7 @@ auto main() -> int {
     ShaderManager::Add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
     ShaderManager::Add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
     ShaderManager::Add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
+    ShaderManager::Add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");
     ShaderManager::Add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
     ShaderManager::Add("Terrain", "../Assets/shaders/infinitePlane.vert", "../Assets/shaders/infinitePlane.frag");
     ShaderManager::Add("Player", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
@@ -152,13 +153,13 @@ auto main() -> int {
     shader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
     shader->setUniform("material.shininess", 64.0F);
 
-    auto model = glm::mat4(1.0F);
+    auto model = Config::IDENTITY_MATRIX;
 
     glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                             glm::vec3(20.0F, 10.0F, 8.0F);
 
     // rotate by 180 degrees
-    glm::mat4 helicopterModel = translate(model, newPosition);
+    const glm::mat4 helicopterModel = translate(model, newPosition);
     // helicopterModel = rotate(helicopterModel, glm::radians(180.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     // scale
     // helicopterModel = scale(helicopterModel, glm::vec3(10.0F));
@@ -184,7 +185,7 @@ auto main() -> int {
 
     // generate a circle
     for (int i = 0; i < numPoints; i++) {
-        float angle = 2.0F * glm::pi<float>() * i / numPoints;
+        const float angle = 2.0F * glm::pi<float>() * i / numPoints;
         auto pos = glm::vec3(30.0F * cos(angle), 5.0F, 30.0F * sin(angle));
         points[i] = pos;
     }
@@ -199,7 +200,7 @@ auto main() -> int {
 
         shadowBuffer.bind();
 
-        auto lightPos = sun.getPosition();
+        auto lightPos = skybox.getSun().getPosition();
         auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
         auto lightView = glm::lookAt(lightPos, player->getPosition(), glm::vec3(0.0F, 1.0F, 0.0F));
 
@@ -207,8 +208,8 @@ auto main() -> int {
         shader->use();
         shader->setUniform("view", lightView);
         shader->setUniform("projection", lightProjection);
-        terrain.draw(lightView, lightProjection, sun.getPosition(), player->getCamera().getPosition(), true);
 
+        terrain.draw(shader);
         newModel.draw(shader);
         model2.draw(shader);
 
@@ -242,11 +243,19 @@ auto main() -> int {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
 
-        terrain.draw(viewMatrix, projectionMatrix, sun.getPosition(), player->getCamera().getPosition());
-        skybox.draw(projectionMatrix, viewMatrix, sun.getPosition().y);
-        sun.draw(viewMatrix, projectionMatrix);
+        shader = terrain.getShader();
+        shader->use();
+        shader->setUniform("light.position", sun.getPosition());
+        shader->setUniform("viewPos", player->getCamera().getPosition());
 
+        shader = skybox.getShader();
+        shader->use();
+        shader->setUniform("intensity", sun.getPosition().y);
+
+        terrain.draw(viewMatrix, projectionMatrix);
+        skybox.draw(viewMatrix, projectionMatrix);
         PlayerManager::Draw(viewMatrix, projectionMatrix);
+
     });
 
     App::view.setInterface([&]() {
@@ -257,7 +266,7 @@ auto main() -> int {
             App::view.optionsInterface();
 
             App::debugInterface();
-            sun.interface();
+            skybox.getSun().interface();
         }
 
         if (App::debug) {
@@ -270,10 +279,10 @@ auto main() -> int {
 
     try {
         App::loop([&] {
-            sun.update(App::view.getDeltaTime());
             PlayerManager::GetCurrent()->update(App::view.getDeltaTime());
             newModel.update(App::view.getDeltaTime());
             model2.update(App::view.getDeltaTime());
+            skybox.update(App::view.getDeltaTime());
 
             auto player = PlayerManager::GetCurrent();
 

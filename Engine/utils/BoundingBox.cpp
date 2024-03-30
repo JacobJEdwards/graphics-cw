@@ -20,6 +20,7 @@
 
 #include "utils/Vertex.h"
 #include "utils/ShaderManager.h"
+#include "App.h"
 
 
 BoundingBox::BoundingBox(glm::vec3 min, glm::vec3 max) : min(min), max(max) {
@@ -289,32 +290,57 @@ void BoundingBox::initBuffer() {
     buffer.fill(vertices, indices);
 }
 
-
 void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
-                       const glm::mat4 &projection) {
+                       const glm::mat4 &projection) const {
 
     const GLuint previousProgram = ShaderManager::GetActiveShader();
 
-    initBuffer();
-
     const std::shared_ptr<Shader> shader = ShaderManager::Get("BoundingBox");
 
-
     shader->use();
-    //shader->setUniform("model", model);
-    shader->setUniform("model", glm::mat4(1.0F));
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
 
-    buffer.bind();
-    buffer.draw();
-    buffer.unbind();
+    if (App::debug) {
+        shader->setUniform("model", Config::IDENTITY_MATRIX);
+        Buffer buffer;
+        buffer.drawMode = GL_LINES;
 
-    /*
-    for (const auto &child: children) {
-        child->draw();
+        std::vector<Vertex::Data> vertices = {
+                {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+                {{max.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+                {{max.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+                {{min.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+                {{min.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+                {{max.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+                {{max.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+                {{min.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        };
+
+        std::vector<GLuint> indices = {
+                0, 1, 2, 2, 3, 0, 1, 5, 6, 6, 2, 1, 5, 4, 7, 7, 6, 5,
+                4, 0, 3, 3, 7, 4, 3, 2, 6, 6, 7, 3, 4, 5, 1, 1, 0, 4,
+        };
+
+        buffer.fill(vertices, indices);
+
+        buffer.bind();
+        buffer.draw();
+        buffer.unbind();
+    } else {
+        shader->setUniform("model", model);
+        buffer.bind();
+        buffer.draw();
+        buffer.unbind();
     }
-     */
+
+    for (const auto &child: children) {
+        if (App::debug) {
+            child->draw(model, view, projection);
+        } else {
+            child->draw();
+        }
+    }
 
     glUseProgram(previousProgram);
 }

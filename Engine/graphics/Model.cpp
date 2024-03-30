@@ -40,7 +40,7 @@ void Model::draw(std::shared_ptr<Shader> shader) const {
     }
 }
 
-void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) {
+void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     shader->use();
 
     shader->setUniform("model", attributes.transform);
@@ -68,11 +68,6 @@ void Model::loadModel(const std::filesystem::path &path) {
     directory = path.parent_path();
 
     processNode(scene->mRootNode, scene);
-
-    calculateBoundingBox();
-
-    attributes.position = getCentre();
-    attributes.transform = glm::mat4(1.0F);
 }
 
 void Model::processNode(const aiNode *const node, const aiScene *scene) {
@@ -198,84 +193,7 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat,
     return textures;
 }
 
-auto Model::detectCollisions(const glm::vec3 &point) const -> bool {
-    return std::ranges::any_of(
-            meshes, [&](const auto &mesh) { return mesh->detectCollisions(point); });
-}
-
-auto Model::getCentre() const -> glm::vec3 {
-    return std::accumulate(meshes.begin(), meshes.end(), glm::vec3(0.0F),
-                           [](const auto &acc, const auto &mesh) {
-                               return acc + mesh->getCentre();
-                           }) /
-           static_cast<float>(meshes.size());
-}
-
-auto Model::getOffset(const glm::vec3 &point) const -> glm::vec3 {
-    return std::accumulate(meshes.begin(), meshes.end(), glm::vec3(0.0F),
-                           [&](const auto &acc, const auto &mesh) {
-                               return acc + mesh->getOffset(point);
-                           }) /
-           static_cast<float>(meshes.size());
-}
-
-auto Model::getOffset(const BoundingBox &other) const -> glm::vec3 {
-    return std::accumulate(meshes.begin(), meshes.end(), glm::vec3(0.0F),
-                           [&](const auto &acc, const auto &mesh) {
-                               return acc + mesh->getOffset(other);
-                           }) /
-           static_cast<float>(meshes.size());
-}
-
-[[nodiscard]] auto Model::isColliding(const BoundingBox &other) const -> bool {
-    return std::ranges::any_of(
-            meshes, [&](const auto &mesh) { return mesh->isColliding(other); });
-}
-
-void Model::rotate(const glm::vec3 &axis, float angle) {
-    attributes.applyRotation(axis * angle);
-
-    for (auto &mesh: meshes) {
-        mesh->rotate(axis, angle);
-    }
-
-    box.rotate(axis, angle);
-}
-
-void Model::translate(const glm::vec3 &translation) {
-    attributes.position += translation;
-
-    for (auto &mesh: meshes) {
-        mesh->translate(translation);
-    }
-
-    box.translate(translation);
-}
-
-void Model::scale(const glm::vec3 &scale) {
-    attributes.transform = glm::scale(attributes.transform, scale);
-
-    for (auto &mesh: meshes) {
-        mesh->scale(scale);
-    }
-
-    box.scale(scale);
-}
-
-void Model::transform(const glm::mat4 &transform) {
-    attributes.transform = transform * attributes.transform;
-
-    for (auto &mesh: meshes) {
-        mesh->transform(transform);
-    }
-
-    attributes.position =
-            glm::vec3(attributes.transform * glm::vec4(attributes.position, 1.0F));
-
-    box.transform(transform);
-}
-
-void Model::calculateBoundingBox() {
+[[nodiscard]] auto Model::getBoundingBox() const -> BoundingBox {
     auto min = glm::vec3(std::numeric_limits<float>::max());
     auto max = glm::vec3(std::numeric_limits<float>::min());
 
@@ -291,24 +209,5 @@ void Model::calculateBoundingBox() {
         max = glm::max(max, meshMax);
     }
 
-    this->box = BoundingBox(min, max);
-    // this->box.addChildren(children);
-}
-
-[[nodiscard]] auto Model::getBoundingBox() const -> BoundingBox {
-    return box;
-}
-
-void Model::update(float deltaTime) {
-    const glm::mat4 oldTransform = attributes.transform;
-
-    attributes.update(deltaTime);
-
-    const glm::mat4 newTransform = attributes.transform;
-
-    for (auto &mesh: meshes) {
-        mesh->transform(newTransform * glm::inverse(oldTransform));
-    }
-
-    box.transform(newTransform * glm::inverse(oldTransform));
+    return BoundingBox(min, max);
 }

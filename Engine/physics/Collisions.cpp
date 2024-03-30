@@ -123,10 +123,6 @@ namespace Physics::Collisions {
         return a.isColliding(b);
     }
 
-    auto check(const Model &a, const Model &b) -> bool {
-        return a.isColliding(b);
-    }
-
     auto check(const BoundingBox &a, const glm::vec3 &b) -> bool { return a.contains(b); }
 
     auto getCollisionPoint(const BoundingBox &a, const BoundingBox &b) -> glm::vec3 {

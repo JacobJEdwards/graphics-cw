@@ -49,6 +49,8 @@ add_executable(CW main.cpp
         Engine/physics/Spline.cpp
         Engine/Entity.cpp
         Engine/Entity.h
+        Engine/ImmovableObject.cpp
+        Engine/ImmovableObject.h
 )
 
 # Link libraries

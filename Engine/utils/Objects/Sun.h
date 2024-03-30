@@ -17,50 +17,74 @@
 #include "utils/Shader.h"
 #include "utils/ShaderManager.h"
 #include "imgui/imgui.h"
+#include "Entity.h"
 
-class Sun {
+class Sun : public Entity {
 public:
-    Sun() {
-        auto shader = ShaderManager::Get("Sun");
-        model.setShader(shader);
+    Sun() : Entity("../Assets/objects/sun/sun.obj") {
+        shader = ShaderManager::Get("Sun");
+
         auto transform = Config::IDENTITY_MATRIX;
         transform = glm::scale(transform, glm::vec3(scale));
-        model.transform(transform);
-        model.attributes.position.z = -50.0F; // Sun typically appears farther away
+
+        Entity::transform(transform);
+
+        attributes.position.x = 0.0F;
+        attributes.position.y = 0.0F;
+        attributes.position.z = -50.0F;
     };
 
-    void update(const float dt) {
+    void update(float deltaTime) override {
+
         if (!move) {
             return;
         }
 
-        angle += 0.05F * dt;
-        float orbitRadius = 100.0F;
-        float height = 20.0F;
-        float x = orbitRadius * std::cos(angle);
-        float y = orbitRadius * std::sin(angle);
-        float z = height * std::sin(0.5 * angle);
+        attributes.update(deltaTime * 10);
 
-        model.attributes.position.x = x;
-        model.attributes.position.y = y;
-        model.attributes.position.z = z;
-        model.update(dt);
+        angle += 0.05F * deltaTime * 10;
+        const float orbitRadius = 100.0F;
+        const float height = 20.0F;
+        const float x = orbitRadius * std::cos(angle);
+        const float y = orbitRadius * std::sin(angle);
+        const float z = height * std::sin(0.5 * angle);
+
+
+        attributes.position.x = x;
+        attributes.position.y = y;
+        attributes.position.z = z;
+
+        // if y pos near horizon, increase scale
+        if (y < 1.0F) {
+            scale = scale + 0.0001F;
+        } else {
+            scale = 0.005F;
+        }
+
+
     }
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection) {
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override {
+
+        GLenum prevDepthFunc;
+        glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint *>(&prevDepthFunc));
+
         glDepthFunc(GL_LEQUAL);
 
         const auto newView = glm::mat4(glm::mat3(view));
-        model.draw(view, projection);
 
-        glDepthFunc(GL_LESS);
+        Entity::draw(newView, projection);
+
+        glDepthFunc(prevDepthFunc);
     }
 
-    void setPosition(const glm::vec3 &pos) { model.attributes.position = pos; }
+    void setPosition(const glm::vec3 &pos) { attributes.position = pos; }
+
+    [[nodiscard]] auto getDirection() const -> glm::vec3 { return glm::normalize(attributes.position); }
 
     void setScale(const float newScale) { scale = newScale; }
 
-    [[nodiscard]] auto getPosition() const -> glm::vec3 { return model.attributes.position; }
+    [[nodiscard]] auto getPosition() const -> glm::vec3 { return attributes.position; }
 
     void interface() {
         ImGui::Begin("Sun");
@@ -69,9 +93,7 @@ public:
     }
 
 private:
-    Model model = Model("../Assets/objects/sun/sun.obj");
-
-    float scale = 0.01F; // Increase scale to make it more visible
+    float scale = 0.005F;
     float angle = 0.0F;
     bool move = true;
 };

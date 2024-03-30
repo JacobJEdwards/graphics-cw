@@ -177,6 +177,30 @@ Engine/Entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/Entity.cpp.s
 .PHONY : Engine/Entity.cpp.s
 
+Engine/ImmovableObject.o: Engine/ImmovableObject.cpp.o
+.PHONY : Engine/ImmovableObject.o
+
+# target to build an object file
+Engine/ImmovableObject.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/ImmovableObject.cpp.o
+.PHONY : Engine/ImmovableObject.cpp.o
+
+Engine/ImmovableObject.i: Engine/ImmovableObject.cpp.i
+.PHONY : Engine/ImmovableObject.i
+
+# target to preprocess a source file
+Engine/ImmovableObject.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/ImmovableObject.cpp.i
+.PHONY : Engine/ImmovableObject.cpp.i
+
+Engine/ImmovableObject.s: Engine/ImmovableObject.cpp.s
+.PHONY : Engine/ImmovableObject.s
+
+# target to generate assembly for a file
+Engine/ImmovableObject.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/ImmovableObject.cpp.s
+.PHONY : Engine/ImmovableObject.cpp.s
+
 Engine/View.o: Engine/View.cpp.o
 .PHONY : Engine/View.o
 
@@ -984,6 +1008,9 @@ help:
 	@echo "... Engine/Entity.o"
 	@echo "... Engine/Entity.i"
 	@echo "... Engine/Entity.s"
+	@echo "... Engine/ImmovableObject.o"
+	@echo "... Engine/ImmovableObject.i"
+	@echo "... Engine/ImmovableObject.s"
 	@echo "... Engine/View.o"
 	@echo "... Engine/View.i"
 	@echo "... Engine/View.s"

@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <utility>
 #include <filesystem>
+#include <vector>
 #include "utils/Shader.h"
 #include "utils/BoundingBox.h"
 #include "utils/ShaderManager.h"
@@ -19,9 +20,9 @@ class Entity : public Renderable {
 public:
     Entity() = default;
 
-    Entity(const std::filesystem::path &path);
+    explicit Entity(const std::filesystem::path &path);
 
-    virtual ~Entity() = default;
+    ~Entity() override = default;
 
     Entity(const Entity &other) = delete;
 
@@ -32,11 +33,11 @@ public:
     auto operator=(Entity &&other) noexcept -> Entity & = default;
 
 
-    void update(float deltaTime) override;
+    virtual void update(float deltaTime);
 
-    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) override;
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    virtual void draw(std::shared_ptr<Shader> shader) const override;
+    void draw(std::shared_ptr<Shader> shader) const override;
 
     [[nodiscard]] auto getModel() const -> const Model &;
 

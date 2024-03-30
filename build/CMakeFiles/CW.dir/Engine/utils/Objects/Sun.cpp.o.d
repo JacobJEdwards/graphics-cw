@@ -1199,4 +1199,5 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h
