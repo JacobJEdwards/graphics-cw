@@ -194,20 +194,28 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat,
 }
 
 [[nodiscard]] auto Model::getBoundingBox() const -> BoundingBox {
+    // add children
     auto min = glm::vec3(std::numeric_limits<float>::max());
     auto max = glm::vec3(std::numeric_limits<float>::min());
 
-    std::vector<std::unique_ptr<BoundingBox>> children(meshes.size());
+    std::vector<BoundingBox> children(meshes.size());
 
     for (const auto &mesh: meshes) {
         auto meshBox = mesh->getBoundingBox();
         auto [meshMin, meshMax] = meshBox.getMinMax();
 
-        children.push_back(std::make_unique<BoundingBox>(meshBox));
+        children.push_back(meshBox);
 
         min = glm::min(min, meshMin);
         max = glm::max(max, meshMax);
     }
 
-    return BoundingBox(min, max);
+    BoundingBox box(min, max);
+
+    for (const auto &child: children) {
+        auto c = std::make_unique<BoundingBox>(child.getMin(), child.getMax());
+        box.addChild(c);
+    }
+
+    return box;
 }

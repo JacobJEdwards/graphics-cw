@@ -7800,7 +7800,6 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iomanip
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ios
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iosfwd
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/istream
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iterator
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits
@@ -7854,7 +7853,6 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_malloc_type.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_ptrcheck.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/math.h
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/nl_types.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/os/availability.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/pthread.h
@@ -7971,34 +7969,16 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o
  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdarg.h
  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h
  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/FrameBuffer.h
  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h
  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/shapes/Plane.h
  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h
  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h
  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h
  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h
- /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h
  /opt/homebrew/include/GL/glew.h
  /opt/homebrew/include/GLFW/glfw3.h
  /opt/homebrew/include/assimp/Compiler/poppack1.h
  /opt/homebrew/include/assimp/Compiler/pushpack1.h
- /opt/homebrew/include/assimp/Importer.hpp
  /opt/homebrew/include/assimp/MathFunctions.h
  /opt/homebrew/include/assimp/aabb.h
  /opt/homebrew/include/assimp/anim.h
@@ -8025,7 +8005,6 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o
  /opt/homebrew/include/assimp/vector2.inl
  /opt/homebrew/include/assimp/vector3.h
  /opt/homebrew/include/assimp/vector3.inl
- /opt/homebrew/include/glfw/glfw3.h
  /opt/homebrew/include/glm/common.hpp
  /opt/homebrew/include/glm/detail/qualifier.hpp
  /opt/homebrew/include/glm/detail/setup.hpp
@@ -8195,9 +8174,6 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o
  /opt/homebrew/include/glm/detail/type_vec4.hpp
  /opt/homebrew/include/glm/detail/type_vec4.inl
  /opt/homebrew/include/glm/exponential.hpp
- /opt/homebrew/include/glm/ext/matrix_float4x4.hpp
- /opt/homebrew/include/glm/ext/vector_float3.hpp
- /opt/homebrew/include/glm/ext/vector_float4.hpp
  /opt/homebrew/include/glm/fwd.hpp
  /opt/homebrew/include/glm/geometric.hpp
  /opt/homebrew/include/glm/glm.hpp
@@ -20556,6 +20532,7 @@ CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/array
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/atomic
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/bit
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/bitset
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cassert
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cctype
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cerrno
@@ -20583,6 +20560,8 @@ CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/initializer_list
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ios
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iosfwd
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/istream
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iterator
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits.h
@@ -20593,6 +20572,7 @@ CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/mutex
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/new
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/optional
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ostream
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ratio
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stddef.h

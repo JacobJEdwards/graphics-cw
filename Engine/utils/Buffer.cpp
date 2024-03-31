@@ -3,11 +3,26 @@
 //
 
 #include "Buffer.h"
+#include <initializer_list>
+#include <span>
+#include <iostream>
+#include <GL/glew.h>
+#include <vector>
+#include "utils/Vertex.h"
 
 Buffer::Buffer() {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
+}
+
+Buffer::~Buffer() {
+    /*
+    std::cout << "Buffer destructor called" << std::endl;
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+        */
 }
 
 void Buffer::fill(std::initializer_list<Vertex::Data> vertices,
@@ -36,9 +51,13 @@ void Buffer::fill(std::span<const Vertex::Data> vertices) {
     setup();
 }
 
-void Buffer::bind() const { glBindVertexArray(VAO); }
+void Buffer::bind() const {
+    glBindVertexArray(VAO);
+}
 
-void Buffer::unbind() const { glBindVertexArray(0); }
+void Buffer::unbind() const {
+    glBindVertexArray(0);
+}
 
 void Buffer::draw() const {
     if (!data.indices.empty()) {

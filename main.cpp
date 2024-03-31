@@ -27,7 +27,6 @@
 #include "utils/Objects/InfinitePlane.h"
 #include "utils/Objects/Player.h"
 #include "utils/Objects/Skybox.h"
-#include "utils/Objects/Sun.h"
 #include "utils/ShaderManager.h"
 #include "graphics/ShadowBuffer.h"
 #include "Entity.h"
@@ -88,7 +87,7 @@ auto main() -> int {
     };
 
     Skybox skybox(skyboxFaces);
-    Skydome skydome;
+    // Skydome skydome;
     InfinitePlane terrain;
 
     Texture::Loader::setFlip(false);
@@ -172,6 +171,7 @@ auto main() -> int {
 
     model2.transform(backpackModel);
 
+
     const int numPoints = 10;
     std::vector<glm::vec3> points(numPoints);
 
@@ -182,7 +182,9 @@ auto main() -> int {
         points[i] = pos;
     }
 
-    ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
+    // ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
+
+    ShadowBuffer shadowBuffer = ShadowBuffer(10000, 10000);
     App::view.setPipeline([&]() {
         View::clearTarget(Color::BLACK);
         auto player = PlayerManager::GetCurrent();
@@ -212,7 +214,7 @@ auto main() -> int {
         View::clearTarget(Color::BLACK);
         shader = ShaderManager::Get("Base");
         shader->use();
-        shader->setUniform("light.position", skydome.getSun().getPosition());
+        shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
         auto texture = shadowBuffer.getTexture();
@@ -222,9 +224,10 @@ auto main() -> int {
         newModel.draw(viewMatrix, projectionMatrix);
         model2.draw(viewMatrix, projectionMatrix);
 
+
         shader = ShaderManager::Get("Terrain");
         shader->use();
-        shader->setUniform("light.position", skydome.getSun().getPosition());
+        shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform("projection", projectionMatrix);
         shader->setUniform("view", viewMatrix);
@@ -242,7 +245,7 @@ auto main() -> int {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
 
-        shader->setUniform("light.position", skydome.getSun().getPosition());
+        shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
         // skydome.draw(viewMatrix, projectionMatrix);

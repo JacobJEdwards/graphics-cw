@@ -1189,28 +1189,4 @@ CMakeFiles/CW.dir/Engine/graphics/Mesh.cpp.o: \
   /opt/homebrew/include/GLFW/glfw3.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
-  /opt/homebrew/include/glm/ext/vector_float3.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
-  /opt/homebrew/include/glm/ext/vector_float4.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/FrameBuffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/shapes/Plane.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h \
-  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
-  /opt/homebrew/include/assimp/Importer.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
-  /opt/homebrew/include/glfw/glfw3.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h

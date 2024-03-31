@@ -8,18 +8,16 @@
 #include "utils/BoundingBox.h"
 #include "utils/Shader.h"
 #include "utils/Vertex.h"
-#include "App.h"
 #include <GL/glew.h>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
-#include "utils/ShaderManager.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
-           std::vector<Texture::Data> textures, const BoundingBox &box)
-        : textures(std::move(textures)), box(box) {
+           std::vector<Texture::Data> textures, BoundingBox box)
+        : textures(std::move(textures)), box(std::move(box)) {
     buffer.fill(std::move(vertices), std::move(indices));
 }
 
@@ -85,34 +83,4 @@ void Mesh::draw() const {
     buffer.unbind();
 }
 
-auto Mesh::detectCollisions(const glm::vec3 &position) const -> bool {
-    return box.contains(position);
-}
-
-auto Mesh::getCentre() const -> glm::vec3 { return box.getCenter(); }
-
-auto Mesh::getOffset(const glm::vec3 &point) const -> glm::vec3 {
-    return box.getOffset(point);
-}
-
-auto Mesh::getOffset(const BoundingBox &other) const -> glm::vec3 {
-    return box.getOffset(other);
-}
-
 auto Mesh::getBoundingBox() const -> BoundingBox { return box; }
-
-auto Mesh::isColliding(const BoundingBox &other) const -> bool {
-    return box.collides(other);
-}
-
-void Mesh::translate(const glm::vec3 &translation) {
-    box.translate(translation);
-}
-
-void Mesh::transform(const glm::mat4 &transform) { box.transform(transform); }
-
-void Mesh::scale(const glm::vec3 &scale) { box.scale(scale); }
-
-void Mesh::rotate(const glm::vec3 &axis, float angle) {
-    box.rotate(axis, angle);
-}

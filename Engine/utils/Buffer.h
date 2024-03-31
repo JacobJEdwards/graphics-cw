@@ -29,6 +29,8 @@ public:
 
     Buffer();
 
+    ~Buffer();
+
     void fill(std::initializer_list<Vertex::Data> vertices, std::initializer_list<GLuint> indices);
 
     void fill(std::span<const Vertex::Data> vertices, std::span<const GLuint> indices);

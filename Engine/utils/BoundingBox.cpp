@@ -101,6 +101,10 @@ void BoundingBox::transform(const glm::mat4 &model) {
     // Transform the min and max points by the model
     min = glm::vec3(model * glm::vec4(min, 1.0F));
     max = glm::vec3(model * glm::vec4(max, 1.0F));
+
+    for (const auto &child: children) {
+        child->transform(model);
+    }
 }
 
 auto BoundingBox::collides(const BoundingBox &other) const -> bool {
@@ -327,19 +331,11 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
         buffer.bind();
         buffer.draw();
         buffer.unbind();
-    } else {
-        shader->setUniform("model", model);
-        buffer.bind();
-        buffer.draw();
-        buffer.unbind();
-    }
 
-    for (const auto &child: children) {
-        if (App::debug) {
+        for (const auto &child: children) {
             child->draw(model, view, projection);
-        } else {
-            child->draw();
         }
+
     }
 
     glUseProgram(previousProgram);
