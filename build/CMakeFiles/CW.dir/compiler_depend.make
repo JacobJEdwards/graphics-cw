@@ -11468,7 +11468,10 @@ CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.o: /Users/jacobedwards/Unive
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/shapes/Plane.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /opt/homebrew/include/GL/glew.h \
   /opt/homebrew/include/GLFW/glfw3.h \
   /opt/homebrew/include/glm/common.hpp \

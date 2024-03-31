@@ -7,14 +7,14 @@ uniform sampler2D screenTexture;
 uniform vec3 sunPosition;
 uniform vec3 viewPos;
 
-const float gamma = 2.2;
-const float exposure = 1.0;
-const float contrast = 1.2;// Adjusted contrast for better visibility
-const float saturation = 1.5;// Increased saturation for more vibrant colors
-const float brightness = 1.0;
+uniform float gamma = 2.2;
+uniform float exposure = 1.0;
+uniform float contrast = 1.2;// Adjusted contrast for better visibility
+uniform float saturation = 1.5;// Increased saturation for more vibrant colors
+uniform float brightness = 1.0;
 
-const float bloomThreshold = 0.7;
-const float bloomIntensity = 1.5;
+const float bloomThreshold = 0.98;
+const float bloomIntensity = 1.1;
 const float vignetteStrength = 0.3;
 
 const vec3 orangeTint = vec3(1.0, 0.5, 0.2);
@@ -58,7 +58,7 @@ void main() {
     color.rgb = applyContrast(color.rgb);
     color.rgb = applySaturation(color.rgb);
     color.rgb = applyBrightness(color.rgb);
-    // color.rgb = applyBloom(color.rgb);
+    color.rgb = applyBloom(color.rgb);
 
     float sunsetFactor = max(dot(normalize(sunPosition), vec3(0, -1, 0)), 0.0);
     color.rgb = mix(color.rgb, color.rgb * orangeTint, sunsetFactor);

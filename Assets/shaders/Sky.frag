@@ -12,23 +12,23 @@ uniform vec3 sunPos = vec3(0.0, 100.0, 0.0);// Position of the sun
 
 uniform vec3 horizonColor = vec3(0.5, 0.6, 0.7);// Color of the horizon
 uniform vec3 zenithColor = vec3(0.4, 0.7, 1.0);// Color of the zenith (top of the sky)
-uniform vec3 cloudColor = vec3(1.0, 1.0, 1.0);// Color of clouds
+uniform vec4 cloudColor = vec4(1.0, 1.0, 1.0, 0.95);
 
 uniform float cloudCover = 0.6;// Amount of cloud cover
 uniform float cloudSharpness = 0.5;// Sharpness of the clouds
 uniform float cloudDensity = 0.6;// Density of the clouds
 uniform float cloudScale = 0.02;// Scale of the clouds
-uniform float cloudSpeed = 0.01;// Speed of cloud movement
+uniform float cloudSpeed = 0.005;// Speed of cloud movement
 
 uniform float sunSize = 8.0;// Size of the sun
-uniform float sunSharpness = 50.0;// Sharpness of the sun
+uniform float sunSharpness = 30.0;// Sharpness of the sun
 uniform float sunIntensity =  1.5;// Intensity of sunlight
 
-uniform float horizonHeight = 0.4;// Height of the horizon
-uniform float horizonSharpness = 0.3;// Sharpness of the horizon
+uniform float horizonHeight = 0.2;// Height of the horizon
+uniform float horizonSharpness = 0.9;// Sharpness of the horizon
 
-uniform float zenithHeight = 0.3;// Height of the zenith
-uniform float zenithSharpness = 0.3;// Sharpness of the zenith
+uniform float zenithHeight = 0.8;// Height of the zenith
+uniform float zenithSharpness = 0.9;// Sharpness of the zenith
 
 uniform vec3 skyColor = vec3(0.5, 0.6, 0.7);
 
@@ -83,14 +83,14 @@ void main() {
     float cloudAmount = pow(max(0.0, 1.0 - FragPos.y), cloudSharpness);
     float cloudNoise = fbm(FragPos * cloudScale + vec3(0.0, time * cloudSpeed, 0.0));
     float cloudDensityFactor = cloudDensity * cloudCover;
-    vec3 cloud = cloudColor * cloudAmount * cloudNoise * cloudDensityFactor;
+    vec4 cloud = cloudColor * cloudAmount * cloudNoise * cloudDensityFactor;
 
     // darkening the sky at the zenith
     float zenithFactor = pow(max(0.0, FragPos.y), zenithSharpness);
     finalSkyColor = mix(finalSkyColor, zenithColor, zenithFactor);
 
     finalSkyColor = mix(finalSkyColor, vec3(0.001, 0.001, 0.001), 1.0 - sunHeightFactor);
-    cloud = mix(cloud, vec3(0.0, 0.0, 0.0), 1.0 - sunHeightFactor);
+    cloud = mix(cloud, vec4(0.0, 0.0, 0.0, 0.0), 1.0 - sunHeightFactor);
 
     // stars
     float starProb = step(hash(FragPosWorld.x * 0.1 + FragPosWorld.y * 0.1), starDensity);
@@ -100,5 +100,11 @@ void main() {
 
     finalSkyColor += sun;
 
-    FragColor = vec4(finalSkyColor + cloud + stars, 1.0);
+    // make clouds slightly transparent
+    finalSkyColor = mix(finalSkyColor, cloud.rgb, cloud.a);
+
+    // add stars
+    finalSkyColor += stars;
+
+    FragColor = vec4(finalSkyColor, 1.0);
 }

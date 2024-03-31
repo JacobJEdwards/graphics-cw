@@ -90,10 +90,12 @@ auto main() -> int {
     // Skydome skydome;
     InfinitePlane terrain;
 
-    Texture::Loader::setFlip(false);
+    // this one works
+    Texture::Loader::setFlip(true);
     Entity newModel("../Assets/objects/bumpercar1/bumper-car.obj");
     newModel.getAttributes().mass = 2.0F;
-    Texture::Loader::setFlip(true);
+    Texture::Loader::setFlip(false);
+
     Entity model2("../Assets/objects/bumpercar2/bumper-car.obj");
     model2.getAttributes().mass = 2.0F;
     Texture::Loader::setFlip(false);

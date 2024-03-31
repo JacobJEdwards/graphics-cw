@@ -101,11 +101,8 @@ auto View::init(const std::string &title, int width, int height) -> bool {
     ImGui::StyleColorsDark();
     setup = true;
 
-    auto postProcessingShader =
-            std::make_shared<Shader>("../assets/shaders/postProcessing.vert",
-                                     "../assets/shaders/postProcessing.frag");
     postProcessor = std::make_unique<PostProcess>(
-            WIDTH, HEIGHT, postProcessingShader, multiSample);
+            WIDTH, HEIGHT);
 
     return true;
 }
@@ -241,17 +238,10 @@ auto View::getKey(int key) const -> int { return glfwGetKey(window, key); }
 
 void View::optionsInterface() {
     ImGui::Begin("View Options");
-    ImGui::Checkbox("Post Processing", &postProcessorEnabled);
+    // ImGui::Checkbox("Post Processing", &postProcessorEnabled);
 
-    if (postProcessorEnabled) {
-        bool sample = multiSample;
-        ImGui::Checkbox("Multi Sample", &sample);
-
-        if (sample != multiSample) {
-            multiSample = sample;
-            postProcessor = std::make_unique<PostProcess>(
-                    WIDTH, HEIGHT, postProcessor->getShader(), multiSample);
-        }
+    postProcessor->interface();
+    if (ImGui::Checkbox("Post Processing", &postProcessorEnabled)) {
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     } else {

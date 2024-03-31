@@ -37,6 +37,8 @@ public:
 
     void resize(unsigned int width, unsigned int height);
 
+    void setMultisampled(bool multisampled);
+
 protected:
     void setup();
 

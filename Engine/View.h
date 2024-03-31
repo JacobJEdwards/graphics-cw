@@ -112,7 +112,6 @@ private:
     ImGuiIO io;
 
     std::unique_ptr<PostProcess> postProcessor;
-    bool multiSample = true;
     bool postProcessorEnabled = true;
 
     bool showInterface = true;

@@ -8,7 +8,7 @@
 
 class PostProcess {
 public:
-    PostProcess(unsigned int width, unsigned int height, const std::shared_ptr<Shader> &shader,
+    PostProcess(unsigned int width, unsigned int height,
                 bool multisampled = true);
 
     void render();
@@ -29,6 +29,10 @@ public:
 
     void resize(unsigned int width, unsigned int height);
 
+    void interface();
+
+    void setMultisampled(bool multisampled);
+
 private:
     std::shared_ptr<Shader> shader;
     std::shared_ptr<FrameBuffer> frameBuffer;
@@ -37,6 +41,15 @@ private:
 
     unsigned int width;
     unsigned int height;
+
+    bool multisampled = true;
+
+    float gamma = 2.2;
+    float exposure = 1.0;
+    float contrast = 1.2;// Adjusted contrast for better visibility
+    float saturation = 1.5;// Increased saturation for more vibrant colors
+    float brightness = 1.0;
+
 };
 
 #endif // POSTPROCESS_H
