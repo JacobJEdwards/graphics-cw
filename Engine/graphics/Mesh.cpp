@@ -18,7 +18,8 @@
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
            std::vector<Texture::Data> textures, BoundingBox box)
         : textures(std::move(textures)), box(std::move(box)) {
-    buffer.fill(std::move(vertices), std::move(indices));
+    buffer = std::make_unique<Buffer>();
+    buffer->fill(std::move(vertices), std::move(indices));
 }
 
 void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
@@ -70,17 +71,17 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
                            static_cast<GLint>(i));
     }
 
-    buffer.bind();
-    buffer.draw();
-    buffer.unbind();
+    buffer->bind();
+    buffer->draw();
+    buffer->unbind();
 
     glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::draw() const {
-    buffer.bind();
-    buffer.draw();
-    buffer.unbind();
+    buffer->bind();
+    buffer->draw();
+    buffer->unbind();
 }
 
 auto Mesh::getBoundingBox() const -> BoundingBox { return box; }

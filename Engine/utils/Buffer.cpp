@@ -17,12 +17,10 @@ Buffer::Buffer() {
 }
 
 Buffer::~Buffer() {
-    /*
     std::cout << "Buffer destructor called" << std::endl;
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
-        */
 }
 
 void Buffer::fill(std::initializer_list<Vertex::Data> vertices,

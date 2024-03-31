@@ -18,8 +18,9 @@ struct Particle : public Renderable {
     float life = 0.0F;
 
     Particle() {
+        buffer = std::make_unique<Buffer>();
         shader = ShaderManager::Get("Particle");
-        buffer.fill(vertices, indices);
+        buffer->fill(vertices, indices);
     };
 
     void update(float deltaTime) {
@@ -28,7 +29,7 @@ struct Particle : public Renderable {
     };
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override {
-        buffer.bind();
+        buffer->bind();
 
         shader->use();
         shader->setUniform("view", view);
@@ -37,11 +38,11 @@ struct Particle : public Renderable {
         shader->setUniform("color", color);
         shader->setUniform("life", life);
 
-        buffer.draw();
-        buffer.unbind();
+        buffer->draw();
+        buffer->unbind();
     };
 private:
-    Buffer buffer;
+    std::unique_ptr<Buffer> buffer;
 
     const std::vector<Vertex::Data> vertices = {
             Vertex::Data(glm::vec3(-0.5F, -0.5F, 0.0F), glm::vec2(0.0F, 0.0F)),

@@ -218,14 +218,12 @@ auto main() -> int {
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
         auto texture = shadowBuffer.getTexture();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
 
         newModel.draw(viewMatrix, projectionMatrix);
         model2.draw(viewMatrix, projectionMatrix);
 
+        shader = terrain.getShader();
 
-        shader = ShaderManager::Get("Terrain");
         shader->use();
         shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
@@ -234,21 +232,15 @@ auto main() -> int {
         shader->setUniform("shadowMap", 0);
         shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
 
-        texture = shadowBuffer.getTexture();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
 
-        shader = terrain.getShader();
+        shader = ShaderManager::Get("PostProcess");
         shader->use();
-
-        texture = shadowBuffer.getTexture();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-
-        shader->setUniform("light.position", skybox.getSun().getPosition());
+        shader->setUniform("screenTexture", 0);
+        shader->setUniform("sunPosition", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
-        // skydome.draw(viewMatrix, projectionMatrix);
         terrain.draw(viewMatrix, projectionMatrix);
         skybox.draw(viewMatrix, projectionMatrix);
         PlayerManager::Draw(viewMatrix, projectionMatrix);

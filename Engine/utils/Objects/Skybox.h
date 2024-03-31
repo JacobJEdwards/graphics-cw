@@ -81,7 +81,8 @@ private:
 class Skybox : public Renderable {
 public:
     explicit Skybox(std::span<const std::string, NUM_FACES> faces) {
-        buffer.fill(vertices, indices);
+        buffer = std::make_unique<Buffer>();
+        buffer->fill(vertices, indices);
 
         shader = ShaderManager::Get("Sky");
         shader->use();
@@ -99,9 +100,9 @@ public:
         shader->use();
         shader->setUniform("skybox", 0);
 
-        buffer.bind();
-        buffer.draw();
-        buffer.unbind();
+        buffer->bind();
+        buffer->draw();
+        buffer->unbind();
     }
 
     [[nodiscard]] auto getSun() -> Sun & {
@@ -125,11 +126,11 @@ public:
         shader->setUniform("view", newView);
         shader->setUniform("projection", projection);
 
-        buffer.bind();
+        buffer->bind();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP, texture.id);
-        buffer.draw();
-        buffer.unbind();
+        buffer->draw();
+        buffer->unbind();
 
         glDepthFunc(prevDepthFunc);
 
@@ -141,7 +142,7 @@ private:
     Moon moon;
 
     Texture::Data texture;
-    Buffer buffer;
+    std::unique_ptr<Buffer> buffer;
 
     const std::array<Vertex::Data, NUM_VERTEX> vertices = {
             Vertex::Data{glm::vec3(-1.0F, 1.0F, -1.0F)},

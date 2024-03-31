@@ -31,7 +31,7 @@ private:
 
     BoundingBox box{glm::vec3(0.0F), glm::vec3(0.0F)};
 
-    Buffer buffer;
+    std::unique_ptr<Buffer> buffer;
 };
 
 #endif // CW_MESH_H

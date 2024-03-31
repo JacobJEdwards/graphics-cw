@@ -106,7 +106,7 @@ private:
     glm::vec3 min;
     glm::vec3 max;
 
-    Buffer buffer;
+    std::unique_ptr<Buffer> buffer;
 
     std::vector<std::unique_ptr<BoundingBox>> children = {};
     BoundingBox *parent = nullptr;

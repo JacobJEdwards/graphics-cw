@@ -8,16 +8,20 @@
 
 class Plane {
 public:
-    Plane() { buffer.fill(vertices); }
+    Plane() {
+        buffer = std::make_unique<Buffer>();
+        buffer->fill(vertices);
+    }
 
     void draw() const {
-        buffer.bind();
-        buffer.draw();
-        buffer.unbind();
+        buffer->bind();
+        buffer->draw();
+        buffer->unbind();
     }
 
 private:
-    Buffer buffer;
+    std::unique_ptr<Buffer> buffer;
+
     std::vector<Vertex::Data> vertices{
             Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},
             Vertex::Data{glm::vec3(-1.0F, -1.0F, 0.0F), glm::vec2(0.0F, 0.0F)},

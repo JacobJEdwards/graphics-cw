@@ -36,7 +36,7 @@ BoundingBox::BoundingBox(const aiVector3D &min, const aiVector3D &max)
 BoundingBox::BoundingBox(const BoundingBox &other) {
     min = other.min;
     max = other.max;
-    buffer = other.buffer;
+    buffer = std::make_unique<Buffer>(*other.buffer);
     children.clear();
     for (const auto &child: other.children) {
         children.push_back(std::make_unique<BoundingBox>(*child));
@@ -51,7 +51,7 @@ auto BoundingBox::operator=(const BoundingBox &other) -> BoundingBox & {
     if (this != &other) {
         min = other.min;
         max = other.max;
-        buffer = other.buffer;
+        buffer = std::make_unique<Buffer>(*other.buffer);
 
         children.clear();
         for (const auto &child: other.children) {
@@ -272,10 +272,10 @@ void BoundingBox::expand(const BoundingBox &other) {
 }
 
 void BoundingBox::initBuffer() {
-    buffer = Buffer();
-    buffer.drawMode = GL_LINES;
+    buffer = std::make_unique<Buffer>();
+    buffer->drawMode = GL_LINES;
 
-    std::vector<Vertex::Data> vertices = {
+    const std::vector<Vertex::Data> vertices = {
             {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
             {{max.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
             {{max.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
@@ -286,12 +286,12 @@ void BoundingBox::initBuffer() {
             {{min.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
     };
 
-    std::vector<GLuint> indices = {
+    const std::vector<GLuint> indices = {
             0, 1, 2, 2, 3, 0, 1, 5, 6, 6, 2, 1, 5, 4, 7, 7, 6, 5,
             4, 0, 3, 3, 7, 4, 3, 2, 6, 6, 7, 3, 4, 5, 1, 1, 0, 4,
     };
 
-    buffer.fill(vertices, indices);
+    buffer->fill(vertices, indices);
 }
 
 void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
@@ -307,8 +307,8 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
 
     if (App::debug) {
         shader->setUniform("model", Config::IDENTITY_MATRIX);
-        Buffer buffer;
-        buffer.drawMode = GL_LINES;
+        auto buffer = std::make_unique<Buffer>();
+        buffer->drawMode = GL_LINES;
 
         std::vector<Vertex::Data> vertices = {
                 {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
@@ -326,11 +326,11 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
                 4, 0, 3, 3, 7, 4, 3, 2, 6, 6, 7, 3, 4, 5, 1, 1, 0, 4,
         };
 
-        buffer.fill(vertices, indices);
+        buffer->fill(vertices, indices);
 
-        buffer.bind();
-        buffer.draw();
-        buffer.unbind();
+        buffer->bind();
+        buffer->draw();
+        buffer->unbind();
 
         for (const auto &child: children) {
             child->draw(model, view, projection);
@@ -342,9 +342,9 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
 }
 
 void BoundingBox::draw() const {
-    buffer.bind();
-    buffer.draw();
-    buffer.unbind();
+    buffer->bind();
+    buffer->draw();
+    buffer->unbind();
 }
 
 auto BoundingBox::getCollisionPoint(const BoundingBox &box) const -> glm::vec3 {
