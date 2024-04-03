@@ -45,11 +45,11 @@ void Player::processKeyboard(const Direction direction, const float deltaTime) {
             if (mode == Mode::FPS) {
                 jump();
             } else {
-                attributes.applyForce(up * 10.0F);
+                attributes.applyForce(glm::vec3(0.0F, 10.0F, 0.0F));
             }
             break;
         case Direction::DOWN:
-            attributes.applyForce(-up * 10.0F);
+            attributes.applyForce(glm::vec3(0.0F, -10.0F, 0.0F));
             break;
     }
 }

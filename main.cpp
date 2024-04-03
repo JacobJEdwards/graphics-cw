@@ -4,24 +4,26 @@
 #include <GLFW/glfw3.h>
 
 #include <array>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/scalar_constants.hpp>
+#include <glm/ext/scalar_constants.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <memory>
 #include <string>
 
 #include <glm/ext/matrix_transform.hpp>
-#include <glm/glm.hpp>
 #include <vector>
 
 #include "Config.h"
 #include "physics/Spline.h"
 
 #include "App.h"
-#include "physics/Constants.h"
 #include "utils/Camera.h"
 #include "utils/PlayerManager.h"
 
 #include "graphics/Color.h"
-#include "graphics/Model.h"
 #include "graphics/Texture.h"
 #include "physics/Collisions.h"
 #include "utils/Objects/InfinitePlane.h"
@@ -30,149 +32,66 @@
 #include "utils/ShaderManager.h"
 #include "graphics/ShadowBuffer.h"
 #include "Entity.h"
+#include "utils/Objects/ProceduralTerrain.h"
+#include "graphics/Particle.h"
+
+const std::array<std::string, 6> skyboxFaces{
+        "../Assets/textures/skybox/right.jpg",
+        "../Assets/textures/skybox/left.jpg",
+        "../Assets/textures/skybox/top.jpg",
+        "../Assets/textures/skybox/bottom.jpg",
+        "../Assets/textures/skybox/front.jpg",
+        "../Assets/textures/skybox/back.jpg",
+};
 
 void processInput();
 
-/* TODO
- * eneity class rather than all responsibilities in model
- * player extends from entity
- * entity contains model, attributes, bounding box ?
- * entity has update, draw, interface
- * entity has physics
- * entity has collision detection
- * entity has shader
- */
+void setupApp();
+
+void setupShaders();
+
+void setupPlayers();
 
 auto main() -> int {
-    App::window("Coursework", Config::DEFAULT_WIDTH, Config::DEFAULT_HEIGHT);
-    App::init();
-
-    App::view.setKey(processInput);
-    App::view.setMouse([&] {
-        if (!App::paused) {
-            PlayerManager::GetCurrent()->getCamera().processMouseMovement(
-                    App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
-        }
-    });
-
-    App::view.setScroll([&] {
-        PlayerManager::GetCurrent()->getCamera().processMouseScroll(
-                App::view.getScrollY());
-    });
-
-    App::view.setResize([&] {
-        PlayerManager::SetAspect(static_cast<float>(App::view.getWidth()) /
-                                 static_cast<float>(App::view.getHeight()));
-        glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
-                   static_cast<GLsizei>(App::view.getHeight()));
-    });
-
-    ShaderManager::Add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
-    ShaderManager::Add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
-    ShaderManager::Add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
-    ShaderManager::Add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");
-    ShaderManager::Add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
-    ShaderManager::Add("Terrain", "../Assets/shaders/infinitePlane.vert", "../Assets/shaders/infinitePlane.frag");
-    ShaderManager::Add("Player", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
-    ShaderManager::Add("BoundingBox", "../Assets/shaders/boundingBox.vert", "../Assets/shaders/boundingBox.frag");
-    ShaderManager::Add("Shadow", "../Assets/shaders/shadow.vert", "../Assets/shaders/shadow.frag");
-
-    const std::array<std::string, 6> skyboxFaces{
-            "../Assets/textures/skybox/right.jpg",
-            "../Assets/textures/skybox/left.jpg",
-            "../Assets/textures/skybox/top.jpg",
-            "../Assets/textures/skybox/bottom.jpg",
-            "../Assets/textures/skybox/front.jpg",
-            "../Assets/textures/skybox/back.jpg",
-    };
+    setupApp();
+    setupShaders();
 
     Skybox skybox(skyboxFaces);
-    // Skydome skydome;
+    ProceduralTerrain newTerrain;
     InfinitePlane terrain;
+    Skydome skydome;
 
-    // this one works
     Texture::Loader::setFlip(true);
     Entity newModel("../Assets/objects/bumpercar1/bumper-car.obj");
     newModel.getAttributes().mass = 2.0F;
-    Texture::Loader::setFlip(false);
 
     Entity model2("../Assets/objects/bumpercar2/bumper-car.obj");
     model2.getAttributes().mass = 2.0F;
     Texture::Loader::setFlip(false);
 
-    auto orbit = std::make_shared<Player>();
-    orbit->shouldDraw(false);
-    orbit->getCamera().setMode(Camera::Mode::ORBIT);
-    orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F);
-    orbit->getAttributes().gravityAffected = false;
-    PlayerManager::Add("Orbit", orbit);
+    setupPlayers();
 
-    auto free = std::make_shared<Player>();
-    free->shouldDraw(true);
-    free->setMode(Player::Mode::FREE);
-    free->getAttributes().gravityAffected = false;
-    PlayerManager::Add("Free", free);
-
-    auto fps = std::make_shared<Player>();
-    fps->shouldDraw(true);
-    fps->setMode(Player::Mode::FPS);
-    PlayerManager::Add("FPS", fps);
-
-    auto fixed = std::make_shared<Player>();
-    fixed->shouldDraw(true);
-    fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
-                                glm::vec3(4.0F, 3.0F, 6.0F));
-    fixed->setMode(Player::Mode::FIXED);
-    fixed->getAttributes().gravityAffected = false;
-    PlayerManager::Add("Fixed", fixed);
-
-    PlayerManager::SetCurrent("Orbit");
-
-
-    auto shader = ShaderManager::Get("PostProcess");
-    shader->use();
-    shader->setUniform("screenTexture", 0);
-
-    shader = ShaderManager::Get("Terrain");
-    shader->use();
-    shader->setUniform("shadowMap", 0);
-
-    shader = ShaderManager::Get("Base");
+    auto shader = ShaderManager::Get("Base");
     newModel.setShader(shader);
     model2.setShader(shader);
-    orbit->setShader(shader);
-    free->setShader(shader);
-    fps->setShader(shader);
-    fixed->setShader(shader);
-    // skydome.setShader(shader);
-
-    shader->use();
-
-    shader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
-    // material properties
-    shader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("material.shininess", 64.0F);
+    PlayerManager::Get("Orbit")->setShader(shader);
+    PlayerManager::Get("Free")->setShader(shader);
+    PlayerManager::Get("FPS")->setShader(shader);
+    PlayerManager::Get("Fixed")->setShader(shader);
 
     auto model = Config::IDENTITY_MATRIX;
-
     glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                             glm::vec3(20.0F, 10.0F, 8.0F);
     glm::mat4 helicopterModel = translate(model, newPosition);
     helicopterModel = scale(helicopterModel, glm::vec3(4.0F));
-
     newModel.transform(helicopterModel);
 
     model = Config::IDENTITY_MATRIX;
     newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                   glm::vec3(5.0F, 2.0F, 0.45F);
-
     glm::mat4 backpackModel = translate(model, newPosition);
     backpackModel = scale(backpackModel, glm::vec3(4.0F));
-
     model2.transform(backpackModel);
-
 
     const int numPoints = 10;
     std::vector<glm::vec3> points(numPoints);
@@ -180,13 +99,13 @@ auto main() -> int {
     // generate a circle
     for (int i = 0; i < numPoints; i++) {
         const float angle = 2.0F * glm::pi<float>() * i / numPoints;
-        auto pos = glm::vec3(30.0F * cos(angle), 5.0F, 30.0F * sin(angle));
+        auto pos = glm::vec3(30.0F * std::cos(angle), 5.0F, 30.0F * std::sin(angle));
         points[i] = pos;
     }
 
-    // ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
+    ParticleSystem particleSystem;
 
-    ShadowBuffer shadowBuffer = ShadowBuffer(10000, 10000);
+    ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
     App::view.setPipeline([&]() {
         View::clearTarget(Color::BLACK);
         auto player = PlayerManager::GetCurrent();
@@ -208,6 +127,7 @@ auto main() -> int {
         terrain.draw(shader);
         newModel.draw(shader);
         model2.draw(shader);
+        newTerrain.draw(shader);
 
         PlayerManager::Draw(shader);
 
@@ -223,6 +143,8 @@ auto main() -> int {
 
         newModel.draw(viewMatrix, projectionMatrix);
         model2.draw(viewMatrix, projectionMatrix);
+
+        particleSystem.draw(viewMatrix, projectionMatrix);
 
         shader = terrain.getShader();
 
@@ -243,11 +165,21 @@ auto main() -> int {
         shader->setUniform("sunPosition", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
-        terrain.draw(viewMatrix, projectionMatrix);
-        skybox.draw(viewMatrix, projectionMatrix);
         PlayerManager::Draw(viewMatrix, projectionMatrix);
 
+        shader = newTerrain.getShader();
+        shader->use();
+        shader->setUniform("light.position", skybox.getSun().getPosition());
+        shader->setUniform("viewPos", player->getCamera().getPosition());
+        shader->setUniform("projection", projectionMatrix);
+        shader->setUniform("view", viewMatrix);
+        shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
+        shader->setUniform("shadowMap", 0);
+        shader->setUniform("model", model);
 
+        newTerrain.draw(viewMatrix, projectionMatrix);
+        skybox.draw(viewMatrix, projectionMatrix);
+        //skydome.draw(viewMatrix, projectionMatrix);
     });
 
     App::view.setInterface([&]() {
@@ -275,10 +207,12 @@ auto main() -> int {
             newModel.update(App::view.getDeltaTime());
             model2.update(App::view.getDeltaTime());
             skybox.update(App::view.getDeltaTime());
-            // skydome.update(App::view.getDeltaTime());
+            //skydome.update(App::view.getDeltaTime());
+            particleSystem.update(App::view.getDeltaTime());
 
             auto player = PlayerManager::GetCurrent();
 
+            /*
             if (Physics::Collisions::check(terrain.getBoundingBox(),
                                            player->getBoundingBox())) {
                 Physics::Collisions::resolve(player->getAttributes(),
@@ -304,6 +238,7 @@ auto main() -> int {
             } else {
                 model2.attributes.isGrounded = false;
             }
+             */
 
             if (Physics::Collisions::check(newModel.getBoundingBox(), model2.getBoundingBox())) {
                 const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(
@@ -340,6 +275,35 @@ auto main() -> int {
 
             newModel.attributes.applyRotation(torque);
             newModel.attributes.applyForce(forceNeeded);
+
+            // collision with terrain
+            auto position = player->getPosition();
+            if (newTerrain.intersectRay(player->getPosition())) {
+                Physics::Collisions::resolve(player->getAttributes(),
+                                             newTerrain.getTerrainNormal(position.x, position.z));
+                player->attributes.isGrounded = true;
+            } else {
+                player->attributes.isGrounded = false;
+            }
+
+            position = newModel.attributes.position;
+
+            if (newTerrain.intersectRay(position)) {
+                Physics::Collisions::resolve(newModel.attributes,
+                                             newTerrain.getTerrainNormal(position.x, position.z));
+                newModel.attributes.isGrounded = true;
+            } else {
+                newModel.attributes.isGrounded = false;
+            }
+
+            position = model2.attributes.position;
+            if (newTerrain.intersectRay(position)) {
+                Physics::Collisions::resolve(model2.attributes,
+                                             newTerrain.getTerrainNormal(position.x, position.z));
+                model2.attributes.isGrounded = true;
+            } else {
+                model2.attributes.isGrounded = false;
+            }
 
 
         });
@@ -408,4 +372,91 @@ void processInput() {
     if (App::view.getKey(GLFW_KEY_N) == GLFW_PRESS) {
         PlayerManager::GetCurrent()->nitro();
     }
+}
+
+void setupApp() {
+    App::window("Coursework", Config::DEFAULT_WIDTH, Config::DEFAULT_HEIGHT);
+    App::init();
+
+    App::view.setKey(processInput);
+    App::view.setMouse([&] {
+        if (!App::paused) {
+            PlayerManager::GetCurrent()->getCamera().processMouseMovement(
+                    App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
+        }
+    });
+
+    App::view.setScroll([&] {
+        PlayerManager::GetCurrent()->getCamera().processMouseScroll(
+                App::view.getScrollY());
+    });
+
+    App::view.setResize([&] {
+        PlayerManager::SetAspect(static_cast<float>(App::view.getWidth()) /
+                                 static_cast<float>(App::view.getHeight()));
+        glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
+                   static_cast<GLsizei>(App::view.getHeight()));
+    });
+}
+
+void setupShaders() {
+    ShaderManager::Add("Simple", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    ShaderManager::Add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
+    ShaderManager::Add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
+    ShaderManager::Add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
+    ShaderManager::Add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");
+    ShaderManager::Add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
+    ShaderManager::Add("Terrain", "../Assets/shaders/infinitePlane.vert", "../Assets/shaders/infinitePlane.frag");
+    ShaderManager::Add("Player", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    ShaderManager::Add("BoundingBox", "../Assets/shaders/boundingBox.vert", "../Assets/shaders/boundingBox.frag");
+    ShaderManager::Add("Shadow", "../Assets/shaders/shadow.vert", "../Assets/shaders/shadow.frag");
+    ShaderManager::Add("Particle", "../Assets/shaders/particle.vert", "../Assets/shaders/particle.frag");
+
+    auto shader = ShaderManager::Get("PostProcess");
+    shader->use();
+    shader->setUniform("screenTexture", 0);
+
+    shader = ShaderManager::Get("Terrain");
+    shader->use();
+    shader->setUniform("shadowMap", 0);
+
+    shader = ShaderManager::Get("Base");
+    shader->use();
+
+    shader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
+    shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+    // material properties
+    shader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("material.shininess", 64.0F);
+}
+
+void setupPlayers() {
+    auto orbit = std::make_shared<Player>();
+    orbit->shouldDraw(false);
+    orbit->getCamera().setMode(Camera::Mode::ORBIT);
+    orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F);
+    orbit->getAttributes().gravityAffected = false;
+    PlayerManager::Add("Orbit", orbit);
+
+    auto free = std::make_shared<Player>();
+    free->shouldDraw(true);
+    free->setMode(Player::Mode::FREE);
+    free->getAttributes().gravityAffected = false;
+    PlayerManager::Add("Free", free);
+
+    auto fps = std::make_shared<Player>();
+    fps->shouldDraw(true);
+    fps->setMode(Player::Mode::FPS);
+    PlayerManager::Add("FPS", fps);
+
+    auto fixed = std::make_shared<Player>();
+    fixed->shouldDraw(true);
+    fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
+                                glm::vec3(4.0F, 3.0F, 6.0F));
+    fixed->setMode(Player::Mode::FIXED);
+    fixed->getAttributes().gravityAffected = false;
+    PlayerManager::Add("Fixed", fixed);
+
+    PlayerManager::SetCurrent("Free");
 }

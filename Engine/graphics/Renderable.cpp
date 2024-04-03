@@ -14,3 +14,14 @@ void Renderable::setShader(std::shared_ptr<Shader> shader) {
 [[nodiscard]] auto Renderable::getShader() const -> std::shared_ptr<Shader> {
     return shader;
 }
+
+void Renderable::draw() const {
+    draw(shader);
+}
+
+void Renderable::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
+    shader->use();
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
+    draw();
+}

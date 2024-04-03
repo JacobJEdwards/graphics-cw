@@ -216,10 +216,22 @@
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h">
 			<Option target="CW"/>
 		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.h">
+			<Option target="CW"/>
+		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.cpp">
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.h">
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.cpp">

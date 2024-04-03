@@ -16,11 +16,21 @@ public:
 
     virtual ~Renderable() = default;
 
-    // for shaders that don't require a view or projection matrix, only a model matrix
+    // copy
+    Renderable(const Renderable &other) = default;
+
+    auto operator=(const Renderable &other) -> Renderable & = default;
+
+    // move
+    Renderable(Renderable &&other) noexcept = default;
+
+    auto operator=(Renderable &&other) noexcept -> Renderable & = default;
+
     virtual void draw(std::shared_ptr<Shader> shader) const = 0;
 
-    // for use with associated shader
-    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) const = 0;
+    virtual void draw(const glm::mat4 &view, const glm::mat4 &projection) const;
+
+    virtual void draw() const;
 
     void setShader(std::shared_ptr<Shader> shader);
 

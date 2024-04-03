@@ -749,17 +749,17 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/weak_result_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/allocator_destructor.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/uses_allocator_construction.h \
-  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/ext/matrix_float3x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec3.hpp \
   /opt/homebrew/include/glm/ext/../detail/qualifier.hpp \
   /opt/homebrew/include/glm/ext/../detail/setup.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cassert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/assert.h \
   /opt/homebrew/include/glm/ext/../detail/../simd/platform.h \
-  /opt/homebrew/include/glm/ext/../detail/type_vec4.inl \
+  /opt/homebrew/include/glm/ext/../detail/type_vec3.inl \
   /opt/homebrew/include/glm/ext/../detail/compute_vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.inl \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.inl \
   /opt/homebrew/include/glm/ext/../detail/../matrix.hpp \
   /opt/homebrew/include/glm/ext/../detail/../detail/qualifier.hpp \
   /opt/homebrew/include/glm/ext/../detail/../detail/setup.hpp \
@@ -783,8 +783,6 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../ext/scalar_uint_sized.hpp \
   /opt/homebrew/include/glm/ext/../detail/../vec3.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec3.inl \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool3_precision.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float3.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float3_precision.hpp \
@@ -798,6 +796,8 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../ext/vector_uint3.hpp \
   /opt/homebrew/include/glm/ext/../detail/../vec4.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec4.inl \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool4_precision.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float4.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float4_precision.hpp \
@@ -839,8 +839,6 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x2_precision.hpp \
   /opt/homebrew/include/glm/ext/../detail/../mat3x3.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.inl \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x3_precision.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x3.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x3_precision.hpp \
@@ -867,6 +865,8 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x3_precision.hpp \
   /opt/homebrew/include/glm/ext/../detail/../mat4x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.inl \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x4_precision.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x4_precision.hpp \
@@ -888,6 +888,8 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/../detail/func_common.inl \
   /opt/homebrew/include/glm/ext/../detail/compute_common.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_vec1.hpp \
+  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
+  /opt/homebrew/include/glm/ext/vector_float3.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/span.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/functional \
@@ -1033,7 +1035,7 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/type_half.inl \
   /opt/homebrew/include/glm/ext/../detail/../integer.hpp \
   /opt/homebrew/include/glm/ext/../detail/../detail/func_integer.inl \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/filesystem \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
@@ -1056,15 +1058,9 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
-  /opt/homebrew/include/GLFW/glfw3.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Sun.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
-  /opt/homebrew/include/assimp/Importer.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
+  /opt/homebrew/include/assimp/scene.h \
   /opt/homebrew/include/assimp/types.h \
   /opt/homebrew/include/assimp/defs.h \
   /opt/homebrew/include/assimp/config.h \
@@ -1081,7 +1077,6 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/assimp/matrix4x4.inl \
   /opt/homebrew/include/assimp/MathFunctions.h \
   /opt/homebrew/include/assimp/quaternion.inl \
-  /opt/homebrew/include/assimp/scene.h \
   /opt/homebrew/include/assimp/texture.h \
   /opt/homebrew/include/assimp/./Compiler/pushpack1.h \
   /opt/homebrew/include/assimp/./Compiler/poppack1.h \
@@ -1093,8 +1088,6 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/assimp/material.inl \
   /opt/homebrew/include/assimp/anim.h \
   /opt/homebrew/include/assimp/metadata.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
   /opt/homebrew/include/glm/gtc/../mat4x4.hpp \
   /opt/homebrew/include/glm/gtc/../vec2.hpp \
@@ -1190,21 +1183,17 @@ CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/gtc/../mat4x2.hpp \
   /opt/homebrew/include/glm/gtc/../mat4x3.hpp \
   /opt/homebrew/include/glm/gtc/type_ptr.inl \
+  /opt/homebrew/include/GLFW/glfw3.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
+  /opt/homebrew/include/assimp/Importer.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Sun.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
-  /opt/homebrew/include/glm/ext/vector_float3.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
-  /opt/homebrew/include/glm/ext/vector_float4.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/FrameBuffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/shapes/Plane.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
-  /opt/homebrew/include/glfw/glfw3.h
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream

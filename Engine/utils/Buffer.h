@@ -31,6 +31,14 @@ public:
 
     ~Buffer();
 
+    Buffer(const Buffer &other);
+
+    auto operator=(const Buffer &other) -> Buffer &;
+
+    Buffer(Buffer &&other) noexcept;
+
+    auto operator=(Buffer &&other) noexcept -> Buffer &;
+
     void fill(std::initializer_list<Vertex::Data> vertices, std::initializer_list<GLuint> indices);
 
     void fill(std::span<const Vertex::Data> vertices, std::span<const GLuint> indices);
@@ -44,6 +52,8 @@ public:
     void unbind() const;
 
     void draw() const;
+
+    void drawInstanced(std::size_t num) const;
 
 private:
     void setup();

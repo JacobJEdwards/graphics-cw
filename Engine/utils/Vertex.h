@@ -7,6 +7,7 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <utility>
 
 namespace Vertex {
     struct Data {
@@ -37,6 +38,8 @@ namespace Vertex {
                 : position(postion), normal(glm::vec3(0.0F)), texCoords(texCoords), tangent(glm::vec3(0.0F)),
                   bitangent(glm::vec3(0.0F)) {
         }
+
+        //
     };
 
     struct Data2D {

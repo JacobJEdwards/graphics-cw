@@ -3,10 +3,11 @@
 //
 
 #include "Buffer.h"
+#include <cstddef>
 #include <initializer_list>
 #include <span>
-#include <iostream>
 #include <GL/glew.h>
+#include <utility>
 #include <vector>
 #include "utils/Vertex.h"
 
@@ -17,11 +18,59 @@ Buffer::Buffer() {
 }
 
 Buffer::~Buffer() {
-    std::cout << "Buffer destructor called" << std::endl;
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
 }
+
+
+Buffer::Buffer(const Buffer &other) {
+    if (this != &other) {
+        data = other.data;
+        drawMode = other.drawMode;
+        setup();
+    }
+}
+
+auto Buffer::operator=(const Buffer &other) -> Buffer & {
+    if (this != &other) {
+        data = other.data;
+        drawMode = other.drawMode;
+        setup();
+    }
+    return *this;
+}
+
+
+Buffer::Buffer(Buffer &&other) noexcept {
+    data = std::move(other.data);
+    drawMode = other.drawMode;
+    VAO = other.VAO;
+    VBO = other.VBO;
+    EBO = other.EBO;
+
+    other.VAO = 0;
+    other.VBO = 0;
+    other.EBO = 0;
+}
+
+
+auto Buffer::operator=(Buffer &&other) noexcept -> Buffer & {
+    if (this != &other) {
+        data = std::move(other.data);
+        drawMode = other.drawMode;
+        VAO = other.VAO;
+        VBO = other.VBO;
+        EBO = other.EBO;
+
+        other.VAO = 0;
+        other.VBO = 0;
+        other.EBO = 0;
+    }
+
+    return *this;
+}
+
 
 void Buffer::fill(std::initializer_list<Vertex::Data> vertices,
                   std::initializer_list<GLuint> indices) {
@@ -111,4 +160,13 @@ void Buffer::setup() {
             Vertex::Layout::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
             reinterpret_cast<void *>(offsetof(Vertex::Data, bitangent)));
     unbind();
+}
+
+void Buffer::drawInstanced(std::size_t num) const {
+    if (!data.indices.empty()) {
+        glDrawElementsInstanced(drawMode, static_cast<GLsizei>(data.indices.size()), GL_UNSIGNED_INT, nullptr,
+                                static_cast<GLsizei>(num));
+    } else {
+        glDrawArraysInstanced(drawMode, 0, static_cast<GLsizei>(data.vertices.size()), static_cast<GLsizei>(num));
+    }
 }

@@ -48,11 +48,11 @@ add_executable(CW main.cpp
         Engine/graphics/FrameBuffer.cpp
         Engine/physics/Spline.cpp
         Engine/Entity.cpp
-        Engine/Entity.h
         Engine/ImmovableObject.cpp
-        Engine/ImmovableObject.h
         Engine/graphics/Particle.cpp
-        Engine/graphics/Particle.h
+        Engine/utils/Objects/ProceduralTerrain.cpp
+        Engine/utils/Objects/ProceduralTerrain.h
+        Engine/utils/Noise.cpp
 )
 
 # Link libraries
