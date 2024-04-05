@@ -50,8 +50,8 @@ public:
         shader = ShaderManager::Get("Simple");
         chunks.reserve(static_cast<std::size_t>(numChunksX) * static_cast<std::size_t>(numChunksY));
 
-        worldSizeX = chunkSize * numChunksX;
-        worldSizeY = chunkSize * numChunksY;
+        worldSizeX = static_cast<float>(chunkSize * numChunksX);
+        worldSizeY = static_cast<float>(chunkSize * numChunksY);
         generate();
     }
 
@@ -70,6 +70,7 @@ public:
         const int endY = std::min(numChunksY, static_cast<int>(yChunk + renderDistance));
 
         shader->use();
+
 
         for (int i = startY; i < endY; i++) {
             for (int j = startX; j < endX; j++) {
@@ -158,12 +159,11 @@ private:
     glm::vec2 centre;
 
     int chunkSize;
-
     int numChunksX;
     int numChunksY;
 
-    int worldSizeX;
-    int worldSizeY;
+    float worldSizeX;
+    float worldSizeY;
 
     void generate() {
         for (int y = 0; y < numChunksY; y++) {
@@ -186,9 +186,9 @@ private:
         for (int i = 0; i < chunkSize + 1; i++) {
             for (int j = 0; j < chunkSize + 1; j++) {
                 const float xCoord =
-                        static_cast<float>(xOffset + j - worldSizeX) / 2.0F;
+                        static_cast<float>(xOffset + j) - worldSizeX / 2.0F;
                 const float zCoord =
-                        static_cast<float>(yOffset + i - worldSizeY) / 2.0F;
+                        static_cast<float>(yOffset + i) - worldSizeY / 2.0F;
                 const float yCoord = Noise::Simplex(glm::vec2(xCoord, zCoord));
 
                 chunk.vertices.push_back(Vertex::Data{{xCoord, yCoord, zCoord}});
