@@ -5,12 +5,14 @@
 #ifndef CW_PROCEDURALTERRAIN_H
 #define CW_PROCEDURALTERRAIN_H
 
-#include <iostream>
+#include <algorithm>
 #include "utils/Noise.h"
 #include <cstddef>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
+#include <utility>
 #include <vector>
 #include "utils/Buffer.h"
 #include "utils/Vertex.h"
@@ -22,16 +24,22 @@
 
 constexpr auto DEFAULT_CENTRE = glm::vec2{0.0F, 0.0F};
 constexpr auto DEFAULT_CHUNK_SIZE = 100;
-constexpr auto DEFAULT_NUM_CHUNKS_X = 4;
-constexpr auto DEFAULT_NUM_CHUNKS_Y = 4;
+constexpr auto DEFAULT_NUM_CHUNKS_X = 16;
+constexpr auto DEFAULT_NUM_CHUNKS_Y = 16;
 
 
 class ProceduralTerrain : public Renderable {
     struct Chunk {
-        std::unique_ptr<Buffer> buffer;
-        glm::vec2 centre;
-        std::vector<Vertex::Data> vertices;
-        std::vector<GLuint> indices;
+        std::unique_ptr<Buffer> buffer = nullptr;
+        std::vector<Vertex::Data> vertices = {};
+        std::vector<GLuint> indices = {};
+        glm::vec2 centre = glm::vec2(0.0F, 0.0F);
+        int chunkSize = DEFAULT_CHUNK_SIZE;
+
+        void init() {
+            buffer = std::make_unique<Buffer>();
+            buffer->fill(vertices, indices);
+        }
     };
 
 public:
@@ -40,33 +48,39 @@ public:
                                int numChunksY = DEFAULT_NUM_CHUNKS_Y)
             : centre(center), chunkSize(chunkSize), numChunksX(numChunksX), numChunksY(numChunksY) {
         shader = ShaderManager::Get("Simple");
-        buffers.resize(numChunksX * numChunksY);
+        chunks.reserve(static_cast<std::size_t>(numChunksX) * static_cast<std::size_t>(numChunksY));
+
+        worldSizeX = chunkSize * numChunksX;
+        worldSizeY = chunkSize * numChunksY;
         generate();
     }
 
     void draw(std::shared_ptr<Shader> shader) const override {
         auto player = PlayerManager::GetCurrent();
-        auto position = player->attributes.position;
-        auto renderDistance = player->getCamera().getRenderDistance();
+        const glm::vec3 position = player->attributes.position;
+        const int renderDistance = static_cast<int>(player->getCamera().getRenderDistance());
 
-        // only draw cunks within render distance
+        const int xChunk = (position.x + worldSizeX / 2.0F) / chunkSize;
+        const int yChunk = (position.z + worldSizeY / 2.0F) / chunkSize;
+
+        const int startX = std::max(0, xChunk - renderDistance);
+        const int endX = std::min(numChunksX, xChunk + renderDistance);
+
+        const int startY = std::max(0, static_cast<int>(yChunk - renderDistance));
+        const int endY = std::min(numChunksY, static_cast<int>(yChunk + renderDistance));
 
         shader->use();
 
-        /*
-        for (const auto &buffer: buffers) {
-            buffer->bind();
-            buffer->draw();
-            buffer->unbind();
-        }
-         */
+        for (int i = startY; i < endY; i++) {
+            for (int j = startX; j < endX; j++) {
+                const std::size_t index = i * numChunksX + j;
+                const auto &chunk = chunks[index];
 
-        for (const auto &chunk: chunks) {
-            chunk.buffer->bind();
-            chunk.buffer->draw();
-            chunk.buffer->unbind();
+                chunk.buffer->bind();
+                chunk.buffer->draw();
+                chunk.buffer->unbind();
+            }
         }
-
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override {
@@ -99,17 +113,22 @@ public:
         return rayStart.y <= terrainHeight;
     }
 
-    [[nodiscard]] auto getTerrainHeight(float x, float z) const -> float {
-        const auto worldSizeX = static_cast<float>(chunkSize * numChunksX);
-        const auto worldSizeY = static_cast<float>(chunkSize * numChunksY);
+    [[nodiscard]] auto getWorldCoordinates(const glm::vec3 &position) const -> glm::vec2 {
+        return {position.x + static_cast<float>(worldSizeX) / 2.0F, position.z + static_cast<float>(worldSizeY) / 2.0F};
+    }
 
-        const float xCoord = x + worldSizeX / 2.0F;
-        const float zCoord = z + worldSizeY / 2.0F;
+    [[nodiscard]] auto getTerrainHeight(const glm::vec3 &position) const -> float {
+        return getTerrainHeight(position.x, position.z);
+    }
+
+    [[nodiscard]] auto getTerrainHeight(float xPos, float zPos) const -> float {
+        const float xCoord = xPos + static_cast<float>(worldSizeX) / 2.0F;
+        const float zCoord = zPos + static_cast<float>(worldSizeY) / 2.0F;
 
         return Noise::Simplex(glm::vec2(xCoord, zCoord));
     }
 
-    [[nodiscard]] glm::vec3 getIntersectionPoint(const glm::vec3 &rayStart, const glm::vec3 &rayEnd) const {
+    [[nodiscard]] auto getIntersectionPoint(const glm::vec3 &rayStart, const glm::vec3 &rayEnd) const -> glm::vec3 {
         const float terrainHeight = getTerrainHeight(rayStart.x, rayStart.z);
         const float distance = glm::distance(rayStart, rayEnd);
         const float t = (terrainHeight - rayStart.y) / distance;
@@ -134,17 +153,17 @@ public:
 
 
 private:
-    std::vector<std::unique_ptr<Buffer>> buffers;
-    std::vector<std::vector<Vertex::Data>> chunkVertices;
-    std::vector<std::vector<GLuint>> chunkIndices;
-
     std::vector<Chunk> chunks;
 
-    // represents the centre of the terrain,, i.e. corner of 4 chunks
     glm::vec2 centre;
+
     int chunkSize;
+
     int numChunksX;
     int numChunksY;
+
+    int worldSizeX;
+    int worldSizeY;
 
     void generate() {
         for (int y = 0; y < numChunksY; y++) {
@@ -158,23 +177,20 @@ private:
         const int xOffset = chunkX * chunkSize;
         const int yOffset = chunkY * chunkSize;
 
-        const auto worldSizeX = static_cast<float>(chunkSize * numChunksX);
-        const auto worldSizeY = static_cast<float>(chunkSize * numChunksY);
-
         Chunk chunk;
 
-        std::vector<Vertex::Data> vertices;
-        std::vector<GLuint> indices;
+        chunk.centre = centre += glm::vec2(xOffset, yOffset);
+        chunk.chunkSize = chunkSize;
 
         // generate vertices
         for (int i = 0; i < chunkSize + 1; i++) {
             for (int j = 0; j < chunkSize + 1; j++) {
                 const float xCoord =
-                        static_cast<float>(xOffset + j) - worldSizeX / 2.0F;
+                        static_cast<float>(xOffset + j - worldSizeX) / 2.0F;
                 const float zCoord =
-                        static_cast<float>(yOffset + i) - worldSizeY / 2.0F;
+                        static_cast<float>(yOffset + i - worldSizeY) / 2.0F;
                 const float yCoord = Noise::Simplex(glm::vec2(xCoord, zCoord));
-                vertices.push_back(Vertex::Data{{xCoord, yCoord, zCoord}});
+
                 chunk.vertices.push_back(Vertex::Data{{xCoord, yCoord, zCoord}});
             }
         }
@@ -187,14 +203,6 @@ private:
                 const int bottomLeft = j + (i + 1) * (chunkSize + 1);
                 const int bottomRight = (j + 1) + (i + 1) * (chunkSize + 1);
 
-                indices.push_back(topLeft);
-                indices.push_back(bottomLeft);
-                indices.push_back(topRight);
-
-                indices.push_back(topRight);
-                indices.push_back(bottomLeft);
-                indices.push_back(bottomRight);
-
                 chunk.indices.push_back(topLeft);
                 chunk.indices.push_back(bottomLeft);
                 chunk.indices.push_back(topRight);
@@ -205,58 +213,25 @@ private:
             }
         }
 
-        for (int i = 0; i < indices.size(); i += 3) {
-            const glm::vec3 v0 = vertices[indices[i]].position;
-            const glm::vec3 v1 = vertices[indices[i + 1]].position;
-            const glm::vec3 v2 = vertices[indices[i + 2]].position;
+        for (int i = 0; i < chunk.indices.size(); i += 3) {
+            const glm::vec3 v0 = chunk.vertices[chunk.indices[i]].position;
+            const glm::vec3 v1 = chunk.vertices[chunk.indices[i + 1]].position;
+            const glm::vec3 v2 = chunk.vertices[chunk.indices[i + 2]].position;
 
             const glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 
-            vertices[indices[i]].normal += normal;
-            vertices[indices[i + 1]].normal += normal;
-            vertices[indices[i + 2]].normal += normal;
+            chunk.vertices[chunk.indices[i]].normal += normal;
+            chunk.vertices[chunk.indices[i + 1]].normal += normal;
+            chunk.vertices[chunk.indices[i + 2]].normal += normal;
 
-            chunk.vertices[indices[i]].normal += normal;
-            chunk.vertices[indices[i + 1]].normal += normal;
-            chunk.vertices[indices[i + 2]].normal += normal;
-
-        }
-
-        for (auto &vertex: vertices) {
-            vertex.normal = glm::normalize(vertex.normal);
         }
 
         for (auto &vertex: chunk.vertices) {
             vertex.normal = glm::normalize(vertex.normal);
         }
 
-
-        chunkVertices.push_back(vertices);
-        chunkIndices.push_back(indices);
-
-        buffers[chunkX + chunkY * numChunksX] = std::make_unique<Buffer>();
-        buffers[chunkX + chunkY * numChunksX]->fill(vertices, indices);
-
-        chunk.buffer = std::make_unique<Buffer>();
-        chunk.buffer->fill(chunk.vertices, chunk.indices);
-    }
-
-    void generateNormals(std::vector<Vertex::Data> &vertices, const std::vector<GLuint> &indices) {
-        for (int i = 0; i < indices.size(); i += 3) {
-            const glm::vec3 v0 = vertices[indices[i]].position;
-            const glm::vec3 v1 = vertices[indices[i + 1]].position;
-            const glm::vec3 v2 = vertices[indices[i + 2]].position;
-
-            const glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
-
-            vertices[indices[i]].normal += normal;
-            vertices[indices[i + 1]].normal += normal;
-            vertices[indices[i + 2]].normal += normal;
-        }
-
-        for (auto &vertex: vertices) {
-            vertex.normal = glm::normalize(vertex.normal);
-        }
+        chunk.init();
+        chunks.push_back(std::move(chunk));
     }
 };
 
