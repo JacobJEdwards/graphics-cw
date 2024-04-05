@@ -1,24 +1,24 @@
 #version 410 core
 
-layout(location = 0) in vec3 position;
+layout(location = 0) in vec3 aPos;
+/*
+layout(location = 3) in vec3 newPos;
+layout(location = 4) in vec3 velocity;
+layout(location = 5) in vec4 color;
+layout(location = 6) in float life;
+layout(location = 7) in mat4 model;
+*/
 
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec3 offset;// Offset to be passed
+uniform mat4 model;
+
+// out vec4 fColor;
+// out float fLife;
 
 void main() {
-    // Construct a rotation matrix that faces the camera
-    mat4 viewRotation = mat4(
-    view[0][0], view[1][0], view[2][0], 0,
-    view[0][1], view[1][1], view[2][1], 0,
-    view[0][2], view[1][2], view[2][2], 0,
-    0, 0, 0, 1
-    );
+    gl_Position = projection * view * model * vec4(aPos, 1.0);
 
-    // Combine the rotation with the model matrix
-    // Transform the position
-    vec4 transformedPosition = projection * viewRotation * vec4(position + offset, 1.0);
-
-    // Set the output position
-    gl_Position = transformedPosition;
+    // fColor = color;
+    // fLife = life;
 }

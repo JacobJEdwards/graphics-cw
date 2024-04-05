@@ -17,7 +17,7 @@ Player::Player() : Entity("../Assets/objects/person/person.obj") {
 
 // possibly instead set up always as 0,1,0 ?
 void Player::processKeyboard(const Direction direction, const float deltaTime) {
-    if (camera->getMode() == Camera::Mode::ORBIT) {
+    if (camera->getMode() == Camera::Mode::ORBIT || camera->getMode() == Camera::Mode::PATH) {
         return;
     }
 
@@ -63,9 +63,25 @@ void Player::processKeyboard(const Direction direction, const float deltaTime) {
 }
 
 void Player::update(float dt) {
+
     Entity::update(dt);
 
     camera->setPosition(attributes.position + glm::vec3(0.0F, 4.0F, 0.0F));
+
+    if (camera->getMode() == Camera::Mode::PATH) {
+        // instead update the camera view look at based on transform
+        auto front = glm::normalize(glm::vec3(attributes.transform[2]));
+        auto right = glm::normalize(glm::vec3(attributes.transform[0]));
+        auto up = glm::normalize(glm::vec3(attributes.transform[1]));
+
+        auto yaw = glm::degrees(std::atan2(front.z, front.x) + glm::pi<float>()) * 1.2F;
+        auto pitch = glm::degrees(std::asin(front.y));
+
+        camera->setYaw(yaw);
+        camera->setPitch(pitch);
+
+        return;
+    }
 
     const glm::vec3 front = camera->getFront();
     const glm::vec3 modelForward = glm::normalize(glm::vec3(attributes.transform[2]));
@@ -83,9 +99,9 @@ void Player::update(float dt) {
     if (glm::length(rotationRequired) > 0.01F) {
         rotationRequired.z = 0.0F;
         rotationRequired.x = 0.0F;
+
         attributes.applyRotation(rotationRequired);
     }
-
 
     camera->update(dt);
 }

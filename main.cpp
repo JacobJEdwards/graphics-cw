@@ -6,9 +6,7 @@
 #include <array>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/scalar_constants.hpp>
-#include <glm/ext/scalar_constants.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
-#include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -34,6 +32,7 @@
 #include "Entity.h"
 #include "utils/Objects/ProceduralTerrain.h"
 #include "graphics/Particle.h"
+#include <random>
 
 const std::array<std::string, 6> skyboxFaces{
         "../Assets/textures/skybox/right.jpg",
@@ -105,6 +104,10 @@ auto main() -> int {
 
     ParticleSystem particleSystem;
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(-0.5, 0.5);
+
     ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
     App::view.setPipeline([&]() {
         View::clearTarget(Color::BLACK);
@@ -167,6 +170,31 @@ auto main() -> int {
 
         PlayerManager::Draw(viewMatrix, projectionMatrix);
 
+        for (int i = 0; i < 100; i++) {
+            Particle particle;
+            // randomise position slightly based on new model
+            particle.position = newModel.attributes.position;
+            particle.position.x += dis(gen) * 2.0F;
+            particle.position.y += dis(gen);
+            particle.position.z += dis(gen) * 2.0F;
+
+            particle.velocity = newModel.attributes.velocity * 0.1F;
+            particle.velocity.x += dis(gen) * 2.0F;
+            particle.velocity.y += dis(gen);
+            particle.velocity.z += dis(gen) * 2.0F;
+
+            particle.life = 1.0F;
+            particle.color = glm::vec4(0.0F, 0.0F, 0.0F, 0.8F);
+
+            particle.color.x += dis(gen);
+            particle.color.y += dis(gen);
+            particle.color.z += dis(gen);
+
+            particleSystem.add(particle);
+        }
+
+        particleSystem.draw(viewMatrix, projectionMatrix);
+
         shader = newTerrain.getShader();
         shader->use();
         shader->setUniform("light.position", skybox.getSun().getPosition());
@@ -211,6 +239,8 @@ auto main() -> int {
             particleSystem.update(App::view.getDeltaTime());
 
             auto player = PlayerManager::GetCurrent();
+
+
 
             /*
             if (Physics::Collisions::check(terrain.getBoundingBox(),
@@ -275,6 +305,12 @@ auto main() -> int {
 
             newModel.attributes.applyRotation(torque);
             newModel.attributes.applyForce(forceNeeded);
+
+            auto path = PlayerManager::Get("Path");
+            // set to new model
+            path->getAttributes().position = newModel.attributes.position;
+            path->getAttributes().position.y += 0.5F;
+            path->getAttributes().rotation = newModel.attributes.rotation;
 
             // collision with terrain
             auto position = player->getPosition();
@@ -457,6 +493,12 @@ void setupPlayers() {
     fixed->setMode(Player::Mode::FIXED);
     fixed->getAttributes().gravityAffected = false;
     PlayerManager::Add("Fixed", fixed);
+
+    auto path = std::make_shared<Player>();
+    path->shouldDraw(true);
+    path->setMode(Player::Mode::PATH);
+    path->getAttributes().gravityAffected = false;
+    PlayerManager::Add("Path", path);
 
     PlayerManager::SetCurrent("Free");
 }

@@ -154,6 +154,31 @@ void Camera::setPosition(const glm::vec3 &position) {
     updateCameraVectors();
 }
 
+void Camera::setFront(const glm::vec3 &front) {
+    Camera::front = front;
+    updateCameraVectors();
+}
+
+void Camera::setUp(const glm::vec3 &up) {
+    Camera::up = up;
+    updateCameraVectors();
+}
+
+void Camera::setRight(const glm::vec3 &right) {
+    Camera::right = right;
+    updateCameraVectors();
+}
+
+void Camera::setPitch(float pitch) {
+    Camera::pitch = pitch;
+    updateCameraVectors();
+}
+
+void Camera::setYaw(float yaw) {
+    Camera::yaw = yaw;
+    updateCameraVectors();
+}
+
 void Camera::updateCameraVectors() {
     glm::vec3 newFront;
 

@@ -80,6 +80,16 @@ public:
 
     void setPosition(const glm::vec3 &position);
 
+    void setFront(const glm::vec3 &front);
+
+    void setUp(const glm::vec3 &up);
+
+    void setRight(const glm::vec3 &right);
+
+    void setYaw(float yaw);
+
+    void setPitch(float pitch);
+
     void circleOrbit(float deltaTime);
 
     void setAspect(float aspect);

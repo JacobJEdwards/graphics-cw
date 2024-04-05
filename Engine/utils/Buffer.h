@@ -7,6 +7,7 @@
 
 #include "utils/Vertex.h"
 #include <GL/glew.h>
+#include <cstddef>
 #include <initializer_list>
 #include <vector>
 
@@ -52,6 +53,13 @@ public:
     void unbind() const;
 
     void draw() const;
+
+    template<typename T>
+    void setInstanceData(std::size_t index, const T &data) const {
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, index * sizeof(T), sizeof(T), &data);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
 
     void drawInstanced(std::size_t num) const;
 

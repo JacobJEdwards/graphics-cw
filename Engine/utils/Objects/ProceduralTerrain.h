@@ -11,7 +11,6 @@
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
-#include <glm/glm.hpp>
 #include <vector>
 #include "utils/Buffer.h"
 #include "utils/Vertex.h"
@@ -19,6 +18,7 @@
 #include <memory>
 #include "graphics/Renderable.h"
 #include "utils/ShaderManager.h"
+#include "utils/PlayerManager.h"
 
 constexpr auto DEFAULT_CENTRE = glm::vec2{0.0F, 0.0F};
 constexpr auto DEFAULT_CHUNK_SIZE = 100;
@@ -27,6 +27,13 @@ constexpr auto DEFAULT_NUM_CHUNKS_Y = 4;
 
 
 class ProceduralTerrain : public Renderable {
+    struct Chunk {
+        std::unique_ptr<Buffer> buffer;
+        glm::vec2 centre;
+        std::vector<Vertex::Data> vertices;
+        std::vector<GLuint> indices;
+    };
+
 public:
     explicit ProceduralTerrain(glm::vec2 center = DEFAULT_CENTRE, int chunkSize = DEFAULT_CHUNK_SIZE,
                                int numChunksX = DEFAULT_NUM_CHUNKS_X,
@@ -38,25 +45,36 @@ public:
     }
 
     void draw(std::shared_ptr<Shader> shader) const override {
+        auto player = PlayerManager::GetCurrent();
+        auto position = player->attributes.position;
+        auto renderDistance = player->getCamera().getRenderDistance();
+
+        // only draw cunks within render distance
+
+        shader->use();
+
+        /*
         for (const auto &buffer: buffers) {
-            shader->use();
             buffer->bind();
             buffer->draw();
             buffer->unbind();
         }
+         */
+
+        for (const auto &chunk: chunks) {
+            chunk.buffer->bind();
+            chunk.buffer->draw();
+            chunk.buffer->unbind();
+        }
+
     }
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override {
-        for (const auto &buffer: buffers) {
-            buffer->bind();
-            shader->use();
-            shader->setUniform("view", view);
-            shader->setUniform("projection", projection);
+        shader->use();
+        shader->setUniform("view", view);
+        shader->setUniform("projection", projection);
 
-            buffer->draw();
-
-            buffer->unbind();
-        }
+        draw(shader);
     }
 
     [[nodiscard]] auto getCentre() const -> glm::vec2 {
@@ -120,6 +138,8 @@ private:
     std::vector<std::vector<Vertex::Data>> chunkVertices;
     std::vector<std::vector<GLuint>> chunkIndices;
 
+    std::vector<Chunk> chunks;
+
     // represents the centre of the terrain,, i.e. corner of 4 chunks
     glm::vec2 centre;
     int chunkSize;
@@ -141,6 +161,8 @@ private:
         const auto worldSizeX = static_cast<float>(chunkSize * numChunksX);
         const auto worldSizeY = static_cast<float>(chunkSize * numChunksY);
 
+        Chunk chunk;
+
         std::vector<Vertex::Data> vertices;
         std::vector<GLuint> indices;
 
@@ -153,6 +175,7 @@ private:
                         static_cast<float>(yOffset + i) - worldSizeY / 2.0F;
                 const float yCoord = Noise::Simplex(glm::vec2(xCoord, zCoord));
                 vertices.push_back(Vertex::Data{{xCoord, yCoord, zCoord}});
+                chunk.vertices.push_back(Vertex::Data{{xCoord, yCoord, zCoord}});
             }
         }
 
@@ -171,6 +194,14 @@ private:
                 indices.push_back(topRight);
                 indices.push_back(bottomLeft);
                 indices.push_back(bottomRight);
+
+                chunk.indices.push_back(topLeft);
+                chunk.indices.push_back(bottomLeft);
+                chunk.indices.push_back(topRight);
+
+                chunk.indices.push_back(topRight);
+                chunk.indices.push_back(bottomLeft);
+                chunk.indices.push_back(bottomRight);
             }
         }
 
@@ -184,17 +215,30 @@ private:
             vertices[indices[i]].normal += normal;
             vertices[indices[i + 1]].normal += normal;
             vertices[indices[i + 2]].normal += normal;
+
+            chunk.vertices[indices[i]].normal += normal;
+            chunk.vertices[indices[i + 1]].normal += normal;
+            chunk.vertices[indices[i + 2]].normal += normal;
+
         }
 
         for (auto &vertex: vertices) {
             vertex.normal = glm::normalize(vertex.normal);
         }
 
+        for (auto &vertex: chunk.vertices) {
+            vertex.normal = glm::normalize(vertex.normal);
+        }
+
+
         chunkVertices.push_back(vertices);
         chunkIndices.push_back(indices);
 
         buffers[chunkX + chunkY * numChunksX] = std::make_unique<Buffer>();
         buffers[chunkX + chunkY * numChunksX]->fill(vertices, indices);
+
+        chunk.buffer = std::make_unique<Buffer>();
+        chunk.buffer->fill(chunk.vertices, chunk.indices);
     }
 
     void generateNormals(std::vector<Vertex::Data> &vertices, const std::vector<GLuint> &indices) {
@@ -214,7 +258,6 @@ private:
             vertex.normal = glm::normalize(vertex.normal);
         }
     }
-
 };
 
 #endif //CW_PROCEDURALTERRAIN_H
