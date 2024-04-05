@@ -3,13 +3,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <array>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/scalar_constants.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
+#include <glm/geometric.hpp>
 #include <iostream>
 #include <memory>
-#include <string>
 
 #include <glm/ext/matrix_transform.hpp>
 #include <vector>
@@ -34,15 +33,6 @@
 #include "graphics/Particle.h"
 #include <random>
 
-const std::array<std::string, 6> skyboxFaces{
-        "../Assets/textures/skybox/right.jpg",
-        "../Assets/textures/skybox/left.jpg",
-        "../Assets/textures/skybox/top.jpg",
-        "../Assets/textures/skybox/bottom.jpg",
-        "../Assets/textures/skybox/front.jpg",
-        "../Assets/textures/skybox/back.jpg",
-};
-
 void processInput();
 
 void setupApp();
@@ -55,10 +45,9 @@ auto main() -> int {
     setupApp();
     setupShaders();
 
-    Skybox skybox(skyboxFaces);
+    Skybox skybox;
     ProceduralTerrain newTerrain;
     InfinitePlane terrain;
-    Skydome skydome;
 
     Texture::Loader::setFlip(true);
     Entity newModel("../Assets/objects/bumpercar1/bumper-car.obj");
@@ -282,6 +271,10 @@ auto main() -> int {
                         player->getBoundingBox(), newModel.getBoundingBox());
                 Physics::Collisions::resolve(player->getAttributes(),
                                              newModel.attributes, collisionPoint);
+
+                if (glm::length(player->getAttributes().force) > 0.1F) {
+                    App::view.blurScreen();
+                }
             }
 
             if (Physics::Collisions::check(player->getBoundingBox(), model2.getBoundingBox())) {

@@ -5,10 +5,9 @@
 #ifndef CW_RENDERABLE_H
 #define CW_RENDERABLE_H
 
+#include <glm/ext/matrix_float4x4.hpp>
 #include <memory>
 #include "utils/Shader.h"
-#include <glm/glm.hpp>
-#include <utility>
 
 class Renderable {
 public:

@@ -12,10 +12,12 @@ uniform float exposure = 1.0;
 uniform float contrast = 1.2;// Adjusted contrast for better visibility
 uniform float saturation = 1.5;// Increased saturation for more vibrant colors
 uniform float brightness = 1.0;
-
-const float bloomThreshold = 0.98;
-const float bloomIntensity = 1.1;
-const float vignetteStrength = 0.3;
+uniform float bloomThreshold = 0.98;
+uniform float bloomIntensity = 1.4;
+uniform float vignetteStrength = 0.3;
+uniform float blurAmount = 0.008;
+uniform bool blur = false;
+uniform float blurTime = 0.0;
 
 const vec3 orangeTint = vec3(1.0, 0.5, 0.2);
 
@@ -50,6 +52,17 @@ float calculateVignette(vec2 texCoords) {
     return smoothstep(1.0, 1.0 - vignetteStrength, length(texCoords - 0.5));
 }
 
+vec4 applyBlur(sampler2D tex, vec2 texCoords, vec2 direction, float blurAmount) {
+    vec4 color = vec4(0.0);
+    vec2 step = direction * blurAmount * blurTime;
+
+    for (int i = -5; i <= 5; ++i) {
+        color += texture(tex, texCoords + float(i) * step);
+    }
+
+    return color / 11.0;// Normalize by the number of samples
+}
+
 void main() {
     vec4 color = texture(screenTexture, TexCoords);
 
@@ -65,6 +78,12 @@ void main() {
 
     float vignette = calculateVignette(TexCoords);
     color.rgb *= vignette;
+
+    if (blur) {
+        vec4 blurredColorX = applyBlur(screenTexture, TexCoords, vec2(1.0, 0.0), blurAmount);
+        vec4 blurredColorY = applyBlur(screenTexture, TexCoords, vec2(0.0, 1.0), blurAmount);
+        color = (blurredColorX + blurredColorY) / 2.0;
+    }
 
     FragColor = color;
 }

@@ -102,6 +102,10 @@ public:
 
     void optionsInterface();
 
+    void blurScreen() {
+        postProcessor->isBlurred();
+    }
+
 private:
     GLFWwindow *window = nullptr;
 
@@ -132,6 +136,7 @@ private:
     void errorCallback(int error, const char *description);
 
     void resizeCallback(GLFWwindow *, int width, int height);
+
 
     Handle interface = []() {};
     Handle menu = []() {};
@@ -166,6 +171,7 @@ private:
     // time
     float deltaTime = 0.0F;
     float lastFrame = 0.0F;
+
     bool wireframe = false;
 };
 

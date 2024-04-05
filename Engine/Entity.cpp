@@ -34,12 +34,10 @@ void Entity::update(float deltaTime) {
 
 void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     shader->use();
-
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
-    shader->setUniform("model", attributes.transform);
 
-    model->draw(shader);
+    draw(shader);
 
     if (App::debug) {
         box.draw(attributes.transform, view, projection);

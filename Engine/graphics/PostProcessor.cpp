@@ -18,7 +18,7 @@ PostProcess::PostProcess(unsigned int width, unsigned int height,
     shader->setUniform("screenTexture", 0);
 }
 
-void PostProcess::render() {
+void PostProcess::render(float deltaTime, float time) {
     glDisable(GL_DEPTH_TEST);
     shader->use();
     shader->setUniform("gamma", gamma);
@@ -26,6 +26,23 @@ void PostProcess::render() {
     shader->setUniform("contrast", contrast);
     shader->setUniform("saturation", saturation);
     shader->setUniform("brightness", brightness);
+    shader->setUniform("bloomThreshold", bloomThreshold);
+    shader->setUniform("bloomIntensity", bloomIntensity);
+    shader->setUniform("vignetteStrength", vignetteStrength);
+    shader->setUniform("time", time);
+
+    if (blur) {
+        shader->setUniform("blur", true);
+        shader->setUniform("blurTime", blurTime);
+        shader->setUniform("shake", true);
+        blurTime -= deltaTime;
+        if (blurTime <= 0.0F) {
+            blur = false;
+        }
+    } else {
+        shader->setUniform("blur", false);
+        shader->setUniform("shake", false);
+    }
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, frameBuffer->getTexture());
@@ -84,5 +101,8 @@ void PostProcess::interface() {
     ImGui::SliderFloat("Contrast", &contrast, 0.0f, 5.0f);
     ImGui::SliderFloat("Saturation", &saturation, 0.0f, 5.0f);
     ImGui::SliderFloat("Brightness", &brightness, 0.0f, 5.0f);
+    ImGui::SliderFloat("Bloom Threshold", &bloomThreshold, 0.0f, 1.0f);
+    ImGui::SliderFloat("Bloom Intensity", &bloomIntensity, 0.0f, 5.0f);
+    ImGui::SliderFloat("Vignette Strength", &vignetteStrength, 0.0f, 5.0f);
     ImGui::End();
 }

@@ -200,7 +200,7 @@ void View::render() {
         (pipeline)();
         postProcessor->end();
 
-        postProcessor->render();
+        postProcessor->render(deltaTime, currentFrame);
     } else {
         (pipeline)();
     }
