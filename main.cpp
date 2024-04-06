@@ -80,17 +80,19 @@ auto main() -> int {
     auto model = Config::IDENTITY_MATRIX;
     glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                             glm::vec3(20.0F, 10.0F, 8.0F);
-    glm::mat4 helicopterModel = translate(model, newPosition);
-    helicopterModel = scale(helicopterModel, glm::vec3(4.0F));
-    bumperCar.transform(helicopterModel);
+    model = translate(model, newPosition);
+    model = scale(model, glm::vec3(4.0F));
+    // make forward vector point to the right
+    bumperCar.transform(model);
 
     model = Config::IDENTITY_MATRIX;
     newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
                   glm::vec3(5.0F, 2.0F, 0.45F);
-    glm::mat4 backpackModel = translate(model, newPosition);
-    backpackModel = scale(backpackModel, glm::vec3(4.0F));
-    model2.transform(backpackModel);
+    model = translate(model, newPosition);
+    model = scale(model, glm::vec3(4.0F));
+    model2.transform(model);
 
+    model = Config::IDENTITY_MATRIX;
 
     ParticleSystem particleSystem;
 
@@ -159,8 +161,6 @@ auto main() -> int {
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
         PlayerManager::Draw(viewMatrix, projectionMatrix);
-
-
         particleSystem.draw(viewMatrix, projectionMatrix);
 
         shader = newTerrain.getShader();
@@ -175,7 +175,6 @@ auto main() -> int {
 
         newTerrain.draw(viewMatrix, projectionMatrix);
         skybox.draw(viewMatrix, projectionMatrix);
-        //skydome.draw(viewMatrix, projectionMatrix);
     });
 
     App::view.setInterface([&]() {
@@ -197,18 +196,16 @@ auto main() -> int {
 
     try {
         App::loop([&] {
-            PlayerManager::GetCurrent()->update(App::view.getDeltaTime());
+            auto player = PlayerManager::GetCurrent();
+
+            player->update(App::view.getDeltaTime());
             bumperCar.update(App::view.getDeltaTime());
             model2.update(App::view.getDeltaTime());
             skybox.update(App::view.getDeltaTime());
-            //skydome.update(App::view.getDeltaTime());
             particleSystem.update(App::view.getDeltaTime());
-
-            auto player = PlayerManager::GetCurrent();
 
             for (int i = 0; i < 100; i++) {
                 Particle particle;
-                // randomise position slightly based on new model
                 particle.position = bumperCar.attributes.position;
                 particle.position.x += dis(gen) * 2.0F;
                 particle.position.y += dis(gen);
@@ -228,7 +225,6 @@ auto main() -> int {
 
                 particleSystem.add(particle);
             }
-
 
             if (Physics::Collisions::check(bumperCar.getBoundingBox(), model2.getBoundingBox())) {
                 const glm::vec3 collisionPoint = Physics::Collisions::getCollisionPoint(

@@ -4,11 +4,17 @@
 
 #include "BumperCar.h"
 
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float2.hpp>
 #include <glm/geometric.hpp>
 #include <glm/glm.hpp>
 #include <glm/trigonometric.hpp>
+#include <memory>
 #include <vector>
 #include "utils/PlayerManager.h"
+#include <iostream>
+#include "Entity.h"
+#include "App.h"
 
 
 BumperCar::BumperCar(glm::vec2 centre, float radius, float speed) : Entity(
@@ -37,20 +43,42 @@ BumperCar::BumperCar(std::vector<glm::vec3> points, float speed) : Entity(
 }
 
 void BumperCar::update(float deltaTime) {
-    Entity::update(deltaTime);
     if (pathed) {
         spline.update(deltaTime);
         auto interpolatedPoint = spline.getPoint();
         moveTo(interpolatedPoint);
     }
-
     if (track) {
         auto player = PlayerManager::GetCurrent();
         auto playerPos = player->getAttributes().position;
 
         moveTo(playerPos);
     }
+    Entity::update(deltaTime);
+}
 
+void BumperCar::draw(std::shared_ptr<Shader> shader) const {
+    shader->use();
+    auto mat = attributes.transform;
+    // rotate the car to face the direction it is moving
+    mat = glm::rotate(mat, glm::radians(-90.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+    shader->setUniform("model", mat);
+    model->draw(shader);
+
+    if (App::debug) {
+        // draw spline
+    }
+}
+
+void BumperCar::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
+    shader->use();
+    shader->setUniform("view", view);
+    shader->setUniform("projection", projection);
+    draw(shader);
+
+    if (App::debug) {
+        box.draw(attributes.transform, view, projection);
+    }
 }
 
 void BumperCar::moveTo(glm::vec3 position) {
@@ -59,11 +87,14 @@ void BumperCar::moveTo(glm::vec3 position) {
 
     forceNeeded = glm::vec3(forceNeeded.x, 0.0F, forceNeeded.z);
 
-    glm::vec3 torque = attributes.calculateRotation(position);
-    torque = glm::vec3(0.0F, torque.y, 0.0F);
-    // torque.y -= glm::radians(90.0F);
+    glm::vec3 rotation = attributes.calculateRotation(position);
+    rotation = glm::vec3(0.0F, rotation.y, 0.0F);
 
-    attributes.applyRotation(torque);
+    // if (pathed) {
+    // rotation.y -= glm::radians(90.0F);
+    //}
+
+    attributes.applyRotation(rotation);
     attributes.applyForce(forceNeeded);
 }
 

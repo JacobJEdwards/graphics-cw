@@ -1,6 +1,7 @@
 #include "physics/ModelAttributes.h"
 
 #include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <glm/detail/type_quat.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -23,6 +24,7 @@ void Physics::Attributes::update(float dt) {
 
     const float rotationDamping = 1.0F - Physics::ANGULAR_DAMPING;
     rotation *= rotationDamping;
+
     rotationMatrix = glm::rotate(rotationMatrix, rotation.x * dt, glm::vec3(1.0F, 0.0F, 0.0F));
     rotationMatrix = glm::rotate(rotationMatrix, rotation.y * dt, glm::vec3(0.0F, 1.0F, 0.0F));
     rotationMatrix = glm::rotate(rotationMatrix, rotation.z * dt, glm::vec3(0.0F, 0.0F, 1.0F));
@@ -95,17 +97,36 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point) const
         return glm::vec3(0.0F);
     }
 
-    glm::vec3 initialVelocity = velocity;
+    const glm::vec3 initialVelocity = velocity;
 
-    glm::vec3 finalVelocity = (point - position);;
+    const glm::vec3 finalVelocity = (point - position);;
 
-    glm::vec3 acceleration = (finalVelocity - initialVelocity);
+    const glm::vec3 acceleration = (finalVelocity - initialVelocity);
 
-    glm::vec3 force = mass * acceleration;
+    const glm::vec3 force = mass * acceleration;
 
     return force;
 }
 
+auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
+    const glm::vec3 direction = glm::normalize(point - position);
+    const glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
+
+    auto rotation = glm::vec3(0.0F);
+
+    if (direction != forward) {
+        const glm::vec3 axis = glm::cross(forward, direction);
+        const float angle = glm::acos(glm::dot(forward, direction));
+
+        const glm::quat rotationQuat = glm::angleAxis(angle, axis);
+
+        rotation = glm::eulerAngles(rotationQuat);
+    }
+
+    return rotation;
+}
+
+/*
 auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
     glm::vec3 direction = glm::normalize(point - position);
     glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
@@ -113,30 +134,15 @@ auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3
     auto rotation = glm::vec3(0.0F);
 
     if (direction != forward) {
-        glm::vec3 axis = glm::cross(forward, direction);
-        float angle = glm::acos(glm::dot(forward, direction));
+        const glm::vec3 axis = glm::cross(forward, direction);
+        const float angle = glm::acos(glm::dot(forward, direction));
 
         rotation = axis * angle;
     }
 
     return rotation;
 }
-
-// calculate minimum rotation needed to rotate the object to face the point
-auto Physics::Attributes::calculateTorque(const glm::vec3 &point) -> glm::vec3 {
-    glm::vec3 direction = glm::normalize(point - position);
-    glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
-
-    auto torque = glm::vec3(0.0F);
-
-    if (direction != forward) {
-        glm::vec3 axis = glm::cross(forward, direction);
-        float angle = glm::acos(glm::dot(forward, direction));
-        torque = axis * angle;
-    }
-
-    return torque;
-}
+ */
 
 void Physics::Attributes::applyRotation(const glm::vec3 &rotation) {
     this->rotation += rotation;

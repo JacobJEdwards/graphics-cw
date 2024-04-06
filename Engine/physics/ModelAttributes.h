@@ -44,8 +44,6 @@ namespace Physics {
 
         [[nodiscard]] auto calculateForce(const glm::vec3 &point) const -> glm::vec3;
 
-        [[nodiscard]] auto calculateTorque(const glm::vec3 &point) -> glm::vec3;
-
         void applyRotation(const glm::vec3 &rotation);
 
         void applyTorque(const glm::vec3 &torque);

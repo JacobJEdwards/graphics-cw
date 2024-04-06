@@ -18,6 +18,10 @@ public:
 
     void update(float deltaTime) override;
 
+    void draw(std::shared_ptr<Shader> shader) const override;
+
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
+
     void setTrack(bool track);
 
     void setPathed(bool pathed);
@@ -28,9 +32,10 @@ public:
 
     void moveTo(glm::vec3 position);
 
+
 private:
-    bool pathed = false;
-    bool track = true;
+    bool pathed = true;
+    bool track = false;
 
     float speed = 1.0F;
 

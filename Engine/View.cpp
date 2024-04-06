@@ -6,6 +6,7 @@
 
 #include <GLFW/glfw3.h>
 #include <cstdlib>
+#include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -238,8 +239,6 @@ auto View::getKey(int key) const -> int { return glfwGetKey(window, key); }
 
 void View::optionsInterface() {
     ImGui::Begin("View Options");
-    // ImGui::Checkbox("Post Processing", &postProcessorEnabled);
-
     postProcessor->interface();
     if (ImGui::Checkbox("Post Processing", &postProcessorEnabled)) {
 

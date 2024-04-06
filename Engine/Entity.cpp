@@ -87,6 +87,7 @@ void Entity::transform(const glm::mat4 &transformation) {
     attributes.transform = transformation * attributes.transform;
     attributes.position =
             glm::vec3(attributes.transform * glm::vec4(attributes.position, 1.0F));
+
     box.transform(transformation);
 
 }
