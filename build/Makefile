@@ -681,6 +681,30 @@ Engine/utils/Noise.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Noise.cpp.s
 .PHONY : Engine/utils/Noise.cpp.s
 
+Engine/utils/Objects/BumperCar.o: Engine/utils/Objects/BumperCar.cpp.o
+.PHONY : Engine/utils/Objects/BumperCar.o
+
+# target to build an object file
+Engine/utils/Objects/BumperCar.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o
+.PHONY : Engine/utils/Objects/BumperCar.cpp.o
+
+Engine/utils/Objects/BumperCar.i: Engine/utils/Objects/BumperCar.cpp.i
+.PHONY : Engine/utils/Objects/BumperCar.i
+
+# target to preprocess a source file
+Engine/utils/Objects/BumperCar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.i
+.PHONY : Engine/utils/Objects/BumperCar.cpp.i
+
+Engine/utils/Objects/BumperCar.s: Engine/utils/Objects/BumperCar.cpp.s
+.PHONY : Engine/utils/Objects/BumperCar.s
+
+# target to generate assembly for a file
+Engine/utils/Objects/BumperCar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.s
+.PHONY : Engine/utils/Objects/BumperCar.cpp.s
+
 Engine/utils/Objects/Player.o: Engine/utils/Objects/Player.cpp.o
 .PHONY : Engine/utils/Objects/Player.o
 
@@ -1143,6 +1167,9 @@ help:
 	@echo "... Engine/utils/Noise.o"
 	@echo "... Engine/utils/Noise.i"
 	@echo "... Engine/utils/Noise.s"
+	@echo "... Engine/utils/Objects/BumperCar.o"
+	@echo "... Engine/utils/Objects/BumperCar.i"
+	@echo "... Engine/utils/Objects/BumperCar.s"
 	@echo "... Engine/utils/Objects/Player.o"
 	@echo "... Engine/utils/Objects/Player.i"
 	@echo "... Engine/utils/Objects/Player.s"

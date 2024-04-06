@@ -370,6 +370,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /opt/homebrew/include/glm/ext/.././ext/matrix_float4x4_precision.hpp \
   /opt/homebrew/include/glm/ext/../detail/func_matrix.inl \
   /opt/homebrew/include/glm/ext/../detail/../geometric.hpp \
+  /opt/homebrew/include/glm/ext/vector_float3.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ios \
@@ -1050,7 +1051,6 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/unary_negate.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
-  /opt/homebrew/include/glm/ext/vector_float3.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
@@ -1215,6 +1215,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Particle.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/BumperCar.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/random \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/bernoulli_distribution.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/uniform_real_distribution.h \

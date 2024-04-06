@@ -3,6 +3,9 @@
 //
 
 #include "Spline.h"
+#include <vector>
+#include <vector>
+#include <stdexcept>
 
 #define GLM_ENABLE_EXPERIMENTAL
 
@@ -26,10 +29,11 @@ namespace {
 }
 
 
-Physics::Spline::Spline(std::span<const glm::vec3> points, Type type) : points(points.begin(),
-                                                                               points.end()),
-                                                                        type(type),
-                                                                        numPoints(points.size()) {
+Physics::Spline::Spline(std::span<const glm::vec3> points, Type type, float speed) : points(points.begin(),
+                                                                                            points.end()),
+                                                                                     type(type),
+                                                                                     speed(speed),
+                                                                                     numPoints(points.size()) {
     if (numPoints < 4) {
         throw std::runtime_error("Spline must have at least 4 points");
     }
@@ -54,13 +58,17 @@ Physics::Spline::Spline(std::span<const glm::vec3> points, Type type) : points(p
     }
 }
 
+[[nodiscard]] auto Physics::Spline::getPoints() const -> const std::vector<glm::vec3> & {
+    return points;
+}
+
 void Physics::Spline::update(const float dt) {
     p0Index = p0Index % numPoints;
     p1Index = p1Index % numPoints;
     p2Index = p2Index % numPoints;
     p3Index = p3Index % numPoints;
 
-    t += dt;
+    t += dt * speed;
 
     if (t > 1.0F) {
         t = 0.0F;
@@ -69,4 +77,12 @@ void Physics::Spline::update(const float dt) {
         p2Index = (p2Index + 1) % numPoints;
         p3Index = (p3Index + 1) % numPoints;
     }
+}
+
+void Physics::Spline::setSpeed(const float speed) {
+    this->speed = speed;
+}
+
+void Physics::Spline::invert() {
+    std::reverse(points.begin(), points.end());
 }

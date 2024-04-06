@@ -45,6 +45,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Noise.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Noise.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o"
+  "CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Objects/ProceduralTerrain.cpp.o"

@@ -31,6 +31,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.cpp" "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.cpp" "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.cpp" "CMakeFiles/CW.dir/Engine/utils/Noise.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Noise.cpp.o.d"
+  "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/BumperCar.cpp" "CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.cpp" "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.cpp" "CMakeFiles/CW.dir/Engine/utils/Objects/ProceduralTerrain.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Objects/ProceduralTerrain.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.cpp" "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o.d"

@@ -1,6 +1,8 @@
 #ifndef SPLINE_H
 #define SPLINE_H
 
+#include <cstddef>
+#include <glm/ext/vector_float3.hpp>
 #include <glm/glm.hpp>
 
 #include <utility>
@@ -18,15 +20,24 @@ namespace Physics {
             LINEAR
         };
 
-        explicit Spline(std::span<const glm::vec3> points, Type type = Type::CATMULLROM);
+        Spline() = default;
+
+        explicit Spline(std::span<const glm::vec3> points, Type type = Type::CATMULLROM, float speed = 1.0F);
+
+        [[nodiscard]] auto getPoints() const -> const std::vector<glm::vec3> &;
 
         [[nodiscard]] auto getPoint() const -> glm::vec3;
 
         void update(float dt);
 
+        void setSpeed(float speed);
+
+        void invert();
+
     private:
         std::vector<glm::vec3> points;
         Type type;
+        float speed;
         std::size_t numPoints;
 
         std::size_t p0Index = 0;

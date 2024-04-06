@@ -232,5 +232,11 @@
   "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks -isystem /opt/homebrew/include  -std=c++20 -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Noise.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.cpp",
   "file": "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.cpp",
   "output": "CMakeFiles/CW.dir/Engine/utils/Noise.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks -isystem /opt/homebrew/include  -std=c++20 -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/BumperCar.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/BumperCar.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o"
 }
 ]

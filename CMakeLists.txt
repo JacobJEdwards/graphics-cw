@@ -53,6 +53,8 @@ add_executable(CW main.cpp
         Engine/utils/Objects/ProceduralTerrain.cpp
         Engine/utils/Objects/ProceduralTerrain.h
         Engine/utils/Noise.cpp
+        Engine/utils/Objects/BumperCar.h
+        Engine/utils/Objects/BumperCar.cpp
 )
 
 # Link libraries

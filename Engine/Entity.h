@@ -32,7 +32,6 @@ public:
 
     auto operator=(Entity &&other) noexcept -> Entity & = default;
 
-
     virtual void update(float deltaTime);
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
