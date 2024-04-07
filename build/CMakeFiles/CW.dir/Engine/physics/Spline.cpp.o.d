@@ -1068,4 +1068,6 @@ CMakeFiles/CW.dir/Engine/physics/Spline.cpp.o: \
   /opt/homebrew/include/glm/gtx/../glm.hpp \
   /opt/homebrew/include/glm/gtx/../gtx/optimum_pow.hpp \
   /opt/homebrew/include/glm/gtx/optimum_pow.inl \
-  /opt/homebrew/include/glm/gtx/spline.inl
+  /opt/homebrew/include/glm/gtx/spline.inl \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /opt/homebrew/include/GLFW/glfw3.h

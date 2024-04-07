@@ -17,6 +17,7 @@
 #include "App.h"
 #include "utils/Shader.h"
 #include "imgui/imgui.h"
+#include <random>
 
 float BumperCar::coneRadius = 45.0F;
 float BumperCar::coneHeight = 100.0F;
@@ -28,17 +29,22 @@ BumperCar::BumperCar(glm::vec2 centre, float radius, float speed) : Entity(
         "../Assets/objects/bumpercar1/bumper-car.obj"), speed(speed) {
     person = std::make_unique<Model>("../Assets/objects/person/person.obj");
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.5F, 1.0F);
+
     const int numPoints = 10;
 
     float angle = 0.0F;
     const float angleIncrement = glm::radians(360.0F / numPoints);
 
     for (int i = 0; i < numPoints; i++) {
-        const float x = centre.x + radius * glm::cos(angle);
-        const float z = centre.y + radius * glm::sin(angle);
+        const float x = centre.x + radius * glm::cos(angle) * dis(gen);
+        const float z = centre.y + radius * glm::sin(angle) * dis(gen);
         points.emplace_back(x, 0.0F, z);
         angle += angleIncrement;
     }
+
 
     spline = Physics::Spline(points, Physics::Spline::Type::CATMULLROM, speed);
     attributes.mass = 2.0F;
@@ -92,7 +98,7 @@ void BumperCar::update(float deltaTime) {
             }
             break;
         case Mode::NONE:
-            return;
+            break;
     };
 
     Entity::update(deltaTime);
@@ -112,7 +118,7 @@ void BumperCar::draw(std::shared_ptr<Shader> shader) const {
     model->draw(shader);
 
     if (App::debug) {
-        // draw spline
+        spline.draw(shader);
     }
 }
 

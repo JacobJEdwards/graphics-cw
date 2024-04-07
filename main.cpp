@@ -52,9 +52,9 @@ auto main() -> int {
     ProceduralTerrain newTerrain;
     InfinitePlane terrain;
 
-    Entity model2("../Assets/objects/bumpercar2/bumper-car.obj");
-    model2.getAttributes().mass = 2.0F;
-    Texture::Loader::setFlip(false);
+    Texture::Loader::setFlip(true);
+    BumperCar model2;
+    model2.setMode(BumperCar::Mode::NONE);
 
     const int numPoints = 10;
     std::vector<glm::vec3> points(numPoints);
@@ -66,8 +66,7 @@ auto main() -> int {
         points[i] = pos;
     }
 
-    Texture::Loader::setFlip(true);
-    BumperCar bumperCar(points, 1.0F);
+    BumperCar bumperCar;
 
     auto shader = ShaderManager::Get("Base");
     model2.setShader(shader);

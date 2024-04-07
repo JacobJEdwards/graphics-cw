@@ -20,6 +20,7 @@
 #include "utils/Buffer.h"
 #include "utils/Shader.h"
 #include "utils/Vertex.h"
+#include "utils/ShaderManager.h"
 #include <GL/glew.h>
 
 namespace {
@@ -48,20 +49,26 @@ Physics::Spline::Spline(std::span<const glm::vec3> points, Type type, float spee
 
     buffer = std::make_unique<Buffer>();
     std::vector<Vertex::Data> vertices;
-    vertices.reserve(numPoints);
+    vertices.reserve(numPoints + 1);
 
     for (const auto &point: points) {
         vertices.emplace_back(point, glm::vec3(0.0F), glm::vec2(0.0F));
     }
 
+    vertices.emplace_back(*points.begin(), glm::vec3(0.0F), glm::vec2(0.0F));
+
+
     std::vector<GLuint> indices;
-    indices.reserve(numPoints);
+    indices.reserve(numPoints + 1);
 
     for (GLuint i = 0; i < numPoints; i++) {
         indices.push_back(i);
     }
 
+    indices.push_back(0);
+
     buffer->fill(vertices, indices);
+    shader = ShaderManager::Get("Base");
 }
 
 [[nodiscard]] auto Physics::Spline::getPoint() const -> glm::vec3 {
@@ -108,7 +115,7 @@ void Physics::Spline::draw(std::shared_ptr<Shader> shader) const {
     shader->use();
     shader->setUniform("model", glm::mat4(1.0F));
     buffer->bind();
-    glDrawArrays(GL_LINE_STRIP, 0, numPoints);
+    glDrawArrays(GL_LINE_STRIP, 0, numPoints + 1);
     buffer->unbind();
 }
 
