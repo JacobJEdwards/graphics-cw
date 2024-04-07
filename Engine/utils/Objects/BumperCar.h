@@ -10,6 +10,12 @@
 #include "Entity.h"
 
 class BumperCar : public Entity {
+    enum class Mode {
+        PATHED,
+        TRACK,
+        AUTO,
+        NONE
+    };
 public:
 
     explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 1.0F, float speed = 1.0F);
@@ -22,9 +28,7 @@ public:
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    void setTrack(bool track);
-
-    void setPathed(bool pathed);
+    void setMode(Mode mode);
 
     void setSpeed(float speed);
 
@@ -32,16 +36,26 @@ public:
 
     void moveTo(glm::vec3 position);
 
+    static void Interface();
+
 
 private:
-    bool pathed = true;
-    bool track = false;
+    Mode mode = Mode::AUTO;
 
     float speed = 1.0F;
 
     Physics::Spline spline;
     std::vector<glm::vec3> points;
 
+    // move this instead as child of Entity
+    // so transform is updated in Entity::update
+    std::unique_ptr<Model> person;
+
+    static float coneRadius;
+    static float coneHeight;
+    static bool paused;
+    static float trackingDistance;
+    static float ventureDistance;
 };
 
 #endif

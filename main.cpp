@@ -183,6 +183,7 @@ auto main() -> int {
             PlayerManager::Interface();
             PlayerManager::GetCurrent()->interface();
             App::view.optionsInterface();
+            BumperCar::Interface();
 
             App::debugInterface();
             skybox.getSun().interface();

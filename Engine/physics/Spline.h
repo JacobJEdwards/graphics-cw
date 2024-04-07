@@ -8,9 +8,13 @@
 #include <utility>
 #include <vector>
 #include <span>
+#include <memory>
+#include "utils/Buffer.h"
+#include "utils/Shader.h"
+#include "graphics/Renderable.h"
 
 namespace Physics {
-    class Spline {
+    class Spline : public Renderable {
     public:
         enum class Type {
             CATMULLROM,
@@ -30,6 +34,8 @@ namespace Physics {
 
         void update(float dt);
 
+        void draw(std::shared_ptr<Shader> shader) const override;
+
         void setSpeed(float speed);
 
         void invert();
@@ -44,6 +50,8 @@ namespace Physics {
         std::size_t p1Index = 1;
         std::size_t p2Index = 2;
         std::size_t p3Index = 3;
+
+        std::unique_ptr<Buffer> buffer;
 
         float t = 0.0F;
     };

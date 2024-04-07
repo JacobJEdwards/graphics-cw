@@ -5,20 +5,29 @@
 #include "BumperCar.h"
 
 #include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/vector_float2.hpp>
 #include <glm/geometric.hpp>
 #include <glm/glm.hpp>
 #include <glm/trigonometric.hpp>
 #include <memory>
 #include <vector>
+#include "graphics/Model.h"
 #include "utils/PlayerManager.h"
 #include <iostream>
 #include "Entity.h"
 #include "App.h"
+#include "utils/Shader.h"
+#include "imgui/imgui.h"
 
+float BumperCar::coneRadius = 45.0F;
+float BumperCar::coneHeight = 100.0F;
+bool BumperCar::paused = false;
+float BumperCar::trackingDistance = 25.0F;
+float BumperCar::ventureDistance = 100.0F;
 
 BumperCar::BumperCar(glm::vec2 centre, float radius, float speed) : Entity(
         "../Assets/objects/bumpercar1/bumper-car.obj"), speed(speed) {
+    person = std::make_unique<Model>("../Assets/objects/person/person.obj");
+
     const int numPoints = 10;
 
     float angle = 0.0F;
@@ -39,28 +48,65 @@ BumperCar::BumperCar(std::vector<glm::vec3> points, float speed) : Entity(
         "../Assets/objects/bumpercar1/bumper-car.obj"), speed(speed),
                                                                    spline(points, Physics::Spline::Type::CATMULLROM,
                                                                           speed), points(points) {
+    person = std::make_unique<Model>("../Assets/objects/person/person.obj");
     attributes.mass = 2.0F;
 }
 
 void BumperCar::update(float deltaTime) {
-    if (pathed) {
-        spline.update(deltaTime);
-        auto interpolatedPoint = spline.getPoint();
-        moveTo(interpolatedPoint);
+    if (paused) {
+        return;
     }
-    if (track) {
-        auto player = PlayerManager::GetCurrent();
-        auto playerPos = player->getAttributes().position;
 
-        moveTo(playerPos);
-    }
+    auto player = PlayerManager::GetCurrent();
+    auto playerPos = player->getPosition();
+    auto point = spline.getPoint();
+    auto currentPos = attributes.position;
+    auto transform = attributes.transform;
+
+    auto forward = glm::normalize(glm::vec3(transform[2]));
+
+    auto toPlayer = glm::normalize(playerPos - currentPos);
+    auto angle = glm::degrees(glm::acos(glm::dot(forward, toPlayer)));
+
+    switch (mode) {
+        case Mode::PATHED:
+            spline.update(deltaTime);
+            moveTo(point);
+            break;
+        case Mode::TRACK:
+            moveTo(playerPos);
+            break;
+        case Mode::AUTO:
+            spline.update(deltaTime);
+            if (angle > coneRadius) {
+                moveTo(point);
+                break;
+            }
+
+            // work this out better
+            if (glm::distance(currentPos, playerPos) < trackingDistance &&
+                glm::distance(currentPos, point) < ventureDistance) {
+                moveTo(playerPos);
+            } else {
+                moveTo(point);
+            }
+            break;
+        case Mode::NONE:
+            return;
+    };
+
     Entity::update(deltaTime);
 }
 
 void BumperCar::draw(std::shared_ptr<Shader> shader) const {
     shader->use();
     auto mat = attributes.transform;
-    // rotate the car to face the direction it is moving
+    mat = glm::translate(mat, glm::vec3(0.0F, -1.0F, 0.0F));
+    mat = glm::scale(mat, glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("model", mat);
+    person->draw(shader);
+
+    mat = attributes.transform;
     mat = glm::rotate(mat, glm::radians(-90.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     shader->setUniform("model", mat);
     model->draw(shader);
@@ -90,10 +136,6 @@ void BumperCar::moveTo(glm::vec3 position) {
     glm::vec3 rotation = attributes.calculateRotation(position);
     rotation = glm::vec3(0.0F, rotation.y, 0.0F);
 
-    // if (pathed) {
-    // rotation.y -= glm::radians(90.0F);
-    //}
-
     attributes.applyRotation(rotation);
     attributes.applyForce(forceNeeded);
 }
@@ -102,14 +144,8 @@ void BumperCar::invert() {
     spline.invert();
 }
 
-void BumperCar::setTrack(bool track) {
-    this->track = track;
-    this->pathed = !track;
-}
-
-void BumperCar::setPathed(bool pathed) {
-    this->pathed = pathed;
-    this->track = !pathed;
+void BumperCar::setMode(BumperCar::Mode mode) {
+    this->mode = mode;
 }
 
 void BumperCar::setSpeed(float speed) {
@@ -117,3 +153,13 @@ void BumperCar::setSpeed(float speed) {
     spline.setSpeed(speed);
 }
 
+void BumperCar::Interface() {
+    ImGui::Begin("Bumper Car Debug");
+    ImGui::SliderFloat("Cone Radius", &coneRadius, 0.0F, 360.0F);
+    ImGui::SliderFloat("Cone Height", &coneHeight, 0.0F, 125.0F);
+    ImGui::SliderFloat("Tracking Distance", &trackingDistance, 0.0F, 100.0F);
+    ImGui::SliderFloat("Venture Distance", &ventureDistance, 0.0F, 1000.0F);
+    ImGui::Checkbox("Paused", &paused);
+    ImGui::End();
+
+}

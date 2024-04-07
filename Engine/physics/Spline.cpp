@@ -3,6 +3,10 @@
 //
 
 #include "Spline.h"
+#include <algorithm>
+#include <memory>
+#include "utils/Vertex.h"
+#include "utils/Vertex.h"
 #include <vector>
 #include <vector>
 #include <stdexcept>
@@ -13,6 +17,10 @@
 
 #include <glm/glm.hpp>
 #include <span>
+#include "utils/Buffer.h"
+#include "utils/Shader.h"
+#include "utils/Vertex.h"
+#include <GL/glew.h>
 
 namespace {
     // floating point errors
@@ -37,6 +45,23 @@ Physics::Spline::Spline(std::span<const glm::vec3> points, Type type, float spee
     if (numPoints < 4) {
         throw std::runtime_error("Spline must have at least 4 points");
     }
+
+    buffer = std::make_unique<Buffer>();
+    std::vector<Vertex::Data> vertices;
+    vertices.reserve(numPoints);
+
+    for (const auto &point: points) {
+        vertices.emplace_back(point, glm::vec3(0.0F), glm::vec2(0.0F));
+    }
+
+    std::vector<GLuint> indices;
+    indices.reserve(numPoints);
+
+    for (GLuint i = 0; i < numPoints; i++) {
+        indices.push_back(i);
+    }
+
+    buffer->fill(vertices, indices);
 }
 
 [[nodiscard]] auto Physics::Spline::getPoint() const -> glm::vec3 {
@@ -77,6 +102,14 @@ void Physics::Spline::update(const float dt) {
         p2Index = (p2Index + 1) % numPoints;
         p3Index = (p3Index + 1) % numPoints;
     }
+}
+
+void Physics::Spline::draw(std::shared_ptr<Shader> shader) const {
+    shader->use();
+    shader->setUniform("model", glm::mat4(1.0F));
+    buffer->bind();
+    glDrawArrays(GL_LINE_STRIP, 0, numPoints);
+    buffer->unbind();
 }
 
 void Physics::Spline::setSpeed(const float speed) {
