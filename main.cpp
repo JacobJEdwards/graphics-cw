@@ -10,18 +10,18 @@
 #include <memory>
 
 #include <glm/ext/matrix_transform.hpp>
+#include <vector>
+#include <vector>
 
 #include "Config.h"
 
 #include "App.h"
-#include "Entity.h"
 #include "utils/Camera.h"
 #include "utils/PlayerManager.h"
 
 #include "graphics/Color.h"
 #include "graphics/Texture.h"
 #include "physics/Collisions.h"
-#include "utils/Objects/InfinitePlane.h"
 #include "utils/Objects/Player.h"
 #include "utils/Objects/Skybox.h"
 #include "utils/ShaderManager.h"
@@ -48,51 +48,35 @@ auto main() -> int {
     ProceduralTerrain terrain;
 
     Texture::Loader::setFlip(true);
-    BumperCar model2;
-    BumperCar model3;
-    BumperCar model4;
-    BumperCar model5;
-    // model2.setMode(BumperCar::Mode::NONE);
 
-    BumperCar bumperCar;
+    const std::vector<std::shared_ptr<Entity>> models = {std::make_shared<BumperCar>(),
+                                                         std::make_shared<BumperCar>(),
+                                                         std::make_shared<BumperCar>(),
+                                                         std::make_shared<BumperCar>(),
+                                                         std::make_shared<BumperCar>(),
+                                                         std::make_shared<BumperCar>(),
+                                                         std::make_shared<BumperCar>()};
+
+    auto matrix = Config::IDENTITY_MATRIX;
+    glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
+                            glm::vec3(20.0F, 10.0F, 8.0F);
+    matrix = translate(matrix, newPosition);
+    matrix = scale(matrix, glm::vec3(4.0F));
 
     auto shader = ShaderManager::Get("Base");
-    model2.setShader(shader);
-    model3.setShader(shader);
-    model4.setShader(shader);
-    model5.setShader(shader);
-    bumperCar.setShader(shader);
+    for (const auto &model: models) {
+        model->setShader(shader);
+        model->transform(matrix);
+        matrix = translate(matrix, glm::vec3(5.0F, 0.0F, 0.0F));
+    }
+
     PlayerManager::Get("Orbit")->setShader(shader);
     PlayerManager::Get("Free")->setShader(shader);
     PlayerManager::Get("FPS")->setShader(shader);
     PlayerManager::Get("Fixed")->setShader(shader);
 
+
     auto model = Config::IDENTITY_MATRIX;
-    glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
-                            glm::vec3(20.0F, 10.0F, 8.0F);
-    model = translate(model, newPosition);
-    model = scale(model, glm::vec3(4.0F));
-    // make forward vector point to the right
-    bumperCar.transform(model);
-
-    model = Config::IDENTITY_MATRIX;
-    newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
-                  glm::vec3(5.0F, 2.0F, 0.45F);
-    model = translate(model, newPosition);
-    model = scale(model, glm::vec3(4.0F));
-    model2.transform(model);
-
-    model = translate(model, glm::vec3(5.0F, 0.0F, 0.0F));
-    model3.transform(model);
-
-    model = translate(model, glm::vec3(5.0F, 0.0F, 0.0F));
-    model4.transform(model);
-
-    model = translate(model, glm::vec3(5.0F, 0.0F, 0.0F));
-    model5.transform(model);
-
-
-    model = Config::IDENTITY_MATRIX;
 
     ParticleSystem particleSystem;
 
@@ -118,11 +102,9 @@ auto main() -> int {
         shader->setUniform("projection", lightProjection);
 
         terrain.draw(shader);
-        bumperCar.draw(shader);
-        model2.draw(shader);
-        model3.draw(shader);
-        model4.draw(shader);
-        model5.draw(shader);
+        for (const auto &model: models) {
+            model->draw(shader);
+        }
 
         terrain.draw(shader);
 
@@ -138,39 +120,19 @@ auto main() -> int {
 
         auto texture = shadowBuffer.getTexture();
 
-        bumperCar.draw(viewMatrix, projectionMatrix);
-        model2.draw(viewMatrix, projectionMatrix);
-        model3.draw(viewMatrix, projectionMatrix);
-        model4.draw(viewMatrix, projectionMatrix);
-        model5.draw(viewMatrix, projectionMatrix);
-
+        for (const auto &model: models) {
+            model->draw(viewMatrix, projectionMatrix);
+        }
 
         particleSystem.draw(viewMatrix, projectionMatrix);
-
-        shader = terrain.getShader();
-
-        shader->use();
-        shader->setUniform("light.position", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
-        shader->setUniform("projection", projectionMatrix);
-        shader->setUniform("view", viewMatrix);
-        shader->setUniform("shadowMap", 0);
-        shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-
-        shader = ShaderManager::Get("PostProcess");
-        shader->use();
-        shader->setUniform("screenTexture", 0);
-        shader->setUniform("sunPosition", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
 
         PlayerManager::Draw(viewMatrix, projectionMatrix);
         particleSystem.draw(viewMatrix, projectionMatrix);
 
         shader = terrain.getShader();
         shader->use();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
         shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform("projection", projectionMatrix);
@@ -181,6 +143,11 @@ auto main() -> int {
 
         terrain.draw(viewMatrix, projectionMatrix);
         skybox.draw(viewMatrix, projectionMatrix);
+
+        shader = ShaderManager::Get("PostProcess");
+        shader->use();
+        shader->setUniform("sunPosition", skybox.getSun().getPosition());
+        shader->setUniform("viewPos", player->getCamera().getPosition());
     });
 
     App::view.setInterface([&]() {
@@ -206,115 +173,36 @@ auto main() -> int {
             const auto player = PlayerManager::GetCurrent();
 
             player->update(App::view.getDeltaTime());
-            bumperCar.update(App::view.getDeltaTime());
-            model2.update(App::view.getDeltaTime());
-            model3.update(App::view.getDeltaTime());
-            model4.update(App::view.getDeltaTime());
-            model5.update(App::view.getDeltaTime());
+            for (const auto &model: models) {
+                model->update(App::view.getDeltaTime());
+            }
+
             skybox.update(App::view.getDeltaTime());
             particleSystem.update(App::view.getDeltaTime());
 
-            for (int i = 0; i < 100; i++) {
-                Particle particle;
-                particle.position = bumperCar.attributes.position;
-                particle.position.x += Random::Float(-1.0F, 1.0F);
-                particle.position.y += Random::Float(-0.5F, 0.5F);
-                particle.position.z += Random::Float(-1.0F, 1.0F);
+            // find al permutations of models
+            for (int i = 0; i < models.size(); i++) {
+                for (int j = i + 1; j < models.size(); j++) {
+                    if (Physics::Collisions::check(*models[i], *models[j])) {
+                        Physics::Collisions::resolve(*models[i], *models[j]);
 
-                particle.velocity = bumperCar.attributes.velocity * 0.1F;
-                particle.velocity.x += Random::Float(-1.0F, 1.0F);
-                particle.velocity.y += Random::Float(-1.0F, 1.0F);
-                particle.velocity.z += Random::Float(-1.0F, 1.0F);
-
-                particle.life = 1.0F;
-                particle.color = glm::vec4(0.0F, 0.0F, 0.0F, 0.8F);
-
-                particle.color.x += Random::Float(0.0F, 0.8F);
-                particle.color.y += Random::Float(0.0F, 0.8F);
-                particle.color.z += Random::Float(0.0F, 0.8F);
-
-                particleSystem.add(particle);
-            }
-
-            if (Physics::Collisions::check(bumperCar, model2)) {
-                Physics::Collisions::resolve(bumperCar, model2);
-            }
-
-            if (Physics::Collisions::check(bumperCar, model3)) {
-                Physics::Collisions::resolve(bumperCar, model3);
-            }
-
-            if (Physics::Collisions::check(bumperCar, model4)) {
-                Physics::Collisions::resolve(bumperCar, model4);
-            }
-
-            if (Physics::Collisions::check(bumperCar, model5)) {
-                Physics::Collisions::resolve(bumperCar, model5);
-            }
-
-            if (Physics::Collisions::check(model2, model3)) {
-                Physics::Collisions::resolve(model2, model3);
-            }
-
-            if (Physics::Collisions::check(model2, model4)) {
-                Physics::Collisions::resolve(model2, model4);
-            }
-
-            if (Physics::Collisions::check(model2, model5)) {
-                Physics::Collisions::resolve(model2, model5);
-            }
-
-            if (Physics::Collisions::check(model3, model4)) {
-                Physics::Collisions::resolve(model3, model4);
-            }
-
-            if (Physics::Collisions::check(model3, model5)) {
-                Physics::Collisions::resolve(model3, model5);
-            }
-
-            if (Physics::Collisions::check(model4, model5)) {
-                Physics::Collisions::resolve(model4, model5);
-            }
-
-            if (Physics::Collisions::check(*player, bumperCar)) {
-                if (glm::length(player->getAttributes().force) > 0.1F) {
-                    App::view.blurScreen();
+                        particleSystem.generate(*models[i]);
+                    }
                 }
-
-                Physics::Collisions::resolve(*player, bumperCar);
             }
 
-            if (Physics::Collisions::check(*player, model2)) {
-                if (glm::length(player->getAttributes().force) > 0.1F) {
-                    App::view.blurScreen();
+            for (const auto &model: models) {
+                if (Physics::Collisions::check(*player, *model)) {
+                    if (glm::length(player->getAttributes().force) > 0.1F) {
+                        App::view.blurScreen();
+                    }
+
+                    Physics::Collisions::resolve(*player, *model);
+
+                    particleSystem.generate(*player);
                 }
-
-                Physics::Collisions::resolve(*player, model2);
             }
 
-            if (Physics::Collisions::check(*player, model3)) {
-                if (glm::length(player->getAttributes().force) > 0.1F) {
-                    App::view.blurScreen();
-                }
-
-                Physics::Collisions::resolve(*player, model3);
-            }
-
-            if (Physics::Collisions::check(*player, model4)) {
-                if (glm::length(player->getAttributes().force) > 0.1F) {
-                    App::view.blurScreen();
-                }
-
-                Physics::Collisions::resolve(*player, model4);
-            }
-
-            if (Physics::Collisions::check(*player, model5)) {
-                if (glm::length(player->getAttributes().force) > 0.1F) {
-                    App::view.blurScreen();
-                }
-
-                Physics::Collisions::resolve(*player, model5);
-            }
 
             if (Physics::Collisions::check(*player, terrain)) {
                 Physics::Collisions::resolve(*player, terrain);
@@ -323,40 +211,13 @@ auto main() -> int {
                 player->attributes.isGrounded = false;
             }
 
-
-            if (Physics::Collisions::check(bumperCar, terrain)) {
-                Physics::Collisions::resolve(bumperCar, terrain);
-                bumperCar.attributes.isGrounded = true;
-            } else {
-                bumperCar.attributes.isGrounded = false;
-            }
-
-            if (Physics::Collisions::check(model2, terrain)) {
-                Physics::Collisions::resolve(model2, terrain);
-                model2.attributes.isGrounded = true;
-            } else {
-                model2.attributes.isGrounded = false;
-            }
-
-            if (Physics::Collisions::check(model3, terrain)) {
-                Physics::Collisions::resolve(model3, terrain);
-                model3.attributes.isGrounded = true;
-            } else {
-                model3.attributes.isGrounded = false;
-            }
-
-            if (Physics::Collisions::check(model4, terrain)) {
-                Physics::Collisions::resolve(model4, terrain);
-                model4.attributes.isGrounded = true;
-            } else {
-                model4.attributes.isGrounded = false;
-            }
-
-            if (Physics::Collisions::check(model5, terrain)) {
-                Physics::Collisions::resolve(model5, terrain);
-                model5.attributes.isGrounded = true;
-            } else {
-                model5.attributes.isGrounded = false;
+            for (const auto &model: models) {
+                if (Physics::Collisions::check(*model, terrain)) {
+                    Physics::Collisions::resolve(*model, terrain);
+                    model->attributes.isGrounded = true;
+                } else {
+                    model->attributes.isGrounded = false;
+                }
             }
         });
     } catch (const std::exception &e) {

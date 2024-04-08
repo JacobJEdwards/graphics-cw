@@ -203,6 +203,11 @@ void ProceduralTerrain::generateChunk(int chunkX, int chunkY) {
         vertex.normal = glm::normalize(vertex.normal);
     }
 
+    // texture coordinates
+    for (auto &vertex: chunk.vertices) {
+        vertex.texCoords = glm::vec2(vertex.position.x, vertex.position.z);
+    }
+
     chunk.init();
     chunks.push_back(std::move(chunk));
 }

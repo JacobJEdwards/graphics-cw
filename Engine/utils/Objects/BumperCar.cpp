@@ -29,15 +29,15 @@ BumperCar::BumperCar(glm::vec2 centre, float radius, float speed) : Entity(
     person = std::make_unique<Model>("../Assets/objects/person/person.obj");
 
 
-    const int numPoints = 10;
+    const int numPoints = static_cast<int>(Random::Int(5, 20));
 
     float angle = 0.0F;
     const float angleIncrement = glm::radians(360.0F / numPoints);
 
     for (int i = 0; i < numPoints; i++) {
-        const float x = centre.x + radius * glm::cos(angle) * Random::Float(0.9F, 1.1F);
-        const float z = centre.y + radius * glm::sin(angle) * Random::Float(0.9F, 1.1F);
-        points.emplace_back(x, 0.0F, z);
+        const float xPos = centre.x + radius * glm::cos(angle) * Random::Float(0.9F, 1.1F);
+        const float zPos = centre.y + radius * glm::sin(angle) * Random::Float(0.9F, 1.1F);
+        points.emplace_back(xPos, 0.0F, zPos);
         angle += angleIncrement;
     }
 
@@ -45,7 +45,7 @@ BumperCar::BumperCar(glm::vec2 centre, float radius, float speed) : Entity(
     spline = Physics::Spline(points, Physics::Spline::Type::CATMULLROM, speed);
     spline.randomise();
 
-    speed *= Random::Float(0.9F, 1.1F);
+    this->speed *= Random::Float(0.8F, 1.2F);
 
     attributes.mass = 2.0F;
 }
@@ -56,7 +56,7 @@ BumperCar::BumperCar(std::vector<glm::vec3> points, float speed) : Entity(
                                                                           speed), points(points) {
     person = std::make_unique<Model>("../Assets/objects/person/person.obj");
     spline.randomise();
-    speed *= Random::Float(0.9F, 1.1F);
+    this->speed *= Random::Float(0.8F, 1.2F);
     attributes.mass = 2.0F;
 }
 
@@ -85,7 +85,7 @@ void BumperCar::update(float deltaTime) {
             moveTo(playerPos);
             break;
         case Mode::AUTO:
-            spline.update(deltaTime);
+            spline.update(deltaTime * Random::Float(0.8F, 1.2F));
             if (angle > coneRadius) {
                 moveTo(point);
                 break;

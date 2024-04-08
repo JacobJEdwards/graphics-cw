@@ -28,4 +28,8 @@ namespace Random {
     auto Vec3(float min, float max) -> glm::vec3 {
         return {Float(min, max), Float(min, max), Float(min, max)};
     }
+
+    auto Vec4(float min, float max) -> glm::vec4 {
+        return {Float(min, max), Float(min, max), Float(min, max), Float(min, max)};
+    }
 }

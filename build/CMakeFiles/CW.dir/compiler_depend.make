@@ -9974,13 +9974,58 @@ CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o: /Users/jacobedwards/University
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__mutex/tag_types.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__mutex/unique_lock.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__node_handle \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/accumulate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/gcd_lcm.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/inclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/inner_product.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/iota.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/midpoint.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/partial_sum.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/pstl_reduce.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/pstl_transform_reduce.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/transform_exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/transform_inclusive_scan.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__numeric/transform_reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/bernoulli_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/binomial_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/cauchy_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/chi_squared_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/clamp_to_integral.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/default_random_engine.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/discard_block_engine.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/discrete_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/exponential_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/extreme_value_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/fisher_f_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/gamma_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/generate_canonical.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/geometric_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/independent_bits_engine.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/is_seed_sequence.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/is_valid.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/knuth_b.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/linear_congruential_engine.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/log2.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/lognormal_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/mersenne_twister_engine.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/negative_binomial_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/normal_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/piecewise_constant_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/piecewise_linear_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/poisson_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/random_device.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/ranlux.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/seed_seq.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/shuffle_order_engine.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/student_t_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/subtract_with_carry_engine.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/uniform_int_distribution.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/uniform_random_bit_generator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/uniform_real_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/weibull_distribution.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/access.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/concepts.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/container_compatible_range.h \
@@ -10211,7 +10256,6 @@ CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o: /Users/jacobedwards/University
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iomanip \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ios \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iosfwd \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/istream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iterator \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits \
@@ -10222,8 +10266,10 @@ CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o: /Users/jacobedwards/University
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/memory \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/mutex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/new \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/numeric \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/optional \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ostream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/random \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ratio \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stddef.h \
@@ -10384,6 +10430,7 @@ CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o: /Users/jacobedwards/University
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Particle.h \
@@ -10395,6 +10442,7 @@ CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o: /Users/jacobedwards/University
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Random.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
@@ -10663,6 +10711,7 @@ CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o: /Users/jacobedwards/University
   /opt/homebrew/include/glm/fwd.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
   /opt/homebrew/include/glm/glm.hpp \
+  /opt/homebrew/include/glm/gtc/constants.hpp \
   /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
   /opt/homebrew/include/glm/gtc/type_ptr.hpp \
   /opt/homebrew/include/glm/integer.hpp \
@@ -37114,7 +37163,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/ImmovableObject.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/FrameBuffer.h \
@@ -37133,7 +37181,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/BumperCar.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/InfinitePlane.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/Skybox.h \
@@ -37423,8 +37470,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
   /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
   /opt/homebrew/include/glm/gtc/type_ptr.hpp
 
-
-/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/InfinitePlane.h:
 
 /Users/jacobedwards/University/Year2/Graphics/graphics-cw/main.cpp:
 
@@ -38170,6 +38215,26 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
 
 /opt/homebrew/include/glm/gtx/spline.inl:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Headers/AEDataModel.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/LSOpenDeprecated.h:
+
+/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.cpp:
+
+/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.h:
+
+/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Constants.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/IntlResources.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/Security.framework/Headers/AuthorizationTags.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/Security.framework/Headers/SecStaticCode.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/concepts.h:
+
+/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/stb_image.h:
+
 /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/FrameBuffer.cpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/file_status.h:
@@ -38251,26 +38316,6 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
 /opt/homebrew/include/glm/ext/vector_uint4.hpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/bernoulli_distribution.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Headers/AEDataModel.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/LSOpenDeprecated.h:
-
-/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.cpp:
-
-/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.h:
-
-/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Constants.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/IntlResources.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/Security.framework/Headers/AuthorizationTags.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/Security.framework/Headers/SecStaticCode.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/concepts.h:
-
-/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/stb_image.h:
 
 /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Particle.cpp:
 
@@ -39426,9 +39471,9 @@ CMakeFiles/CW.dir/main.cpp.o: /Users/jacobedwards/University/Year2/Graphics/grap
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGPDFPage.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/random_device.h:
-
 /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Gravity.cpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/random_device.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/os/availability.h:
 

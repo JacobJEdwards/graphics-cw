@@ -16,6 +16,8 @@ namespace Random {
     auto Int(int min, int max) -> int;
 
     auto Vec3(float min, float max) -> glm::vec3;
+
+    auto Vec4(float min, float max) -> glm::vec4;
 }
 
 
