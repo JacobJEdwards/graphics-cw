@@ -57,6 +57,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/utils/Random.cpp.o"
+  "CMakeFiles/CW.dir/Engine/utils/Random.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o"

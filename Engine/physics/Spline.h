@@ -40,11 +40,13 @@ namespace Physics {
 
         void invert();
 
+        void randomise();
+
     private:
         std::vector<glm::vec3> points;
         Type type;
-        float speed;
-        std::size_t numPoints;
+        float speed{};
+        std::size_t numPoints{};
 
         std::size_t p0Index = 0;
         std::size_t p1Index = 1;

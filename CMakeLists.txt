@@ -55,6 +55,8 @@ add_executable(CW main.cpp
         Engine/utils/Noise.cpp
         Engine/utils/Objects/BumperCar.h
         Engine/utils/Objects/BumperCar.cpp
+        Engine/utils/Random.cpp
+        Engine/utils/Random.h
 )
 
 # Link libraries

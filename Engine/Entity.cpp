@@ -57,7 +57,7 @@ void Entity::draw(std::shared_ptr<Shader> shader) const {
     return *model;
 }
 
-[[nodiscard]] auto Entity::getBoundingBox() -> BoundingBox & {
+[[nodiscard]] auto Entity::getBoundingBox() const -> const BoundingBox & {
     return box;
 }
 

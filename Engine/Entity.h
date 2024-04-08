@@ -40,7 +40,7 @@ public:
 
     [[nodiscard]] auto getModel() const -> const Model &;
 
-    [[nodiscard]] auto getBoundingBox() -> BoundingBox &;
+    [[nodiscard]] auto getBoundingBox() const -> const BoundingBox &;
 
     [[nodiscard]] auto getAttributes() -> Physics::Attributes &;
 

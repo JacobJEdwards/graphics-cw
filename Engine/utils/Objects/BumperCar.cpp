@@ -12,12 +12,11 @@
 #include <vector>
 #include "graphics/Model.h"
 #include "utils/PlayerManager.h"
-#include <iostream>
 #include "Entity.h"
 #include "App.h"
 #include "utils/Shader.h"
 #include "imgui/imgui.h"
-#include <random>
+#include "utils/Random.h"
 
 float BumperCar::coneRadius = 45.0F;
 float BumperCar::coneHeight = 100.0F;
@@ -29,9 +28,6 @@ BumperCar::BumperCar(glm::vec2 centre, float radius, float speed) : Entity(
         "../Assets/objects/bumpercar1/bumper-car.obj"), speed(speed) {
     person = std::make_unique<Model>("../Assets/objects/person/person.obj");
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.5F, 1.0F);
 
     const int numPoints = 10;
 
@@ -39,14 +35,18 @@ BumperCar::BumperCar(glm::vec2 centre, float radius, float speed) : Entity(
     const float angleIncrement = glm::radians(360.0F / numPoints);
 
     for (int i = 0; i < numPoints; i++) {
-        const float x = centre.x + radius * glm::cos(angle) * dis(gen);
-        const float z = centre.y + radius * glm::sin(angle) * dis(gen);
+        const float x = centre.x + radius * glm::cos(angle) * Random::Float(0.9F, 1.1F);
+        const float z = centre.y + radius * glm::sin(angle) * Random::Float(0.9F, 1.1F);
         points.emplace_back(x, 0.0F, z);
         angle += angleIncrement;
     }
 
 
     spline = Physics::Spline(points, Physics::Spline::Type::CATMULLROM, speed);
+    spline.randomise();
+
+    speed *= Random::Float(0.9F, 1.1F);
+
     attributes.mass = 2.0F;
 }
 
@@ -55,6 +55,8 @@ BumperCar::BumperCar(std::vector<glm::vec3> points, float speed) : Entity(
                                                                    spline(points, Physics::Spline::Type::CATMULLROM,
                                                                           speed), points(points) {
     person = std::make_unique<Model>("../Assets/objects/person/person.obj");
+    spline.randomise();
+    speed *= Random::Float(0.9F, 1.1F);
     attributes.mass = 2.0F;
 }
 
@@ -89,7 +91,6 @@ void BumperCar::update(float deltaTime) {
                 break;
             }
 
-            // work this out better
             if (glm::distance(currentPos, playerPos) < trackingDistance &&
                 glm::distance(currentPos, point) < ventureDistance) {
                 moveTo(playerPos);

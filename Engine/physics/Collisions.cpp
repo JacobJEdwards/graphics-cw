@@ -1,8 +1,10 @@
 #include "Collisions.h"
+#include "Entity.h"
 #include "physics/Constants.h"
 #include "physics/ModelAttributes.h"
 #include "graphics/Model.h"
 #include "utils/BoundingBox.h"
+#include "utils/Objects/ProceduralTerrain.h"
 
 namespace {
     void resolveWithFloor(Physics::Attributes &a, float floorY) {
@@ -16,8 +18,8 @@ namespace {
 
 namespace Physics::Collisions {
     void resolve(Attributes &a, const glm::vec3 &normal) {
-        glm::vec3 relativeVelocity = a.velocity;
-        float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
+        const glm::vec3 relativeVelocity = a.velocity;
+        const float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
 
         if (relativeVelocityAlongNormal > 0) {
             a.applyFriction(Physics::FRICTION);
@@ -29,13 +31,17 @@ namespace Physics::Collisions {
             return;
         }
 
-        float e = 0.5F;
+        const float e = 0.5F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
         j /= 1 / a.mass;
 
-        glm::vec3 impulse = j * normal;
+        const glm::vec3 impulse = j * normal;
 
         a.applyImpulse(impulse);
+    }
+
+    void resolve(Entity &a, const glm::vec3 &normal) {
+        resolve(a.getAttributes(), normal);
     }
 
     void resolve(Attributes &a, Attributes &b) {
@@ -119,6 +125,16 @@ namespace Physics::Collisions {
         }
     }
 
+    void resolve(Entity &a, Entity &b) {
+        const glm::vec3 collisionPoint = getCollisionPoint(a.getBoundingBox(), b.getBoundingBox());
+        resolve(a.getAttributes(), b.getAttributes(), collisionPoint);
+    }
+
+    void resolve(Entity &a, ProceduralTerrain &b) {
+        const auto normal = b.getTerrainNormal(a.attributes.position.x, a.attributes.position.z);
+        resolve(a, normal);
+    }
+
     auto check(const BoundingBox &a, const BoundingBox &b) -> bool {
         return a.isColliding(b);
     }
@@ -127,6 +143,14 @@ namespace Physics::Collisions {
 
     auto getCollisionPoint(const BoundingBox &a, const BoundingBox &b) -> glm::vec3 {
         return a.getCollisionPoint(b);
+    }
+
+    auto check(const Entity &a, const Entity &b) -> bool {
+        return check(a.getBoundingBox(), b.getBoundingBox());
+    }
+
+    auto check(const Entity &a, const ProceduralTerrain &b) -> bool {
+        return b.intersectRay(a.attributes.position);
     }
 } // namespace Physics::Collisions
 

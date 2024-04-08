@@ -18,7 +18,7 @@ public:
         NONE
     };
 
-    explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 30.0F, float speed = 1.0F);
+    explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 50.0F, float speed = 1.0F);
 
     explicit BumperCar(std::vector<glm::vec3> points, float speed = 1.0F);
 

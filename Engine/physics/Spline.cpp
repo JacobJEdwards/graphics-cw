@@ -23,6 +23,8 @@
 #include "utils/ShaderManager.h"
 #include <GL/glew.h>
 
+#include "utils/Random.h"
+
 namespace {
     // floating point errors
     template<typename T>
@@ -115,7 +117,7 @@ void Physics::Spline::draw(std::shared_ptr<Shader> shader) const {
     shader->use();
     shader->setUniform("model", glm::mat4(1.0F));
     buffer->bind();
-    glDrawArrays(GL_LINE_STRIP, 0, numPoints + 1);
+    glDrawArrays(GL_LINE_STRIP, 0, static_cast<GLint>(numPoints + 1));
     buffer->unbind();
 }
 
@@ -125,4 +127,11 @@ void Physics::Spline::setSpeed(const float speed) {
 
 void Physics::Spline::invert() {
     std::reverse(points.begin(), points.end());
+}
+
+void Physics::Spline::randomise() {
+    // shift all points index in a random direction
+    const auto shift = Random::Int(0, numPoints - 1);
+
+    std::rotate(points.begin(), points.begin() + shift, points.end());
 }

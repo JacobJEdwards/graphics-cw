@@ -3,20 +3,31 @@
 
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
-#include "graphics/Model.h"
+#include "Entity.h"
+#include "utils/Objects/ProceduralTerrain.h"
 #include <glm/glm.hpp>
 
 
 namespace Physics::Collisions {
     void resolve(Attributes &a, const glm::vec3 &normal);
 
+    void resolve(Entity &a, const glm::vec3 &normal);
+
     void resolve(Attributes &a, Attributes &b, const glm::vec3 &point);
 
     void resolve(Attributes &a, Attributes &b);
 
+    void resolve(Entity &a, Entity &b);
+
+    void resolve(Entity &a, ProceduralTerrain &b);
+
     auto check(const BoundingBox &a, const BoundingBox &b) -> bool;
 
     auto check(const BoundingBox &a, const glm::vec3 &b) -> bool;
+
+    auto check(const Entity &a, const Entity &b) -> bool;
+
+    auto check(const Entity &a, const ProceduralTerrain &b) -> bool;
 
     auto getCollisionPoint(const BoundingBox &a, const BoundingBox &b) -> glm::vec3;
 } // namespace Physics::Collisions
