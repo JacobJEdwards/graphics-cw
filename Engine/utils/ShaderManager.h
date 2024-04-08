@@ -21,6 +21,8 @@ public:
 
     static auto Get(GLuint id) -> std::shared_ptr<Shader>;
 
+    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader>>;
+
     static void Remove(const std::string &name);
 
     static void Clear();

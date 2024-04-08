@@ -52,7 +52,6 @@ void ShadowBuffer::bind() {
     glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
     glClear(GL_DEPTH_BUFFER_BIT);
 
-    glEnable(GL_CULL_FACE);
     glCullFace(GL_FRONT);
     glDepthFunc(GL_LESS);
 }

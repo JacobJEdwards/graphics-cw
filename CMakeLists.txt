@@ -57,6 +57,8 @@ add_executable(CW main.cpp
         Engine/utils/Objects/BumperCar.cpp
         Engine/utils/Random.cpp
         Engine/utils/Random.h
+        Engine/utils/UniformBuffer.cpp
+        Engine/utils/UniformBuffer.h
 )
 
 # Link libraries

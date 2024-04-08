@@ -33,6 +33,10 @@ auto ShaderManager::Get(GLuint id) -> std::shared_ptr<Shader> {
     return nullptr;
 }
 
+auto ShaderManager::GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader>> {
+    return Shaders;
+}
+
 void ShaderManager::Remove(const std::string &name) {
     Shaders.erase(name);
 }

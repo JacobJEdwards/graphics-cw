@@ -54,6 +54,7 @@ void ProceduralTerrain::draw(std::shared_ptr<Shader> shader) const {
     const int endY = std::min(numChunksY, static_cast<int>(yChunk + renderDistance));
 
     shader->use();
+    shader->setUniform("model", Config::IDENTITY_MATRIX);
 
 
     for (int i = startY; i < endY; i++) {

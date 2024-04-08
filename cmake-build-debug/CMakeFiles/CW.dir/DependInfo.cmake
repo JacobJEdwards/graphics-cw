@@ -40,6 +40,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Random.cpp" "CMakeFiles/CW.dir/Engine/utils/Random.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Random.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.cpp" "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.cpp" "CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o.d"
+  "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/UniformBuffer.cpp" "CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.cpp" "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o" "gcc" "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.cpp" "CMakeFiles/CW.dir/external/imgui/imgui.cpp.o" "gcc" "CMakeFiles/CW.dir/external/imgui/imgui.cpp.o.d"
   "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_demo.cpp" "CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o" "gcc" "CMakeFiles/CW.dir/external/imgui/imgui_demo.cpp.o.d"

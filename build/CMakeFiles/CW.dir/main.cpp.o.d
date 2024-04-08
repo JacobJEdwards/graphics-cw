@@ -1262,4 +1262,5 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/weibull_distribution.h \
   /opt/homebrew/include/glm/gtc/constants.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/BumperCar.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/UniformBuffer.h

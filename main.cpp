@@ -11,11 +11,11 @@
 
 #include <glm/ext/matrix_transform.hpp>
 #include <vector>
-#include <vector>
 
 #include "Config.h"
 
 #include "App.h"
+#include "Entity.h"
 #include "utils/Camera.h"
 #include "utils/PlayerManager.h"
 
@@ -29,7 +29,7 @@
 #include "utils/Objects/ProceduralTerrain.h"
 #include "graphics/Particle.h"
 #include "utils/Objects/BumperCar.h"
-#include "utils/Random.h"
+#include "utils/UniformBuffer.h"
 
 void processInput();
 
@@ -46,6 +46,18 @@ auto main() -> int {
 
     Skybox skybox;
     ProceduralTerrain terrain;
+
+    struct {
+        glm::mat4 projection = Config::IDENTITY_MATRIX;
+        glm::mat4 view = Config::IDENTITY_MATRIX;
+    } matrices;
+    // proj and view matrices
+    UniformBuffer ubo;
+    ubo.bind();
+    ubo.setData(matrices);
+    ubo.bindBufferBase(0);
+
+    ubo.bindBufferRange(0, 0, 2 * sizeof(glm::mat4));
 
     Texture::Loader::setFlip(true);
 
@@ -74,9 +86,7 @@ auto main() -> int {
     PlayerManager::Get("Free")->setShader(shader);
     PlayerManager::Get("FPS")->setShader(shader);
     PlayerManager::Get("Fixed")->setShader(shader);
-
-
-    auto model = Config::IDENTITY_MATRIX;
+    PlayerManager::Get("Path")->setShader(shader);
 
     ParticleSystem particleSystem;
 
@@ -90,11 +100,16 @@ auto main() -> int {
         const auto projectionMatrix = player->getCamera().getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
 
+
         shadowBuffer.bind();
 
         auto lightPos = skybox.getSun().getPosition();
         auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
         auto lightView = glm::lookAt(lightPos, player->getPosition(), glm::vec3(0.0F, 1.0F, 0.0F));
+
+        matrices.view = lightView;
+        matrices.projection = lightProjection;
+        ubo.setData(matrices);
 
         shader = ShaderManager::Get("Shadow");
         shader->use();
@@ -113,6 +128,11 @@ auto main() -> int {
         shadowBuffer.unbind();
 
         View::clearTarget(Color::BLACK);
+
+        matrices.view = viewMatrix;
+        matrices.projection = projectionMatrix;
+        ubo.setData(matrices);
+
         shader = ShaderManager::Get("Base");
         shader->use();
         shader->setUniform("light.position", skybox.getSun().getPosition());
@@ -135,11 +155,8 @@ auto main() -> int {
         glBindTexture(GL_TEXTURE_2D, texture);
         shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
-        shader->setUniform("projection", projectionMatrix);
-        shader->setUniform("view", viewMatrix);
         shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
         shader->setUniform("shadowMap", 0);
-        shader->setUniform("model", model);
 
         terrain.draw(viewMatrix, projectionMatrix);
         skybox.draw(viewMatrix, projectionMatrix);
@@ -180,7 +197,6 @@ auto main() -> int {
             skybox.update(App::view.getDeltaTime());
             particleSystem.update(App::view.getDeltaTime());
 
-            // find al permutations of models
             for (int i = 0; i < models.size(); i++) {
                 for (int j = i + 1; j < models.size(); j++) {
                     if (Physics::Collisions::check(*models[i], *models[j])) {
@@ -342,6 +358,10 @@ void setupShaders() {
     // material properties
     shader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
     shader->setUniform("material.shininess", 64.0F);
+
+    for (const auto &[name, shader]: ShaderManager::GetAll()) {
+        UniformBuffer::Create(shader, "Matrices", 0);
+    }
 }
 
 void setupPlayers() {

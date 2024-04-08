@@ -897,6 +897,30 @@ Engine/utils/ShaderManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s
 .PHONY : Engine/utils/ShaderManager.cpp.s
 
+Engine/utils/UniformBuffer.o: Engine/utils/UniformBuffer.cpp.o
+.PHONY : Engine/utils/UniformBuffer.o
+
+# target to build an object file
+Engine/utils/UniformBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.o
+.PHONY : Engine/utils/UniformBuffer.cpp.o
+
+Engine/utils/UniformBuffer.i: Engine/utils/UniformBuffer.cpp.i
+.PHONY : Engine/utils/UniformBuffer.i
+
+# target to preprocess a source file
+Engine/utils/UniformBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.i
+.PHONY : Engine/utils/UniformBuffer.cpp.i
+
+Engine/utils/UniformBuffer.s: Engine/utils/UniformBuffer.cpp.s
+.PHONY : Engine/utils/UniformBuffer.s
+
+# target to generate assembly for a file
+Engine/utils/UniformBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.s
+.PHONY : Engine/utils/UniformBuffer.cpp.s
+
 Engine/utils/Vertex.o: Engine/utils/Vertex.cpp.o
 .PHONY : Engine/utils/Vertex.o
 
@@ -1218,6 +1242,9 @@ help:
 	@echo "... Engine/utils/ShaderManager.o"
 	@echo "... Engine/utils/ShaderManager.i"
 	@echo "... Engine/utils/ShaderManager.s"
+	@echo "... Engine/utils/UniformBuffer.o"
+	@echo "... Engine/utils/UniformBuffer.i"
+	@echo "... Engine/utils/UniformBuffer.s"
 	@echo "... Engine/utils/Vertex.o"
 	@echo "... Engine/utils/Vertex.i"
 	@echo "... Engine/utils/Vertex.s"

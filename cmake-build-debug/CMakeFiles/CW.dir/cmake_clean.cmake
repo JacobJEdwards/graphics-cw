@@ -63,6 +63,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.o"
+  "CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o"
   "CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o.d"
   "CMakeFiles/CW.dir/external/imgui/imgui.cpp.o"
