@@ -5,8 +5,12 @@
 #include "ShaderManager.h"
 
 #include "utils/Shader.h"
+#include <filesystem>
 #include <memory>
 #include "imgui/imgui.h"
+#include <ranges>
+#include <string>
+#include <unordered_map>
 
 std::unordered_map<std::string, std::shared_ptr<Shader>> ShaderManager::Shaders;
 
@@ -18,12 +22,13 @@ void ShaderManager::Add(const std::string &name, const std::filesystem::path &ve
 }
 
 auto ShaderManager::Get(const std::string &name) -> std::shared_ptr<Shader> {
-    auto it = Shaders.find(name);
+    const auto it = Shaders.find(name);
 
     return it != Shaders.end() ? it->second : nullptr;
 }
 
-auto ShaderManager::Get(GLuint id) -> std::shared_ptr<Shader> {
+auto ShaderManager::Get(const GLuint id) -> std::shared_ptr<Shader> {
+
     for (const auto &[name, shader]: Shaders) {
         if (shader->getProgramID() == id) {
             return shader;

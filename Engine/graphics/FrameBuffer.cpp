@@ -4,13 +4,11 @@
 
 #include "FrameBuffer.h"
 
-#include "Config.h"
 #include <GL/glew.h>
-#include <stdexcept>
 #include <iostream>
 
-FrameBuffer::FrameBuffer(unsigned int width,
-                         unsigned int height, bool multisample)
+FrameBuffer::FrameBuffer(const unsigned int width,
+                         const unsigned int height, const bool multisample)
         : width(width), height(height), multisample(multisample) {
     setup();
 }
@@ -116,17 +114,17 @@ void FrameBuffer::unbind() const {
 
 [[nodiscard]] auto FrameBuffer::getTexture() const -> GLuint { return texture.id; }
 
-void FrameBuffer::setHeight(unsigned int height) {
+void FrameBuffer::setHeight(const unsigned int height) {
     this->height = height;
     resize();
 }
 
-void FrameBuffer::setWidth(unsigned int width) {
+void FrameBuffer::setWidth(const unsigned int width) {
     this->width = width;
     resize();
 }
 
-void FrameBuffer::resize(unsigned int width, unsigned int height) {
+void FrameBuffer::resize(const unsigned int width, const unsigned int height) {
     this->width = width;
     this->height = height;
     resize();
@@ -151,7 +149,7 @@ void FrameBuffer::setup() {
                            texture.id, 0);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        throw std::runtime_error("Framebuffer is not complete");
+        std::cerr << "Framebuffer is not complete!" << std::endl;
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -197,6 +195,6 @@ void FrameBuffer::resize() const {
                  GL_UNSIGNED_BYTE, nullptr);
 }
 
-void FrameBuffer::setMultisampled(bool multisampled) {
+void FrameBuffer::setMultisampled(const bool multisampled) {
     this->multisample = multisampled;
 }

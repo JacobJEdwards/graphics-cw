@@ -7,9 +7,11 @@
 #include "Config.h"
 #include <GL/glew.h>
 #include <cmath>
+#include <glm/ext/matrix_float3x3.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/ext/matrix_transform.hpp>
 #include <glm/geometric.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include "utils/ShaderManager.h"
 #include "imgui/imgui.h"
@@ -32,9 +34,9 @@ Sun::Sun() : Entity("../Assets/objects/sun/sun.obj") {
     moon.attributes.position.x = 0.0F;
     moon.attributes.position.y = 0.0F;
     moon.attributes.position.z = 50.0F;
-};
+}
 
-void Sun::update(float deltaTime) {
+void Sun::update(const float deltaTime) {
     if (!move) {
         return;
     }
@@ -42,8 +44,8 @@ void Sun::update(float deltaTime) {
     attributes.update(deltaTime * speed);
 
     angle += 0.05F * deltaTime * speed;
-    const float orbitRadius = 100.0F;
-    const float height = 20.0F;
+    constexpr float orbitRadius = 100.0F;
+    constexpr float height = 20.0F;
     const float x = orbitRadius * std::cos(angle);
     const float y = orbitRadius * std::sin(angle);
     const float z = height * std::sin(0.5 * angle);
@@ -56,11 +58,9 @@ void Sun::update(float deltaTime) {
     moon.attributes.position.x = -x;
     moon.attributes.position.y = -y;
     moon.attributes.position.z = -z;
-
 }
 
 void Sun::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
-
     GLenum prevDepthFunc;
     glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint *>(&prevDepthFunc));
 

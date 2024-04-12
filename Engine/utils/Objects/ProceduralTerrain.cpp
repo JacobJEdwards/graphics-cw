@@ -8,29 +8,28 @@
 #include <algorithm>
 #include "utils/Noise.h"
 #include <cstddef>
+#include <cstddef>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include <utility>
-#include <vector>
 #include "utils/Buffer.h"
 #include "utils/Vertex.h"
 #include "utils/Shader.h"
 #include <memory>
-#include "graphics/Renderable.h"
 #include "utils/ShaderManager.h"
 #include "utils/PlayerManager.h"
 
 void ProceduralTerrain::Chunk::init() {
     buffer = std::make_unique<Buffer>();
     buffer->fill(vertices, indices);
-};
+}
 
-ProceduralTerrain::ProceduralTerrain(glm::vec2 center, int chunkSize,
-                                     int numChunksX,
-                                     int numChunksY)
-        : centre(center), chunkSize(chunkSize), numChunksX(numChunksX), numChunksY(numChunksY) {
+ProceduralTerrain::ProceduralTerrain(const glm::vec2 center, const int chunkSize,
+                                     const int numChunksX,
+                                     const int numChunksY)
+    : centre(center), chunkSize(chunkSize), numChunksX(numChunksX), numChunksY(numChunksY) {
     shader = ShaderManager::Get("Simple");
     chunks.reserve(static_cast<std::size_t>(numChunksX) * static_cast<std::size_t>(numChunksY));
 
@@ -39,13 +38,13 @@ ProceduralTerrain::ProceduralTerrain(glm::vec2 center, int chunkSize,
     generate();
 }
 
-void ProceduralTerrain::draw(std::shared_ptr<Shader> shader) const {
-    auto player = PlayerManager::GetCurrent();
+void ProceduralTerrain::draw(const std::shared_ptr<Shader> shader) const {
+    const auto player = PlayerManager::GetCurrent();
     const glm::vec3 position = player->attributes.position;
     const int renderDistance = static_cast<int>(player->getCamera().getRenderDistance());
 
-    const int xChunk = (position.x + worldSizeX / 2.0F) / chunkSize;
-    const int yChunk = (position.z + worldSizeY / 2.0F) / chunkSize;
+    const int xChunk = static_cast<int>(position.x + worldSizeX / 2.0F) / chunkSize;
+    const int yChunk = static_cast<int>(position.z + worldSizeY / 2.0F) / chunkSize;
 
     const int startX = std::max(0, xChunk - renderDistance);
     const int endX = std::min(numChunksX, xChunk + renderDistance);
@@ -54,8 +53,6 @@ void ProceduralTerrain::draw(std::shared_ptr<Shader> shader) const {
     const int endY = std::min(numChunksY, static_cast<int>(yChunk + renderDistance));
 
     shader->use();
-    shader->setUniform("model", Config::IDENTITY_MATRIX);
-
 
     for (int i = startY; i < endY; i++) {
         for (int j = startX; j < endX; j++) {
@@ -107,7 +104,7 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     return getTerrainHeight(position.x, position.z);
 }
 
-[[nodiscard]] auto ProceduralTerrain::getTerrainHeight(float xPos, float zPos) const -> float {
+[[nodiscard]] auto ProceduralTerrain::getTerrainHeight(const float xPos, const float zPos) const -> float {
     const float xCoord = xPos + static_cast<float>(worldSizeX) / 2.0F;
     const float zCoord = zPos + static_cast<float>(worldSizeY) / 2.0F;
 
@@ -124,9 +121,9 @@ ProceduralTerrain::getIntersectionPoint(const glm::vec3 &rayStart, const glm::ve
 
 // get teh normal of the terrain at a given point
 // can be used for collision detection
-[[nodiscard]] auto ProceduralTerrain::getTerrainNormal(float x, float y) const -> glm::vec3 {
-    const float dx = 0.1F;
-    const float dz = 0.1F;
+[[nodiscard]] auto ProceduralTerrain::getTerrainNormal(const float x, const float y) const -> glm::vec3 {
+    constexpr float dx = 0.1F;
+    constexpr float dz = 0.1F;
 
     const float height1 = getTerrainHeight(x - dx, y);
     const float height2 = getTerrainHeight(x + dx, y);
@@ -147,7 +144,7 @@ void ProceduralTerrain::generate() {
     }
 }
 
-void ProceduralTerrain::generateChunk(int chunkX, int chunkY) {
+void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
     const int xOffset = chunkX * chunkSize;
     const int yOffset = chunkY * chunkSize;
 
@@ -173,9 +170,9 @@ void ProceduralTerrain::generateChunk(int chunkX, int chunkY) {
     for (int i = 0; i < chunkSize; i++) {
         for (int j = 0; j < chunkSize; j++) {
             const int topLeft = j + i * (chunkSize + 1);
-            const int topRight = (j + 1) + i * (chunkSize + 1);
+            const int topRight = j + 1 + i * (chunkSize + 1);
             const int bottomLeft = j + (i + 1) * (chunkSize + 1);
-            const int bottomRight = (j + 1) + (i + 1) * (chunkSize + 1);
+            const int bottomRight = j + 1 + (i + 1) * (chunkSize + 1);
 
             chunk.indices.push_back(topLeft);
             chunk.indices.push_back(bottomLeft);
@@ -187,7 +184,7 @@ void ProceduralTerrain::generateChunk(int chunkX, int chunkY) {
         }
     }
 
-    for (int i = 0; i < chunk.indices.size(); i += 3) {
+    for (std::size_t i = 0; i < chunk.indices.size(); i += 3) {
         const glm::vec3 v0 = chunk.vertices[chunk.indices[i]].position;
         const glm::vec3 v1 = chunk.vertices[chunk.indices[i + 1]].position;
         const glm::vec3 v2 = chunk.vertices[chunk.indices[i + 2]].position;
@@ -197,7 +194,6 @@ void ProceduralTerrain::generateChunk(int chunkX, int chunkY) {
         chunk.vertices[chunk.indices[i]].normal += normal;
         chunk.vertices[chunk.indices[i + 1]].normal += normal;
         chunk.vertices[chunk.indices[i + 2]].normal += normal;
-
     }
 
     for (auto &vertex: chunk.vertices) {

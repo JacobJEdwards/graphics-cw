@@ -5,7 +5,7 @@
 #include "utils/BoundingBox.h"
 #include "Entity.h"
 #include "utils/Objects/ProceduralTerrain.h"
-#include <glm/glm.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 
 namespace Physics::Collisions {
@@ -19,7 +19,9 @@ namespace Physics::Collisions {
 
     void resolve(Entity &a, Entity &b);
 
-    void resolve(Entity &a, ProceduralTerrain &b);
+    void resolve(Entity &a, const ProceduralTerrain &b);
+
+    void resolve(Entity &a, Entity &b, const glm::vec3 &collisionPoint);
 
     auto check(const BoundingBox &a, const BoundingBox &b) -> bool;
 
@@ -30,6 +32,8 @@ namespace Physics::Collisions {
     auto check(const Entity &a, const ProceduralTerrain &b) -> bool;
 
     auto getCollisionPoint(const BoundingBox &a, const BoundingBox &b) -> glm::vec3;
+
+    auto getCollisionPoint(const Entity &a, const Entity &b) -> glm::vec3;
 } // namespace Physics::Collisions
 
 

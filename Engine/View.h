@@ -29,7 +29,7 @@ public:
 
     auto init(const std::string &title, int width, int height) -> bool;
 
-    void quit();
+    void quit() const;
 
     void render();
 
@@ -52,9 +52,9 @@ public:
     static void clearTarget(const glm::vec3 &color = Color::BLACK,
                             bool clearc = true, bool cleard = true);
 
-    auto shouldClose() -> bool;
+    [[nodiscard]] auto shouldClose() const -> bool;
 
-    void swapBuffers();
+    void swapBuffers() const;
 
     static void pollEvents();
 
@@ -88,13 +88,13 @@ public:
 
     [[nodiscard]] auto getWindow() const -> GLFWwindow * { return window; }
 
-    void setDimensions(unsigned int width, unsigned int height) {
+    void setDimensions(const unsigned int width, const unsigned int height) {
         WIDTH = width;
         HEIGHT = height;
         (resize)();
     }
 
-    auto getPostProcessor() -> PostProcess & { return *postProcessor.get(); }
+    [[nodiscard]] auto getPostProcessor() const -> PostProcess & { return *postProcessor; }
 
     void close() const;
 
@@ -102,15 +102,15 @@ public:
 
     void optionsInterface();
 
-    void blurScreen() {
+    void blurScreen() const {
         postProcessor->isBlurred();
     }
 
 private:
     GLFWwindow *window = nullptr;
 
-    unsigned int WIDTH = 0;
-    unsigned int HEIGHT = 0;
+    unsigned int WIDTH = 0U;
+    unsigned int HEIGHT = 0U;
     std::string title;
 
     ImGuiIO io;
@@ -121,35 +121,42 @@ private:
     bool showInterface = true;
     bool showMenu = true;
 
-    void interfaceLoop();
+    void interfaceLoop() const;
 
-    void menuLoop();
+    void menuLoop() const;
 
-    void keyLoop();
+    void keyLoop() const;
 
-    void setCallbacks();
+    void setCallbacks() const;
 
-    void scrollCallback(GLFWwindow *, double x, double y);
+    void scrollCallback(GLFWwindow *, double xOffset, double yOffset);
 
     void mouseCallback(GLFWwindow *, double x, double y);
 
-    void errorCallback(int error, const char *description);
+    void errorCallback(int err, const char *description) const;
 
     void resizeCallback(GLFWwindow *, int width, int height);
 
 
-    Handle interface = []() {};
-    Handle menu = []() {};
+    Handle interface = []() {
+    };
+    Handle menu = []() {
+    };
 
-    Handle key = []() {};
-    Handle mouse = []() {};
-    Handle pipeline = []() {};
+    Handle key = []() {
+    };
+    Handle mouse = []() {
+    };
+    Handle pipeline = []() {
+    };
 
-    Handle scroll = []() {};
+    Handle scroll = []() {
+    };
 
-    Handle resize = [&]() {};
+    Handle resize = [&]() {
+    };
 
-    ErrorHandle error = [](int err, const char *description) {
+    ErrorHandle error = [](const int err, const char *description) {
         std::cerr << "Error: " << err << " - " << description << std::endl;
     };
 

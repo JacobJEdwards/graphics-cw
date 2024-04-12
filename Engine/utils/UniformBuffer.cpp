@@ -24,7 +24,7 @@ void UniformBuffer::bind() const {
     glBindBuffer(GL_UNIFORM_BUFFER, UBO);
 }
 
-void UniformBuffer::unbind() const {
+void UniformBuffer::unbind() {
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 

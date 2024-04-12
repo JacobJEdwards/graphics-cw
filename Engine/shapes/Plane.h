@@ -3,7 +3,7 @@
 
 #include "utils/Buffer.h"
 #include "utils/Vertex.h"
-#include <glm/glm.hpp>
+#include <memory>
 #include <vector>
 
 class Plane {

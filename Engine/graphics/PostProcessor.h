@@ -13,11 +13,11 @@ public:
 
     void render(float deltaTime, float time);
 
-    void begin();
+    void begin() const;
 
-    void end();
+    void end() const;
 
-    void setShader(std::shared_ptr<Shader> shader);
+    void setShader(const std::shared_ptr<Shader> &shader);
 
     auto getShader() -> std::shared_ptr<Shader>;
 
@@ -49,14 +49,14 @@ private:
 
     bool multisampled = true;
 
-    float gamma = 2.2;
-    float exposure = 1.0;
-    float contrast = 1.2;
-    float saturation = 1.5;
-    float brightness = 1.0;
-    float bloomThreshold = 0.8;
-    float bloomIntensity = 1.4;
-    float vignetteStrength = 0.3;
+    float gamma = 2.2F;
+    float exposure = 1.0F;
+    float contrast = 1.2F;
+    float saturation = 1.5F;
+    float brightness = 1.0F;
+    float bloomThreshold = 0.8F;
+    float bloomIntensity = 1.4F;
+    float vignetteStrength = 0.3F;
 
     bool blur = false;
     float blurTime = 0.0F;

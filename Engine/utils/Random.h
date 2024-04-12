@@ -5,10 +5,9 @@
 #ifndef CW_RANDOM_H
 #define CW_RANDOM_H
 
-#include <random>
+#include <glm/ext/vector_float4.hpp>
+#include <glm/ext/vector_float3.hpp>
 #include <ctime>
-#include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
 
 namespace Random {
     auto Float(float min, float max) -> float;

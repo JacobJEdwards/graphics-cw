@@ -18,14 +18,14 @@
 
 constexpr auto DEFAULT_CENTRE = glm::vec2{0.0F, 0.0F};
 constexpr auto DEFAULT_CHUNK_SIZE = 100;
-constexpr auto DEFAULT_NUM_CHUNKS_X = 5;
-constexpr auto DEFAULT_NUM_CHUNKS_Y = 5;
+constexpr auto DEFAULT_NUM_CHUNKS_X = 8;
+constexpr auto DEFAULT_NUM_CHUNKS_Y = 8;
 
-class ProceduralTerrain : public Renderable {
+class ProceduralTerrain final : public Renderable {
     struct Chunk {
         std::unique_ptr<Buffer> buffer = nullptr;
-        std::vector<Vertex::Data> vertices = {};
-        std::vector<GLuint> indices = {};
+        std::vector<Vertex::Data> vertices;
+        std::vector<GLuint> indices;
         glm::vec2 centre = glm::vec2(0.0F, 0.0F);
         int chunkSize = DEFAULT_CHUNK_SIZE;
 
@@ -61,7 +61,6 @@ public:
     [[nodiscard]] auto getIntersectionPoint(const glm::vec3 &rayStart, const glm::vec3 &rayEnd) const -> glm::vec3;
 
     [[nodiscard]] auto getTerrainNormal(float x, float y) const -> glm::vec3;
-
 
 private:
     std::vector<Chunk> chunks;

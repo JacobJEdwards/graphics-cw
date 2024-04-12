@@ -10,20 +10,20 @@
 #include "utils/Vertex.h"
 #include <GL/glew.h>
 #include <memory>
-#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
+#include <iostream>
+#include "utils/Buffer.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
            std::vector<Texture::Data> textures, BoundingBox box)
-        : textures(std::move(textures)), box(std::move(box)) {
+    : textures(std::move(textures)), box(std::move(box)) {
     buffer = std::make_unique<Buffer>();
     buffer->fill(std::move(vertices), std::move(indices));
 }
 
 void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
-
     GLuint diffuseNr = 1;
     GLuint specularNr = 1;
     GLuint normalNr = 1;
@@ -35,9 +35,11 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
         glActiveTexture(GL_TEXTURE0 + i);
 
         std::string number;
-        const Texture::Type name = textures[i].type;
 
-        switch (name) {
+        // structured binding
+        const auto [id, type, path, target] = textures[i];
+
+        switch (type) {
             case Texture::Type::DIFFUSE:
                 number = std::to_string(diffuseNr);
                 diffuseNr++;
@@ -63,11 +65,12 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
                 emissiveNr++;
                 break;
             default:
-                throw std::runtime_error("Unknown texture type");
+                std::cerr << "Unknown texture type" << std::endl;
+                continue;
         }
 
-        glBindTexture(GL_TEXTURE_2D, textures[i].id);
-        shader->setUniform(("material.texture_" + toString(name) + number),
+        glBindTexture(GL_TEXTURE_2D, id);
+        shader->setUniform("material.texture_" + toString(type) + number,
                            static_cast<GLint>(i));
     }
 

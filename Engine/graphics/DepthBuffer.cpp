@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-DepthBuffer::DepthBuffer(unsigned int width, unsigned int height) {
+DepthBuffer::DepthBuffer(const unsigned int width, const unsigned int height) {
     glGenFramebuffers(1, &DBO);
     glBindFramebuffer(GL_FRAMEBUFFER, DBO);
 
@@ -52,7 +52,7 @@ void DepthBuffer::Clear() {
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void DepthBuffer::destroy() {
+void DepthBuffer::destroy() const {
     glDeleteFramebuffers(1, &DBO);
     glDeleteRenderbuffers(1, &RBO);
 }

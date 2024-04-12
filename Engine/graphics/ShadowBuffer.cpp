@@ -7,7 +7,7 @@
 #include <iostream>
 #include <array>
 
-ShadowBuffer::ShadowBuffer(unsigned int width, unsigned int height) {
+ShadowBuffer::ShadowBuffer(const unsigned int width, const unsigned int height) {
     glGenFramebuffers(1, &FBO);
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
@@ -19,7 +19,7 @@ ShadowBuffer::ShadowBuffer(unsigned int width, unsigned int height) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    std::array<GLfloat, 4> borderColor{1.0, 1.0, 1.0, 1.0};
+    constexpr std::array<GLfloat, 4> borderColor{1.0, 1.0, 1.0, 1.0};
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor.data());
 
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
@@ -67,7 +67,7 @@ void ShadowBuffer::Clear() {
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void ShadowBuffer::destroy() {
+void ShadowBuffer::destroy() const {
     glDeleteFramebuffers(1, &FBO);
     glDeleteTextures(1, &depthTexture);
 }

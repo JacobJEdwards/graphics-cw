@@ -18,7 +18,6 @@ public:
     // copy
     Renderable(const Renderable &other) = default;
 
-    auto operator=(const Renderable &other) -> Renderable & = default;
 
     // move
     Renderable(Renderable &&other) noexcept = default;
@@ -37,6 +36,8 @@ public:
 
 protected:
     std::shared_ptr<Shader> shader;
+
+    auto operator=(const Renderable &other) -> Renderable & = default;
 };
 
 

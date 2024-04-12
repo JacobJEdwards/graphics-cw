@@ -5,6 +5,10 @@
 #include "Skybox.h"
 
 #include <GL/glew.h>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_float3x3.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <memory>
 #include "Config.h"
 #include "Entity.h"
@@ -12,16 +16,15 @@
 #include "utils/Shader.h"
 #include "utils/ShaderManager.h"
 #include "Sun.h"
-#include <glm/glm.hpp>
 
 
 Skydome::Skydome() : Entity("../Assets/objects/sphere/sphere.obj") {
     shader = ShaderManager::Get("Sky");
     // scale(glm::vec3(100.0F));
     attributes.gravityAffected = false;
-};
+}
 
-void Skydome::update(float deltaTime) {
+void Skydome::update(const float deltaTime) {
     sun.update(deltaTime);
     time += deltaTime;
     Entity::update(deltaTime);
@@ -68,12 +71,12 @@ Skybox::Skybox() {
     shader = ShaderManager::Get("Sky");
 }
 
-void Skybox::update(float deltaTime) {
+void Skybox::update(const float deltaTime) {
     sun.update(deltaTime);
     time += deltaTime;
 }
 
-void Skybox::draw(std::shared_ptr<Shader> shader) const {
+void Skybox::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
     buffer->bind();
     buffer->draw();

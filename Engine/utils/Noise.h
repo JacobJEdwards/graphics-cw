@@ -5,9 +5,6 @@
 #ifndef CW_NOISE_H
 #define CW_NOISE_H
 
-#include <vector>
-#include <array>
-#include <glm/glm.hpp>
 #include <glm/gtc/noise.hpp>
 
 namespace Noise {

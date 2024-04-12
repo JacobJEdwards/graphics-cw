@@ -5,19 +5,21 @@
 #ifndef CW_ENTITY_H
 #define CW_ENTITY_H
 
-#include <glm/glm.hpp>
-#include <utility>
+#include <glm/ext/vector_float3.hpp>
+#include <memory>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <filesystem>
 #include <vector>
 #include "utils/Shader.h"
 #include "utils/BoundingBox.h"
-#include "utils/ShaderManager.h"
 #include "graphics/Model.h"
 #include "physics/ModelAttributes.h"
 #include "graphics/Renderable.h"
 
 class Entity : public Renderable {
 public:
+    using Renderable::draw;
+
     Entity() = default;
 
     explicit Entity(const std::filesystem::path &path);
@@ -64,7 +66,7 @@ protected:
     std::unique_ptr<Model> model;
     BoundingBox box;
 
-    std::vector<std::unique_ptr<Entity>> children = {};
+    std::vector<std::unique_ptr<Entity> > children;
     Entity *parent = nullptr;
 };
 

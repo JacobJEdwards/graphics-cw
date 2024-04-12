@@ -4,6 +4,7 @@
 
 #include "Renderable.h"
 #include "utils/Shader.h"
+#include <glm/ext/matrix_float4x4.hpp>
 #include <utility>
 #include <memory>
 

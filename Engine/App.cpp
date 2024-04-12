@@ -3,6 +3,7 @@
 //
 #include "App.h"
 
+#include <cstdlib>
 #include <iostream>
 
 #include "imgui/imgui.h"
@@ -41,8 +42,8 @@ auto App::init() -> bool {
     return true;
 }
 
-auto App::window(const std::string &title, int width,
-                 int height) -> bool {
+auto App::window(const std::string &title, const int width,
+                 const int height) -> bool {
     if (!view.init(title, width, height)) {
         return false;
     }
@@ -77,7 +78,7 @@ void App::setPaused(const bool value) {
     if (!paused) {
         glfwSetInputMode(view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     } else {
-        glfwSetInputMode(App::view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        glfwSetInputMode(view.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 }
 

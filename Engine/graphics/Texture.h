@@ -12,7 +12,7 @@
 
 namespace Texture {
     namespace Loader {
-        constexpr auto CUBE_MAP_FACES = 6;
+        constexpr auto CUBE_MAP_FACES = 6U;
 
         auto load(const std::filesystem::path &path, GLint wrapS = GL_REPEAT, GLint wrapT = GL_REPEAT,
                   GLint minFilter = GL_LINEAR_MIPMAP_LINEAR, GLint magFilter = GL_LINEAR) -> GLuint;
@@ -43,39 +43,11 @@ namespace Texture {
     auto toString(Type type) -> std::string;
 
     struct Data {
-        GLuint id = 0;
+        GLuint id = 0U;
         Type type = Type::DIFFUSE;
-        std::string path = "";
+        std::string path;
         GLenum target = GL_TEXTURE_2D;
-
-        /*
-        Data();
-
-        Data(GLuint id, Type type, std::string path);
-
-        Data(const Data &other);
-
-        Data(Data &&other) noexcept;
-
-        auto operator=(const Data &other) -> Data &;
-
-        auto operator=(Data &&other) noexcept -> Data &;
-
-        ~Data();
-
-        void init();
-
-        void bind() const;
-
-        void unbind() const;
-         */
     };
-
-    void bind(const Data &texture);
-
-    void unbind();
-
-    void del(const Data &texture);
 }
 
 #endif // CW_TEXTURE_H

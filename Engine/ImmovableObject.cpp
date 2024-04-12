@@ -6,6 +6,7 @@
 
 #include "utils/BoundingBox.h"
 #include "physics/ModelAttributes.h"
+#include <glm/ext/vector_float3.hpp>
 
 
 [[nodiscard]] auto ImmovableObject::getBoundingBox() -> BoundingBox & {

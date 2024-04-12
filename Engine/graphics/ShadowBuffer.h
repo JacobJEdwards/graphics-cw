@@ -24,7 +24,7 @@ public:
 
     static void Clear();
 
-    void destroy();
+    void destroy() const;
 
     [[nodiscard]] auto getTexture() const -> GLuint;
 

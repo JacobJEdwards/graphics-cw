@@ -9,10 +9,6 @@
 
 #include "Config.h"
 #include "View.h"
-#include "utils/PlayerManager.h"
-
-#include <GL/glew.h>
-#include <glfw/glfw3.h>
 
 namespace App {
 

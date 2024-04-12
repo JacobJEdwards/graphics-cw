@@ -23,12 +23,8 @@ constexpr float MINPITCH = -89.0F;
 
 class Camera {
 public:
-    enum class Direction {
-        FORWARD, BACKWARD, LEFT, RIGHT, NONE, UP, DOWN
-    };
-
     enum class Mode {
-        FPS, FREE, ORBIT, FIXED, PATH
+        FPS, FREE, ORBIT, FIXED, PATH, DRIVE
     };
 
     explicit Camera(glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F),
@@ -41,7 +37,7 @@ public:
     [[nodiscard]] auto getViewMatrix() const -> glm::mat4;
 
     void processMouseMovement(float xOffset, float yOffset,
-                              GLboolean constrainPitch = 1U);
+                              bool constrainPitch = true);
 
     void processMouseScroll(float yOffset);
 
@@ -96,7 +92,7 @@ public:
 
     void interface();
 
-    void update(float dt);
+    void update(float deltaTime);
 
 private:
     Mode mode = Mode::FREE;

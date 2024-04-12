@@ -2,12 +2,12 @@
 #include "Entity.h"
 #include "physics/Constants.h"
 #include "physics/ModelAttributes.h"
-#include "graphics/Model.h"
 #include "utils/BoundingBox.h"
 #include "utils/Objects/ProceduralTerrain.h"
+#include <glm/geometric.hpp>
 
 namespace {
-    void resolveWithFloor(Physics::Attributes &a, float floorY) {
+    void resolveWithFloor(Physics::Attributes &a, const float floorY) {
         if (a.position.y < floorY) {
             a.position.y = floorY;
             a.velocity.y = -a.velocity.y;
@@ -31,7 +31,7 @@ namespace Physics::Collisions {
             return;
         }
 
-        const float e = 0.5F;
+        constexpr float e = 0.3F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
         j /= 1 / a.mass;
 
@@ -57,7 +57,7 @@ namespace Physics::Collisions {
             return;
         }
 
-        const float e = 0.5F;
+        constexpr float e = 0.5F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
 
         if (a.mass != 0.0F && b.mass != 0.0F) {
@@ -77,6 +77,9 @@ namespace Physics::Collisions {
         if (b.mass != 0.0F) {
             b.applyImpulse(impulse);
         }
+
+        a.isColliding = true;
+        b.isColliding = true;
     }
 
     void resolve(Attributes &a, Attributes &b, const glm::vec3 &point) {
@@ -92,7 +95,7 @@ namespace Physics::Collisions {
             return;
         }
 
-        const float e = 0.5F;
+        constexpr float e = 1.0F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
 
         if (a.mass != 0.0F && b.mass != 0.0F) {
@@ -123,6 +126,13 @@ namespace Physics::Collisions {
         if (b.mass != 0.0F) {
             b.applyImpulse(impulse);
         }
+
+        a.isColliding = true;
+        b.isColliding = true;
+    }
+
+    void resolve(Entity &a, Entity &b, const glm::vec3 &collisionPoint) {
+        resolve(a.getAttributes(), b.getAttributes(), collisionPoint);
     }
 
     void resolve(Entity &a, Entity &b) {
@@ -130,7 +140,7 @@ namespace Physics::Collisions {
         resolve(a.getAttributes(), b.getAttributes(), collisionPoint);
     }
 
-    void resolve(Entity &a, ProceduralTerrain &b) {
+    void resolve(Entity &a, const ProceduralTerrain &b) {
         const auto normal = b.getTerrainNormal(a.attributes.position.x, a.attributes.position.z);
         resolve(a, normal);
     }
@@ -143,6 +153,10 @@ namespace Physics::Collisions {
 
     auto getCollisionPoint(const BoundingBox &a, const BoundingBox &b) -> glm::vec3 {
         return a.getCollisionPoint(b);
+    }
+
+    auto getCollisionPoint(const Entity &a, const Entity &b) -> glm::vec3 {
+        return getCollisionPoint(a.getBoundingBox(), b.getBoundingBox());
     }
 
     auto check(const Entity &a, const Entity &b) -> bool {

@@ -6,9 +6,7 @@
 #define CW_UNIFORMBUFFER_H
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <string>
-#include <memory>
 #include <memory>
 #include "utils/Shader.h"
 #include "utils/ShaderManager.h"
@@ -22,9 +20,9 @@ public:
 
     void bind() const;
 
-    void unbind() const;
+    static void unbind() ;
 
-    static void Create(std::shared_ptr<Shader> shader, const std::string &blockName, GLuint bindingPoint) {
+    static void Create(const std::shared_ptr<Shader> &shader, const std::string &blockName, const GLuint bindingPoint) {
         const GLuint blockIndex = glGetUniformBlockIndex(shader->getProgramID(), blockName.c_str());
         glUniformBlockBinding(shader->getProgramID(), blockIndex, bindingPoint);
     }
@@ -37,41 +35,43 @@ public:
     }
 
     template<typename T>
-    void setSubData(const T &data, GLuint offset) {
+    void setSubData(const T &data, const GLuint offset) {
         bind();
         glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), &data);
         unbind();
     }
 
-    void setUniformBlockBinding(std::shared_ptr<Shader> shader, const std::string &blockName, GLuint bindingPoint) {
+    static void setUniformBlockBinding(const std::shared_ptr<Shader> &shader, const std::string &blockName, const GLuint
+    bindingPoint) {
         const GLuint blockIndex = glGetUniformBlockIndex(shader->getProgramID(), blockName.c_str());
         glUniformBlockBinding(shader->getProgramID(), blockIndex, bindingPoint);
     }
 
-    void setUniformBlockBinding(const std::string &shaderName, const std::string &blockName, GLuint bindingPoint) {
+    static void setUniformBlockBinding(const std::string &shaderName, const std::string &blockName, const GLuint
+    bindingPoint) {
         const auto shader = ShaderManager::Get(shaderName);
         const GLuint blockIndex = glGetUniformBlockIndex(shader->getProgramID(), blockName.c_str());
         glUniformBlockBinding(shader->getProgramID(), blockIndex, bindingPoint);
     }
 
-    void bindBufferBase(GLuint bindingPoint) {
+    void bindBufferBase(const GLuint bindingPoint) const {
         glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, UBO);
     }
 
-    void bindBufferRange(GLuint bindingPoint, GLuint offset, GLuint size) {
+    void bindBufferRange(const GLuint bindingPoint, const GLuint offset, const GLuint size) const {
         glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, UBO, offset, size);
     }
 
-    void unbindBufferBase(GLuint bindingPoint) {
+    static void unbindBufferBase(const GLuint bindingPoint) {
         glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, 0);
     }
 
-    void unbindBufferRange(GLuint bindingPoint, GLuint offset, GLuint size) {
+    static void unbindBufferRange(const GLuint bindingPoint, const GLuint offset, const GLuint size) {
         glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, 0, offset, size);
     }
 
 private:
-    GLuint UBO;
+    GLuint UBO = 0;
 };
 
 

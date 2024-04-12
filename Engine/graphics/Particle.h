@@ -6,24 +6,20 @@
 #define CW_PARTICLE_H
 
 #include "Config.h"
+#include "Entity.h"
 #include "Renderable.h"
-#include <algorithm>
 #include <array>
 #include <cstddef>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/ext/vector_float4.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/geometric.hpp>
 #include <memory>
 #include <vector>
 #include "utils/Shader.h"
-#include "utils/ShaderManager.h"
 #include "utils/Buffer.h"
 #include "utils/Vertex.h"
 #include <GL/glew.h>
-#include "utils/PlayerManager.h"
 #include "graphics/Color.h"
-#include "utils/Random.h"
 
 struct Particle {
     glm::vec3 position = glm::vec3(0.0F);
@@ -37,13 +33,9 @@ struct Particle {
     Particle(glm::vec3 position, glm::vec3 velocity, glm::vec4 color, float life);
 
     Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 color, float life);
-
 };
 
-// instanced rendering
-// billboard particles
-// particle system
-class ParticleSystem : public Renderable {
+class ParticleSystem final : public Renderable {
 public:
     ParticleSystem();
 
@@ -65,14 +57,15 @@ private:
     std::vector<Particle> particles;
     std::shared_ptr<Buffer> buffer;
 
-    constexpr static auto MAX_PARTICLES = 10000;
+    constexpr static unsigned int MAX_PARTICLES = 10000;
 
 
     const std::array<Vertex::Data, 4> vertices = {
-            Vertex::Data{glm::vec3(-0.5F, -0.5F, 0.0F)},
-            Vertex::Data{glm::vec3(0.5F, -0.5F, 0.0F)},
-            Vertex::Data{glm::vec3(0.5F, 0.5F, 0.0F)},
-            Vertex::Data{glm::vec3(-0.5F, 0.5F, 0.0F)}};
+        Vertex::Data{glm::vec3(-0.5F, -0.5F, 0.0F)},
+        Vertex::Data{glm::vec3(0.5F, -0.5F, 0.0F)},
+        Vertex::Data{glm::vec3(0.5F, 0.5F, 0.0F)},
+        Vertex::Data{glm::vec3(-0.5F, 0.5F, 0.0F)}
+    };
 
     const std::array<GLuint, 6> indices = {0, 1, 2, 2, 3, 0};
 

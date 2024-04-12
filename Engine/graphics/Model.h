@@ -5,6 +5,9 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <assimp/material.h>
+#include <assimp/mesh.h>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -14,7 +17,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 
-#include "Config.h"
 #include "Mesh.h"
 #include "graphics/Texture.h"
 #include "physics/ModelAttributes.h"
@@ -22,7 +24,7 @@
 #include "utils/Shader.h"
 #include "graphics/Renderable.h"
 
-class Model : public Renderable {
+class Model final : public Renderable {
 public:
     Physics::Attributes attributes;
 

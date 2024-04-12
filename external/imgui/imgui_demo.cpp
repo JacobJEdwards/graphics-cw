@@ -804,7 +804,7 @@ static void ShowDemoWindowWidgets()
             "Tooltip are typically created by using a IsItemHovered() + SetTooltip() sequence.\n\n"
             "We provide a helper SetItemTooltip() function to perform the two with standards flags.");
 
-        ImVec2 sz = ImVec2(-FLT_MIN, 0.0f);
+        const auto sz = ImVec2(-FLT_MIN, 0.0f);
 
         ImGui::Button("Basic", sz);
         ImGui::SetItemTooltip("I am a tooltip");
@@ -1064,9 +1064,9 @@ static void ShowDemoWindowWidgets()
             for (int n = 0; n < 2; n++)
             {
                 ImGui::Text("Test paragraph %d:", n);
-                ImVec2 pos = ImGui::GetCursorScreenPos();
-                ImVec2 marker_min = ImVec2(pos.x + wrap_width, pos.y);
-                ImVec2 marker_max = ImVec2(pos.x + wrap_width + 10, pos.y + ImGui::GetTextLineHeight());
+                ImVec2 const pos = ImGui::GetCursorScreenPos();
+                ImVec2 const marker_min = ImVec2(pos.x + wrap_width, pos.y);
+                ImVec2 const marker_max = ImVec2(pos.x + wrap_width + 10, pos.y + ImGui::GetTextLineHeight());
                 ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + wrap_width);
                 if (n == 0)
                     ImGui::Text("The lazy dog is a good dog. This paragraph should fit within %.0f pixels. Testing a 1 character word. The quick brown fox jumps over the lazy dog.", wrap_width);

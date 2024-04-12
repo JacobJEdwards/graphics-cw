@@ -62,13 +62,13 @@ namespace Color {
     constexpr glm::vec3 INDIGO = glm::vec3(0.29F, 0.0F, 0.51F);
 
     template<typename T>
-    constexpr glm::vec3 fromRGB(T r, T g, T b) requires std::integral<T> || std::floating_point<T> {
+    constexpr auto fromRGB(T r, T g, T b) -> glm::vec3 requires std::integral<T> || std::floating_point<T> {
         static_assert(std::is_arithmetic_v<T>, "Color::fromRGB requires an arithmetic type");
         return {r / RGB_MAX, g / RGB_MAX, b / RGB_MAX};
     }
 
     template<typename T>
-    constexpr glm::vec4 fromRGB(T r, T g, T b, T a) requires std::integral<T> || std::floating_point<T> {
+    constexpr auto fromRGB(T r, T g, T b, T a) -> glm::vec4 requires std::integral<T> || std::floating_point<T> {
         static_assert(std::is_arithmetic_v<T>, "Color::fromRGB requires an arithmetic type");
         return {r / RGB_MAX, g / RGB_MAX, b / RGB_MAX, a / RGB_MAX};
     }

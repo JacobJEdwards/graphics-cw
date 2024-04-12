@@ -3,10 +3,14 @@
 //
 
 #include <array>
+#include <exception>
 #include <filesystem>
 #include <fstream>
+#include <glm/fwd.hpp>
 #include <iostream>
+#include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <GL/glew.h>
@@ -17,10 +21,10 @@
 Shader::Shader(std::filesystem::path vertexPath, std::filesystem::path fragmentPath,
                std::filesystem::path geometryPath, std::filesystem::path tessControlPath,
                std::filesystem::path tessEvalPath)
-        : vertexPath(std::move(vertexPath)), fragmentPath(std::move(fragmentPath)),
-          geometryPath(std::move(geometryPath)),
-          tessControlPath(std::move(tessControlPath)),
-          tessEvalPath(std::move(tessEvalPath)) {
+    : vertexPath(std::move(vertexPath)), fragmentPath(std::move(fragmentPath)),
+      geometryPath(std::move(geometryPath)),
+      tessControlPath(std::move(tessControlPath)),
+      tessEvalPath(std::move(tessEvalPath)) {
     load();
 }
 
@@ -46,14 +50,16 @@ Shader::Shader(Shader &&other) noexcept: ID(other.ID) { other.ID = 0; }
         std::vector<GLchar> infoLog(infoLogLength);
         glGetProgramInfoLog(ID, infoLogLength, nullptr, infoLog.data());
         std::cerr << "ERROR::SHADER::PROGRAM_VALIDATION_FAILED\n"
-                  << infoLog.data() << std::endl;
+                << infoLog.data() << std::endl;
         std::cerr << vertexPath << "\n" << fragmentPath << std::endl;
         return false;
     }
     return true;
 }
 
-void Shader::use() const { glUseProgram(ID); }
+void Shader::use() const {
+    glUseProgram(ID);
+}
 
 void Shader::reload() {
     deleteProgram();
@@ -63,9 +69,9 @@ void Shader::reload() {
 [[nodiscard]] auto Shader::getProgramID() const -> GLuint { return ID; }
 
 template<typename T>
-void Shader::setUniform(const std::string &name, T  /*value*/) const {
-    std::string error = "Invalid type for uniform " + name;
-    throw std::runtime_error(error);
+void Shader::setUniform(const std::string &name, T /*value*/) const {
+    const std::string error = "Invalid type for uniform " + name;
+    std::cerr << error << std::endl;
 }
 
 template<>
@@ -238,8 +244,10 @@ void Shader::setUniform(const std::string &name,
 
 template<typename T>
 auto Shader::getUniform(const std::string &name) const -> T {
-    std::string error = "Invalid type for uniform " + name;
-    throw std::runtime_error(error);
+    const std::string error = "Invalid type for uniform " + name;
+    std::cerr << error << std::endl;
+
+    return nullptr;
 }
 
 template<>
@@ -419,15 +427,15 @@ void Shader::checkCompileErrors(const GLuint shader, const bool isProgram) {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (success == 0) {
             glGetShaderInfoLog(shader, BUFFER_SIZE, nullptr, infoLog.data());
-            throw std::runtime_error(std::string("Shader compilation error") + "\n" +
-                                     std::string(infoLog.data()));
+            std::cerr << "Shader compilation error" << "\n" << infoLog.data()
+                    << std::endl;
         }
     } else {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (success == 0) {
             glGetProgramInfoLog(shader, BUFFER_SIZE, nullptr, infoLog.data());
-            throw std::runtime_error(std::string("Program linking error") + "\n" +
-                                     std::string(infoLog.data()));
+            std::cerr << "Program linking error" << "\n" << infoLog.data()
+                    << std::endl;
         }
     }
 }
@@ -437,7 +445,7 @@ void Shader::deleteProgram() const {
         glDeleteProgram(ID);
         if (const GLuint error = glGetError(); error != GL_NO_ERROR) {
             std::cerr << "OpenGL error after deleting program: " << error
-                      << std::endl;
+                    << std::endl;
         }
     }
 }
@@ -456,7 +464,7 @@ auto Shader::readShaderFile(const std::filesystem::path &path) -> std::string {
     std::string line;
     while (std::getline(shaderFile, line)) {
         if (line.find("#include") != std::string::npos) {
-            std::string includePath =
+            const std::string includePath =
                     line.substr(line.find_first_of('\"') + 1,
                                 line.find_last_of('\"') - line.find_first_of('\"') - 1);
             shaderCode += readShaderFile(path.parent_path() / includePath);
@@ -468,10 +476,10 @@ auto Shader::readShaderFile(const std::filesystem::path &path) -> std::string {
     return shaderCode;
 }
 
-auto Shader::compileShader(const std::string &shaderCode, GLenum shaderType)
--> GLuint {
+auto Shader::compileShader(const std::string &shaderCode, const GLenum shaderType)
+    -> GLuint {
     const char *code = shaderCode.c_str();
-    GLuint shader = glCreateShader(shaderType);
+    const GLuint shader = glCreateShader(shaderType);
     glShaderSource(shader, 1, &code, nullptr);
     glCompileShader(shader);
     checkCompileErrors(shader, false);
@@ -488,7 +496,6 @@ void Shader::load() {
             fragmentCode = readShaderFile(fragmentPath);
         }
 
-        // if geometry shader path is present, also load a geometry shader
         if (!geometryPath.empty() && geometryCode.empty()) {
             geometryCode = readShaderFile(geometryPath);
         }
@@ -501,14 +508,11 @@ void Shader::load() {
         }
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
-        throw;
     }
 
-    // 2. compile shaders
-    GLuint vertex = compileShader(vertexCode, GL_VERTEX_SHADER);
-    GLuint fragment = compileShader(fragmentCode, GL_FRAGMENT_SHADER);
+    const GLuint vertex = compileShader(vertexCode, GL_VERTEX_SHADER);
+    const GLuint fragment = compileShader(fragmentCode, GL_FRAGMENT_SHADER);
 
-    // if geometry shader is given, compile geometry shader
     GLuint geometry = 0;
     if (!geometryPath.empty()) {
         geometry = compileShader(geometryCode, GL_GEOMETRY_SHADER);
@@ -542,8 +546,6 @@ void Shader::load() {
     glLinkProgram(ID);
     checkCompileErrors(ID, true);
 
-    // delete the shaders as they're linked into our program now and no longer
-    // necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 

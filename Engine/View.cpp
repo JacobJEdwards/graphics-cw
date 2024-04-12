@@ -22,8 +22,8 @@ auto setupGLEW() -> bool {
     return GLEW_OK == glewInit();
 }
 
-auto createWindow(const std::string &title, int width, int height)
--> GLFWwindow * {
+auto createWindow(const std::string &title, const int width, const int height)
+    -> GLFWwindow * {
     if (glfwInit() == 0) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         exit(EXIT_FAILURE);
@@ -48,30 +48,30 @@ auto createWindow(const std::string &title, int width, int height)
     return window;
 }
 
-void View::setCallbacks() {
-    glfwSetCursorPosCallback(window, [](GLFWwindow *window, double x, double y) {
+void View::setCallbacks() const {
+    glfwSetCursorPosCallback(window, [](GLFWwindow *window, const double x, const double y) {
         static_cast<View *>(glfwGetWindowUserPointer(window))
                 ->mouseCallback(window, x, y);
     });
 
-    glfwSetScrollCallback(window, [](GLFWwindow *window, double x, double y) {
+    glfwSetScrollCallback(window, [](GLFWwindow *window, const double x, const double y) {
         static_cast<View *>(glfwGetWindowUserPointer(window))
                 ->scrollCallback(window, x, y);
     });
 
-    glfwSetErrorCallback([](int error, const char *description) {
+    glfwSetErrorCallback([](const int error, const char *description) {
         static_cast<View *>(glfwGetWindowUserPointer(glfwGetCurrentContext()))
                 ->errorCallback(error, description);
     });
 
     glfwSetFramebufferSizeCallback(
-            window, [](GLFWwindow *window, int width, int height) {
-                static_cast<View *>(glfwGetWindowUserPointer(window))
-                        ->resizeCallback(window, width, height);
-            });
+        window, [](GLFWwindow *window, const int width, const int height) {
+            static_cast<View *>(glfwGetWindowUserPointer(window))
+                    ->resizeCallback(window, width, height);
+        });
 }
 
-auto View::init(const std::string &title, int width, int height) -> bool {
+auto View::init(const std::string &title, const int width, const int height) -> bool {
     this->window = createWindow(title, width, height);
     this->WIDTH = width;
     this->HEIGHT = height;
@@ -103,12 +103,12 @@ auto View::init(const std::string &title, int width, int height) -> bool {
     setup = true;
 
     postProcessor = std::make_unique<PostProcess>(
-            WIDTH, HEIGHT);
+        WIDTH, HEIGHT);
 
     return true;
 }
 
-void View::quit() {
+void View::quit() const {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
@@ -117,7 +117,7 @@ void View::quit() {
     exit(EXIT_SUCCESS);
 }
 
-void View::interfaceLoop() {
+void View::interfaceLoop() const {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -126,7 +126,7 @@ void View::interfaceLoop() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void View::menuLoop() {
+void View::menuLoop() const {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -135,7 +135,7 @@ void View::menuLoop() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void View::mouseCallback(GLFWwindow * /*window*/, double x, double y) {
+void View::mouseCallback(GLFWwindow * /*window*/, const double x, const double y) {
     io.MousePos.x = static_cast<float>(x);
     io.MousePos.y = static_cast<float>(y);
 
@@ -154,21 +154,21 @@ void View::mouseCallback(GLFWwindow * /*window*/, double x, double y) {
     (mouse)();
 }
 
-void View::keyLoop() { (key)(); }
+void View::keyLoop() const { (key)(); }
 
-void View::scrollCallback(GLFWwindow * /*window*/, double xoffset,
-                          double yoffset) {
-    scrollX = static_cast<float>(xoffset);
-    scrollY = static_cast<float>(yoffset);
+void View::scrollCallback(GLFWwindow * /*window*/, const double xOffset,
+                          const double yOffset) {
+    scrollX = static_cast<float>(xOffset);
+    scrollY = static_cast<float>(yOffset);
 
     (scroll)();
 }
 
-void View::errorCallback(const int err, const char *description) {
+void View::errorCallback(const int err, const char *description) const {
     (error)(err, description);
 }
 
-void View::resizeCallback(GLFWwindow * /*window*/, int width, int height) {
+void View::resizeCallback(GLFWwindow * /*window*/, const int width, const int height) {
     WIDTH = width;
     HEIGHT = height;
     postProcessor->resize(width, height);
@@ -211,9 +211,9 @@ void View::render() {
     }
 }
 
-auto View::shouldClose() -> bool { return glfwWindowShouldClose(window) != 0; }
+auto View::shouldClose() const -> bool { return glfwWindowShouldClose(window) != 0; }
 
-void View::swapBuffers() { glfwSwapBuffers(window); }
+void View::swapBuffers() const { glfwSwapBuffers(window); }
 
 void View::pollEvents() { glfwPollEvents(); }
 
@@ -235,13 +235,12 @@ void View::setError(ErrorHandle handle) { error = std::move(handle); }
 
 void View::close() const { glfwSetWindowShouldClose(window, GLFW_TRUE); }
 
-auto View::getKey(int key) const -> int { return glfwGetKey(window, key); }
+auto View::getKey(const int key) const -> int { return glfwGetKey(window, key); }
 
 void View::optionsInterface() {
     ImGui::Begin("View Options");
     postProcessor->interface();
     if (ImGui::Checkbox("Post Processing", &postProcessorEnabled)) {
-
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     } else {
         ImGui::Checkbox("Wireframe", &wireframe);

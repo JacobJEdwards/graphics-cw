@@ -12,10 +12,8 @@
 #include <GL/glew.h>
 #include <array>
 #include <glm/ext/matrix_float4x4.hpp>
-#include <glm/glm.hpp>
 #include <memory>
 
-#include "Config.h"
 #include "utils/Shader.h"
 #include "utils/ShaderManager.h"
 #include "ImmovableObject.h"

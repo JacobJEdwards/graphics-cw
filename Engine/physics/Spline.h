@@ -3,9 +3,7 @@
 
 #include <cstddef>
 #include <glm/ext/vector_float3.hpp>
-#include <glm/glm.hpp>
 
-#include <utility>
 #include <vector>
 #include <span>
 #include <memory>
@@ -48,10 +46,10 @@ namespace Physics {
         float speed{};
         std::size_t numPoints{};
 
-        std::size_t p0Index = 0;
-        std::size_t p1Index = 1;
-        std::size_t p2Index = 2;
-        std::size_t p3Index = 3;
+        std::size_t p0Index = 0U;
+        std::size_t p1Index = 1U;
+        std::size_t p2Index = 2U;
+        std::size_t p3Index = 3U;
 
         std::unique_ptr<Buffer> buffer;
 

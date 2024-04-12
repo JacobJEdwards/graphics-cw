@@ -9,32 +9,20 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include <glm/trigonometric.hpp>
 
 #include "imgui/imgui.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 worldUp, float yaw, float pitch)
-        : position(position), worldUp(worldUp), yaw(yaw), pitch(pitch) {
-
-    updateCameraVectors();
-}
-
-// constructor with scalar values
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY,
-               float upZ, float yaw, float pitch)
-        : position(glm::vec3(posX, posY, posZ)), worldUp(glm::vec3(upX, upY, upZ)),
-          yaw(yaw), pitch(pitch) {
+Camera::Camera(const glm::vec3 position, const glm::vec3 worldUp, const float yaw, const float pitch)
+    : position(position), worldUp(worldUp), yaw(yaw), pitch(pitch) {
     updateCameraVectors();
 }
 
 [[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
     switch (mode) {
         case Mode::ORBIT:
-            return lookAt(position, target, worldUp);
-        case Mode::FPS:
-        case Mode::FREE:
-            return lookAt(position, position + front, up);
         case Mode::FIXED:
             return lookAt(position, target, up);
 
@@ -56,39 +44,17 @@ void Camera::circleOrbit(const float deltaTime) {
     updateOrbitPosition();
 }
 
-/*
-void Camera::applyFPSModeEffects() {
-  if (!attributes.isGrounded) {
-    attributes.applyForce(Physics::GRAVITY_VECTOR * attributes.mass);
-  }
-  downwards ? yPosition -= 0.0001 : yPosition += 0.0001;
-
-  if (yPosition > 0.03) {
-    downwards = true;
-  }
-
-  if (yPosition < 0.0) {
-    downwards = false;
-  }
-}
-*/
-
 void Camera::processMouseMovement(float xOffset, float yOffset,
-                                  const GLboolean constrainPitch) {
+                                  const bool constrainPitch) {
     xOffset *= mouseSensitivity;
     yOffset *= mouseSensitivity;
 
     yaw += xOffset;
     pitch += yOffset;
 
-    if (constrainPitch != 0U) {
-        if (mode == Mode::FIXED) {
-            pitch = std::min(pitch, 89.0F);
-            pitch = std::max(pitch, -89.0F);
-        } else {
-            pitch = std::min(pitch, MAXPITCH);
-            pitch = std::max(pitch, MINPITCH);
-        }
+    if (constrainPitch) {
+        pitch = std::min(pitch, MAXPITCH);
+        pitch = std::max(pitch, MINPITCH);
     }
 
     updateCameraVectors();
@@ -118,8 +84,8 @@ void Camera::setOrbit(const glm::vec3 target, const float radius,
     orbitSpeed = speed;
 }
 
-void Camera::setOrbit(glm::vec3 target, float radius, float angle, float speed,
-                      float height) {
+void Camera::setOrbit(const glm::vec3 target, const float radius, const float angle, const float speed,
+                      const float height) {
     this->target = target;
     orbitRadius = radius;
     orbitAngle = angle;
@@ -127,7 +93,7 @@ void Camera::setOrbit(glm::vec3 target, float radius, float angle, float speed,
     orbitHeight = height;
 }
 
-void Camera::setFixed(glm::vec3 target, glm::vec3 position) {
+void Camera::setFixed(const glm::vec3 target, const glm::vec3 position) {
     this->target = target;
     this->position = position;
     distance = glm::distance(target, position);
@@ -156,25 +122,22 @@ void Camera::setPosition(const glm::vec3 &position) {
 
 void Camera::setFront(const glm::vec3 &front) {
     Camera::front = front;
-    updateCameraVectors();
 }
 
 void Camera::setUp(const glm::vec3 &up) {
     Camera::up = up;
-    updateCameraVectors();
 }
 
 void Camera::setRight(const glm::vec3 &right) {
     Camera::right = right;
-    updateCameraVectors();
 }
 
-void Camera::setPitch(float pitch) {
+void Camera::setPitch(const float pitch) {
     Camera::pitch = pitch;
     updateCameraVectors();
 }
 
-void Camera::setYaw(float yaw) {
+void Camera::setYaw(const float yaw) {
     Camera::yaw = yaw;
     updateCameraVectors();
 }
@@ -232,9 +195,9 @@ void Camera::interface() {
 
 void Camera::setAspect(const float aspect) { this->aspect = aspect; }
 
-void Camera::update(float dt) {
+void Camera::update(const float deltaTime) {
     if (mode == Mode::ORBIT) {
-        circleOrbit(dt);
+        circleOrbit(deltaTime);
     }
 }
 

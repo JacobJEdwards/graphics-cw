@@ -4,15 +4,15 @@
 
 #include "Model.h"
 
-#include <algorithm>
 #include <assimp/material.h>
 #include <assimp/mesh.h>
+#include <assimp/types.h>
 #include <glm/common.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <iostream>
 #include <limits>
 #include <memory>
-#include <numeric>
 #include <stack>
-#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -25,16 +25,13 @@
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
 #include "helpers/AssimpGLMHelpers.h"
-#include "physics/Gravity.h"
 #include "utils/BoundingBox.h"
 #include "utils/Shader.h"
 #include "utils/Vertex.h"
-#include "utils/ShaderManager.h"
-#include "App.h"
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 
-void Model::draw(std::shared_ptr<Shader> shader) const {
+void Model::draw(const std::shared_ptr<Shader> shader) const {
     for (const auto &mesh: meshes) {
         mesh->draw(shader);
     }
@@ -59,10 +56,11 @@ void Model::loadModel(const std::filesystem::path &path) {
                            aiProcess_FlipUVs | aiProcess_CalcTangentSpace |
                            aiProcess_GenBoundingBoxes);
 
-    if ((scene == nullptr) ||
-        ((scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) != 0U) ||
-        (scene->mRootNode == nullptr)) {
-        throw std::runtime_error(importer.GetErrorString());
+    if (scene == nullptr ||
+        (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) != 0U ||
+        scene->mRootNode == nullptr) {
+        std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
+        return;
     }
 
     directory = path.parent_path();
@@ -128,7 +126,7 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     }
 
     for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
-        aiFace face = mesh->mFaces[i];
+        aiFace const face = mesh->mFaces[i];
 
         for (unsigned int j = 0; j < face.mNumIndices; j++) {
             indices.push_back(face.mIndices[j]);

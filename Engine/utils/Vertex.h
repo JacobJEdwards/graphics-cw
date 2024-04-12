@@ -6,8 +6,8 @@
 #define CW_VERTEX_H
 
 #include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <utility>
+#include <glm/ext/vector_float2.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 namespace Vertex {
     struct Data {
@@ -48,16 +48,16 @@ namespace Vertex {
     };
 
     struct Layout {
-        static constexpr GLuint POSITION = 0;
-        static constexpr GLuint NORMAL = 1;
-        static constexpr GLuint TEX_COORDS = 2;
-        static constexpr GLuint TANGENT = 3;
-        static constexpr GLuint BITANGENT = 4;
+        static constexpr GLuint POSITION = 0U;
+        static constexpr GLuint NORMAL = 1U;
+        static constexpr GLuint TEX_COORDS = 2U;
+        static constexpr GLuint TANGENT = 3U;
+        static constexpr GLuint BITANGENT = 4U;
     };
 
     struct Layout2D {
-        static constexpr GLuint POSITION = 0;
-        static constexpr GLuint TEX_COORDS = 1;
+        static constexpr GLuint POSITION = 0U;
+        static constexpr GLuint TEX_COORDS = 1U;
     };
 }
 

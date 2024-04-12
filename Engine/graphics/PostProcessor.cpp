@@ -4,12 +4,10 @@
 #include "utils/Shader.h"
 #include <memory>
 #include "imgui/imgui.h"
-#include "utils/ShaderManager.h"
 
 PostProcess::PostProcess(unsigned int width, unsigned int height,
                          bool multisampled)
-        : width(width), height(height) {
-
+    : width(width), height(height) {
     frameBuffer = std::make_shared<FrameBuffer>(width, height, multisampled);
 
     shader = std::make_shared<Shader>("../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
@@ -18,7 +16,7 @@ PostProcess::PostProcess(unsigned int width, unsigned int height,
     shader->setUniform("screenTexture", 0);
 }
 
-void PostProcess::render(float deltaTime, float time) {
+void PostProcess::render(const float deltaTime, const float time) {
     glDisable(GL_DEPTH_TEST);
     shader->use();
     shader->setUniform("gamma", gamma);
@@ -51,11 +49,11 @@ void PostProcess::render(float deltaTime, float time) {
     glEnable(GL_DEPTH_TEST);
 }
 
-void PostProcess::begin() { frameBuffer->bind(); }
+void PostProcess::begin() const { frameBuffer->bind(); }
 
-void PostProcess::end() { frameBuffer->unbind(); }
+void PostProcess::end() const { frameBuffer->unbind(); }
 
-void PostProcess::setShader(std::shared_ptr<Shader> shader) {
+void PostProcess::setShader(const std::shared_ptr<Shader> &shader) {
     this->shader = shader;
 
     shader->use();
@@ -68,23 +66,23 @@ auto PostProcess::getFrameBuffer() -> std::shared_ptr<FrameBuffer> {
     return frameBuffer;
 }
 
-void PostProcess::setWidth(unsigned int width) {
+void PostProcess::setWidth(const unsigned int width) {
     this->width = width;
     frameBuffer->setWidth(width);
 }
 
-void PostProcess::setHeight(unsigned int height) {
+void PostProcess::setHeight(const unsigned int height) {
     this->height = height;
     frameBuffer->setHeight(height);
 }
 
-void PostProcess::resize(unsigned int width, unsigned int height) {
+void PostProcess::resize(const unsigned int width, const unsigned int height) {
     this->width = width;
     this->height = height;
     frameBuffer->resize(width, height);
 }
 
-void PostProcess::setMultisampled(bool multisampled) {
+void PostProcess::setMultisampled(const bool multisampled) {
     this->multisampled = multisampled;
     frameBuffer->setMultisampled(multisampled);
 }
@@ -96,13 +94,13 @@ void PostProcess::interface() {
         frameBuffer->setMultisampled(multisampled);
     }
 
-    ImGui::SliderFloat("Gamma", &gamma, 0.0f, 5.0f);
-    ImGui::SliderFloat("Exposure", &exposure, 0.0f, 5.0f);
-    ImGui::SliderFloat("Contrast", &contrast, 0.0f, 5.0f);
-    ImGui::SliderFloat("Saturation", &saturation, 0.0f, 5.0f);
-    ImGui::SliderFloat("Brightness", &brightness, 0.0f, 5.0f);
-    ImGui::SliderFloat("Bloom Threshold", &bloomThreshold, 0.0f, 1.0f);
-    ImGui::SliderFloat("Bloom Intensity", &bloomIntensity, 0.0f, 5.0f);
-    ImGui::SliderFloat("Vignette Strength", &vignetteStrength, 0.0f, 5.0f);
+    ImGui::SliderFloat("Gamma", &gamma, 0.0F, 5.0F);
+    ImGui::SliderFloat("Exposure", &exposure, 0.0F, 5.0F);
+    ImGui::SliderFloat("Contrast", &contrast, 0.0F, 5.0F);
+    ImGui::SliderFloat("Saturation", &saturation, 0.0F, 5.0F);
+    ImGui::SliderFloat("Brightness", &brightness, 0.0F, 5.0F);
+    ImGui::SliderFloat("Bloom Threshold", &bloomThreshold, 0.0F, 1.0F);
+    ImGui::SliderFloat("Bloom Intensity", &bloomIntensity, 0.0F, 5.0F);
+    ImGui::SliderFloat("Vignette Strength", &vignetteStrength, 0.0F, 5.0F);
     ImGui::End();
 }

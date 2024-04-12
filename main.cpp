@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include <iostream>
 #include <memory>
@@ -15,12 +15,11 @@
 #include "Config.h"
 
 #include "App.h"
-#include "Entity.h"
 #include "utils/Camera.h"
 #include "utils/PlayerManager.h"
 
-#include "graphics/Color.h"
 #include "graphics/Texture.h"
+#include "graphics/Color.h"
 #include "physics/Collisions.h"
 #include "utils/Objects/Player.h"
 #include "utils/Objects/Skybox.h"
@@ -29,7 +28,6 @@
 #include "utils/Objects/ProceduralTerrain.h"
 #include "graphics/Particle.h"
 #include "utils/Objects/BumperCar.h"
-#include "utils/UniformBuffer.h"
 
 void processInput();
 
@@ -45,33 +43,26 @@ auto main() -> int {
     setupPlayers();
 
     Skybox skybox;
-    ProceduralTerrain terrain;
-
-    struct {
-        glm::mat4 projection = Config::IDENTITY_MATRIX;
-        glm::mat4 view = Config::IDENTITY_MATRIX;
-    } matrices;
-    // proj and view matrices
-    UniformBuffer ubo;
-    ubo.bind();
-    ubo.setData(matrices);
-    ubo.bindBufferBase(0);
-
-    ubo.bindBufferRange(0, 0, 2 * sizeof(glm::mat4));
+    const ProceduralTerrain terrain;
 
     Texture::Loader::setFlip(true);
 
-    const std::vector<std::shared_ptr<Entity>> models = {std::make_shared<BumperCar>(),
-                                                         std::make_shared<BumperCar>(),
-                                                         std::make_shared<BumperCar>(),
-                                                         std::make_shared<BumperCar>(),
-                                                         std::make_shared<BumperCar>(),
-                                                         std::make_shared<BumperCar>(),
-                                                         std::make_shared<BumperCar>()};
+    const auto playerCar = PlayerManager::Get("Path")->getCar();
+    playerCar->shouldDrawPlayer(false);
+    const std::vector models = {
+        std::make_shared<BumperCar>(),
+        std::make_shared<BumperCar>(),
+        std::make_shared<BumperCar>(),
+        std::make_shared<BumperCar>(),
+        std::make_shared<BumperCar>(),
+        std::make_shared<BumperCar>(),
+        std::make_shared<BumperCar>(),
+        playerCar
+    };
 
     auto matrix = Config::IDENTITY_MATRIX;
-    glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
-                            glm::vec3(20.0F, 10.0F, 8.0F);
+    const glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
+                                  glm::vec3(20.0F, 10.0F, 8.0F);
     matrix = translate(matrix, newPosition);
     matrix = scale(matrix, glm::vec3(4.0F));
 
@@ -89,56 +80,46 @@ auto main() -> int {
     PlayerManager::Get("Path")->setShader(shader);
 
     ParticleSystem particleSystem;
-
     // ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
     ShadowBuffer shadowBuffer(10000, 10000);
 
-    App::view.setPipeline([&]() {
+    App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
-        auto player = PlayerManager::GetCurrent();
+        const auto player = PlayerManager::GetCurrent();
 
         const auto projectionMatrix = player->getCamera().getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
 
-
         shadowBuffer.bind();
 
-        auto lightPos = skybox.getSun().getPosition();
-        auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
-        auto lightView = glm::lookAt(lightPos, player->getPosition(), glm::vec3(0.0F, 1.0F, 0.0F));
-
-        matrices.view = lightView;
-        matrices.projection = lightProjection;
-        ubo.setData(matrices);
+        const auto lightPos = skybox.getSun().getPosition();
+        const auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
+        const auto lightView = lookAt(lightPos, player->getPosition(), glm::vec3(0.0F, 1.0F, 0.0F));
 
         shader = ShaderManager::Get("Shadow");
         shader->use();
         shader->setUniform("view", lightView);
         shader->setUniform("projection", lightProjection);
 
-        terrain.draw(shader);
         for (const auto &model: models) {
             model->draw(shader);
         }
 
-        terrain.draw(shader);
 
         PlayerManager::Draw(shader);
+
+        terrain.draw(shader);
 
         shadowBuffer.unbind();
 
         View::clearTarget(Color::BLACK);
-
-        matrices.view = viewMatrix;
-        matrices.projection = projectionMatrix;
-        ubo.setData(matrices);
 
         shader = ShaderManager::Get("Base");
         shader->use();
         shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
 
-        auto texture = shadowBuffer.getTexture();
+        const auto texture = shadowBuffer.getTexture();
 
         for (const auto &model: models) {
             model->draw(viewMatrix, projectionMatrix);
@@ -167,7 +148,7 @@ auto main() -> int {
         shader->setUniform("viewPos", player->getCamera().getPosition());
     });
 
-    App::view.setInterface([&]() {
+    App::view.setInterface([&] {
         if (App::paused) {
             PlayerManager::GetCurrent()->getCamera().interface();
             PlayerManager::Interface();
@@ -187,10 +168,26 @@ auto main() -> int {
 
     try {
         App::loop([&] {
+            PlayerManager::Update(App::view.getDeltaTime());
             const auto player = PlayerManager::GetCurrent();
 
-            player->update(App::view.getDeltaTime());
             for (const auto &model: models) {
+                model->clearTrackablePositions();
+                // add trackable positions of all other models
+                /*
+                for (const auto &m: models) {
+                    if (m != model) {
+                        model->addTrackablePosition(m->attributes.position);
+                    }
+                }
+                 */
+
+                if (player->getMode() != Player::Mode::ORBIT && player->getMode() != Player::Mode::FIXED &&
+                    player->getMode() != Player::Mode::PATH) {
+                    model->addTrackablePosition(player->attributes.position);
+                }
+                model->addTrackablePosition(player->attributes.position);
+
                 model->update(App::view.getDeltaTime());
             }
 
@@ -200,31 +197,45 @@ auto main() -> int {
             for (int i = 0; i < models.size(); i++) {
                 for (int j = i + 1; j < models.size(); j++) {
                     if (Physics::Collisions::check(*models[i], *models[j])) {
+                        models[i]->attributes.isColliding = true;
+                        models[j]->attributes.isColliding = true;
                         Physics::Collisions::resolve(*models[i], *models[j]);
-
                         particleSystem.generate(*models[i]);
+                    } else {
+                        models[i]->attributes.isColliding = false;
+                        models[j]->attributes.isColliding = false;
                     }
                 }
             }
 
             for (const auto &model: models) {
+                if (model == player->getCar()) {
+                    continue;
+                }
+
                 if (Physics::Collisions::check(*player, *model)) {
-                    if (glm::length(player->getAttributes().force) > 0.1F) {
+                    if (length(player->getAttributes().force) > 0.1F) {
                         App::view.blurScreen();
                     }
 
-                    Physics::Collisions::resolve(*player, *model);
+                    player->attributes.isColliding = true;
+                    model->attributes.isColliding = true;
 
+                    Physics::Collisions::resolve(*player, *model);
                     particleSystem.generate(*player);
+                } else {
+                    player->attributes.isColliding = false;
+                    model->attributes.isColliding = false;
                 }
             }
 
-
-            if (Physics::Collisions::check(*player, terrain)) {
-                Physics::Collisions::resolve(*player, terrain);
-                player->attributes.isGrounded = true;
-            } else {
-                player->attributes.isGrounded = false;
+            for (const auto &player: PlayerManager::GetAll()) {
+                if (Physics::Collisions::check(*player.second, terrain)) {
+                    Physics::Collisions::resolve(*player.second, terrain);
+                    player.second->attributes.isGrounded = true;
+                } else {
+                    player.second->attributes.isGrounded = false;
+                }
             }
 
             for (const auto &model: models) {
@@ -311,13 +322,13 @@ void setupApp() {
     App::view.setMouse([&] {
         if (!App::paused) {
             PlayerManager::GetCurrent()->getCamera().processMouseMovement(
-                    App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
+                App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
         }
     });
 
     App::view.setScroll([&] {
         PlayerManager::GetCurrent()->getCamera().processMouseScroll(
-                App::view.getScrollY());
+            App::view.getScrollY());
     });
 
     App::view.setResize([&] {
@@ -358,43 +369,34 @@ void setupShaders() {
     // material properties
     shader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
     shader->setUniform("material.shininess", 64.0F);
-
-    for (const auto &[name, shader]: ShaderManager::GetAll()) {
-        UniformBuffer::Create(shader, "Matrices", 0);
-    }
 }
 
 void setupPlayers() {
-    auto orbit = std::make_shared<Player>();
+    const auto orbit = std::make_shared<Player>(Player::Mode::ORBIT);
     orbit->shouldDraw(false);
-    orbit->getCamera().setMode(Camera::Mode::ORBIT);
     orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F);
-    orbit->getAttributes().gravityAffected = false;
+    orbit->attributes.gravityAffected = false;
     PlayerManager::Add("Orbit", orbit);
 
-    auto free = std::make_shared<Player>();
+    const auto free = std::make_shared<Player>(Player::Mode::FREE);
     free->shouldDraw(true);
-    free->setMode(Player::Mode::FREE);
     free->getAttributes().gravityAffected = false;
     PlayerManager::Add("Free", free);
 
-    auto fps = std::make_shared<Player>();
+    const auto fps = std::make_shared<Player>(Player::Mode::FPS);
     fps->shouldDraw(true);
-    fps->setMode(Player::Mode::FPS);
     PlayerManager::Add("FPS", fps);
 
-    auto fixed = std::make_shared<Player>();
+    const auto fixed = std::make_shared<Player>(Player::Mode::FIXED);
     fixed->shouldDraw(true);
     fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
                                 glm::vec3(4.0F, 3.0F, 6.0F));
-    fixed->setMode(Player::Mode::FIXED);
-    fixed->getAttributes().gravityAffected = false;
+    fixed->attributes.gravityAffected = false;
     PlayerManager::Add("Fixed", fixed);
 
-    auto path = std::make_shared<Player>();
+    const auto path = std::make_shared<Player>(Player::Mode::PATH);
     path->shouldDraw(true);
-    path->setMode(Player::Mode::PATH);
-    path->getAttributes().gravityAffected = false;
+    path->attributes.gravityAffected = true;
     PlayerManager::Add("Path", path);
 
     PlayerManager::SetCurrent("Free");

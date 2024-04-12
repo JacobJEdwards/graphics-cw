@@ -3,7 +3,7 @@
 
 #include "Config.h"
 #include <glm/ext/matrix_float4x4.hpp>
-#include <glm/glm.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 namespace Physics {
     struct Attributes {
@@ -22,6 +22,7 @@ namespace Physics {
         float mass = 1.0F;
         float damping = 0.99F;
         bool isGrounded = false;
+        bool isColliding = false;
 
         bool gravityAffected = true;
 

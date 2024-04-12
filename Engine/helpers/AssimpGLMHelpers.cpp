@@ -7,9 +7,12 @@
 #include <assimp/matrix4x4.h>
 #include <assimp/quaternion.h>
 #include <assimp/vector3.h>
+#include <glm/fwd.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 
-auto AssimpGLMHelpers::getGLMMatrix4x4(const aiMatrix4x4& from) -> glm::mat4
-{
+
+auto AssimpGLMHelpers::getGLMMatrix4x4(const aiMatrix4x4 &from) -> glm::mat4 {
     glm::mat4 mat4;
     // the a,b,c,d in assimp is the row ; the 1,2,3,4 is the column
     mat4[0][0] = from.a1;
@@ -32,12 +35,7 @@ auto AssimpGLMHelpers::getGLMMatrix4x4(const aiMatrix4x4& from) -> glm::mat4
     return mat4;
 }
 
-auto AssimpGLMHelpers::getGLMVec(const aiVector3D& from) -> glm::vec3
-{
-    return { from.x, from.y, from.z };
+auto AssimpGLMHelpers::getGLMVec(const aiVector3D &from) -> glm::vec3 {
+    return {from.x, from.y, from.z};
 }
 
-auto AssimpGLMHelpers::getGLMQuat(const aiQuaternion& from) -> glm::quat
-{
-    return { from.w, from.x, from.y, from.z };
-}

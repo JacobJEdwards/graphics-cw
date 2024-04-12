@@ -6,6 +6,7 @@
 #define CW_MESH_H
 
 #include <GL/glew.h>
+#include <glm/ext/vector_float3.hpp>
 #include <memory>
 #include <vector>
 

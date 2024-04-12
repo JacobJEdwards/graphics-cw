@@ -4,26 +4,66 @@
 
 #include "Player.h"
 
+#include "BumperCar.h"
 #include "imgui/imgui.h"
-#include "utils/BoundingBox.h"
-#include <glm/glm.hpp>
+#include <glm/ext/scalar_constants.hpp>
+#include <cmath>
+#include <glm/trigonometric.hpp>
+#include <glm/geometric.hpp>
+#include <memory>
+#include <iostream>
+#include <glm/ext/matrix_transform.hpp>
 
 #include "utils/Camera.h"
 #include "Entity.h"
 
-Player::Player() : Entity("../Assets/objects/person/person.obj") {
-};
+Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") {
+    this->mode = mode;
+
+    auto carModelMat = glm::mat4(1.0F);
+    carModelMat = glm::translate(carModelMat, glm::vec3(0.0F, 0.0F, 0.0F));
 
 
-// possibly instead set up always as 0,1,0 ?
-void Player::processKeyboard(const Direction direction, const float deltaTime) {
+    switch (mode) {
+        case Mode::FPS:
+            camera->setMode(Camera::Mode::FPS);
+            break;
+        case Mode::ORBIT:
+            attributes.gravityAffected = false;
+            drawModel = false;
+            camera->setMode(Camera::Mode::ORBIT);
+            break;
+        case Mode::FREE:
+            attributes.gravityAffected = false;
+            camera->setMode(Camera::Mode::FREE);
+            break;
+        case Mode::FIXED:
+            drawModel = false;
+            attributes.gravityAffected = false;
+            camera->setMode(Camera::Mode::FIXED);
+            break;
+        case Mode::PATH:
+            camera->setMode(Camera::Mode::PATH);
+            car = std::make_shared<BumperCar>();
+            car->setMode(BumperCar::Mode::PATHED);
+            car->transform(carModelMat);
+            break;
+        case Mode::DRIVE:
+            camera->setMode(Camera::Mode::DRIVE);
+            car = std::make_shared<BumperCar>();
+            car->setMode(BumperCar::Mode::NONE);
+            car->transform(carModelMat);
+    }
+}
+
+
+void Player::processKeyboard(const Direction direction, const float /*deltaTime*/) {
     if (camera->getMode() == Camera::Mode::ORBIT || camera->getMode() == Camera::Mode::PATH) {
         return;
     }
 
-    auto front = camera->getFront();
-    auto right = camera->getRight();
-    auto up = camera->getUp();
+    const auto front = camera->getFront();
+    const auto right = camera->getRight();
 
     switch (direction) {
         case Direction::FORWARD:
@@ -62,41 +102,41 @@ void Player::processKeyboard(const Direction direction, const float deltaTime) {
     return attributes.position;
 }
 
-void Player::update(float dt) {
-
+void Player::update(const float dt) {
     Entity::update(dt);
 
-    camera->setPosition(attributes.position + glm::vec3(0.0F, 4.0F, 0.0F));
+    if (mode == Mode::PATH) {
+        const glm::vec3 pos = car->attributes.position;
+        attributes.position = pos;
+        camera->setPosition(attributes.position + glm::vec3(0.0F, 4.5F, 0.0F));
 
-    if (camera->getMode() == Camera::Mode::PATH) {
-        // instead update the camera view look at based on transform
-        auto front = glm::normalize(glm::vec3(attributes.transform[2]));
-        auto right = glm::normalize(glm::vec3(attributes.transform[0]));
-        auto up = glm::normalize(glm::vec3(attributes.transform[1]));
+        const auto transform = car->attributes.transform;
+        const auto front = glm::normalize(glm::vec3(transform[2]));
 
-        auto yaw = glm::degrees(std::atan2(front.z, front.x) + glm::pi<float>()) * 1.2F;
-        auto pitch = glm::degrees(std::asin(front.y));
-
-        camera->setYaw(yaw);
-        camera->setPitch(pitch);
+        // rotate the camera to face the direction of the car
+        camera->setFront(front);
+        camera->setRight(glm::normalize(glm::cross(front, glm::vec3(0.0F, 1.0F, 0.0F))));
+        camera->setUp(glm::normalize(glm::cross(camera->getRight(), front)));
 
         return;
     }
+
+    camera->setPosition(attributes.position + glm::vec3(0.0F, 8.0F, 0.0F));
 
     const glm::vec3 front = camera->getFront();
     const glm::vec3 modelForward = glm::normalize(glm::vec3(attributes.transform[2]));
 
     auto rotationRequired = glm::vec3(0.0F);
 
-    const float dotProduct = glm::dot(modelForward, front);
+    const float dotProduct = dot(modelForward, front);
 
     if (dotProduct < 0.99F) {
         const float angle = std::acos(dotProduct);
-        const glm::vec3 axis = glm::normalize(glm::cross(modelForward, front));
+        const glm::vec3 axis = normalize(cross(modelForward, front));
         rotationRequired = axis * angle;
     }
 
-    if (glm::length(rotationRequired) > 0.01F) {
+    if (length(rotationRequired) > 0.01F) {
         rotationRequired.z = 0.0F;
         rotationRequired.x = 0.0F;
 
@@ -110,30 +150,8 @@ void Player::update(float dt) {
     return drawModel;
 }
 
-void Player::shouldDraw(bool draw) {
+void Player::shouldDraw(const bool draw) {
     drawModel = draw;
-}
-
-void Player::setMode(Mode mode) {
-    Player::mode = mode;
-
-    switch (mode) {
-        case Mode::FPS:
-            camera->setMode(Camera::Mode::FPS);
-            break;
-        case Mode::ORBIT:
-            camera->setMode(Camera::Mode::ORBIT);
-            break;
-        case Mode::FREE:
-            camera->setMode(Camera::Mode::FREE);
-            break;
-        case Mode::FIXED:
-            camera->setMode(Camera::Mode::FIXED);
-            break;
-        case Mode::PATH:
-            camera->setMode(Camera::Mode::PATH);
-            break;
-    }
 }
 
 void Player::jump() {
@@ -166,3 +184,12 @@ void Player::interface() {
 void Player::nitro() {
     attributes.applyForce(camera->getFront() * 200.0F);
 }
+
+auto Player::getMode() const -> Mode {
+    return mode;
+}
+
+auto Player::getCar() const -> std::shared_ptr<BumperCar> {
+    return car;
+}
+

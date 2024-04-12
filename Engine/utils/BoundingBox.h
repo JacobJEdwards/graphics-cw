@@ -5,17 +5,15 @@
 #ifndef BOUNDINGBOX_H
 #define BOUNDINGBOX_H
 
-#include <assimp/scene.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <assimp/vector3.h>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 
 #include <utility>
 #include <vector>
 #include <memory>
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 #include "utils/Buffer.h"
 
@@ -103,12 +101,12 @@ public:
     [[nodiscard]] auto getParent() const -> BoundingBox *;
 
 private:
-    glm::vec3 min;
-    glm::vec3 max;
+    glm::vec3 min{};
+    glm::vec3 max{};
 
     std::unique_ptr<Buffer> buffer;
 
-    std::vector<std::unique_ptr<BoundingBox>> children = {};
+    std::vector<std::unique_ptr<BoundingBox>> children;
     BoundingBox *parent = nullptr;
 
     void initBuffer();

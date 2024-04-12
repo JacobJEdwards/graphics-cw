@@ -4,18 +4,21 @@
 
 #include "BoundingBox.h"
 
+#include "Config.h"
+#include "Buffer.h"
 #include "Shader.h"
 #include "helpers/AssimpGLMHelpers.h"
-#include <assimp/scene.h>
+#include <algorithm>
 #include <assimp/vector3.h>
 #include <cstdlib>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/common.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include <utility>
 #include <vector>
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <memory>
 
 #include "utils/Vertex.h"
@@ -23,7 +26,7 @@
 #include "App.h"
 
 
-BoundingBox::BoundingBox(glm::vec3 min, glm::vec3 max) : min(min), max(max) {
+BoundingBox::BoundingBox(const glm::vec3 min, const glm::vec3 max) : min(min), max(max) {
     initBuffer();
 }
 
@@ -130,8 +133,8 @@ auto BoundingBox::isColliding(const BoundingBox &other) const -> bool {
 }
 
 void BoundingBox::setPosition(const glm::vec3 &position) {
-    auto center = getCenter();
-    auto offset = position - center;
+    const auto center = getCenter();
+    const auto offset = position - center;
 
     translate(offset);
 }
@@ -144,7 +147,7 @@ void BoundingBox::translate(const glm::vec3 &translation) {
     min += translation;
     max += translation;
 
-    for (auto &child: children) {
+    for (const auto &child: children) {
         child->translate(translation);
     }
 }
@@ -153,31 +156,31 @@ void BoundingBox::scale(const glm::vec3 &scale) {
     min *= scale;
     max *= scale;
 
-    for (auto &child: children) {
+    for (const auto &child: children) {
         child->scale(scale);
     }
 }
 
 void BoundingBox::rotate(const glm::vec3 &rotation) {
-    auto center = getCenter();
+    const auto center = getCenter();
     auto rotationMatrix = glm::rotate(glm::mat4(1.0F), rotation.x, glm::vec3(1.0F, 0.0F, 0.0F));
     rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0F, 1.0F, 0.0F));
     rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0F, 0.0F, 1.0F));
     min = glm::vec3(rotationMatrix * glm::vec4(min - center, 1.0F)) + center;
     max = glm::vec3(rotationMatrix * glm::vec4(max - center, 1.0F)) + center;
 
-    for (auto &child: children) {
+    for (const auto &child: children) {
         child->rotate(rotation);
     }
 }
 
-void BoundingBox::rotate(const glm::vec3 &axis, float angle) {
-    auto center = getCenter();
-    auto rotationMatrix = glm::rotate(glm::mat4(1.0F), angle, axis);
+void BoundingBox::rotate(const glm::vec3 &axis, const float angle) {
+    const auto center = getCenter();
+    const auto rotationMatrix = glm::rotate(glm::mat4(1.0F), angle, axis);
     min = glm::vec3(rotationMatrix * glm::vec4(min - center, 1.0F)) + center;
     max = glm::vec3(rotationMatrix * glm::vec4(max - center, 1.0F)) + center;
 
-    for (auto &child: children) {
+    for (const auto &child: children) {
         child->rotate(axis, angle);
     }
 }
@@ -257,7 +260,7 @@ void BoundingBox::expand(const glm::vec3 &amount) {
     min -= amount;
     max += amount;
 
-    for (auto &child: children) {
+    for (const auto &child: children) {
         child->expand(amount);
     }
 }
@@ -266,7 +269,7 @@ void BoundingBox::expand(const BoundingBox &other) {
     min = glm::min(min, other.min);
     max = glm::max(max, other.max);
 
-    for (auto &child: children) {
+    for (const auto &child: children) {
         child->expand(other);
     }
 }
@@ -307,7 +310,7 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
 
     if (App::debug) {
         shader->setUniform("model", Config::IDENTITY_MATRIX);
-        auto buffer = std::make_unique<Buffer>();
+        const auto buffer = std::make_unique<Buffer>();
         buffer->drawMode = GL_LINES;
 
         std::vector<Vertex::Data> vertices = {
@@ -350,7 +353,7 @@ void BoundingBox::draw() const {
 auto BoundingBox::getCollisionPoint(const BoundingBox &box) const -> glm::vec3 {
     const glm::vec3 overlap = glm::min(max, box.max) - glm::max(min, box.min);
 
-    if (overlap.x < 0 || overlap.y < 0 || overlap.z < 0) {
+    if (overlap.x < 0.0F || overlap.y < 0.0F || overlap.z < 0.0F) {
         return glm::vec3(0.0F);
     }
 

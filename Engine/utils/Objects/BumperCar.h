@@ -4,13 +4,17 @@
 #include "graphics/Model.h"
 #include "physics/Spline.h"
 #include "utils/Shader.h"
+#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float2.hpp>
+#include <glm/ext/vector_float3.hpp>
 #include <memory>
 #include <vector>
 #include "Entity.h"
 
-class BumperCar : public Entity {
+class BumperCar final : public Entity {
 public:
+    using Entity::draw;
+
     enum class Mode {
         PATHED,
         TRACK,
@@ -36,8 +40,17 @@ public:
 
     void moveTo(glm::vec3 position);
 
-    static void Interface();
+    void shouldDrawPlayer(bool draw);
 
+    void addTrackablePosition(const glm::vec3 position) {
+        trackablePositions.push_back(position);
+    }
+
+    void clearTrackablePositions() {
+        trackablePositions.clear();
+    }
+
+    static void Interface();
 
 private:
     Mode mode = Mode::AUTO;
@@ -46,9 +59,8 @@ private:
 
     Physics::Spline spline;
     std::vector<glm::vec3> points;
+    std::vector<glm::vec3> trackablePositions;
 
-    // move this instead as child of Entity
-    // so transform is updated in Entity::update
     std::unique_ptr<Model> person;
 
     static float coneRadius;
@@ -56,6 +68,8 @@ private:
     static bool paused;
     static float trackingDistance;
     static float ventureDistance;
+
+    bool drawPlayer = true;
 };
 
 #endif

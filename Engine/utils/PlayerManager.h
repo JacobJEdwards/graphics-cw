@@ -1,9 +1,11 @@
 #ifndef PLAYERHOLDER_H
 #define PLAYERHOLDER_H
 
+#include "Shader.h"
 #include "utils/Objects/Player.h"
-#include <glm/glm.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <memory.h>
+#include <memory>
 #include <string>
 #include <unordered_map>
 

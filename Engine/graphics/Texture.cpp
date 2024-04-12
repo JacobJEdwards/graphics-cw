@@ -3,6 +3,7 @@
 //
 
 #include "Texture.h"
+#include <cstddef>
 
 #define STB_IMAGE_IMPLEMENTATION
 
@@ -12,9 +13,7 @@
 #include <filesystem>
 #include <iostream>
 #include <span>
-#include <stdexcept>
 #include <string>
-#include <utility>
 
 namespace Texture {
     namespace Loader {
@@ -98,7 +97,7 @@ namespace Texture {
             return texture;
         }
 
-        auto loadCubemap(std::span<const std::string, CUBE_MAP_FACES> faces) -> GLuint {
+        auto loadCubemap(const std::span<const std::string, CUBE_MAP_FACES> faces) -> GLuint {
             GLuint texture;
             glGenTextures(1, &texture);
             glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
@@ -107,7 +106,7 @@ namespace Texture {
             int height;
             int nrChannels;
 
-            for (unsigned int i = 0; i < faces.size(); i++) {
+            for (std::size_t i = 0; i < faces.size(); i++) {
                 stbi_uc *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
                 if (data != nullptr) {
                     const GLint format = getFormat(nrChannels);
@@ -141,7 +140,7 @@ namespace Texture {
                 case 4:
                     return GL_RGBA;
                 default:
-                    throw std::runtime_error("Error loading texture");
+                    return GL_RGB;
             }
         }
 
@@ -164,76 +163,4 @@ namespace Texture {
                 return "";
         }
     }
-
-    /*
-    Data::Data() {
-        init();
-    }
-
-    Data::Data(GLuint id, Type type, std::string path) : id(id), type(type), path(std::move(path)) {
-        init();
-    }
-
-    Data::Data(const Data &other) : id(other.id), type(other.type), path(other.path) {
-        init();
-    }
-
-    Data::Data(Data &&other) noexcept: id(other.id), type(other.type), path(std::move(other.path)) {
-        other.id = 0;
-        other.type = Type::DIFFUSE;
-        other.path = "";
-    }
-
-    auto Data::operator=(const Data &other) -> Data & {
-        if (this != &other) {
-            id = other.id;
-            type = other.type;
-            path = other.path;
-            init();
-        }
-        return *this;
-    }
-
-    auto Data::operator=(Data &&other) noexcept -> Data & {
-        if (this != &other) {
-            id = other.id;
-            type = other.type;
-            path = std::move(other.path);
-            other.id = 0;
-            other.type = Type::DIFFUSE;
-            other.path = "";
-        }
-        return *this;
-    }
-
-    Data::~Data() {
-        glDeleteTextures(1, &id);
-    }
-
-    void Data::init() {
-        switch (type) {
-            case Type::DIFFUSE:
-            case Type::SPECULAR:
-            case Type::NORMAL:
-            case Type::HEIGHT:
-            case Type::EMISSIVE:
-            case Type::AMBIENT_OCCLUSION:
-                target = GL_TEXTURE_2D;
-                break;
-            case Type::CUBEMAP:
-                target = GL_TEXTURE_CUBE_MAP;
-                break;
-        }
-
-        glGenTextures(1, &id);
-    }
-
-    void Data::bind() const {
-        glBindTexture(target, id);
-    }
-
-    void Data::unbind() const {
-        glBindTexture(target, 0);
-    }
-        */
 }

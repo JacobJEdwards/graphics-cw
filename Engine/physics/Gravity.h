@@ -1,7 +1,7 @@
 #ifndef GRAVITY_H
 #define GRAVITY_H
 
-#include <glm/glm.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 namespace Physics {
     constexpr float GRAVITY = 9.8F;

@@ -6,10 +6,10 @@
 
 
 #include "Config.h"
-#include <algorithm>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/geometric.hpp>
 #include <memory>
+#include "Entity.h"
 #include "utils/Shader.h"
 #include "utils/ShaderManager.h"
 #include "utils/Buffer.h"
@@ -17,18 +17,26 @@
 #include "utils/PlayerManager.h"
 #include "graphics/Color.h"
 #include "utils/Random.h"
+#include <vector>
 
-Particle::Particle() : position(0.0F), velocity(0.0F), color(1.0F), life(0.0F) {}
+Particle::Particle() : position(0.0F), velocity(0.0F), color(1.0F), life(0.0F) {
+}
 
-Particle::Particle(glm::vec3 position, glm::vec3 velocity, glm::vec4 color, float life) : position(position),
-                                                                                          velocity(velocity),
-                                                                                          color(color),
-                                                                                          life(life) {}
+Particle::Particle(const glm::vec3 position, const glm::vec3 velocity, const glm::vec4 color,
+                   const float life) : position
+                                       (position),
+                                       velocity(velocity),
+                                       color(color),
+                                       life(life) {
+}
 
-Particle::Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 color, float life) : position(position),
-                                                                                          velocity(velocity),
-                                                                                          color(glm::vec4(color, 0.8F)),
-                                                                                          life(life) {}
+Particle::Particle(const glm::vec3 position, const glm::vec3 velocity, const glm::vec3 color,
+                   const float life) : position
+                                       (position),
+                                       velocity(velocity),
+                                       color(glm::vec4(color, 0.8F)),
+                                       life(life) {
+}
 
 
 ParticleSystem::ParticleSystem() {
@@ -43,31 +51,31 @@ void ParticleSystem::add(const Particle &particle) {
     particles.push_back(particle);
 }
 
-void ParticleSystem::update(float deltaTime) {
-    auto player = PlayerManager::GetCurrent();
-    auto camera = player->getCamera();
-    auto up = camera.getUp();
-    auto right = camera.getRight();
+void ParticleSystem::update(const float deltaTime) {
+    const auto player = PlayerManager::GetCurrent();
+    const auto camera = player->getCamera();
+    const auto up = camera.getUp();
+    const auto right = camera.getRight();
 
     for (auto &particle: particles) {
         particle.position += particle.velocity * deltaTime;
         particle.life -= deltaTime;
 
         auto model = Config::IDENTITY_MATRIX;
-        model = glm::translate(model, particle.position);
+        model = translate(model, particle.position);
         model[0] = glm::vec4(right, 0.0F);
         model[1] = glm::vec4(up, 0.0F);
         model[2] = glm::vec4(glm::cross(right, up), 0.0F);
-        model = glm::scale(model, glm::vec3(0.1F));
+        model = scale(model, glm::vec3(0.1F));
         particle.model = model;
     }
 
-    particles.erase(std::remove_if(particles.begin(), particles.end(), [](const Particle &particle) {
+    std::erase_if(particles, [](const Particle &particle) {
         return particle.life <= 0.0F;
-    }), particles.end());
+    });
 }
 
-void ParticleSystem::draw(std::shared_ptr<Shader> shader) const {
+void ParticleSystem::draw(const std::shared_ptr<Shader> shader) const {
     buffer->bind();
 
     GLuint previousBlendSrc;
@@ -84,7 +92,7 @@ void ParticleSystem::draw(std::shared_ptr<Shader> shader) const {
         shader->setUniform("color", particle.color);
         shader->setUniform("life", particle.life);
 
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
     }
 
     /*
@@ -140,21 +148,21 @@ void ParticleSystem::draw() const {
 
 void ParticleSystem::generate() {
     for (int i = 0; i < MAX_PARTICLES; i++) {
-        auto position = glm::vec3(0.0F);
-        auto velocity = glm::vec3(0.0F);
-        auto color = glm::vec4(Color::WHITE, 0.8F);
-        auto life = 0.0F;
+        constexpr auto position = glm::vec3(0.0F);
+        constexpr auto velocity = glm::vec3(0.0F);
+        constexpr auto color = glm::vec4(Color::WHITE, 0.8F);
+        constexpr auto life = 0.0F;
 
         add(Particle(position, velocity, color, life));
     }
 }
 
-void ParticleSystem::generate(const Entity &entity, const glm::vec3 &offset, int numParticles) {
+void ParticleSystem::generate(const Entity &entity, const glm::vec3 &offset, const int numParticles) {
     for (int i = 0; i < numParticles; i++) {
-        auto position = entity.attributes.position + offset + Random::Vec3(-1.0F, 1.0F);
-        auto velocity = entity.attributes.velocity + Random::Vec3(-1.0F, 1.0F);
-        auto color = glm::vec4(Color::SILVER, 0.8F) * Random::Float(0.8F, 1.2F);
-        auto life = Random::Float(0.8F, 1.0F);
+        const auto position = entity.attributes.position + offset + Random::Vec3(-1.0F, 1.0F);
+        const auto velocity = entity.attributes.velocity + Random::Vec3(-1.0F, 1.0F);
+        const auto color = glm::vec4(Color::SILVER, 0.8F) * Random::Float(0.8F, 1.2F);
+        const auto life = Random::Float(0.8F, 1.0F);
 
         add(Particle(position, velocity, color, life));
     }

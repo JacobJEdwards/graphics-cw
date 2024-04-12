@@ -5,7 +5,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <glm/glm.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 
 namespace Config {
     constexpr auto DEFAULT_WIDTH = 1200;

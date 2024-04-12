@@ -49,9 +49,9 @@ Buffer::Buffer(Buffer &&other) noexcept {
     VBO = other.VBO;
     EBO = other.EBO;
 
-    other.VAO = 0;
-    other.VBO = 0;
-    other.EBO = 0;
+    other.VAO = 0U;
+    other.VBO = 0U;
+    other.EBO = 0U;
 }
 
 
@@ -63,38 +63,38 @@ auto Buffer::operator=(Buffer &&other) noexcept -> Buffer & {
         VBO = other.VBO;
         EBO = other.EBO;
 
-        other.VAO = 0;
-        other.VBO = 0;
-        other.EBO = 0;
+        other.VAO = 0U;
+        other.VBO = 0U;
+        other.EBO = 0U;
     }
 
     return *this;
 }
 
 
-void Buffer::fill(std::initializer_list<Vertex::Data> vertices,
-                  std::initializer_list<GLuint> indices) {
-    data.vertices = std::vector<Vertex::Data>(vertices.begin(), vertices.end());
-    data.indices = std::vector<GLuint>(indices.begin(), indices.end());
+void Buffer::fill(const std::initializer_list<Vertex::Data> vertices,
+                  const std::initializer_list<GLuint> indices) {
+    data.vertices = std::vector(vertices.begin(), vertices.end());
+    data.indices = std::vector(indices.begin(), indices.end());
 
     setup();
 }
 
 void Buffer::fill(std::span<const Vertex::Data> vertices,
                   std::span<const GLuint> indices) {
-    data.vertices = std::vector<Vertex::Data>(vertices.begin(), vertices.end());
-    data.indices = std::vector<GLuint>(indices.begin(), indices.end());
+    data.vertices = std::vector(vertices.begin(), vertices.end());
+    data.indices = std::vector(indices.begin(), indices.end());
 
     setup();
 }
 
-void Buffer::fill(std::initializer_list<Vertex::Data> vertices) {
-    data.vertices = std::vector<Vertex::Data>(vertices.begin(), vertices.end());
+void Buffer::fill(const std::initializer_list<Vertex::Data> vertices) {
+    data.vertices = std::vector(vertices.begin(), vertices.end());
     setup();
 }
 
 void Buffer::fill(std::span<const Vertex::Data> vertices) {
-    data.vertices = std::vector<Vertex::Data>(vertices.begin(), vertices.end());
+    data.vertices = std::vector(vertices.begin(), vertices.end());
     setup();
 }
 
@@ -115,7 +115,7 @@ void Buffer::draw() const {
     }
 }
 
-void Buffer::setup() {
+void Buffer::setup() const {
     bind();
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
@@ -162,7 +162,7 @@ void Buffer::setup() {
     unbind();
 }
 
-void Buffer::drawInstanced(std::size_t num) const {
+void Buffer::drawInstanced(const std::size_t num) const {
     if (!data.indices.empty()) {
         glDrawElementsInstanced(drawMode, static_cast<GLsizei>(data.indices.size()), GL_UNSIGNED_INT, nullptr,
                                 static_cast<GLsizei>(num));

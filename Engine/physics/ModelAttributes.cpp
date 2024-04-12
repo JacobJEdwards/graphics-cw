@@ -2,16 +2,17 @@
 
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
-#include <glm/glm.hpp>
-#include <glm/detail/type_quat.hpp>
+#include <glm/ext/quaternion_trigonometric.hpp>
+#include <glm/fwd.hpp>
+#include <glm/geometric.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include <iostream>
+#include <glm/trigonometric.hpp>
 
 #include "Config.h"
 #include "physics/Constants.h"
 #include "physics/Gravity.h"
 
-void Physics::Attributes::update(float dt) {
+void Physics::Attributes::update(const float dt) {
     velocity += acceleration * dt;
     position += velocity * dt;
     acceleration = force / mass;
@@ -22,7 +23,7 @@ void Physics::Attributes::update(float dt) {
 
     glm::mat4 rotationMatrix = Config::IDENTITY_MATRIX;
 
-    const float rotationDamping = 1.0F - Physics::ANGULAR_DAMPING;
+    constexpr float rotationDamping = 1.0F - Physics::ANGULAR_DAMPING;
     rotation *= rotationDamping;
 
     rotationMatrix = glm::rotate(rotationMatrix, rotation.x * dt, glm::vec3(1.0F, 0.0F, 0.0F));
@@ -59,12 +60,12 @@ void Physics::Attributes::applyGravity() {
     applyForce(Physics::GRAVITY_VECTOR * mass);
 }
 
-void Physics::Attributes::applyFriction(float friction) {
+void Physics::Attributes::applyFriction(const float friction) {
     applyForce(-velocity * friction);
     applyTorque(-angularVelocity * friction);
 }
 
-void Physics::Attributes::applyDrag(float drag) {
+void Physics::Attributes::applyDrag(const float drag) {
     applyForce(-velocity * drag);
     applyTorque(-angularVelocity * drag);
 }
@@ -78,8 +79,8 @@ void Physics::Attributes::applyImpulse(const glm::vec3 &impulse) {
 }
 
 void Physics::Attributes::applySpring(const glm::vec3 &springAnchor,
-                                      float springConstant,
-                                      float springLength) {
+                                      const float springConstant,
+                                      const float springLength) {
     const glm::vec3 springVector = springAnchor - position;
     const glm::vec3 springForce = springConstant *
                                   (glm::length(springVector) - springLength) *
@@ -99,9 +100,9 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point) const
 
     const glm::vec3 initialVelocity = velocity;
 
-    const glm::vec3 finalVelocity = (point - position);;
+    const glm::vec3 finalVelocity = point - position;
 
-    const glm::vec3 acceleration = (finalVelocity - initialVelocity);
+    const glm::vec3 acceleration = finalVelocity - initialVelocity;
 
     const glm::vec3 force = mass * acceleration;
 

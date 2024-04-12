@@ -6,7 +6,8 @@
 
 
 #include <glm/ext/matrix_float4x4.hpp>
-#include <glm/glm.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float3.hpp>
 #include <memory>
 #include <filesystem>
 #include <utility>
@@ -23,12 +24,12 @@ Entity::Entity(const std::filesystem::path &path) {
     shader = ShaderManager::Get("Base");
 }
 
-void Entity::update(float deltaTime) {
+void Entity::update(const float deltaTime) {
     const glm::mat4 oldTransform = attributes.transform;
     attributes.update(deltaTime);
     const glm::mat4 newTransform = attributes.transform;
 
-    auto translation = glm::vec3(newTransform[3]) - glm::vec3(oldTransform[3]);
+    const auto translation = glm::vec3(newTransform[3]) - glm::vec3(oldTransform[3]);
 
     box.translate(translation);
 }
@@ -46,7 +47,7 @@ void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
 }
 
 
-void Entity::draw(std::shared_ptr<Shader> shader) const {
+void Entity::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
     shader->setUniform("model", attributes.transform);
     model->draw(shader);
@@ -98,7 +99,7 @@ void Entity::scale(const glm::vec3 &scale) {
     box.scale(scale);
 }
 
-void Entity::rotate(const glm::vec3 &axis, float angle) {
+void Entity::rotate(const glm::vec3 &axis, const float angle) {
     attributes.applyRotation(axis * angle);
     box.rotate(axis, angle);
 }

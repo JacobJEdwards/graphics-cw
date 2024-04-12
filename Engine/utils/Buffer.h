@@ -64,7 +64,7 @@ public:
     void drawInstanced(std::size_t num) const;
 
 private:
-    void setup();
+    void setup() const;
 };
 
 #endif // CW_BUFFER_H
