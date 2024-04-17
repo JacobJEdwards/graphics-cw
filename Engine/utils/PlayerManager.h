@@ -19,11 +19,11 @@ public:
 
     static void Update(float deltaTime);
 
-    static void Add(const std::string &name, std::shared_ptr<Player> player);
+    static void Add(const std::string &name, const std::shared_ptr<Player> &player);
 
     static auto Get(const std::string &name) -> std::shared_ptr<Player>;
 
-    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Player>> &;
+    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Player> > &;
 
     static auto GetCurrent() -> std::shared_ptr<Player>;
 
@@ -43,9 +43,8 @@ public:
 
     static void Interface();
 
-
 private:
-    static std::unordered_map<std::string, std::shared_ptr<Player>> Players;
+    static std::unordered_map<std::string, std::shared_ptr<Player> > Players;
     static std::shared_ptr<Player> CurrentPlayer;
 };
 

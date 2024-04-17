@@ -49,6 +49,8 @@ auto main() -> int {
 
     const auto playerCar = PlayerManager::Get("Path")->getCar();
     playerCar->shouldDrawPlayer(false);
+
+    const auto driveable = PlayerManager::Get("Drive")->getCar();
     const std::vector models = {
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
@@ -57,12 +59,12 @@ auto main() -> int {
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
-        playerCar
+        playerCar,
+        // driveable
     };
 
     auto matrix = Config::IDENTITY_MATRIX;
-    const glm::vec3 newPosition = PlayerManager::GetCurrent()->getCamera().getPosition() +
-                                  glm::vec3(20.0F, 10.0F, 8.0F);
+    constexpr auto newPosition = glm::vec3(20.0F, 10.0F, 8.0F);
     matrix = translate(matrix, newPosition);
     matrix = scale(matrix, glm::vec3(4.0F));
 
@@ -78,6 +80,7 @@ auto main() -> int {
     PlayerManager::Get("FPS")->setShader(shader);
     PlayerManager::Get("Fixed")->setShader(shader);
     PlayerManager::Get("Path")->setShader(shader);
+    PlayerManager::Get("Drive")->setShader(shader);
 
     ParticleSystem particleSystem;
     // ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
@@ -124,6 +127,8 @@ auto main() -> int {
         for (const auto &model: models) {
             model->draw(viewMatrix, projectionMatrix);
         }
+
+        driveable->draw(viewMatrix, projectionMatrix);
 
         particleSystem.draw(viewMatrix, projectionMatrix);
 
@@ -374,7 +379,7 @@ void setupShaders() {
 void setupPlayers() {
     const auto orbit = std::make_shared<Player>(Player::Mode::ORBIT);
     orbit->shouldDraw(false);
-    orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F);
+    orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F, 10.0F);
     orbit->attributes.gravityAffected = false;
     PlayerManager::Add("Orbit", orbit);
 
@@ -389,8 +394,7 @@ void setupPlayers() {
 
     const auto fixed = std::make_shared<Player>(Player::Mode::FIXED);
     fixed->shouldDraw(true);
-    fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F),
-                                glm::vec3(4.0F, 3.0F, 6.0F));
+    fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3(0.0F, 10.0F, 10.0F));
     fixed->attributes.gravityAffected = false;
     PlayerManager::Add("Fixed", fixed);
 
@@ -398,6 +402,11 @@ void setupPlayers() {
     path->shouldDraw(true);
     path->attributes.gravityAffected = true;
     PlayerManager::Add("Path", path);
+
+    const auto drive = std::make_shared<Player>(Player::Mode::DRIVE);
+    drive->shouldDraw(true);
+    drive->attributes.gravityAffected = true;
+    PlayerManager::Add("Drive", drive);
 
     PlayerManager::SetCurrent("Free");
 }

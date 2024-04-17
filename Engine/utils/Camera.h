@@ -21,6 +21,16 @@ constexpr float MINZOOM = 1.0F;
 constexpr float MAXPITCH = 89.0F;
 constexpr float MINPITCH = -89.0F;
 
+constexpr float MAXYAW = 360.0F;
+constexpr float MINYAW = -360.0F;
+
+constexpr float MAXSPEED = 10.0F;
+constexpr float MINSPEED = 0.0F;
+
+constexpr float FARPLANE = 300.0F;
+constexpr float NEARPLANE = 0.1F;
+
+
 class Camera {
 public:
     enum class Mode {
@@ -31,10 +41,9 @@ public:
                     glm::vec3 worldUp = glm::vec3(0.0F, 1.0F, 0.0F),
                     float yaw = YAW, float pitch = PITCH);
 
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ,
-           float yaw, float pitch);
-
     [[nodiscard]] auto getViewMatrix() const -> glm::mat4;
+
+    [[nodiscard]] auto getOrthoMatrix() const -> glm::mat4;
 
     void processMouseMovement(float xOffset, float yOffset,
                               bool constrainPitch = true);
@@ -42,8 +51,6 @@ public:
     void processMouseScroll(float yOffset);
 
     void setMode(Mode value);
-
-    void setOrbit(glm::vec3 target, float radius, float angle, float speed);
 
     void setOrbit(glm::vec3 target, float radius, float angle, float speed,
                   float height);
@@ -107,9 +114,17 @@ private:
     float yaw;
     float pitch;
 
+    float maxPitch = MAXPITCH;
+    float minPitch = MINPITCH;
+
+    float maxYaw = MAXYAW;
+    float minYaw = MINYAW;
+
     float mouseSensitivity = SENSITIVITY;
     float zoom = ZOOM;
-    float nearPlane = 0.1F;
+
+    float renderDistance = FARPLANE;
+    float nearPlane = NEARPLANE;
 
     glm::vec3 target = glm::vec3(0.0F, 0.0F, 0.0F);
 
@@ -122,17 +137,13 @@ private:
 
     float aspect = 1.0F;
 
-    float renderDistance = 100.0F;
-
-    float yPosition = 0.0F;
+    float yPosition = 1.0F;
 
     bool downwards = false;
 
     void updateCameraVectors();
 
     void updateOrbitPosition();
-
-    void adjustOrbitPosition(glm::vec3 &newPos) const;
 };
 
 #endif // CW_CAMERA_H

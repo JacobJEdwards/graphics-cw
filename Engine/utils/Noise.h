@@ -8,19 +8,18 @@
 #include <glm/gtc/noise.hpp>
 
 namespace Noise {
-    namespace {
-        constexpr float SCALE = 0.1F;
-        constexpr float AMPLITUDE = 1.0F;
-        constexpr float FREQUENCY = 1.0F;
-        constexpr int OCTAVES = 1;
-        constexpr float PERSISTENCE = 0.5F;
-    }
+    constexpr float SCALE = 0.1F;
+    constexpr float AMPLITUDE = 1.0F;
+    constexpr float FREQUENCY = 1.0F;
+    constexpr int OCTAVES = 1;
+    constexpr float PERSISTENCE = 0.5F;
 
     template<typename T>
     auto
-    Perlin(const T &pos, float scale = SCALE, float amplitude = AMPLITUDE, float frequency = FREQUENCY,
-           int octaves = OCTAVES,
-           float persistence = PERSISTENCE) -> float {
+    Perlin(const T &pos, const float scale = SCALE, const float amplitude = AMPLITUDE,
+           const float frequency = FREQUENCY,
+           const int octaves = OCTAVES,
+           const float persistence = PERSISTENCE) -> float {
         float noise = 0.0F;
         float maxNoise = 0.0F;
         float amp = amplitude;
@@ -35,9 +34,10 @@ namespace Noise {
     }
 
     template<typename T>
-    auto Simplex(const T &pos, float scale = SCALE, float amplitude = AMPLITUDE, float frequency = FREQUENCY,
-                 int octaves = OCTAVES,
-                 float persistence = PERSISTENCE) -> float {
+    auto Simplex(const T &pos, const float scale = SCALE, const float amplitude = AMPLITUDE, const float frequency =
+                         FREQUENCY,
+                 const int octaves = OCTAVES,
+                 const float persistence = PERSISTENCE) -> float {
         float noise = 0.0F;
         float maxNoise = 0.0F;
         float amp = amplitude;

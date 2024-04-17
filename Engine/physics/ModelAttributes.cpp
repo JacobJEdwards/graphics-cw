@@ -89,7 +89,7 @@ void Physics::Attributes::applySpring(const glm::vec3 &springAnchor,
 }
 
 auto Physics::Attributes::calculateForce(const glm::vec3 &point) const
--> glm::vec3 {
+    -> glm::vec3 {
     if (mass == 0.0F) {
         return glm::vec3(0.0F);
     }
@@ -127,23 +127,6 @@ auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3
     return rotation;
 }
 
-/*
-auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
-    glm::vec3 direction = glm::normalize(point - position);
-    glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
-
-    auto rotation = glm::vec3(0.0F);
-
-    if (direction != forward) {
-        const glm::vec3 axis = glm::cross(forward, direction);
-        const float angle = glm::acos(glm::dot(forward, direction));
-
-        rotation = axis * angle;
-    }
-
-    return rotation;
-}
- */
 
 void Physics::Attributes::applyRotation(const glm::vec3 &rotation) {
     this->rotation += rotation;

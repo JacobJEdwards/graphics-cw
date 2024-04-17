@@ -6,6 +6,7 @@
 #include <cmath>
 
 #include <algorithm>
+#include <iostream>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -20,14 +21,22 @@ Camera::Camera(const glm::vec3 position, const glm::vec3 worldUp, const float ya
     updateCameraVectors();
 }
 
+[[nodiscard]] auto Camera::getOrthoMatrix() const -> glm::mat4 {
+    return glm::ortho(-aspect, aspect, -1.0F, 1.0F, -1.0F, 1.0F);
+}
+
+// TODO debug this for fixed and orbit
 [[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
     switch (mode) {
+        case Mode::FPS:
+        case Mode::FREE:
+        case Mode::DRIVE:
+        case Mode::PATH:
+            return lookAt(position, position + front, up);
         case Mode::ORBIT:
         case Mode::FIXED:
-            return lookAt(position, target, up);
-
         default:
-            return lookAt(position, position + front, up);
+            return lookAt(position, target + front, worldUp);
     }
 }
 
@@ -53,19 +62,22 @@ void Camera::processMouseMovement(float xOffset, float yOffset,
     pitch += yOffset;
 
     if (constrainPitch) {
-        pitch = std::min(pitch, MAXPITCH);
-        pitch = std::max(pitch, MINPITCH);
+        pitch = std::min(pitch, maxPitch);
+        pitch = std::max(pitch, minPitch);
     }
 
-    updateCameraVectors();
+    yaw = std::fmod(yaw, 360.0F);
+    yaw = std::min(yaw, maxYaw);
+    yaw = std::max(yaw, minYaw);
+
 
     if (mode == Mode::ORBIT) {
         orbitAngle += xOffset * orbitSpeed * 0.1F;
         orbitHeight += yOffset * orbitSpeed * 0.1F;
         orbitHeight = std::max(orbitHeight, yPosition);
-        orbitHeight = std::min(orbitHeight, 10.0F);
-        updateOrbitPosition();
     }
+
+    updateCameraVectors();
 }
 
 void Camera::processMouseScroll(const float yOffset) {
@@ -76,14 +88,6 @@ void Camera::processMouseScroll(const float yOffset) {
 
 void Camera::setMode(const Mode value) { mode = value; }
 
-void Camera::setOrbit(const glm::vec3 target, const float radius,
-                      const float angle, const float speed) {
-    this->target = target;
-    orbitRadius = radius;
-    orbitAngle = angle;
-    orbitSpeed = speed;
-}
-
 void Camera::setOrbit(const glm::vec3 target, const float radius, const float angle, const float speed,
                       const float height) {
     this->target = target;
@@ -91,6 +95,7 @@ void Camera::setOrbit(const glm::vec3 target, const float radius, const float an
     orbitAngle = angle;
     orbitSpeed = speed;
     orbitHeight = height;
+    distance = glm::distance(target, position);
 }
 
 void Camera::setFixed(const glm::vec3 target, const glm::vec3 position) {
@@ -159,9 +164,9 @@ void Camera::updateCameraVectors() {
 }
 
 void Camera::updateOrbitPosition() {
-    position.x = target.x + orbitRadius * cos(glm::radians(orbitAngle));
-    position.z = target.z + orbitRadius * sin(glm::radians(orbitAngle));
-    position.y = target.y + orbitHeight;
+    position.x = target.x + orbitRadius * cos(glm::radians(orbitAngle)) * cos(glm::radians(orbitHeight));
+    position.z = target.z + orbitRadius * sin(glm::radians(orbitAngle)) * cos(glm::radians(orbitHeight));
+    position.y = orbitHeight;
 }
 
 void Camera::interface() {

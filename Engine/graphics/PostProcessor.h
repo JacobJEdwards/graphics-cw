@@ -6,6 +6,40 @@
 #include "utils/Shader.h"
 #include <memory>
 
+constexpr float BLOOM_THRESHOLD = 0.8F;
+constexpr float BLOOM_INTENSITY = 1.4F;
+constexpr float VIGNETTE_STRENGTH = 0.3F;
+constexpr float GAMMA = 1.0F;
+constexpr float EXPOSURE = 1.0F;
+constexpr float CONTRAST = 1.2F;
+constexpr float SATURATION = 1.5F;
+constexpr float BRIGHTNESS = 1.0F;
+
+constexpr float BLOOM_THRESHOLD_MIN = 0.0F;
+constexpr float BLOOM_THRESHOLD_MAX = 1.0F;
+
+constexpr float BLOOM_INTENSITY_MIN = 0.0F;
+constexpr float BLOOM_INTENSITY_MAX = 2.0F;
+
+constexpr float VIGNETTE_STRENGTH_MIN = 0.0F;
+constexpr float VIGNETTE_STRENGTH_MAX = 1.0F;
+
+constexpr float GAMMA_MIN = 1.0F;
+constexpr float GAMMA_MAX = 3.0F;
+
+constexpr float EXPOSURE_MIN = 0.0F;
+constexpr float EXPOSURE_MAX = 2.0F;
+
+constexpr float CONTRAST_MIN = 0.0F;
+constexpr float CONTRAST_MAX = 2.0F;
+
+constexpr float SATURATION_MIN = 0.0F;
+constexpr float SATURATION_MAX = 2.0F;
+
+constexpr float BRIGHTNESS_MIN = 0.0F;
+constexpr float BRIGHTNESS_MAX = 2.0F;
+
+
 class PostProcess {
 public:
     PostProcess(unsigned int width, unsigned int height,
@@ -49,14 +83,14 @@ private:
 
     bool multisampled = true;
 
-    float gamma = 2.2F;
-    float exposure = 1.0F;
-    float contrast = 1.2F;
-    float saturation = 1.5F;
-    float brightness = 1.0F;
-    float bloomThreshold = 0.8F;
-    float bloomIntensity = 1.4F;
-    float vignetteStrength = 0.3F;
+    float gamma = GAMMA;
+    float exposure = EXPOSURE;
+    float contrast = CONTRAST;
+    float saturation = SATURATION;
+    float brightness = BRIGHTNESS;
+    float bloomThreshold = BLOOM_THRESHOLD;
+    float bloomIntensity = BLOOM_INTENSITY;
+    float vignetteStrength = VIGNETTE_STRENGTH;
 
     bool blur = false;
     float blurTime = 0.0F;

@@ -60,13 +60,13 @@ vec4 applyBlur(sampler2D tex, vec2 texCoords, vec2 direction, float blurAmount) 
         color += texture(tex, texCoords + float(i) * step);
     }
 
-    return color / 11.0;// Normalize by the number of samples
+    return color / 11.0;
 }
 
 void main() {
     vec4 color = texture(screenTexture, TexCoords);
 
-    // color.rgb = applyGammaCorrection(color.rgb);
+    color.rgb = applyGammaCorrection(color.rgb);
     color.rgb = applyExposure(color.rgb);
     color.rgb = applyContrast(color.rgb);
     color.rgb = applySaturation(color.rgb);
@@ -82,7 +82,8 @@ void main() {
     if (blur) {
         vec4 blurredColorX = applyBlur(screenTexture, TexCoords, vec2(1.0, 0.0), blurAmount);
         vec4 blurredColorY = applyBlur(screenTexture, TexCoords, vec2(0.0, 1.0), blurAmount);
-        color = (blurredColorX + blurredColorY) / 2.0;
+        color = mix(color, (blurredColorX + blurredColorY), 0.8);
+
     }
 
     FragColor = color;

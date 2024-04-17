@@ -42,8 +42,8 @@ void PlayerManager::Update(float deltaTime) {
     });
 }
 
-void PlayerManager::Add(const std::string &name, std::shared_ptr<Player> player) {
-    Players[name] = std::move(player);
+void PlayerManager::Add(const std::string &name, const std::shared_ptr<Player> &player) {
+    Players[name] = player;
 
     if (Players.size() == 1) {
         SetCurrent(name);
@@ -67,9 +67,7 @@ void PlayerManager::SetCurrent(const std::string &name) {
         CurrentPlayer->shouldDraw(true);
     }
 
-    auto it = Players.find(name);
-
-    if (it != Players.end()) {
+    if (const auto it = Players.find(name); it != Players.end()) {
         CurrentPlayer = it->second;
         if (CurrentPlayer) {
             CurrentPlayer->shouldDraw(false);

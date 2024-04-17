@@ -5,10 +5,10 @@
 #include "ProceduralTerrain.h"
 
 
-#include <algorithm>
 #include "utils/Noise.h"
+#include <algorithm>
 #include <cstddef>
-#include <cstddef>
+#include <iostream>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
@@ -17,7 +17,6 @@
 #include "utils/Buffer.h"
 #include "utils/Vertex.h"
 #include "utils/Shader.h"
-#include <memory>
 #include "utils/ShaderManager.h"
 #include "utils/PlayerManager.h"
 
@@ -35,6 +34,9 @@ ProceduralTerrain::ProceduralTerrain(const glm::vec2 center, const int chunkSize
 
     worldSizeX = static_cast<float>(chunkSize * numChunksX);
     worldSizeY = static_cast<float>(chunkSize * numChunksY);
+
+    worldCentre = glm::vec2(worldSizeX / 2.0F, worldSizeY / 2.0F);
+
     generate();
 }
 
@@ -119,8 +121,6 @@ ProceduralTerrain::getIntersectionPoint(const glm::vec3 &rayStart, const glm::ve
     return rayStart + t * (rayEnd - rayStart);
 }
 
-// get teh normal of the terrain at a given point
-// can be used for collision detection
 [[nodiscard]] auto ProceduralTerrain::getTerrainNormal(const float x, const float y) const -> glm::vec3 {
     constexpr float dx = 0.1F;
     constexpr float dz = 0.1F;
@@ -150,8 +150,10 @@ void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
 
     Chunk chunk;
 
-    chunk.centre = centre += glm::vec2(xOffset, yOffset);
+    chunk.centre = centre + glm::vec2(xOffset, yOffset);
     chunk.chunkSize = chunkSize;
+
+    const auto worldCentre = glm::vec2(worldSizeX / 2.0F, worldSizeY / 2.0F);
 
     // generate vertices
     for (int i = 0; i < chunkSize + 1; i++) {
@@ -160,6 +162,7 @@ void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
                     static_cast<float>(xOffset + j) - worldSizeX / 2.0F;
             const float zCoord =
                     static_cast<float>(yOffset + i) - worldSizeY / 2.0F;
+
             const float yCoord = Noise::Simplex(glm::vec2(xCoord, zCoord));
 
             chunk.vertices.push_back(Vertex::Data{{xCoord, yCoord, zCoord}});
@@ -203,6 +206,36 @@ void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
     // texture coordinates
     for (auto &vertex: chunk.vertices) {
         vertex.texCoords = glm::vec2(vertex.position.x, vertex.position.z);
+    }
+
+    // tangent and bitangent
+    for (std::size_t i = 0; i < chunk.indices.size(); i += 3) {
+        const glm::vec3 v0 = chunk.vertices[chunk.indices[i]].position;
+        const glm::vec3 v1 = chunk.vertices[chunk.indices[i + 1]].position;
+        const glm::vec3 v2 = chunk.vertices[chunk.indices[i + 2]].position;
+
+        const glm::vec2 uv0 = chunk.vertices[chunk.indices[i]].texCoords;
+        const glm::vec2 uv1 = chunk.vertices[chunk.indices[i + 1]].texCoords;
+        const glm::vec2 uv2 = chunk.vertices[chunk.indices[i + 2]].texCoords;
+
+        const glm::vec3 deltaPos1 = v1 - v0;
+        const glm::vec3 deltaPos2 = v2 - v0;
+
+        const glm::vec2 deltaUV1 = uv1 - uv0;
+        const glm::vec2 deltaUV2 = uv2 - uv0;
+
+        const float f = 1.0F / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+        const glm::vec3 tangent = f * (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y);
+        const glm::vec3 bitangent = f * (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x);
+
+        chunk.vertices[chunk.indices[i]].tangent += tangent;
+        chunk.vertices[chunk.indices[i + 1]].tangent += tangent;
+        chunk.vertices[chunk.indices[i + 2]].tangent += tangent;
+
+        chunk.vertices[chunk.indices[i]].bitangent += bitangent;
+        chunk.vertices[chunk.indices[i + 1]].bitangent += bitangent;
+        chunk.vertices[chunk.indices[i + 2]].bitangent += bitangent;
     }
 
     chunk.init();

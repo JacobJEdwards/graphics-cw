@@ -5,13 +5,11 @@
 #include "Player.h"
 
 #include "BumperCar.h"
+#include "Config.h"
 #include "imgui/imgui.h"
-#include <glm/ext/scalar_constants.hpp>
 #include <cmath>
-#include <glm/trigonometric.hpp>
 #include <glm/geometric.hpp>
 #include <memory>
-#include <iostream>
 #include <glm/ext/matrix_transform.hpp>
 
 #include "utils/Camera.h"
@@ -20,9 +18,8 @@
 Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") {
     this->mode = mode;
 
-    auto carModelMat = glm::mat4(1.0F);
-    carModelMat = glm::translate(carModelMat, glm::vec3(0.0F, 0.0F, 0.0F));
-
+    auto carModelMat = Config::IDENTITY_MATRIX;
+    carModelMat = glm::translate(carModelMat, glm::vec3(0.0F, 10.0F, 0.0F));
 
     switch (mode) {
         case Mode::FPS:
@@ -52,37 +49,57 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") 
             camera->setMode(Camera::Mode::DRIVE);
             car = std::make_shared<BumperCar>();
             car->setMode(BumperCar::Mode::NONE);
+            carModelMat = glm::scale(carModelMat, glm::vec3(4.0F));
             car->transform(carModelMat);
+            car->shouldDrawPlayer(false);
+            car->attributes.gravityAffected = false;
+            car->attributes.position = attributes.position;
+            box = car->getBoundingBox();
     }
 }
 
 
 void Player::processKeyboard(const Direction direction, const float /*deltaTime*/) {
-    if (camera->getMode() == Camera::Mode::ORBIT || camera->getMode() == Camera::Mode::PATH) {
+    if (mode == Mode::ORBIT || mode == Mode::PATH || mode == Mode::FIXED) {
         return;
     }
 
-    const auto front = camera->getFront();
-    const auto right = camera->getRight();
+    glm::vec3 front = camera->getFront();
+    glm::vec3 right = camera->getRight();
+
+    if (mode == Mode::DRIVE) {
+        front = glm::normalize(glm::vec3(car->attributes.transform[2]));
+        right = glm::normalize(glm::cross(front, glm::vec3(0.0F, 1.0F, 0.0F)));
+    }
 
     switch (direction) {
         case Direction::FORWARD:
-            attributes.applyForce(front * 10.0F);
+            attributes.applyForce(front * 30.0F);
             break;
         case Direction::BACKWARD:
             attributes.applyForce(-front * 10.0F);
             break;
         case Direction::LEFT:
-            attributes.applyForce(-right * 10.0F);
+            if (mode == Mode::DRIVE) {
+                car->attributes.applyRotation(glm::vec3(0.0F, 0.1F, 0.0F));
+            } else {
+                attributes.applyForce(-right * 10.0F);
+            }
             break;
         case Direction::RIGHT:
-            attributes.applyForce(right * 10.0F);
+            if (mode == Mode::DRIVE) {
+                car->attributes.applyRotation(glm::vec3(0.0F, -0.1F, 0.0F));
+            } else {
+                attributes.applyForce(right * 10.0F);
+            }
             break;
         case Direction::NONE:
             attributes.applyDrag(0.5F);
             break;
         case Direction::UP:
-            if (mode == Mode::FPS) {
+            if (mode == Mode::DRIVE) {
+                nitro();
+            } else if (mode == Mode::FPS) {
                 jump();
             } else {
                 attributes.applyForce(glm::vec3(0.0F, 10.0F, 0.0F));
@@ -118,6 +135,29 @@ void Player::update(const float dt) {
         camera->setRight(glm::normalize(glm::cross(front, glm::vec3(0.0F, 1.0F, 0.0F))));
         camera->setUp(glm::normalize(glm::cross(camera->getRight(), front)));
 
+        return;
+    }
+
+    if (mode == Mode::DRIVE) {
+        car->update(dt);
+        car->attributes.position = attributes.position;
+
+        const auto transform = car->attributes.transform;
+        const auto front = glm::normalize(glm::vec3(transform[2]));
+
+        car->attributes.position += front * 0.5F;
+
+        camera->setPosition(attributes.position + glm::vec3(0.0F, 5.0F, 0.0F));
+
+        return;
+    }
+
+    if (mode == Mode::ORBIT) {
+        camera->circleOrbit(dt);
+        return;
+    }
+
+    if (mode == Mode::FIXED) {
         return;
     }
 
