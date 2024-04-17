@@ -170,32 +170,33 @@ void Camera::updateOrbitPosition() {
 }
 
 void Camera::interface() {
+    bool hasChanged = false;
     ImGui::Begin("Camera Options");
     ImGui::SeparatorText("General");
-    ImGui::SliderFloat("Zoom", &zoom, MINZOOM, MAXZOOM);
-    ImGui::SliderFloat("Sensitivity", &mouseSensitivity, 0.0F, 2.5F);
-    ImGui::SliderFloat("Render Distance", &renderDistance, 1.0F, 1000.0F);
-    ImGui::SliderFloat("Near Plane", &nearPlane, 0.1F, 2.5F);
+    hasChanged |= ImGui::SliderFloat("Zoom", &zoom, MINZOOM, MAXZOOM);
+    hasChanged |= ImGui::SliderFloat("Sensitivity", &mouseSensitivity, 0.0F, 2.5F);
+    hasChanged |= ImGui::SliderFloat("Render Distance", &renderDistance, 1.0F, 1000.0F);
+    hasChanged |= ImGui::SliderFloat("Near Plane", &nearPlane, 0.1F, 2.5F);
 
     if (mode == Mode::ORBIT) {
         ImGui::SeparatorText("Orbit");
-        ImGui::SliderFloat("Orbit Radius", &orbitRadius, 0.0F, 100.0F);
-        ImGui::SliderFloat("Orbit Height", &orbitHeight, 0.0F, 100.0F);
+        hasChanged |= ImGui::SliderFloat("Orbit Radius", &orbitRadius, 0.0F, 100.0F);
+        hasChanged |= ImGui::SliderFloat("Orbit Height", &orbitHeight, 0.0F, 100.0F);
+        hasChanged |= ImGui::SliderFloat("Orbit Speed", &orbitSpeed, 0.0F, 100.0F);
     }
 
     if (mode == Mode::FIXED) {
         ImGui::SeparatorText("Fixed");
-        ImGui::SliderFloat("Distance", &distance, 0.0F, 100.0F);
-
-        // calculate the new position
-        position.x = target.x + distance * cos(glm::radians(yaw));
-        position.z = target.z + distance * sin(glm::radians(yaw));
+        if (ImGui::SliderFloat("Distance", &distance, 0.0F, 100.0F)) {
+            position.x = target.x + distance * std::cos(glm::radians(yaw));
+            position.z = target.z + distance * std::sin(glm::radians(yaw));
+        }
     }
-
-    // check for changes
-    updateCameraVectors();
-
     ImGui::End();
+
+    if (hasChanged) {
+        updateCameraVectors();
+    }
 }
 
 void Camera::setAspect(const float aspect) { this->aspect = aspect; }
