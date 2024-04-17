@@ -994,8 +994,8 @@ CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/os/availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/span.h \
@@ -1026,7 +1026,7 @@ CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_unary_function.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/unary_negate.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Shader.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/filesystem \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
@@ -1077,6 +1077,7 @@ CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
   /opt/homebrew/include/glm/ext/vector_float4.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/FrameBuffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/FrameBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/shapes/Plane.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/shapes/Plane.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables//Renderable.h

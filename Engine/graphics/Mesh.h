@@ -12,9 +12,9 @@
 
 #include "graphics/Texture.h"
 #include "utils/BoundingBox.h"
-#include "utils/Buffer.h"
-#include "utils/Shader.h"
-#include "utils/Vertex.h"
+#include "graphics/buffers/Buffer.h"
+#include "graphics/Shader.h"
+#include "graphics/Vertex.h"
 
 class Mesh {
 public:

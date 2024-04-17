@@ -883,8 +883,8 @@ CMakeFiles/CW.dir/Engine/physics/Spline.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_binary_function.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_unary_function.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/unary_negate.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/GL/glew.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/glu.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
@@ -894,7 +894,7 @@ CMakeFiles/CW.dir/Engine/physics/Spline.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/type_vec2.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_vec2.inl \
   /opt/homebrew/include/glm/ext/../detail/./compute_vector_relational.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Shader.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/filesystem \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
@@ -917,7 +917,7 @@ CMakeFiles/CW.dir/Engine/physics/Spline.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h \
   /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat4x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \

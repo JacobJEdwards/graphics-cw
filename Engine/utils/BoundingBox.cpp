@@ -5,8 +5,8 @@
 #include "BoundingBox.h"
 
 #include "Config.h"
-#include "Buffer.h"
-#include "Shader.h"
+#include "graphics/buffers/Buffer.h"
+#include "graphics/Shader.h"
 #include "helpers/AssimpGLMHelpers.h"
 #include <algorithm>
 #include <assimp/vector3.h>
@@ -21,7 +21,7 @@
 #include <GL/glew.h>
 #include <memory>
 
-#include "utils/Vertex.h"
+#include "graphics/Vertex.h"
 #include "utils/ShaderManager.h"
 #include "App.h"
 

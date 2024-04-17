@@ -14,15 +14,15 @@ include_directories(external Engine)
 
 # Add executable
 add_executable(CW main.cpp
-        Engine/utils/Shader.cpp
+        Engine/graphics/Shader.cpp
         Engine/graphics/Texture.cpp
         Engine/utils/Camera.cpp
-        Engine/utils/Vertex.cpp
+        Engine/graphics/Vertex.cpp
         Engine/graphics/Mesh.cpp
         Engine/graphics/Model.cpp
         Engine/helpers/AssimpGLMHelpers.cpp
-        Engine/utils/Objects/Skybox.cpp
-        Engine/utils/Objects/Sun.cpp
+        Engine/renderables/objects/Skybox.cpp
+        Engine/renderables/objects/Sun.cpp
         external/imgui/imgui.cpp
         external/imgui/imgui_widgets.cpp
         external/imgui/imgui_demo.cpp
@@ -33,32 +33,36 @@ add_executable(CW main.cpp
         Engine/App.cpp
         Engine/View.cpp
         Engine/graphics/Color.cpp
-        Engine/utils/Buffer.cpp
+        Engine/graphics/buffers/Buffer.cpp
         Engine/utils/BoundingBox.cpp
         Engine/physics/ModelAttributes.cpp
         Engine/physics/Gravity.cpp
         Engine/physics/Collisions.cpp
         Engine/utils/PlayerManager.cpp
-        Engine/utils/Objects/Player.cpp
+        Engine/renderables/objects/Player.cpp
         Engine/graphics/PostProcessor.cpp
         Engine/utils/ShaderManager.cpp
-        Engine/graphics/DepthBuffer.cpp
-        Engine/graphics/ShadowBuffer.cpp
-        Engine/graphics/Renderable.cpp
-        Engine/graphics/FrameBuffer.cpp
+        Engine/graphics/buffers/DepthBuffer.cpp
+        Engine/graphics/buffers/ShadowBuffer.cpp
+        Engine/renderables/Renderable.cpp
+        Engine/graphics/buffers/FrameBuffer.cpp
         Engine/physics/Spline.cpp
-        Engine/Entity.cpp
-        Engine/ImmovableObject.cpp
-        Engine/graphics/Particle.cpp
-        Engine/utils/Objects/ProceduralTerrain.cpp
-        Engine/utils/Objects/ProceduralTerrain.h
+        Engine/renderables/Entity.cpp
+        Engine/renderables/ImmovableObject.cpp
+        Engine/renderables/Particle.cpp
+        Engine/renderables/objects/ProceduralTerrain.cpp
+        Engine/renderables/objects/ProceduralTerrain.h
         Engine/utils/Noise.cpp
-        Engine/utils/Objects/BumperCar.h
-        Engine/utils/Objects/BumperCar.cpp
+        Engine/renderables/objects/BumperCar.h
+        Engine/renderables/objects/BumperCar.cpp
         Engine/utils/Random.cpp
         Engine/utils/Random.h
-        Engine/utils/UniformBuffer.cpp
-        Engine/utils/UniformBuffer.h
+        Engine/graphics/buffers/UniformBuffer.cpp
+        Engine/graphics/buffers/UniformBuffer.h
+        Engine/renderables/shapes/Plane.cpp
+        Engine/renderables/shapes/Plane.cpp
+        Engine/renderables/objects/InfinitePlane.h
+        Engine/utils/Singleton.h
 )
 
 # Link libraries

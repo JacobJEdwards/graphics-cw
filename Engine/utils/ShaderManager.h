@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-#include "utils/Shader.h"
+#include "graphics/Shader.h"
 
 #include <memory>
 #include <unordered_map>
@@ -20,7 +20,7 @@ public:
 
     static auto Get(GLuint id) -> std::shared_ptr<Shader>;
 
-    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader>>;
+    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader> >;
 
     static void Remove(const std::string &name);
 
@@ -33,7 +33,7 @@ public:
 private:
     ShaderManager() = default;
 
-    static std::unordered_map<std::string, std::shared_ptr<Shader>> Shaders;
+    static std::unordered_map<std::string, std::shared_ptr<Shader> > Shaders;
 };
 
 #endif

@@ -1,9 +1,9 @@
 #include "Collisions.h"
-#include "Entity.h"
+#include "renderables/Entity.h"
 #include "physics/Constants.h"
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
-#include "utils/Objects/ProceduralTerrain.h"
+#include "renderables/objects/ProceduralTerrain.h"
 #include <glm/geometric.hpp>
 
 namespace {

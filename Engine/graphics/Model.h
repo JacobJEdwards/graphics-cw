@@ -21,8 +21,8 @@
 #include "graphics/Texture.h"
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
-#include "utils/Shader.h"
-#include "graphics/Renderable.h"
+#include "graphics/Shader.h"
+#include "renderables/Renderable.h"
 
 class Model final : public Renderable {
 public:

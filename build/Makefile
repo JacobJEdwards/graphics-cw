@@ -153,54 +153,6 @@ Engine/App.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/App.cpp.s
 .PHONY : Engine/App.cpp.s
 
-Engine/Entity.o: Engine/Entity.cpp.o
-.PHONY : Engine/Entity.o
-
-# target to build an object file
-Engine/Entity.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/Entity.cpp.o
-.PHONY : Engine/Entity.cpp.o
-
-Engine/Entity.i: Engine/Entity.cpp.i
-.PHONY : Engine/Entity.i
-
-# target to preprocess a source file
-Engine/Entity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/Entity.cpp.i
-.PHONY : Engine/Entity.cpp.i
-
-Engine/Entity.s: Engine/Entity.cpp.s
-.PHONY : Engine/Entity.s
-
-# target to generate assembly for a file
-Engine/Entity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/Entity.cpp.s
-.PHONY : Engine/Entity.cpp.s
-
-Engine/ImmovableObject.o: Engine/ImmovableObject.cpp.o
-.PHONY : Engine/ImmovableObject.o
-
-# target to build an object file
-Engine/ImmovableObject.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/ImmovableObject.cpp.o
-.PHONY : Engine/ImmovableObject.cpp.o
-
-Engine/ImmovableObject.i: Engine/ImmovableObject.cpp.i
-.PHONY : Engine/ImmovableObject.i
-
-# target to preprocess a source file
-Engine/ImmovableObject.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/ImmovableObject.cpp.i
-.PHONY : Engine/ImmovableObject.cpp.i
-
-Engine/ImmovableObject.s: Engine/ImmovableObject.cpp.s
-.PHONY : Engine/ImmovableObject.s
-
-# target to generate assembly for a file
-Engine/ImmovableObject.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/ImmovableObject.cpp.s
-.PHONY : Engine/ImmovableObject.cpp.s
-
 Engine/View.o: Engine/View.cpp.o
 .PHONY : Engine/View.o
 
@@ -248,54 +200,6 @@ Engine/graphics/Color.s: Engine/graphics/Color.cpp.s
 Engine/graphics/Color.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s
 .PHONY : Engine/graphics/Color.cpp.s
-
-Engine/graphics/DepthBuffer.o: Engine/graphics/DepthBuffer.cpp.o
-.PHONY : Engine/graphics/DepthBuffer.o
-
-# target to build an object file
-Engine/graphics/DepthBuffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.o
-.PHONY : Engine/graphics/DepthBuffer.cpp.o
-
-Engine/graphics/DepthBuffer.i: Engine/graphics/DepthBuffer.cpp.i
-.PHONY : Engine/graphics/DepthBuffer.i
-
-# target to preprocess a source file
-Engine/graphics/DepthBuffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.i
-.PHONY : Engine/graphics/DepthBuffer.cpp.i
-
-Engine/graphics/DepthBuffer.s: Engine/graphics/DepthBuffer.cpp.s
-.PHONY : Engine/graphics/DepthBuffer.s
-
-# target to generate assembly for a file
-Engine/graphics/DepthBuffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/DepthBuffer.cpp.s
-.PHONY : Engine/graphics/DepthBuffer.cpp.s
-
-Engine/graphics/FrameBuffer.o: Engine/graphics/FrameBuffer.cpp.o
-.PHONY : Engine/graphics/FrameBuffer.o
-
-# target to build an object file
-Engine/graphics/FrameBuffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/FrameBuffer.cpp.o
-.PHONY : Engine/graphics/FrameBuffer.cpp.o
-
-Engine/graphics/FrameBuffer.i: Engine/graphics/FrameBuffer.cpp.i
-.PHONY : Engine/graphics/FrameBuffer.i
-
-# target to preprocess a source file
-Engine/graphics/FrameBuffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/FrameBuffer.cpp.i
-.PHONY : Engine/graphics/FrameBuffer.cpp.i
-
-Engine/graphics/FrameBuffer.s: Engine/graphics/FrameBuffer.cpp.s
-.PHONY : Engine/graphics/FrameBuffer.s
-
-# target to generate assembly for a file
-Engine/graphics/FrameBuffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/FrameBuffer.cpp.s
-.PHONY : Engine/graphics/FrameBuffer.cpp.s
 
 Engine/graphics/Mesh.o: Engine/graphics/Mesh.cpp.o
 .PHONY : Engine/graphics/Mesh.o
@@ -345,30 +249,6 @@ Engine/graphics/Model.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Model.cpp.s
 .PHONY : Engine/graphics/Model.cpp.s
 
-Engine/graphics/Particle.o: Engine/graphics/Particle.cpp.o
-.PHONY : Engine/graphics/Particle.o
-
-# target to build an object file
-Engine/graphics/Particle.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.o
-.PHONY : Engine/graphics/Particle.cpp.o
-
-Engine/graphics/Particle.i: Engine/graphics/Particle.cpp.i
-.PHONY : Engine/graphics/Particle.i
-
-# target to preprocess a source file
-Engine/graphics/Particle.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.i
-.PHONY : Engine/graphics/Particle.cpp.i
-
-Engine/graphics/Particle.s: Engine/graphics/Particle.cpp.s
-.PHONY : Engine/graphics/Particle.s
-
-# target to generate assembly for a file
-Engine/graphics/Particle.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Particle.cpp.s
-.PHONY : Engine/graphics/Particle.cpp.s
-
 Engine/graphics/PostProcessor.o: Engine/graphics/PostProcessor.cpp.o
 .PHONY : Engine/graphics/PostProcessor.o
 
@@ -393,53 +273,29 @@ Engine/graphics/PostProcessor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/PostProcessor.cpp.s
 .PHONY : Engine/graphics/PostProcessor.cpp.s
 
-Engine/graphics/Renderable.o: Engine/graphics/Renderable.cpp.o
-.PHONY : Engine/graphics/Renderable.o
+Engine/graphics/Shader.o: Engine/graphics/Shader.cpp.o
+.PHONY : Engine/graphics/Shader.o
 
 # target to build an object file
-Engine/graphics/Renderable.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.o
-.PHONY : Engine/graphics/Renderable.cpp.o
+Engine/graphics/Shader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Shader.cpp.o
+.PHONY : Engine/graphics/Shader.cpp.o
 
-Engine/graphics/Renderable.i: Engine/graphics/Renderable.cpp.i
-.PHONY : Engine/graphics/Renderable.i
-
-# target to preprocess a source file
-Engine/graphics/Renderable.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.i
-.PHONY : Engine/graphics/Renderable.cpp.i
-
-Engine/graphics/Renderable.s: Engine/graphics/Renderable.cpp.s
-.PHONY : Engine/graphics/Renderable.s
-
-# target to generate assembly for a file
-Engine/graphics/Renderable.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Renderable.cpp.s
-.PHONY : Engine/graphics/Renderable.cpp.s
-
-Engine/graphics/ShadowBuffer.o: Engine/graphics/ShadowBuffer.cpp.o
-.PHONY : Engine/graphics/ShadowBuffer.o
-
-# target to build an object file
-Engine/graphics/ShadowBuffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.o
-.PHONY : Engine/graphics/ShadowBuffer.cpp.o
-
-Engine/graphics/ShadowBuffer.i: Engine/graphics/ShadowBuffer.cpp.i
-.PHONY : Engine/graphics/ShadowBuffer.i
+Engine/graphics/Shader.i: Engine/graphics/Shader.cpp.i
+.PHONY : Engine/graphics/Shader.i
 
 # target to preprocess a source file
-Engine/graphics/ShadowBuffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.i
-.PHONY : Engine/graphics/ShadowBuffer.cpp.i
+Engine/graphics/Shader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Shader.cpp.i
+.PHONY : Engine/graphics/Shader.cpp.i
 
-Engine/graphics/ShadowBuffer.s: Engine/graphics/ShadowBuffer.cpp.s
-.PHONY : Engine/graphics/ShadowBuffer.s
+Engine/graphics/Shader.s: Engine/graphics/Shader.cpp.s
+.PHONY : Engine/graphics/Shader.s
 
 # target to generate assembly for a file
-Engine/graphics/ShadowBuffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/ShadowBuffer.cpp.s
-.PHONY : Engine/graphics/ShadowBuffer.cpp.s
+Engine/graphics/Shader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Shader.cpp.s
+.PHONY : Engine/graphics/Shader.cpp.s
 
 Engine/graphics/Texture.o: Engine/graphics/Texture.cpp.o
 .PHONY : Engine/graphics/Texture.o
@@ -464,6 +320,150 @@ Engine/graphics/Texture.s: Engine/graphics/Texture.cpp.s
 Engine/graphics/Texture.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Texture.cpp.s
 .PHONY : Engine/graphics/Texture.cpp.s
+
+Engine/graphics/Vertex.o: Engine/graphics/Vertex.cpp.o
+.PHONY : Engine/graphics/Vertex.o
+
+# target to build an object file
+Engine/graphics/Vertex.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Vertex.cpp.o
+.PHONY : Engine/graphics/Vertex.cpp.o
+
+Engine/graphics/Vertex.i: Engine/graphics/Vertex.cpp.i
+.PHONY : Engine/graphics/Vertex.i
+
+# target to preprocess a source file
+Engine/graphics/Vertex.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Vertex.cpp.i
+.PHONY : Engine/graphics/Vertex.cpp.i
+
+Engine/graphics/Vertex.s: Engine/graphics/Vertex.cpp.s
+.PHONY : Engine/graphics/Vertex.s
+
+# target to generate assembly for a file
+Engine/graphics/Vertex.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Vertex.cpp.s
+.PHONY : Engine/graphics/Vertex.cpp.s
+
+Engine/graphics/buffers/Buffer.o: Engine/graphics/buffers/Buffer.cpp.o
+.PHONY : Engine/graphics/buffers/Buffer.o
+
+# target to build an object file
+Engine/graphics/buffers/Buffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o
+.PHONY : Engine/graphics/buffers/Buffer.cpp.o
+
+Engine/graphics/buffers/Buffer.i: Engine/graphics/buffers/Buffer.cpp.i
+.PHONY : Engine/graphics/buffers/Buffer.i
+
+# target to preprocess a source file
+Engine/graphics/buffers/Buffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.i
+.PHONY : Engine/graphics/buffers/Buffer.cpp.i
+
+Engine/graphics/buffers/Buffer.s: Engine/graphics/buffers/Buffer.cpp.s
+.PHONY : Engine/graphics/buffers/Buffer.s
+
+# target to generate assembly for a file
+Engine/graphics/buffers/Buffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.s
+.PHONY : Engine/graphics/buffers/Buffer.cpp.s
+
+Engine/graphics/buffers/DepthBuffer.o: Engine/graphics/buffers/DepthBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/DepthBuffer.o
+
+# target to build an object file
+Engine/graphics/buffers/DepthBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/DepthBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/DepthBuffer.cpp.o
+
+Engine/graphics/buffers/DepthBuffer.i: Engine/graphics/buffers/DepthBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/DepthBuffer.i
+
+# target to preprocess a source file
+Engine/graphics/buffers/DepthBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/DepthBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/DepthBuffer.cpp.i
+
+Engine/graphics/buffers/DepthBuffer.s: Engine/graphics/buffers/DepthBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/DepthBuffer.s
+
+# target to generate assembly for a file
+Engine/graphics/buffers/DepthBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/DepthBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/DepthBuffer.cpp.s
+
+Engine/graphics/buffers/FrameBuffer.o: Engine/graphics/buffers/FrameBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/FrameBuffer.o
+
+# target to build an object file
+Engine/graphics/buffers/FrameBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/FrameBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/FrameBuffer.cpp.o
+
+Engine/graphics/buffers/FrameBuffer.i: Engine/graphics/buffers/FrameBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/FrameBuffer.i
+
+# target to preprocess a source file
+Engine/graphics/buffers/FrameBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/FrameBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/FrameBuffer.cpp.i
+
+Engine/graphics/buffers/FrameBuffer.s: Engine/graphics/buffers/FrameBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/FrameBuffer.s
+
+# target to generate assembly for a file
+Engine/graphics/buffers/FrameBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/FrameBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/FrameBuffer.cpp.s
+
+Engine/graphics/buffers/ShadowBuffer.o: Engine/graphics/buffers/ShadowBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/ShadowBuffer.o
+
+# target to build an object file
+Engine/graphics/buffers/ShadowBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/ShadowBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/ShadowBuffer.cpp.o
+
+Engine/graphics/buffers/ShadowBuffer.i: Engine/graphics/buffers/ShadowBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/ShadowBuffer.i
+
+# target to preprocess a source file
+Engine/graphics/buffers/ShadowBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/ShadowBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/ShadowBuffer.cpp.i
+
+Engine/graphics/buffers/ShadowBuffer.s: Engine/graphics/buffers/ShadowBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/ShadowBuffer.s
+
+# target to generate assembly for a file
+Engine/graphics/buffers/ShadowBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/ShadowBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/ShadowBuffer.cpp.s
+
+Engine/graphics/buffers/UniformBuffer.o: Engine/graphics/buffers/UniformBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/UniformBuffer.o
+
+# target to build an object file
+Engine/graphics/buffers/UniformBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/UniformBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/UniformBuffer.cpp.o
+
+Engine/graphics/buffers/UniformBuffer.i: Engine/graphics/buffers/UniformBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/UniformBuffer.i
+
+# target to preprocess a source file
+Engine/graphics/buffers/UniformBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/UniformBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/UniformBuffer.cpp.i
+
+Engine/graphics/buffers/UniformBuffer.s: Engine/graphics/buffers/UniformBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/UniformBuffer.s
+
+# target to generate assembly for a file
+Engine/graphics/buffers/UniformBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/UniformBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/UniformBuffer.cpp.s
 
 Engine/helpers/AssimpGLMHelpers.o: Engine/helpers/AssimpGLMHelpers.cpp.o
 .PHONY : Engine/helpers/AssimpGLMHelpers.o
@@ -585,6 +585,246 @@ Engine/physics/Spline.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/physics/Spline.cpp.s
 .PHONY : Engine/physics/Spline.cpp.s
 
+Engine/renderables/Entity.o: Engine/renderables/Entity.cpp.o
+.PHONY : Engine/renderables/Entity.o
+
+# target to build an object file
+Engine/renderables/Entity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Entity.cpp.o
+.PHONY : Engine/renderables/Entity.cpp.o
+
+Engine/renderables/Entity.i: Engine/renderables/Entity.cpp.i
+.PHONY : Engine/renderables/Entity.i
+
+# target to preprocess a source file
+Engine/renderables/Entity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Entity.cpp.i
+.PHONY : Engine/renderables/Entity.cpp.i
+
+Engine/renderables/Entity.s: Engine/renderables/Entity.cpp.s
+.PHONY : Engine/renderables/Entity.s
+
+# target to generate assembly for a file
+Engine/renderables/Entity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Entity.cpp.s
+.PHONY : Engine/renderables/Entity.cpp.s
+
+Engine/renderables/ImmovableObject.o: Engine/renderables/ImmovableObject.cpp.o
+.PHONY : Engine/renderables/ImmovableObject.o
+
+# target to build an object file
+Engine/renderables/ImmovableObject.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/ImmovableObject.cpp.o
+.PHONY : Engine/renderables/ImmovableObject.cpp.o
+
+Engine/renderables/ImmovableObject.i: Engine/renderables/ImmovableObject.cpp.i
+.PHONY : Engine/renderables/ImmovableObject.i
+
+# target to preprocess a source file
+Engine/renderables/ImmovableObject.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/ImmovableObject.cpp.i
+.PHONY : Engine/renderables/ImmovableObject.cpp.i
+
+Engine/renderables/ImmovableObject.s: Engine/renderables/ImmovableObject.cpp.s
+.PHONY : Engine/renderables/ImmovableObject.s
+
+# target to generate assembly for a file
+Engine/renderables/ImmovableObject.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/ImmovableObject.cpp.s
+.PHONY : Engine/renderables/ImmovableObject.cpp.s
+
+Engine/renderables/Particle.o: Engine/renderables/Particle.cpp.o
+.PHONY : Engine/renderables/Particle.o
+
+# target to build an object file
+Engine/renderables/Particle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Particle.cpp.o
+.PHONY : Engine/renderables/Particle.cpp.o
+
+Engine/renderables/Particle.i: Engine/renderables/Particle.cpp.i
+.PHONY : Engine/renderables/Particle.i
+
+# target to preprocess a source file
+Engine/renderables/Particle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Particle.cpp.i
+.PHONY : Engine/renderables/Particle.cpp.i
+
+Engine/renderables/Particle.s: Engine/renderables/Particle.cpp.s
+.PHONY : Engine/renderables/Particle.s
+
+# target to generate assembly for a file
+Engine/renderables/Particle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Particle.cpp.s
+.PHONY : Engine/renderables/Particle.cpp.s
+
+Engine/renderables/Renderable.o: Engine/renderables/Renderable.cpp.o
+.PHONY : Engine/renderables/Renderable.o
+
+# target to build an object file
+Engine/renderables/Renderable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Renderable.cpp.o
+.PHONY : Engine/renderables/Renderable.cpp.o
+
+Engine/renderables/Renderable.i: Engine/renderables/Renderable.cpp.i
+.PHONY : Engine/renderables/Renderable.i
+
+# target to preprocess a source file
+Engine/renderables/Renderable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Renderable.cpp.i
+.PHONY : Engine/renderables/Renderable.cpp.i
+
+Engine/renderables/Renderable.s: Engine/renderables/Renderable.cpp.s
+.PHONY : Engine/renderables/Renderable.s
+
+# target to generate assembly for a file
+Engine/renderables/Renderable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Renderable.cpp.s
+.PHONY : Engine/renderables/Renderable.cpp.s
+
+Engine/renderables/objects/BumperCar.o: Engine/renderables/objects/BumperCar.cpp.o
+.PHONY : Engine/renderables/objects/BumperCar.o
+
+# target to build an object file
+Engine/renderables/objects/BumperCar.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o
+.PHONY : Engine/renderables/objects/BumperCar.cpp.o
+
+Engine/renderables/objects/BumperCar.i: Engine/renderables/objects/BumperCar.cpp.i
+.PHONY : Engine/renderables/objects/BumperCar.i
+
+# target to preprocess a source file
+Engine/renderables/objects/BumperCar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.i
+.PHONY : Engine/renderables/objects/BumperCar.cpp.i
+
+Engine/renderables/objects/BumperCar.s: Engine/renderables/objects/BumperCar.cpp.s
+.PHONY : Engine/renderables/objects/BumperCar.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/BumperCar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.s
+.PHONY : Engine/renderables/objects/BumperCar.cpp.s
+
+Engine/renderables/objects/Player.o: Engine/renderables/objects/Player.cpp.o
+.PHONY : Engine/renderables/objects/Player.o
+
+# target to build an object file
+Engine/renderables/objects/Player.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o
+.PHONY : Engine/renderables/objects/Player.cpp.o
+
+Engine/renderables/objects/Player.i: Engine/renderables/objects/Player.cpp.i
+.PHONY : Engine/renderables/objects/Player.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.i
+.PHONY : Engine/renderables/objects/Player.cpp.i
+
+Engine/renderables/objects/Player.s: Engine/renderables/objects/Player.cpp.s
+.PHONY : Engine/renderables/objects/Player.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.s
+.PHONY : Engine/renderables/objects/Player.cpp.s
+
+Engine/renderables/objects/ProceduralTerrain.o: Engine/renderables/objects/ProceduralTerrain.cpp.o
+.PHONY : Engine/renderables/objects/ProceduralTerrain.o
+
+# target to build an object file
+Engine/renderables/objects/ProceduralTerrain.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.o
+.PHONY : Engine/renderables/objects/ProceduralTerrain.cpp.o
+
+Engine/renderables/objects/ProceduralTerrain.i: Engine/renderables/objects/ProceduralTerrain.cpp.i
+.PHONY : Engine/renderables/objects/ProceduralTerrain.i
+
+# target to preprocess a source file
+Engine/renderables/objects/ProceduralTerrain.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.i
+.PHONY : Engine/renderables/objects/ProceduralTerrain.cpp.i
+
+Engine/renderables/objects/ProceduralTerrain.s: Engine/renderables/objects/ProceduralTerrain.cpp.s
+.PHONY : Engine/renderables/objects/ProceduralTerrain.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/ProceduralTerrain.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.s
+.PHONY : Engine/renderables/objects/ProceduralTerrain.cpp.s
+
+Engine/renderables/objects/Skybox.o: Engine/renderables/objects/Skybox.cpp.o
+.PHONY : Engine/renderables/objects/Skybox.o
+
+# target to build an object file
+Engine/renderables/objects/Skybox.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.o
+.PHONY : Engine/renderables/objects/Skybox.cpp.o
+
+Engine/renderables/objects/Skybox.i: Engine/renderables/objects/Skybox.cpp.i
+.PHONY : Engine/renderables/objects/Skybox.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Skybox.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.i
+.PHONY : Engine/renderables/objects/Skybox.cpp.i
+
+Engine/renderables/objects/Skybox.s: Engine/renderables/objects/Skybox.cpp.s
+.PHONY : Engine/renderables/objects/Skybox.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Skybox.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.s
+.PHONY : Engine/renderables/objects/Skybox.cpp.s
+
+Engine/renderables/objects/Sun.o: Engine/renderables/objects/Sun.cpp.o
+.PHONY : Engine/renderables/objects/Sun.o
+
+# target to build an object file
+Engine/renderables/objects/Sun.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.o
+.PHONY : Engine/renderables/objects/Sun.cpp.o
+
+Engine/renderables/objects/Sun.i: Engine/renderables/objects/Sun.cpp.i
+.PHONY : Engine/renderables/objects/Sun.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Sun.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.i
+.PHONY : Engine/renderables/objects/Sun.cpp.i
+
+Engine/renderables/objects/Sun.s: Engine/renderables/objects/Sun.cpp.s
+.PHONY : Engine/renderables/objects/Sun.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Sun.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.s
+.PHONY : Engine/renderables/objects/Sun.cpp.s
+
+Engine/renderables/shapes/Plane.o: Engine/renderables/shapes/Plane.cpp.o
+.PHONY : Engine/renderables/shapes/Plane.o
+
+# target to build an object file
+Engine/renderables/shapes/Plane.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/shapes/Plane.cpp.o
+.PHONY : Engine/renderables/shapes/Plane.cpp.o
+
+Engine/renderables/shapes/Plane.i: Engine/renderables/shapes/Plane.cpp.i
+.PHONY : Engine/renderables/shapes/Plane.i
+
+# target to preprocess a source file
+Engine/renderables/shapes/Plane.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/shapes/Plane.cpp.i
+.PHONY : Engine/renderables/shapes/Plane.cpp.i
+
+Engine/renderables/shapes/Plane.s: Engine/renderables/shapes/Plane.cpp.s
+.PHONY : Engine/renderables/shapes/Plane.s
+
+# target to generate assembly for a file
+Engine/renderables/shapes/Plane.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/shapes/Plane.cpp.s
+.PHONY : Engine/renderables/shapes/Plane.cpp.s
+
 Engine/utils/BoundingBox.o: Engine/utils/BoundingBox.cpp.o
 .PHONY : Engine/utils/BoundingBox.o
 
@@ -608,30 +848,6 @@ Engine/utils/BoundingBox.s: Engine/utils/BoundingBox.cpp.s
 Engine/utils/BoundingBox.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.s
 .PHONY : Engine/utils/BoundingBox.cpp.s
-
-Engine/utils/Buffer.o: Engine/utils/Buffer.cpp.o
-.PHONY : Engine/utils/Buffer.o
-
-# target to build an object file
-Engine/utils/Buffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.o
-.PHONY : Engine/utils/Buffer.cpp.o
-
-Engine/utils/Buffer.i: Engine/utils/Buffer.cpp.i
-.PHONY : Engine/utils/Buffer.i
-
-# target to preprocess a source file
-Engine/utils/Buffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.i
-.PHONY : Engine/utils/Buffer.cpp.i
-
-Engine/utils/Buffer.s: Engine/utils/Buffer.cpp.s
-.PHONY : Engine/utils/Buffer.s
-
-# target to generate assembly for a file
-Engine/utils/Buffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Buffer.cpp.s
-.PHONY : Engine/utils/Buffer.cpp.s
 
 Engine/utils/Camera.o: Engine/utils/Camera.cpp.o
 .PHONY : Engine/utils/Camera.o
@@ -681,126 +897,6 @@ Engine/utils/Noise.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Noise.cpp.s
 .PHONY : Engine/utils/Noise.cpp.s
 
-Engine/utils/Objects/BumperCar.o: Engine/utils/Objects/BumperCar.cpp.o
-.PHONY : Engine/utils/Objects/BumperCar.o
-
-# target to build an object file
-Engine/utils/Objects/BumperCar.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.o
-.PHONY : Engine/utils/Objects/BumperCar.cpp.o
-
-Engine/utils/Objects/BumperCar.i: Engine/utils/Objects/BumperCar.cpp.i
-.PHONY : Engine/utils/Objects/BumperCar.i
-
-# target to preprocess a source file
-Engine/utils/Objects/BumperCar.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.i
-.PHONY : Engine/utils/Objects/BumperCar.cpp.i
-
-Engine/utils/Objects/BumperCar.s: Engine/utils/Objects/BumperCar.cpp.s
-.PHONY : Engine/utils/Objects/BumperCar.s
-
-# target to generate assembly for a file
-Engine/utils/Objects/BumperCar.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/BumperCar.cpp.s
-.PHONY : Engine/utils/Objects/BumperCar.cpp.s
-
-Engine/utils/Objects/Player.o: Engine/utils/Objects/Player.cpp.o
-.PHONY : Engine/utils/Objects/Player.o
-
-# target to build an object file
-Engine/utils/Objects/Player.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.o
-.PHONY : Engine/utils/Objects/Player.cpp.o
-
-Engine/utils/Objects/Player.i: Engine/utils/Objects/Player.cpp.i
-.PHONY : Engine/utils/Objects/Player.i
-
-# target to preprocess a source file
-Engine/utils/Objects/Player.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.i
-.PHONY : Engine/utils/Objects/Player.cpp.i
-
-Engine/utils/Objects/Player.s: Engine/utils/Objects/Player.cpp.s
-.PHONY : Engine/utils/Objects/Player.s
-
-# target to generate assembly for a file
-Engine/utils/Objects/Player.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Player.cpp.s
-.PHONY : Engine/utils/Objects/Player.cpp.s
-
-Engine/utils/Objects/ProceduralTerrain.o: Engine/utils/Objects/ProceduralTerrain.cpp.o
-.PHONY : Engine/utils/Objects/ProceduralTerrain.o
-
-# target to build an object file
-Engine/utils/Objects/ProceduralTerrain.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/ProceduralTerrain.cpp.o
-.PHONY : Engine/utils/Objects/ProceduralTerrain.cpp.o
-
-Engine/utils/Objects/ProceduralTerrain.i: Engine/utils/Objects/ProceduralTerrain.cpp.i
-.PHONY : Engine/utils/Objects/ProceduralTerrain.i
-
-# target to preprocess a source file
-Engine/utils/Objects/ProceduralTerrain.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/ProceduralTerrain.cpp.i
-.PHONY : Engine/utils/Objects/ProceduralTerrain.cpp.i
-
-Engine/utils/Objects/ProceduralTerrain.s: Engine/utils/Objects/ProceduralTerrain.cpp.s
-.PHONY : Engine/utils/Objects/ProceduralTerrain.s
-
-# target to generate assembly for a file
-Engine/utils/Objects/ProceduralTerrain.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/ProceduralTerrain.cpp.s
-.PHONY : Engine/utils/Objects/ProceduralTerrain.cpp.s
-
-Engine/utils/Objects/Skybox.o: Engine/utils/Objects/Skybox.cpp.o
-.PHONY : Engine/utils/Objects/Skybox.o
-
-# target to build an object file
-Engine/utils/Objects/Skybox.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.o
-.PHONY : Engine/utils/Objects/Skybox.cpp.o
-
-Engine/utils/Objects/Skybox.i: Engine/utils/Objects/Skybox.cpp.i
-.PHONY : Engine/utils/Objects/Skybox.i
-
-# target to preprocess a source file
-Engine/utils/Objects/Skybox.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.i
-.PHONY : Engine/utils/Objects/Skybox.cpp.i
-
-Engine/utils/Objects/Skybox.s: Engine/utils/Objects/Skybox.cpp.s
-.PHONY : Engine/utils/Objects/Skybox.s
-
-# target to generate assembly for a file
-Engine/utils/Objects/Skybox.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Skybox.cpp.s
-.PHONY : Engine/utils/Objects/Skybox.cpp.s
-
-Engine/utils/Objects/Sun.o: Engine/utils/Objects/Sun.cpp.o
-.PHONY : Engine/utils/Objects/Sun.o
-
-# target to build an object file
-Engine/utils/Objects/Sun.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.o
-.PHONY : Engine/utils/Objects/Sun.cpp.o
-
-Engine/utils/Objects/Sun.i: Engine/utils/Objects/Sun.cpp.i
-.PHONY : Engine/utils/Objects/Sun.i
-
-# target to preprocess a source file
-Engine/utils/Objects/Sun.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.i
-.PHONY : Engine/utils/Objects/Sun.cpp.i
-
-Engine/utils/Objects/Sun.s: Engine/utils/Objects/Sun.cpp.s
-.PHONY : Engine/utils/Objects/Sun.s
-
-# target to generate assembly for a file
-Engine/utils/Objects/Sun.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Objects/Sun.cpp.s
-.PHONY : Engine/utils/Objects/Sun.cpp.s
-
 Engine/utils/PlayerManager.o: Engine/utils/PlayerManager.cpp.o
 .PHONY : Engine/utils/PlayerManager.o
 
@@ -849,30 +945,6 @@ Engine/utils/Random.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Random.cpp.s
 .PHONY : Engine/utils/Random.cpp.s
 
-Engine/utils/Shader.o: Engine/utils/Shader.cpp.o
-.PHONY : Engine/utils/Shader.o
-
-# target to build an object file
-Engine/utils/Shader.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Shader.cpp.o
-.PHONY : Engine/utils/Shader.cpp.o
-
-Engine/utils/Shader.i: Engine/utils/Shader.cpp.i
-.PHONY : Engine/utils/Shader.i
-
-# target to preprocess a source file
-Engine/utils/Shader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Shader.cpp.i
-.PHONY : Engine/utils/Shader.cpp.i
-
-Engine/utils/Shader.s: Engine/utils/Shader.cpp.s
-.PHONY : Engine/utils/Shader.s
-
-# target to generate assembly for a file
-Engine/utils/Shader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Shader.cpp.s
-.PHONY : Engine/utils/Shader.cpp.s
-
 Engine/utils/ShaderManager.o: Engine/utils/ShaderManager.cpp.o
 .PHONY : Engine/utils/ShaderManager.o
 
@@ -896,54 +968,6 @@ Engine/utils/ShaderManager.s: Engine/utils/ShaderManager.cpp.s
 Engine/utils/ShaderManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.s
 .PHONY : Engine/utils/ShaderManager.cpp.s
-
-Engine/utils/UniformBuffer.o: Engine/utils/UniformBuffer.cpp.o
-.PHONY : Engine/utils/UniformBuffer.o
-
-# target to build an object file
-Engine/utils/UniformBuffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.o
-.PHONY : Engine/utils/UniformBuffer.cpp.o
-
-Engine/utils/UniformBuffer.i: Engine/utils/UniformBuffer.cpp.i
-.PHONY : Engine/utils/UniformBuffer.i
-
-# target to preprocess a source file
-Engine/utils/UniformBuffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.i
-.PHONY : Engine/utils/UniformBuffer.cpp.i
-
-Engine/utils/UniformBuffer.s: Engine/utils/UniformBuffer.cpp.s
-.PHONY : Engine/utils/UniformBuffer.s
-
-# target to generate assembly for a file
-Engine/utils/UniformBuffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/UniformBuffer.cpp.s
-.PHONY : Engine/utils/UniformBuffer.cpp.s
-
-Engine/utils/Vertex.o: Engine/utils/Vertex.cpp.o
-.PHONY : Engine/utils/Vertex.o
-
-# target to build an object file
-Engine/utils/Vertex.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.o
-.PHONY : Engine/utils/Vertex.cpp.o
-
-Engine/utils/Vertex.i: Engine/utils/Vertex.cpp.i
-.PHONY : Engine/utils/Vertex.i
-
-# target to preprocess a source file
-Engine/utils/Vertex.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.i
-.PHONY : Engine/utils/Vertex.cpp.i
-
-Engine/utils/Vertex.s: Engine/utils/Vertex.cpp.s
-.PHONY : Engine/utils/Vertex.s
-
-# target to generate assembly for a file
-Engine/utils/Vertex.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/utils/Vertex.cpp.s
-.PHONY : Engine/utils/Vertex.cpp.s
 
 external/imgui/imgui.o: external/imgui/imgui.cpp.o
 .PHONY : external/imgui/imgui.o
@@ -1149,45 +1173,45 @@ help:
 	@echo "... Engine/App.o"
 	@echo "... Engine/App.i"
 	@echo "... Engine/App.s"
-	@echo "... Engine/Entity.o"
-	@echo "... Engine/Entity.i"
-	@echo "... Engine/Entity.s"
-	@echo "... Engine/ImmovableObject.o"
-	@echo "... Engine/ImmovableObject.i"
-	@echo "... Engine/ImmovableObject.s"
 	@echo "... Engine/View.o"
 	@echo "... Engine/View.i"
 	@echo "... Engine/View.s"
 	@echo "... Engine/graphics/Color.o"
 	@echo "... Engine/graphics/Color.i"
 	@echo "... Engine/graphics/Color.s"
-	@echo "... Engine/graphics/DepthBuffer.o"
-	@echo "... Engine/graphics/DepthBuffer.i"
-	@echo "... Engine/graphics/DepthBuffer.s"
-	@echo "... Engine/graphics/FrameBuffer.o"
-	@echo "... Engine/graphics/FrameBuffer.i"
-	@echo "... Engine/graphics/FrameBuffer.s"
 	@echo "... Engine/graphics/Mesh.o"
 	@echo "... Engine/graphics/Mesh.i"
 	@echo "... Engine/graphics/Mesh.s"
 	@echo "... Engine/graphics/Model.o"
 	@echo "... Engine/graphics/Model.i"
 	@echo "... Engine/graphics/Model.s"
-	@echo "... Engine/graphics/Particle.o"
-	@echo "... Engine/graphics/Particle.i"
-	@echo "... Engine/graphics/Particle.s"
 	@echo "... Engine/graphics/PostProcessor.o"
 	@echo "... Engine/graphics/PostProcessor.i"
 	@echo "... Engine/graphics/PostProcessor.s"
-	@echo "... Engine/graphics/Renderable.o"
-	@echo "... Engine/graphics/Renderable.i"
-	@echo "... Engine/graphics/Renderable.s"
-	@echo "... Engine/graphics/ShadowBuffer.o"
-	@echo "... Engine/graphics/ShadowBuffer.i"
-	@echo "... Engine/graphics/ShadowBuffer.s"
+	@echo "... Engine/graphics/Shader.o"
+	@echo "... Engine/graphics/Shader.i"
+	@echo "... Engine/graphics/Shader.s"
 	@echo "... Engine/graphics/Texture.o"
 	@echo "... Engine/graphics/Texture.i"
 	@echo "... Engine/graphics/Texture.s"
+	@echo "... Engine/graphics/Vertex.o"
+	@echo "... Engine/graphics/Vertex.i"
+	@echo "... Engine/graphics/Vertex.s"
+	@echo "... Engine/graphics/buffers/Buffer.o"
+	@echo "... Engine/graphics/buffers/Buffer.i"
+	@echo "... Engine/graphics/buffers/Buffer.s"
+	@echo "... Engine/graphics/buffers/DepthBuffer.o"
+	@echo "... Engine/graphics/buffers/DepthBuffer.i"
+	@echo "... Engine/graphics/buffers/DepthBuffer.s"
+	@echo "... Engine/graphics/buffers/FrameBuffer.o"
+	@echo "... Engine/graphics/buffers/FrameBuffer.i"
+	@echo "... Engine/graphics/buffers/FrameBuffer.s"
+	@echo "... Engine/graphics/buffers/ShadowBuffer.o"
+	@echo "... Engine/graphics/buffers/ShadowBuffer.i"
+	@echo "... Engine/graphics/buffers/ShadowBuffer.s"
+	@echo "... Engine/graphics/buffers/UniformBuffer.o"
+	@echo "... Engine/graphics/buffers/UniformBuffer.i"
+	@echo "... Engine/graphics/buffers/UniformBuffer.s"
 	@echo "... Engine/helpers/AssimpGLMHelpers.o"
 	@echo "... Engine/helpers/AssimpGLMHelpers.i"
 	@echo "... Engine/helpers/AssimpGLMHelpers.s"
@@ -1203,51 +1227,54 @@ help:
 	@echo "... Engine/physics/Spline.o"
 	@echo "... Engine/physics/Spline.i"
 	@echo "... Engine/physics/Spline.s"
+	@echo "... Engine/renderables/Entity.o"
+	@echo "... Engine/renderables/Entity.i"
+	@echo "... Engine/renderables/Entity.s"
+	@echo "... Engine/renderables/ImmovableObject.o"
+	@echo "... Engine/renderables/ImmovableObject.i"
+	@echo "... Engine/renderables/ImmovableObject.s"
+	@echo "... Engine/renderables/Particle.o"
+	@echo "... Engine/renderables/Particle.i"
+	@echo "... Engine/renderables/Particle.s"
+	@echo "... Engine/renderables/Renderable.o"
+	@echo "... Engine/renderables/Renderable.i"
+	@echo "... Engine/renderables/Renderable.s"
+	@echo "... Engine/renderables/objects/BumperCar.o"
+	@echo "... Engine/renderables/objects/BumperCar.i"
+	@echo "... Engine/renderables/objects/BumperCar.s"
+	@echo "... Engine/renderables/objects/Player.o"
+	@echo "... Engine/renderables/objects/Player.i"
+	@echo "... Engine/renderables/objects/Player.s"
+	@echo "... Engine/renderables/objects/ProceduralTerrain.o"
+	@echo "... Engine/renderables/objects/ProceduralTerrain.i"
+	@echo "... Engine/renderables/objects/ProceduralTerrain.s"
+	@echo "... Engine/renderables/objects/Skybox.o"
+	@echo "... Engine/renderables/objects/Skybox.i"
+	@echo "... Engine/renderables/objects/Skybox.s"
+	@echo "... Engine/renderables/objects/Sun.o"
+	@echo "... Engine/renderables/objects/Sun.i"
+	@echo "... Engine/renderables/objects/Sun.s"
+	@echo "... Engine/renderables/shapes/Plane.o"
+	@echo "... Engine/renderables/shapes/Plane.i"
+	@echo "... Engine/renderables/shapes/Plane.s"
 	@echo "... Engine/utils/BoundingBox.o"
 	@echo "... Engine/utils/BoundingBox.i"
 	@echo "... Engine/utils/BoundingBox.s"
-	@echo "... Engine/utils/Buffer.o"
-	@echo "... Engine/utils/Buffer.i"
-	@echo "... Engine/utils/Buffer.s"
 	@echo "... Engine/utils/Camera.o"
 	@echo "... Engine/utils/Camera.i"
 	@echo "... Engine/utils/Camera.s"
 	@echo "... Engine/utils/Noise.o"
 	@echo "... Engine/utils/Noise.i"
 	@echo "... Engine/utils/Noise.s"
-	@echo "... Engine/utils/Objects/BumperCar.o"
-	@echo "... Engine/utils/Objects/BumperCar.i"
-	@echo "... Engine/utils/Objects/BumperCar.s"
-	@echo "... Engine/utils/Objects/Player.o"
-	@echo "... Engine/utils/Objects/Player.i"
-	@echo "... Engine/utils/Objects/Player.s"
-	@echo "... Engine/utils/Objects/ProceduralTerrain.o"
-	@echo "... Engine/utils/Objects/ProceduralTerrain.i"
-	@echo "... Engine/utils/Objects/ProceduralTerrain.s"
-	@echo "... Engine/utils/Objects/Skybox.o"
-	@echo "... Engine/utils/Objects/Skybox.i"
-	@echo "... Engine/utils/Objects/Skybox.s"
-	@echo "... Engine/utils/Objects/Sun.o"
-	@echo "... Engine/utils/Objects/Sun.i"
-	@echo "... Engine/utils/Objects/Sun.s"
 	@echo "... Engine/utils/PlayerManager.o"
 	@echo "... Engine/utils/PlayerManager.i"
 	@echo "... Engine/utils/PlayerManager.s"
 	@echo "... Engine/utils/Random.o"
 	@echo "... Engine/utils/Random.i"
 	@echo "... Engine/utils/Random.s"
-	@echo "... Engine/utils/Shader.o"
-	@echo "... Engine/utils/Shader.i"
-	@echo "... Engine/utils/Shader.s"
 	@echo "... Engine/utils/ShaderManager.o"
 	@echo "... Engine/utils/ShaderManager.i"
 	@echo "... Engine/utils/ShaderManager.s"
-	@echo "... Engine/utils/UniformBuffer.o"
-	@echo "... Engine/utils/UniformBuffer.i"
-	@echo "... Engine/utils/UniformBuffer.s"
-	@echo "... Engine/utils/Vertex.o"
-	@echo "... Engine/utils/Vertex.i"
-	@echo "... Engine/utils/Vertex.s"
 	@echo "... external/imgui/imgui.o"
 	@echo "... external/imgui/imgui.i"
 	@echo "... external/imgui/imgui.s"

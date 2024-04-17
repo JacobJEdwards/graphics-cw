@@ -115,7 +115,7 @@ private:
 
     ImGuiIO io;
 
-    std::unique_ptr<PostProcess> postProcessor;
+    std::unique_ptr<PostProcess> postProcessor{};
     bool postProcessorEnabled = true;
 
     bool showInterface = true;

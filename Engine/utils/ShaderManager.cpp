@@ -4,7 +4,7 @@
 
 #include "ShaderManager.h"
 
-#include "utils/Shader.h"
+#include "graphics/Shader.h"
 #include <filesystem>
 #include <memory>
 #include "imgui/imgui.h"
@@ -12,12 +12,11 @@
 #include <string>
 #include <unordered_map>
 
-std::unordered_map<std::string, std::shared_ptr<Shader>> ShaderManager::Shaders;
+std::unordered_map<std::string, std::shared_ptr<Shader> > ShaderManager::Shaders;
 
 void ShaderManager::Add(const std::string &name, const std::filesystem::path &vertexPath,
                         const std::filesystem::path &fragmentPath, const std::filesystem::path &geometryPath,
                         const std::filesystem::path &tessControlPath, const std::filesystem::path &tessEvalPath) {
-
     Shaders[name] = std::make_shared<Shader>(vertexPath, fragmentPath, geometryPath, tessControlPath, tessEvalPath);
 }
 
@@ -28,7 +27,6 @@ auto ShaderManager::Get(const std::string &name) -> std::shared_ptr<Shader> {
 }
 
 auto ShaderManager::Get(const GLuint id) -> std::shared_ptr<Shader> {
-
     for (const auto &[name, shader]: Shaders) {
         if (shader->getProgramID() == id) {
             return shader;
@@ -38,7 +36,7 @@ auto ShaderManager::Get(const GLuint id) -> std::shared_ptr<Shader> {
     return nullptr;
 }
 
-auto ShaderManager::GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader>> {
+auto ShaderManager::GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader> > {
     return Shaders;
 }
 

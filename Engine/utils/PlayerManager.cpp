@@ -5,8 +5,8 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <unordered_map>
 #include <utility>
-#include "utils//Objects/Player.h"
-#include "utils/Shader.h"
+#include "renderables/objects/Player.h"
+#include "graphics/Shader.h"
 #include <memory>
 #include <string>
 #include <ranges>

@@ -901,7 +901,7 @@ CMakeFiles/CW.dir/Engine/View.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_vec4.inl \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/FrameBuffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/FrameBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat4x4.hpp \
@@ -1054,11 +1054,12 @@ CMakeFiles/CW.dir/Engine/View.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/span.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/shapes/Plane.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/shapes/Plane.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables//Renderable.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Shader.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_glfw.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui_impl_opengl3.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/TargetConditionals.h

@@ -7,7 +7,7 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
-#include "utils/Vertex.h"
+#include "graphics/Vertex.h"
 #include <memory>
 #include <vector>
 #include <stdexcept>
@@ -17,8 +17,8 @@
 #include <glm/gtx/spline.hpp>
 
 #include <span>
-#include "utils/Buffer.h"
-#include "utils/Shader.h"
+#include "graphics/buffers/Buffer.h"
+#include "graphics/Shader.h"
 #include "utils/ShaderManager.h"
 #include <GL/glew.h>
 #include <memory>
@@ -29,7 +29,8 @@ namespace {
     // floating point errors
     template<typename T>
     auto bezier(T p1, T p2, T p3, T p4, const float t) -> T {
-        return (1.0F - t) * (1.0F - t) * (1.0F - t) * p1 + 3.0F * (1.0F - t) * (1.0F - t) * t * p2 + 3.0F * (1.0F - t) * t * t * p3 +
+        return (1.0F - t) * (1.0F - t) * (1.0F - t) * p1 + 3.0F * (1.0F - t) * (1.0F - t) * t * p2 + 3.0F * (1.0F - t) *
+               t * t * p3 +
                t * t * t * p4;
     }
 

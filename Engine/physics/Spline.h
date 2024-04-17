@@ -7,9 +7,9 @@
 #include <vector>
 #include <span>
 #include <memory>
-#include "utils/Buffer.h"
-#include "utils/Shader.h"
-#include "graphics/Renderable.h"
+#include "graphics/buffers/Buffer.h"
+#include "graphics/Shader.h"
+#include "renderables/Renderable.h"
 
 namespace Physics {
     class Spline : public Renderable {
@@ -42,7 +42,7 @@ namespace Physics {
 
     private:
         std::vector<glm::vec3> points;
-        Type type;
+        Type type = Type::CATMULLROM;
         float speed{};
         std::size_t numPoints{};
 

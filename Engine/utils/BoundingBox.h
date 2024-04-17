@@ -15,7 +15,7 @@
 
 #include <GL/glew.h>
 
-#include "utils/Buffer.h"
+#include "graphics/buffers/Buffer.h"
 
 class BoundingBox {
 public:

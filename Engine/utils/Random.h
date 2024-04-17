@@ -7,7 +7,6 @@
 
 #include <glm/ext/vector_float4.hpp>
 #include <glm/ext/vector_float3.hpp>
-#include <ctime>
 
 namespace Random {
     auto Float(float min, float max) -> float;

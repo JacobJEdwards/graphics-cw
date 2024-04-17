@@ -1,7 +1,7 @@
 #include "PostProcessor.h"
 
-#include "FrameBuffer.h"
-#include "utils/Shader.h"
+#include "graphics/buffers/FrameBuffer.h"
+#include "graphics/Shader.h"
 #include <memory>
 #include "imgui/imgui.h"
 

@@ -6,15 +6,15 @@
 
 #include "graphics/Texture.h"
 #include "utils/BoundingBox.h"
-#include "utils/Shader.h"
-#include "utils/Vertex.h"
+#include "graphics/Shader.h"
+#include "graphics/Vertex.h"
 #include <GL/glew.h>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
 #include <iostream>
-#include "utils/Buffer.h"
+#include "graphics/buffers/Buffer.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
            std::vector<Texture::Data> textures, BoundingBox box)

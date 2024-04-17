@@ -26,8 +26,8 @@
 #include "graphics/Texture.h"
 #include "helpers/AssimpGLMHelpers.h"
 #include "utils/BoundingBox.h"
-#include "utils/Shader.h"
-#include "utils/Vertex.h"
+#include "graphics/Shader.h"
+#include "graphics/Vertex.h"
 
 Model::Model(const std::filesystem::path &path) { loadModel(path); }
 

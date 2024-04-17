@@ -1,9 +1,9 @@
 #ifndef POSTPROCESS_H
 #define POSTPROCESS_H
 
-#include "graphics/FrameBuffer.h"
-#include "shapes/Plane.h"
-#include "utils/Shader.h"
+#include "graphics/buffers/FrameBuffer.h"
+#include "renderables/shapes/Plane.h"
+#include "graphics/Shader.h"
 #include <memory>
 
 constexpr float BLOOM_THRESHOLD = 0.8F;

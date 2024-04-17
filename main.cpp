@@ -21,13 +21,13 @@
 #include "graphics/Texture.h"
 #include "graphics/Color.h"
 #include "physics/Collisions.h"
-#include "utils/Objects/Player.h"
-#include "utils/Objects/Skybox.h"
+#include "renderables/objects/Player.h"
+#include "renderables/objects/Skybox.h"
 #include "utils/ShaderManager.h"
-#include "graphics/ShadowBuffer.h"
-#include "utils/Objects/ProceduralTerrain.h"
-#include "graphics/Particle.h"
-#include "utils/Objects/BumperCar.h"
+#include "graphics/buffers/ShadowBuffer.h"
+#include "renderables/objects/ProceduralTerrain.h"
+#include "renderables/Particle.h"
+#include "renderables/objects/BumperCar.h"
 
 void processInput();
 
@@ -82,7 +82,7 @@ auto main() -> int {
     PlayerManager::Get("Path")->setShader(shader);
     PlayerManager::Get("Drive")->setShader(shader);
 
-    ParticleSystem particleSystem;
+    ParticleSystem &particleSystem = ParticleSystem::GetInstance();
     // ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
     ShadowBuffer shadowBuffer(10000, 10000);
 
@@ -163,6 +163,7 @@ auto main() -> int {
 
             App::debugInterface();
             skybox.getSun().interface();
+            particleSystem.interface();
         }
 
         if (App::debug) {
@@ -204,8 +205,12 @@ auto main() -> int {
                     if (Physics::Collisions::check(*models[i], *models[j])) {
                         models[i]->attributes.isColliding = true;
                         models[j]->attributes.isColliding = true;
-                        Physics::Collisions::resolve(*models[i], *models[j]);
-                        particleSystem.generate(*models[i]);
+
+                        const auto collisionPoint = Physics::Collisions::getCollisionPoint(*models[i], *models[j]);
+                        Physics::Collisions::resolve(*models[i], *models[j], collisionPoint);
+
+                        particleSystem.generate(models[i]->attributes.position + collisionPoint,
+                                                models[i]->attributes.velocity, Color::ORANGE);
                     } else {
                         models[i]->attributes.isColliding = false;
                         models[j]->attributes.isColliding = false;
@@ -226,8 +231,11 @@ auto main() -> int {
                     player->attributes.isColliding = true;
                     model->attributes.isColliding = true;
 
-                    Physics::Collisions::resolve(*player, *model);
-                    particleSystem.generate(*player);
+                    const auto collisionPoint = Physics::Collisions::getCollisionPoint(*player, *model);
+                    Physics::Collisions::resolve(*player, *model, collisionPoint);
+
+                    particleSystem.generate(player->attributes.position - collisionPoint,
+                                            player->attributes.velocity, Color::ORANGE);
                 } else {
                     player->attributes.isColliding = false;
                     model->attributes.isColliding = false;

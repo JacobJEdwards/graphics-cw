@@ -997,8 +997,8 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/os/availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Buffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Vertex.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/span.h \
@@ -1028,7 +1028,7 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_binary_function.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_unary_function.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/unary_negate.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Entity.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/filesystem \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
@@ -1051,7 +1051,7 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Shader.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Shader.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
   /opt/homebrew/include/assimp/material.h \
   /opt/homebrew/include/assimp/types.h \
@@ -1081,7 +1081,7 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: \
   /opt/homebrew/include/assimp/metadata.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Renderable.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Objects/ProceduralTerrain.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/ProceduralTerrain.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Constants.h \
   /opt/homebrew/include/glm/geometric.hpp

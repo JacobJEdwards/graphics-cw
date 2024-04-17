@@ -3,8 +3,8 @@
 
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
-#include "Entity.h"
-#include "utils/Objects/ProceduralTerrain.h"
+#include "renderables/Entity.h"
+#include "renderables/objects/ProceduralTerrain.h"
 #include <glm/ext/vector_float3.hpp>
 
 

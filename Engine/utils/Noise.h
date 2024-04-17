@@ -11,7 +11,7 @@ namespace Noise {
     constexpr float SCALE = 0.1F;
     constexpr float AMPLITUDE = 1.0F;
     constexpr float FREQUENCY = 1.0F;
-    constexpr int OCTAVES = 1;
+    constexpr unsigned int OCTAVES = 1U;
     constexpr float PERSISTENCE = 0.5F;
 
     template<typename T>
