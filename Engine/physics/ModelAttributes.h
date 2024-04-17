@@ -18,6 +18,8 @@ namespace Physics {
         glm::vec3 torque = Config::ZERO_VECTOR;
 
         glm::mat4 transform = Config::IDENTITY_MATRIX;
+        glm::mat4 previousTransform = Config::IDENTITY_MATRIX;
+
         float radius = 1.0F;
         float mass = 1.0F;
         float damping = 0.99F;
@@ -50,6 +52,18 @@ namespace Physics {
         void applyTorque(const glm::vec3 &torque);
 
         auto calculateRotation(const glm::vec3 &point) -> glm::vec3;
+
+        [[nodiscard]] auto getTransform() const -> glm::mat4;
+
+        [[nodiscard]] auto getPreviousTransform() const -> glm::mat4;
+
+        [[nodiscard]] auto getFront() const -> glm::vec3;
+
+        [[nodiscard]] auto getUp() const -> glm::vec3;
+
+        [[nodiscard]] auto getRight() const -> glm::vec3;
+
+        [[nodiscard]] auto getPosition() const -> glm::vec3;
     };
 } // namespace Physics
 

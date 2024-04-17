@@ -8,9 +8,12 @@
 #include "Config.h"
 #include "imgui/imgui.h"
 #include <cmath>
+#include <iostream>
 #include <glm/geometric.hpp>
 #include <memory>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/quaternion_trigonometric.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include "utils/Camera.h"
 #include "Entity.h"
@@ -44,6 +47,7 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") 
             car = std::make_shared<BumperCar>();
             car->setMode(BumperCar::Mode::PATHED);
             car->transform(carModelMat);
+            box = car->getBoundingBox();
             break;
         case Mode::DRIVE:
             camera->setMode(Camera::Mode::DRIVE);
@@ -55,6 +59,7 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") 
             car->attributes.gravityAffected = false;
             car->attributes.position = attributes.position;
             box = car->getBoundingBox();
+            break;
     }
 }
 
@@ -64,13 +69,8 @@ void Player::processKeyboard(const Direction direction, const float /*deltaTime*
         return;
     }
 
-    glm::vec3 front = camera->getFront();
-    glm::vec3 right = camera->getRight();
-
-    if (mode == Mode::DRIVE) {
-        front = glm::normalize(glm::vec3(car->attributes.transform[2]));
-        right = glm::normalize(glm::cross(front, glm::vec3(0.0F, 1.0F, 0.0F)));
-    }
+    const glm::vec3 front = mode == Mode::DRIVE ? car->attributes.getFront() : camera->getFront();
+    const auto right = glm::normalize(glm::cross(front, glm::vec3(0.0F, 1.0F, 0.0F)));
 
     switch (direction) {
         case Direction::FORWARD:
@@ -81,14 +81,23 @@ void Player::processKeyboard(const Direction direction, const float /*deltaTime*
             break;
         case Direction::LEFT:
             if (mode == Mode::DRIVE) {
-                car->attributes.applyRotation(glm::vec3(0.0F, 0.1F, 0.0F));
+                constexpr auto rotation = glm::vec3(0.0F, 0.1F, 0.0F);
+                car->attributes.applyRotation(rotation);
+
+                const auto yaw = camera->getYaw();
+                const auto newYaw = yaw - 0.5F;
+                camera->setYaw(newYaw);
             } else {
                 attributes.applyForce(-right * 10.0F);
             }
             break;
         case Direction::RIGHT:
             if (mode == Mode::DRIVE) {
-                car->attributes.applyRotation(glm::vec3(0.0F, -0.1F, 0.0F));
+                constexpr auto rotation = glm::vec3(0.0F, -0.1F, 0.0F);
+                car->attributes.applyRotation(rotation);
+                const auto yaw = camera->getYaw();
+                const auto newYaw = yaw + 0.5F;
+                camera->setYaw(newYaw);
             } else {
                 attributes.applyForce(right * 10.0F);
             }
@@ -127,27 +136,22 @@ void Player::update(const float dt) {
         attributes.position = pos;
         camera->setPosition(attributes.position + glm::vec3(0.0F, 4.5F, 0.0F));
 
-        const auto transform = car->attributes.transform;
-        const auto front = glm::normalize(glm::vec3(transform[2]));
+        const auto front = car->attributes.getFront();
 
-        // rotate the camera to face the direction of the car
-        camera->setFront(front);
-        camera->setRight(glm::normalize(glm::cross(front, glm::vec3(0.0F, 1.0F, 0.0F))));
-        camera->setUp(glm::normalize(glm::cross(camera->getRight(), front)));
+        const auto angle = glm::acos(glm::dot(front, glm::vec3(0.0F, 0.0F, 1.0F)));
+        const auto axis = glm::cross(front, glm::vec3(0.0F, 0.0F, 1.0F));
+
+        camera->rotate(-angle, axis);
 
         return;
     }
 
     if (mode == Mode::DRIVE) {
         car->update(dt);
-        car->attributes.position = attributes.position;
 
-        const auto transform = car->attributes.transform;
-        const auto front = glm::normalize(glm::vec3(transform[2]));
-
-        car->attributes.position += front * 0.5F;
-
-        camera->setPosition(attributes.position + glm::vec3(0.0F, 5.0F, 0.0F));
+        const auto front = car->attributes.getFront();
+        car->attributes.position = attributes.position + front * 0.5F;
+        camera->setPosition(attributes.position + glm::vec3(0.0F, 4.5F, 0.0F));
 
         return;
     }
@@ -164,13 +168,11 @@ void Player::update(const float dt) {
     camera->setPosition(attributes.position + glm::vec3(0.0F, 8.0F, 0.0F));
 
     const glm::vec3 front = camera->getFront();
-    const glm::vec3 modelForward = glm::normalize(glm::vec3(attributes.transform[2]));
+    const glm::vec3 modelForward = attributes.getFront();
 
     auto rotationRequired = glm::vec3(0.0F);
 
-    const float dotProduct = dot(modelForward, front);
-
-    if (dotProduct < 0.99F) {
+    if (const float dotProduct = dot(modelForward, front); dotProduct < 0.99F) {
         const float angle = std::acos(dotProduct);
         const glm::vec3 axis = normalize(cross(modelForward, front));
         rotationRequired = axis * angle;

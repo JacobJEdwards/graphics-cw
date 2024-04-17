@@ -101,6 +101,10 @@ public:
 
     void update(float deltaTime);
 
+    void rotate(float angle, const glm::vec3 &axis);
+
+    void rotate(const glm::vec3 &rotation);
+
 private:
     Mode mode = Mode::FREE;
 

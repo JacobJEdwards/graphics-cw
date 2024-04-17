@@ -67,9 +67,6 @@ void Camera::processMouseMovement(float xOffset, float yOffset,
     }
 
     yaw = std::fmod(yaw, 360.0F);
-    yaw = std::min(yaw, maxYaw);
-    yaw = std::max(yaw, minYaw);
-
 
     if (mode == Mode::ORBIT) {
         orbitAngle += xOffset * orbitSpeed * 0.1F;
@@ -171,7 +168,9 @@ void Camera::updateOrbitPosition() {
 
 void Camera::interface() {
     bool hasChanged = false;
+
     ImGui::Begin("Camera Options");
+
     ImGui::SeparatorText("General");
     hasChanged |= ImGui::SliderFloat("Zoom", &zoom, MINZOOM, MAXZOOM);
     hasChanged |= ImGui::SliderFloat("Sensitivity", &mouseSensitivity, 0.0F, 2.5F);
@@ -192,6 +191,7 @@ void Camera::interface() {
             position.z = target.z + distance * std::sin(glm::radians(yaw));
         }
     }
+
     ImGui::End();
 
     if (hasChanged) {
@@ -213,4 +213,21 @@ auto Camera::getPitch() const -> float {
 
 auto Camera::getNear() const -> float {
     return nearPlane;
+}
+
+void Camera::rotate(const float angle, const glm::vec3 &axis) {
+    const auto rotation = glm::rotate(glm::mat4(1.0F), angle, axis);
+    front = glm::vec3(rotation * glm::vec4(front, 1.0F));
+    right = glm::vec3(rotation * glm::vec4(right, 1.0F));
+    up = glm::vec3(rotation * glm::vec4(up, 1.0F));
+}
+
+void Camera::rotate(const glm::vec3 &rotation) {
+    const auto xRotation = glm::rotate(glm::mat4(1.0F), rotation.x, glm::vec3(1.0F, 0.0F, 0.0F));
+    const auto yRotation = glm::rotate(glm::mat4(1.0F), rotation.y, glm::vec3(0.0F, 1.0F, 0.0F));
+    const auto zRotation = glm::rotate(glm::mat4(1.0F), rotation.z, glm::vec3(0.0F, 0.0F, 1.0F));
+
+    front = glm::vec3(zRotation * yRotation * xRotation * glm::vec4(front, 1.0F));
+    right = glm::vec3(zRotation * yRotation * xRotation * glm::vec4(right, 1.0F));
+    up = glm::vec3(zRotation * yRotation * xRotation * glm::vec4(up, 1.0F));
 }

@@ -13,6 +13,8 @@
 #include "physics/Gravity.h"
 
 void Physics::Attributes::update(const float dt) {
+    previousTransform = transform;
+
     velocity += acceleration * dt;
     position += velocity * dt;
     acceleration = force / mass;
@@ -134,4 +136,28 @@ void Physics::Attributes::applyRotation(const glm::vec3 &rotation) {
 
 void Physics::Attributes::applyTorque(const glm::vec3 &torque) {
     this->torque += torque;
+}
+
+auto Physics::Attributes::getTransform() const -> glm::mat4 {
+    return transform;
+}
+
+auto Physics::Attributes::getPreviousTransform() const -> glm::mat4 {
+    return previousTransform;
+}
+
+auto Physics::Attributes::getFront() const -> glm::vec3 {
+    return glm::normalize(glm::vec3(transform[2]));
+}
+
+auto Physics::Attributes::getUp() const -> glm::vec3 {
+    return glm::normalize(glm::vec3(transform[1]));
+}
+
+auto Physics::Attributes::getRight() const -> glm::vec3 {
+    return glm::normalize(glm::vec3(transform[0]));
+}
+
+auto Physics::Attributes::getPosition() const -> glm::vec3 {
+    return position;
 }
