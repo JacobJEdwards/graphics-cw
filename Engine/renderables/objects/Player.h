@@ -54,7 +54,7 @@ private:
     bool drawModel = true;
     float jumpForce = 100.0F;
 
-    float nitroForce = 200.0F;
+    float nitroForce = 500.0F;
     float nitroDuration = 0.0F;
     float nitroMaxDuration = 5.0F;
     bool nitroActive = false;

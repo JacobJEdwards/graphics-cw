@@ -31,8 +31,8 @@ BoundingBox::BoundingBox(const glm::vec3 min, const glm::vec3 max) : min(min), m
 }
 
 BoundingBox::BoundingBox(const aiVector3D &min, const aiVector3D &max)
-        : min(AssimpGLMHelpers::getGLMVec(min)),
-          max(AssimpGLMHelpers::getGLMVec(max)) {
+    : min(AssimpGLMHelpers::getGLMVec(min)),
+      max(AssimpGLMHelpers::getGLMVec(max)) {
     initBuffer();
 }
 
@@ -63,7 +63,6 @@ auto BoundingBox::operator=(const BoundingBox &other) -> BoundingBox & {
         if (other.parent != nullptr) {
             parent = other.parent;
         }
-
     }
     return *this;
 }
@@ -185,6 +184,21 @@ void BoundingBox::rotate(const glm::vec3 &axis, const float angle) {
     }
 }
 
+auto BoundingBox::getCorners() const -> std::vector<glm::vec3> {
+    std::vector<glm::vec3> corners(8);
+
+    for (int i = 0; i < 8; ++i) {
+        corners[i] = {
+            i & 1 ? max.x : min.x,
+            i & 2 ? max.y : min.y,
+            i & 4 ? max.z : min.z,
+        };
+    }
+
+    return corners;
+}
+
+
 auto BoundingBox::getOffset(const glm::vec3 &point) const -> glm::vec3 {
     if (!contains(point)) {
         return glm::vec3(0.0F);
@@ -253,7 +267,6 @@ auto BoundingBox::getOffset(const BoundingBox &other) const -> glm::vec3 {
     }
 
     return {0.0F, 0.0F, overlap.z};
-
 }
 
 void BoundingBox::expand(const glm::vec3 &amount) {
@@ -279,19 +292,19 @@ void BoundingBox::initBuffer() {
     buffer->drawMode = GL_LINES;
 
     const std::vector<Vertex::Data> vertices = {
-            {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-            {{max.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-            {{max.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-            {{min.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-            {{min.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-            {{max.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-            {{max.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-            {{min.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{max.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{max.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{min.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{min.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{max.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{max.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+        {{min.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
     };
 
     const std::vector<GLuint> indices = {
-            0, 1, 2, 2, 3, 0, 1, 5, 6, 6, 2, 1, 5, 4, 7, 7, 6, 5,
-            4, 0, 3, 3, 7, 4, 3, 2, 6, 6, 7, 3, 4, 5, 1, 1, 0, 4,
+        0, 1, 2, 2, 3, 0, 1, 5, 6, 6, 2, 1, 5, 4, 7, 7, 6, 5,
+        4, 0, 3, 3, 7, 4, 3, 2, 6, 6, 7, 3, 4, 5, 1, 1, 0, 4,
     };
 
     buffer->fill(vertices, indices);
@@ -299,7 +312,6 @@ void BoundingBox::initBuffer() {
 
 void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
                        const glm::mat4 &projection) const {
-
     const GLuint previousProgram = ShaderManager::GetActiveShader();
 
     const std::shared_ptr<Shader> shader = ShaderManager::Get("BoundingBox");
@@ -314,19 +326,19 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
         buffer->drawMode = GL_LINES;
 
         std::vector<Vertex::Data> vertices = {
-                {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-                {{max.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-                {{max.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-                {{min.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-                {{min.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-                {{max.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-                {{max.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
-                {{min.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{min.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{max.x, min.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{max.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{min.x, max.y, min.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{min.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{max.x, min.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{max.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
+            {{min.x, max.y, max.z}, {0.0F, 0.0F, 0.0F}, {0.0F, 0.0F}},
         };
 
         std::vector<GLuint> indices = {
-                0, 1, 2, 2, 3, 0, 1, 5, 6, 6, 2, 1, 5, 4, 7, 7, 6, 5,
-                4, 0, 3, 3, 7, 4, 3, 2, 6, 6, 7, 3, 4, 5, 1, 1, 0, 4,
+            0, 1, 2, 2, 3, 0, 1, 5, 6, 6, 2, 1, 5, 4, 7, 7, 6, 5,
+            4, 0, 3, 3, 7, 4, 3, 2, 6, 6, 7, 3, 4, 5, 1, 1, 0, 4,
         };
 
         buffer->fill(vertices, indices);
@@ -338,7 +350,6 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
         for (const auto &child: children) {
             child->draw(model, view, projection);
         }
-
     }
 
     glUseProgram(previousProgram);
@@ -368,17 +379,16 @@ auto BoundingBox::getCollisionPoint(const BoundingBox &box) const -> glm::vec3 {
     }
 
     return {0.0F, 0.0F, overlap.z};
-
 }
 
 auto BoundingBox::getMinMax() const -> std::pair<glm::vec3, glm::vec3> {
     return {
-            glm::min(min, max),
-            glm::max(min, max)
+        glm::min(min, max),
+        glm::max(min, max)
     };
 }
 
-void BoundingBox::addChildren(std::vector<std::unique_ptr<BoundingBox>> &children) {
+void BoundingBox::addChildren(std::vector<std::unique_ptr<BoundingBox> > &children) {
     for (auto &child: children) {
         addChild(child);
     }
@@ -394,7 +404,7 @@ void BoundingBox::addChild(const BoundingBox &box) {
     children.back()->setParent(this);
 }
 
-[[nodiscard]] auto BoundingBox::getChildren() const -> const std::vector<std::unique_ptr<BoundingBox>> & {
+[[nodiscard]] auto BoundingBox::getChildren() const -> const std::vector<std::unique_ptr<BoundingBox> > & {
     return children;
 }
 

@@ -17,8 +17,11 @@
 
 
 Skybox::Skybox() {
-    buffer = std::make_unique<Buffer>();
-    buffer->fill(vertices, indices);
+    skyBuffer = std::make_unique<Buffer>();
+    skyBuffer->fill(vertices, indices);
+
+    mountainBuffer = std::make_unique<Buffer>();
+    mountainBuffer->fill(vertices, indices);
 
     shader = ShaderManager::Get("Sky");
 }
@@ -30,9 +33,9 @@ void Skybox::update(const float deltaTime) {
 
 void Skybox::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
-    buffer->bind();
-    buffer->draw();
-    buffer->unbind();
+    skyBuffer->bind();
+    skyBuffer->draw();
+    skyBuffer->unbind();
 }
 
 [[nodiscard]] auto Skybox::getSun() -> Sun & {
@@ -56,9 +59,9 @@ void Skybox::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     shader->setUniform("view", newView);
     shader->setUniform("projection", projection);
 
-    buffer->bind();
-    buffer->draw();
-    buffer->unbind();
+    skyBuffer->bind();
+    skyBuffer->draw();
+    skyBuffer->unbind();
 
     glDepthFunc(prevDepthFunc);
 

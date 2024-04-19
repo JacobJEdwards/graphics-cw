@@ -11,6 +11,7 @@
 
 #include <glm/ext/matrix_transform.hpp>
 #include <vector>
+#include <glm/ext/quaternion_geometric.hpp>
 
 #include "Config.h"
 
@@ -28,6 +29,7 @@
 #include "renderables/objects/ProceduralTerrain.h"
 #include "renderables/Particle.h"
 #include "renderables/objects/BumperCar.h"
+#include "utils/Random.h"
 
 void processInput();
 
@@ -47,10 +49,11 @@ auto main() -> int {
 
     Texture::Loader::setFlip(true);
 
-    const auto playerCar = PlayerManager::Get("Path")->getCar();
-    playerCar->shouldDrawPlayer(false);
+    const auto pathedCar = PlayerManager::Get("Path")->getCar();
+    pathedCar->shouldDrawPlayer(false);
 
     const auto driveable = PlayerManager::Get("Drive")->getCar();
+
     const std::vector models = {
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
@@ -59,9 +62,21 @@ auto main() -> int {
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
-        playerCar,
-        // driveable
+        pathedCar,
+        driveable
     };
+
+    for (const auto &model: models) {
+        model->addTrackableEntity(Random::Element(models));
+
+        if (Random::Int(0, 5) == 0) {
+            model->addTrackableEntity(Random::Element(models));
+        }
+
+        if (Random::Int(0, 5) == 0) {
+            model->addTrackableEntity(pathedCar);
+        }
+    }
 
     auto matrix = Config::IDENTITY_MATRIX;
     constexpr auto newPosition = glm::vec3(20.0F, 10.0F, 8.0F);
@@ -83,16 +98,24 @@ auto main() -> int {
     PlayerManager::Get("Drive")->setShader(shader);
 
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
-    // ShadowBuffer shadowBuffer = ShadowBuffer(App::view.getWidth(), App::view.getHeight());
-    ShadowBuffer shadowBuffer(10000, 10000);
+    ShadowBuffer shadowBuffer(App::view.getWidth(), App::view.getHeight());
+    // ShadowBuffer shadowBuffer(10000, 10000);
+
+    std::vector<glm::vec3> points;
+
+    for (const auto &model: models) {
+        points.insert(points.end(), model->getPoints().begin(), model->getPoints().end());
+    }
+
+    std::cout << "Points: " << points.size() << std::endl;
 
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
         const auto player = PlayerManager::GetCurrent();
-
         const auto projectionMatrix = player->getCamera().getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
 
+        // shadow pass
         shadowBuffer.bind();
 
         const auto lightPos = skybox.getSun().getPosition();
@@ -115,6 +138,7 @@ auto main() -> int {
 
         shadowBuffer.unbind();
 
+        // render pass
         View::clearTarget(Color::BLACK);
 
         shader = ShaderManager::Get("Base");
@@ -128,7 +152,7 @@ auto main() -> int {
             model->draw(viewMatrix, projectionMatrix);
         }
 
-        driveable->draw(viewMatrix, projectionMatrix);
+        // driveable->draw(viewMatrix, projectionMatrix);
 
         particleSystem.draw(viewMatrix, projectionMatrix);
 
@@ -143,6 +167,11 @@ auto main() -> int {
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
         shader->setUniform("shadowMap", 0);
+
+        // give points to terrain
+        shader->setVec3Array("pathedPoints", points);
+        shader->setUniform("pathedPointsCount", static_cast<int>(points.size()));
+        shader->setUniform("pathDarkness", models[0]->getLaps() / 1000.0F);
 
         terrain.draw(viewMatrix, projectionMatrix);
         skybox.draw(viewMatrix, projectionMatrix);
@@ -180,16 +209,14 @@ auto main() -> int {
             for (const auto &model: models) {
                 model->clearTrackablePositions();
                 // add trackable positions of all other models
-                /*
                 for (const auto &m: models) {
                     if (m != model) {
                         model->addTrackablePosition(m->attributes.position);
                     }
                 }
-                 */
 
                 if (player->getMode() != Player::Mode::ORBIT && player->getMode() != Player::Mode::FIXED &&
-                    player->getMode() != Player::Mode::PATH) {
+                    player->getMode() != Player::Mode::PATH && player->getMode() != Player::Mode::FREE) {
                     model->addTrackablePosition(player->attributes.position);
                 }
                 model->addTrackablePosition(player->attributes.position);
@@ -200,32 +227,17 @@ auto main() -> int {
             skybox.update(App::view.getDeltaTime());
             particleSystem.update(App::view.getDeltaTime());
 
-            for (int i = 0; i < models.size(); i++) {
-                for (int j = i + 1; j < models.size(); j++) {
-                    if (Physics::Collisions::check(*models[i], *models[j])) {
-                        models[i]->attributes.isColliding = true;
-                        models[j]->attributes.isColliding = true;
-
-                        const auto collisionPoint = Physics::Collisions::getCollisionPoint(*models[i], *models[j]);
-                        Physics::Collisions::resolve(*models[i], *models[j], collisionPoint);
-
-                        particleSystem.generate(models[i]->attributes.position + collisionPoint,
-                                                models[i]->attributes.velocity, Color::ORANGE);
-                    } else {
-                        models[i]->attributes.isColliding = false;
-                        models[j]->attributes.isColliding = false;
-                    }
-                }
-            }
-
             for (const auto &model: models) {
                 if (model == player->getCar()) {
                     continue;
                 }
 
                 if (Physics::Collisions::check(*player, *model)) {
-                    if (length(player->getAttributes().force) > 0.1F) {
+                    if (length(player->getAttributes().force) > 25.0F && (player->getMode() == Player::Mode::DRIVE ||
+                                                                          player->getMode() == Player::Mode::PATH ||
+                                                                          player->getMode() == Player::Mode::FPS)) {
                         App::view.blurScreen();
+                        model->setBroken(true);
                     }
 
                     player->attributes.isColliding = true;
@@ -241,6 +253,42 @@ auto main() -> int {
                     model->attributes.isColliding = false;
                 }
             }
+
+            for (int i = 0; i < models.size(); i++) {
+                for (int j = i + 1; j < models.size(); j++) {
+                    if (Physics::Collisions::check(*models[i], *models[j])) {
+                        models[i]->attributes.isColliding = true;
+                        models[j]->attributes.isColliding = true;
+
+                        const auto collisionPoint = Physics::Collisions::getCollisionPoint(*models[i], *models[j]);
+                        Physics::Collisions::resolve(*models[i], *models[j], collisionPoint);
+
+                        particleSystem.generate(models[i]->attributes.position + collisionPoint,
+                                                models[i]->attributes.velocity, Color::ORANGE);
+
+                        /*
+                        if (length(models[i]->attributes.force) > 25.0F) {
+                            models[j]->setBroken(true);
+                        }
+
+                        if (length(models[j]->attributes.force) > 25.0F) {
+                            models[i]->setBroken(true);
+                        }
+                        */
+
+                        // if player car, blur screen
+                        if ((models[i] == player->getCar() || models[j] == player->getCar())) {
+                            models[i]->setBroken(true);
+                            models[j]->setBroken(true);
+                            App::view.blurScreen();
+                        }
+                    } else {
+                        models[i]->attributes.isColliding = false;
+                        models[j]->attributes.isColliding = false;
+                    }
+                }
+            }
+
 
             for (const auto &player: PlayerManager::GetAll()) {
                 if (Physics::Collisions::check(*player.second, terrain)) {

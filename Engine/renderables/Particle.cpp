@@ -56,8 +56,9 @@ void ParticleSystem::add(const Particle &particle) {
 }
 
 void ParticleSystem::update(const float deltaTime) {
-    const auto player = PlayerManager::GetCurrent();
-    const auto camera = player->getCamera();
+    const auto camera = PlayerManager::GetCurrent()->getCamera();
+
+    const auto forward = camera.getFront();
     const auto up = camera.getUp();
     const auto right = camera.getRight();
 
@@ -67,10 +68,11 @@ void ParticleSystem::update(const float deltaTime) {
 
         auto model = Config::IDENTITY_MATRIX;
         model = translate(model, particle.position);
+        // rotate model to face camera
         model[0] = glm::vec4(right, 0.0F);
         model[1] = glm::vec4(up, 0.0F);
-        model[2] = glm::vec4(glm::cross(right, up), 0.0F);
-        model = glm::scale(model, glm::vec3(0.1F));
+        model[2] = glm::vec4(-forward, 0.0F);
+        model = glm::scale(model, glm::vec3(scale));
         particle.model = model;
     }
 
@@ -95,9 +97,7 @@ void ParticleSystem::draw(const std::shared_ptr<Shader> shader) const {
 
     shader->use();
     for (const auto &particle: particles) {
-        auto model = particle.model;
-        model = glm::scale(model, glm::vec3(scale));
-        shader->setUniform("model", model);
+        shader->setUniform("model", particle.model);
         shader->setUniform("color", particle.color);
         shader->setUniform("life", particle.life);
 

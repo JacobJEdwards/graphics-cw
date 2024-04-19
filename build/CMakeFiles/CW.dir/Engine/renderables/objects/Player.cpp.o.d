@@ -1079,6 +1079,20 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Shader.h \
+  /opt/homebrew/include/glm/glm.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cfloat \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/float.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/float.h \
+  /opt/homebrew/include/glm/ext/../detail/../fwd.hpp \
+  /opt/homebrew/include/glm/ext/../detail/../trigonometric.hpp \
+  /opt/homebrew/include/glm/ext/../detail/../detail/func_trigonometric.inl \
+  /opt/homebrew/include/glm/ext/../detail/../packing.hpp \
+  /opt/homebrew/include/glm/ext/../detail/../detail/func_packing.inl \
+  /opt/homebrew/include/glm/ext/../detail/type_half.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_half.inl \
+  /opt/homebrew/include/glm/ext/../detail/../integer.hpp \
+  /opt/homebrew/include/glm/ext/../detail/../detail/func_integer.inl \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h \
@@ -1089,12 +1103,8 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o: \
   /opt/homebrew/include/glm/ext/vector_float4.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/float.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/float.h \
   /opt/homebrew/include/glm/geometric.hpp \
   /opt/homebrew/include/glm/trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_trigonometric.inl \
   /opt/homebrew/include/glm/ext/matrix_transform.hpp \
   /opt/homebrew/include/glm/ext/../gtc/constants.hpp \
   /opt/homebrew/include/glm/ext/../gtc/../ext/scalar_constants.hpp \
@@ -1146,7 +1156,6 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/../gtc/constants.hpp \
   /opt/homebrew/include/glm/ext/../detail/../gtc/matrix_transform.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_quat.inl \
-  /opt/homebrew/include/glm/ext/../detail/../trigonometric.hpp \
   /opt/homebrew/include/glm/ext/../detail/../ext/quaternion_common.hpp \
   /opt/homebrew/include/glm/ext/../detail/../ext/quaternion_geometric.hpp \
   /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_float_precision.hpp \

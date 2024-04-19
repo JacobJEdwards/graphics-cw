@@ -110,7 +110,23 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     const float xCoord = xPos + static_cast<float>(worldSizeX) / 2.0F;
     const float zCoord = zPos + static_cast<float>(worldSizeY) / 2.0F;
 
-    return Noise::Simplex(glm::vec2(xCoord, zCoord));
+    // cool mountains
+    // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 100.0F;
+
+    // flat terrain
+    // return 0.0F;
+
+    // hills
+    // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 10.0F;
+
+    // fairly flat terrain
+    return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F);
+
+    // hills with valleys
+    // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F) * 10.0F;
+
+    // hills with valleys and mountains
+    // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F) * 10.0F + Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 100.0F;
 }
 
 [[nodiscard]] auto
@@ -155,6 +171,7 @@ void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
 
     const auto worldCentre = glm::vec2(worldSizeX / 2.0F, worldSizeY / 2.0F);
 
+
     // generate vertices
     for (int i = 0; i < chunkSize + 1; i++) {
         for (int j = 0; j < chunkSize + 1; j++) {
@@ -163,7 +180,7 @@ void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
             const float zCoord =
                     static_cast<float>(yOffset + i) - worldSizeY / 2.0F;
 
-            const float yCoord = Noise::Simplex(glm::vec2(xCoord, zCoord));
+            const float yCoord = getTerrainHeight(xCoord, zCoord);
 
             chunk.vertices.push_back(Vertex::Data{{xCoord, yCoord, zCoord}});
         }

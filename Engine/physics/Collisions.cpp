@@ -164,7 +164,9 @@ namespace Physics::Collisions {
     }
 
     auto check(const Entity &a, const ProceduralTerrain &b) -> bool {
-        return b.intersectRay(a.attributes.position);
+        return std::ranges::any_of(a.getBoundingBox().getCorners(), [&b](const auto &corner) {
+            return b.intersectRay(corner);
+        });
     }
 } // namespace Physics::Collisions
 

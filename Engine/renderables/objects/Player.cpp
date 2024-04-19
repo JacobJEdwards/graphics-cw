@@ -55,11 +55,9 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") 
             camera->setMode(Camera::Mode::DRIVE);
             car = std::make_shared<BumperCar>();
             car->setMode(BumperCar::Mode::NONE);
-            carModelMat = glm::scale(carModelMat, glm::vec3(4.0F));
+        // carModelMat = glm::scale(carModelMat, glm::vec3(4.0F));
             car->transform(carModelMat);
             car->shouldDrawPlayer(false);
-            car->attributes.gravityAffected = false;
-            car->attributes.position = attributes.position;
             box = car->getBoundingBox();
             break;
     }
@@ -76,10 +74,18 @@ void Player::processKeyboard(const Direction direction, const float /*deltaTime*
 
     switch (direction) {
         case Direction::FORWARD:
-            attributes.applyForce(front * 30.0F);
+            if (mode == Mode::DRIVE) {
+                car->attributes.applyForce(front * 50.0F);
+            } else {
+                attributes.applyForce(front * 10.0F);
+            }
             break;
         case Direction::BACKWARD:
-            attributes.applyForce(-front * 10.0F);
+            if (mode == Mode::DRIVE) {
+                car->attributes.applyForce(-front * 50.0F);
+            } else {
+                attributes.applyForce(-front * 10.0F);
+            }
             break;
         case Direction::LEFT:
             if (mode == Mode::DRIVE) {
@@ -135,7 +141,7 @@ void Player::update(const float dt) {
 
     if (nitroActive) {
         if (mode == Mode::DRIVE) {
-            attributes.applyForce(car->attributes.getFront() * nitroForce);
+            car->attributes.applyForce(car->attributes.getFront() * nitroForce);
         } else {
             attributes.applyForce(camera->getFront() * nitroForce);
         }
@@ -167,10 +173,10 @@ void Player::update(const float dt) {
     }
 
     if (mode == Mode::DRIVE) {
-        car->update(dt);
-
         const auto front = car->attributes.getFront();
-        car->attributes.position = attributes.position + front * 0.5F;
+        const auto pos = car->attributes.position;
+
+        attributes.position = pos;
         camera->setPosition(attributes.position + glm::vec3(0.0F, 4.5F, 0.0F));
 
         return;

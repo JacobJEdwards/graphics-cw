@@ -13,13 +13,14 @@ namespace Noise {
     constexpr float FREQUENCY = 1.0F;
     constexpr unsigned int OCTAVES = 1U;
     constexpr float PERSISTENCE = 0.5F;
+    constexpr float LACUNARITY = 2.0F;
 
     template<typename T>
     auto
     Perlin(const T &pos, const float scale = SCALE, const float amplitude = AMPLITUDE,
            const float frequency = FREQUENCY,
            const int octaves = OCTAVES,
-           const float persistence = PERSISTENCE) -> float {
+           const float persistence = PERSISTENCE, const float lacunarity = LACUNARITY) -> float {
         float noise = 0.0F;
         float maxNoise = 0.0F;
         float amp = amplitude;
@@ -28,7 +29,7 @@ namespace Noise {
             noise += glm::perlin(pos * scale * freq) * amp;
             maxNoise += amp;
             amp *= persistence;
-            freq *= 2.0F;
+            freq *= lacunarity;
         }
         return noise / maxNoise;
     }
@@ -37,7 +38,7 @@ namespace Noise {
     auto Simplex(const T &pos, const float scale = SCALE, const float amplitude = AMPLITUDE, const float frequency =
                          FREQUENCY,
                  const int octaves = OCTAVES,
-                 const float persistence = PERSISTENCE) -> float {
+                 const float persistence = PERSISTENCE, const float lacunarity = LACUNARITY) -> float {
         float noise = 0.0F;
         float maxNoise = 0.0F;
         float amp = amplitude;
@@ -46,7 +47,7 @@ namespace Noise {
             noise += glm::simplex(pos * scale * freq) * amp;
             maxNoise += amp;
             amp *= persistence;
-            freq *= 2.0F;
+            freq *= lacunarity;
         }
         return noise / maxNoise;
     }

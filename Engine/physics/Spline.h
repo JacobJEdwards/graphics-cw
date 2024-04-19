@@ -12,7 +12,7 @@
 #include "renderables/Renderable.h"
 
 namespace Physics {
-    class Spline : public Renderable {
+    class Spline final : public Renderable {
     public:
         enum class Type {
             CATMULLROM,
@@ -36,11 +36,14 @@ namespace Physics {
 
         void setSpeed(float speed);
 
+        [[nodiscard]] auto getLaps() const -> std::size_t;
+
         void invert();
 
         void randomise();
 
-    private:
+    private
+    :
         std::vector<glm::vec3> points;
         Type type = Type::CATMULLROM;
         float speed{};
@@ -50,6 +53,8 @@ namespace Physics {
         std::size_t p1Index = 1U;
         std::size_t p2Index = 2U;
         std::size_t p3Index = 3U;
+
+        std::size_t laps = 0U;
 
         std::unique_ptr<Buffer> buffer;
 

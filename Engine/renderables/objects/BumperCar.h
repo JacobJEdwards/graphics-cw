@@ -46,11 +46,43 @@ public:
         trackablePositions.push_back(position);
     }
 
+    void addTrackableEntity(const std::shared_ptr<Entity> &entity) {
+        if (entity == nullptr) {
+            return;
+        }
+
+        if (std::ranges::find(trackableEntities, entity) != trackableEntities.end()) {
+            return;
+        }
+
+        if (entity.get() == this) {
+            return;
+        }
+
+        trackableEntities.push_back(entity);
+    }
+
     void clearTrackablePositions() {
         trackablePositions.clear();
     }
 
+    [[nodiscard]] auto getPoints() const -> const std::vector<glm::vec3> & {
+        return points;
+    }
+
+    [[nodiscard]] auto getLaps() const -> std::size_t {
+        return spline.getLaps();
+    }
+
     static void Interface();
+
+    void setBroken(const bool broken) {
+        isBroken = broken;
+    }
+
+    [[nodiscard]] auto hasBroke() const -> bool {
+        return isBroken;
+    }
 
 private:
     Mode mode = Mode::AUTO;
@@ -60,6 +92,7 @@ private:
     Physics::Spline spline;
     std::vector<glm::vec3> points;
     std::vector<glm::vec3> trackablePositions;
+    std::vector<std::shared_ptr<Entity> > trackableEntities;
 
     std::unique_ptr<Model> person;
 
@@ -68,6 +101,9 @@ private:
     static bool paused;
     static float trackingDistance;
     static float ventureDistance;
+
+    bool isBroken = false;
+    float brokenTime = 0.0F;
 
     bool drawPlayer = true;
 };

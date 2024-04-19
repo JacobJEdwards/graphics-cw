@@ -6,9 +6,13 @@
 #define CW_SHADER_H
 
 #include <GL/glew.h>
+#include <cstddef>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/glm.hpp>
 
 #include <filesystem>
 #include <string>
+#include <vector>
 
 class Shader {
 public:
@@ -40,6 +44,14 @@ public:
     void setUniform(const std::string &name, T value) const;
 
     template<typename T>
+    void setUniform(const std::string &name, T value, std::size_t count) const;
+
+    void setVec3Array(const std::string &name, const std::vector<glm::vec3> &values) const {
+        const auto location = glGetUniformLocation(ID, name.c_str());
+        glUniform3fv(location, static_cast<GLsizei>(values.size()), &values[0][0]);
+    }
+
+    template<typename T>
     auto getUniform(const std::string &name) const -> T;
 
 private:
@@ -68,7 +80,7 @@ private:
     static auto readShaderFile(const std::filesystem::path &path) -> std::string;
 
     static auto compileShader(const std::string &shaderCode, GLenum shaderType)
-    -> GLuint;
+        -> GLuint;
 };
 
 #endif // CW_SHADER_H

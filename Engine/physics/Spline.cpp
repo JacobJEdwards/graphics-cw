@@ -113,7 +113,12 @@ void Physics::Spline::update(const float dt) {
         p1Index = (p1Index + 1U) % numPoints;
         p2Index = (p2Index + 1U) % numPoints;
         p3Index = (p3Index + 1U) % numPoints;
+        laps++;
     }
+}
+
+auto Physics::Spline::getLaps() const -> std::size_t {
+    return laps;
 }
 
 void Physics::Spline::draw(const std::shared_ptr<Shader> shader) const {

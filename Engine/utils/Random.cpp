@@ -26,6 +26,10 @@ namespace Random {
         return dis(gen);
     }
 
+    auto Vec2(const float min, const float max) -> glm::vec2 {
+        return {Float(min, max), Float(min, max)};
+    }
+
     auto Vec3(const float min, const float max) -> glm::vec3 {
         return {Float(min, max), Float(min, max), Float(min, max)};
     }

@@ -13,7 +13,9 @@
 #include <limits>
 #include <memory>
 #include <vector>
+#include "graphics/Color.h"
 #include "graphics/Model.h"
+#include "physics/Spline.h"
 #include "utils/PlayerManager.h"
 #include "renderables/Entity.h"
 #include "App.h"
@@ -33,7 +35,7 @@ BumperCar::BumperCar(const glm::vec2 centre, const float radius, const float spe
     person = std::make_unique<Model>("../Assets/objects/person/person.obj");
 
 
-    const int numPoints = Random::Int(5, 20);
+    const int numPoints = Random::Int(10, 30);
 
     float angle = 0.0F;
     const float angleIncrement = glm::radians(360.0F / static_cast<float>(numPoints));
@@ -45,11 +47,34 @@ BumperCar::BumperCar(const glm::vec2 centre, const float radius, const float spe
         angle += angleIncrement;
     }
 
+    Physics::Spline::Type type;
 
-    spline = Physics::Spline(points, Physics::Spline::Type::CATMULLROM, speed);
-    spline.randomise();
+    switch (Random::Int(0, 4)) {
+        case 0:
+            type = Physics::Spline::Type::CATMULLROM;
+            break;
+        case 1:
+            type = Physics::Spline::Type::BEZIER;
+            break;
+        case 2:
+            type = Physics::Spline::Type::HERMITE;
+            break;
+        case 3:
+            type = Physics::Spline::Type::CUBIC;
+            break;
+        case 4:
+            type = Physics::Spline::Type::LINEAR;
+            break;
+        default:
+            type = Physics::Spline::Type::CATMULLROM;
+            break;
+    }
+
 
     this->speed *= Random::Float(0.8F, 1.2F);
+
+    spline = Physics::Spline(points, type, this->speed);
+    spline.randomise();
 
     attributes.mass = 10.0F;
 }
@@ -72,14 +97,25 @@ void BumperCar::update(const float deltaTime) {
         return;
     }
 
-    if (Random::Int(0, 100) == 0) {
-        ParticleSystem::GetInstance().generate(attributes.position, -attributes.velocity / 5.0F, Color::WHITE);
+    if (isBroken) {
+        brokenTime += deltaTime;
+        // fire
+        // num based on time, big at start, small at end
+        const int numParticles = std::max(1, static_cast<int>(10.0F - (brokenTime * 2.0F)));
+
+        ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(1.0F, 10.0F, 1.0F), Color::ORANGE,
+                                               numParticles);
+        Entity::update(deltaTime);
+        return;
+    }
+
+    if (Random::Int(0, 150) == 0) {
+        ParticleSystem::GetInstance().generate(attributes.position, -attributes.velocity / 5.0F, Color::WHITE, 10);
     }
 
 
     const auto point = spline.getPoint();
     const auto currentPos = attributes.position;
-    auto transform = attributes.transform;
 
     const auto forward = attributes.getFront();
 
@@ -103,15 +139,22 @@ void BumperCar::update(const float deltaTime) {
 
             auto closest = glm::vec3(0.0F);
             auto closestDistance = std::numeric_limits<float>::max();
-            for (const auto &trackablePosition: trackablePositions) {
+
+            std::vector<glm::vec3> positionList(trackablePositions.size() + trackableEntities.size() + 1U);
+
+            for (const auto &entity: trackableEntities) {
+                positionList.emplace_back(entity->attributes.getPosition());
+            }
+
+            positionList.insert(positionList.end(), trackablePositions.begin(), trackablePositions.end());
+
+            for (const auto &trackablePosition: positionList) {
                 auto toPos = normalize(trackablePosition - currentPos);
-                const auto angle = glm::degrees(glm::acos(dot(forward, toPos)));
-                if (angle > adjustedConeRadius) {
+                if (const auto angle = glm::degrees(glm::acos(dot(forward, toPos))); angle > adjustedConeRadius) {
                     continue;
                 }
 
-                const auto distance = glm::distance(currentPos, trackablePosition);
-                if (distance < closestDistance) {
+                if (const auto distance = glm::distance(currentPos, trackablePosition); distance < closestDistance) {
                     closest = trackablePosition;
                     closestDistance = distance;
                 }

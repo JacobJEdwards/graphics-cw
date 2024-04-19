@@ -8,36 +8,36 @@ in vec2 TexCoords;
 out vec4 FragColor;
 
 uniform vec3 sunColor = vec3(1.0, 0.9, 0.6);
-uniform vec3 sunPos = vec3(0.0, 100.0, 0.0);// Position of the sun
+uniform vec3 sunPos = vec3(0.0, 100.0, 0.0);
 
-uniform vec3 horizonColor = vec3(0.5, 0.6, 0.7);// Color of the horizon
-uniform vec3 zenithColor = vec3(0.4, 0.7, 1.0);// Color of the zenith (top of the sky)
+uniform vec3 horizonColor = vec3(0.5, 0.6, 0.7);
+uniform vec3 zenithColor = vec3(0.4, 0.7, 1.0);
 uniform vec4 cloudColor = vec4(1.0, 1.0, 1.0, 0.95);
 
-uniform float cloudCover = 0.6;// Amount of cloud cover
-uniform float cloudSharpness = 0.5;// Sharpness of the clouds
-uniform float cloudDensity = 0.6;// Density of the clouds
-uniform float cloudScale = 0.02;// Scale of the clouds
-uniform float cloudSpeed = 0.005;// Speed of cloud movement
+uniform float cloudCover = 0.6;
+uniform float cloudSharpness = 0.5;
+uniform float cloudDensity = 0.6;
+uniform float cloudScale = 0.02;
+uniform float cloudSpeed = 0.005;
 
-uniform float sunSize = 8.0;// Size of the sun
-uniform float sunSharpness = 30.0;// Sharpness of the sun
-uniform float sunIntensity =  1.5;// Intensity of sunlight
+uniform float sunSize = 8.0;
+uniform float sunSharpness = 30.0;
+uniform float sunIntensity =  1.5;
 
-uniform float horizonHeight = 0.2;// Height of the horizon
-uniform float horizonSharpness = 0.9;// Sharpness of the horizon
+uniform float horizonHeight = 0.2;
+uniform float horizonSharpness = 0.9;
 
-uniform float zenithHeight = 0.8;// Height of the zenith
-uniform float zenithSharpness = 0.9;// Sharpness of the zenith
+uniform float zenithHeight = 0.8;
+uniform float zenithSharpness = 0.9;
 
 uniform vec3 skyColor = vec3(0.5, 0.6, 0.7);
 
-uniform float time = 0.0;// Time variable for animation or time-based effects
+uniform float time = 0.0;
 
 // stars
-uniform float starDensity = 0.00001;// Density of stars
-uniform float starSharpness = 1.0;// Sharpness of stars
-uniform float starSize = 0.01;// Size of stars
+uniform float starDensity = 0.00001;
+uniform float starSharpness = 1.0;
+uniform float starSize = 0.01;
 
 float hash(float n) {
     return fract(sin(n) * 43758.5453123);
@@ -92,8 +92,7 @@ void main() {
     finalSkyColor = mix(finalSkyColor, vec3(0.001, 0.001, 0.001), 1.0 - sunHeightFactor);
     cloud = mix(cloud, vec4(0.0, 0.0, 0.0, 0.0), 1.0 - sunHeightFactor);
 
-    // stars
-    float starProb = step(hash(FragPosWorld.x * 0.1 + FragPosWorld.y * 0.1), starDensity);
+    float starProb = step(hash((FragPosWorld.x + FragPosWorld.y + FragPosWorld.z) * 0.1), starDensity);
     vec3 stars = vec3(1.0, 1.0, 1.0) * starProb;
 
     stars = mix(vec3(0.0, 0.0, 0.0), stars, 1.0 - sunHeightFactor);
@@ -104,7 +103,7 @@ void main() {
     finalSkyColor = mix(finalSkyColor, cloud.rgb, cloud.a);
 
     // add stars
-    finalSkyColor += stars;
+    if (sunPos.y < 0.0) finalSkyColor += stars;
 
     FragColor = vec4(finalSkyColor, 1.0);
 }

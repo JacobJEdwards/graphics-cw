@@ -74,6 +74,8 @@ public:
 
     void rotate(const glm::vec3 &rotation);
 
+    [[nodiscard]] auto getCorners() const -> std::vector<glm::vec3>;
+
     [[nodiscard]] auto getOffset(const glm::vec3 &point) const -> glm::vec3;
 
     [[nodiscard]] auto getOffset(const BoundingBox &other) const -> glm::vec3;
@@ -88,7 +90,7 @@ public:
 
     [[nodiscard]] auto getCollisionPoint(const BoundingBox &box) const -> glm::vec3;
 
-    void addChildren(std::vector<std::unique_ptr<BoundingBox>> &children);
+    void addChildren(std::vector<std::unique_ptr<BoundingBox> > &children);
 
     void addChild(std::unique_ptr<BoundingBox> &child);
 
@@ -96,7 +98,7 @@ public:
 
     void setParent(BoundingBox *parent);
 
-    [[nodiscard]] auto getChildren() const -> const std::vector<std::unique_ptr<BoundingBox>> &;
+    [[nodiscard]] auto getChildren() const -> const std::vector<std::unique_ptr<BoundingBox> > &;
 
     [[nodiscard]] auto getParent() const -> BoundingBox *;
 
@@ -106,7 +108,7 @@ private:
 
     std::unique_ptr<Buffer> buffer;
 
-    std::vector<std::unique_ptr<BoundingBox>> children;
+    std::vector<std::unique_ptr<BoundingBox> > children;
     BoundingBox *parent = nullptr;
 
     void initBuffer();

@@ -107,11 +107,27 @@ void Camera::setFixed(const glm::vec3 target, const glm::vec3 position) {
 
 [[nodiscard]] auto Camera::getPosition() const -> glm::vec3 { return position; }
 
-[[nodiscard]] auto Camera::getFront() const -> glm::vec3 { return front; }
+[[nodiscard]] auto Camera::getFront() const -> glm::vec3 {
+    if (mode == Mode::ORBIT) {
+        return normalize(target - position);
+    }
+    return front;
+}
 
-[[nodiscard]] auto Camera::getUp() const -> glm::vec3 { return up; }
+[[nodiscard]] auto Camera::getUp() const -> glm::vec3 {
+    if (mode == Mode::ORBIT) {
+        return {0.0F, 1.0F, 0.0F};
+    }
+    return up;
+}
 
-[[nodiscard]] auto Camera::getRight() const -> glm::vec3 { return right; }
+[[nodiscard]] auto Camera::getRight() const -> glm::vec3 {
+    if (mode == Mode::ORBIT) {
+        return normalize(cross(getFront(), getUp()));
+    }
+
+    return right;
+}
 
 [[nodiscard]] auto Camera::getWorldUp() const -> glm::vec3 { return worldUp; }
 

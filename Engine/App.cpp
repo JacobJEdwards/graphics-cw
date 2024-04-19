@@ -29,7 +29,6 @@ auto App::init() -> bool {
     glViewport(0, 0, static_cast<GLsizei>(view.getWidth()), static_cast<GLsizei>(view.getHeight()));
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_FRAMEBUFFER_SRGB);
@@ -38,6 +37,7 @@ auto App::init() -> bool {
     glEnable(GL_PROGRAM_POINT_SIZE);
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
     return true;
 }

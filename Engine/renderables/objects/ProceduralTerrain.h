@@ -17,9 +17,9 @@
 #include "renderables/Renderable.h"
 
 constexpr auto DEFAULT_CENTRE = glm::vec2{0.0F, 0.0F};
-constexpr auto DEFAULT_CHUNK_SIZE = 64;
-constexpr auto DEFAULT_NUM_CHUNKS_X = 8;
-constexpr auto DEFAULT_NUM_CHUNKS_Y = 8;
+constexpr auto DEFAULT_CHUNK_SIZE = 32;
+constexpr auto DEFAULT_NUM_CHUNKS_X = 16;
+constexpr auto DEFAULT_NUM_CHUNKS_Y = 16;
 
 class ProceduralTerrain final : public Renderable {
     struct Chunk {
@@ -64,6 +64,7 @@ public:
 
 private:
     std::vector<Chunk> chunks;
+    std::vector<Chunk> distantChunks;
 
     glm::vec2 centre;
     glm::vec2 worldCentre;

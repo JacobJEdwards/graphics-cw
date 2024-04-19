@@ -3,6 +3,7 @@
 //
 
 #include <array>
+#include <cstddef>
 #include <exception>
 #include <filesystem>
 #include <fstream>
@@ -241,6 +242,41 @@ void Shader::setUniform(const std::string &name,
     glUniformMatrix2x4dv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
                          value_ptr(value));
 }
+
+
+template<typename T>
+void Shader::setUniform(const std::string &name, T /*value*/, std::size_t /*count*/) const {
+    const std::string error = "Invalid type for uniform " + name;
+    std::cerr << error << std::endl;
+}
+
+template<>
+void Shader::setUniform(const std::string &name, const glm::mat4 value, const std::size_t count) const {
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), count, GL_FALSE,
+                       value_ptr(value));
+}
+
+template<>
+void Shader::setUniform(const std::string &name, const glm::mat3 value, const std::size_t count) const {
+    glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), count, GL_FALSE,
+                       value_ptr(value));
+}
+
+template<>
+void Shader::setUniform(const std::string &name, const glm::vec4 value, const std::size_t count) const {
+    glUniform4fv(glGetUniformLocation(ID, name.c_str()), count, value_ptr(value));
+}
+
+template<>
+void Shader::setUniform(const std::string &name, const glm::vec3 value, const std::size_t count) const {
+    glUniform3fv(glGetUniformLocation(ID, name.c_str()), count, value_ptr(value));
+}
+
+template<>
+void Shader::setUniform(const std::string &name, const glm::vec2 value, const std::size_t count) const {
+    glUniform2fv(glGetUniformLocation(ID, name.c_str()), count, value_ptr(value));
+}
+
 
 template<typename T>
 auto Shader::getUniform(const std::string &name) const -> T {

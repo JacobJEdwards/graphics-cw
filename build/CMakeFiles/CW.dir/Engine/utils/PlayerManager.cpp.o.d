@@ -56,64 +56,88 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/os/availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/filesystem \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/time_point.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/duration.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/ordering.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_same.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/three_way_comparable.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/common_comparison_category.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/common_reference_with.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/convertible_to.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_convertible.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_array.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_function.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_const.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_reference.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_void.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/remove_reference.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__utility/declval.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/same_as.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/common_reference.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/common_type.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/conditional.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/decay.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_pointer.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_referenceable.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/remove_extent.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/remove_cvref.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/void_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/copy_cv.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_const.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_cv.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_volatile.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/copy_cvref.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_lvalue_reference.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_rvalue_reference.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/equality_comparable.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/boolean_testable.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__utility/forward.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/make_const_lvalue_ref.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/totally_ordered.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_floating_point.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_arithmetic.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_signed.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__undef_macros \
+  /opt/homebrew/include/glm/ext/vector_float3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/qualifier.hpp \
+  /opt/homebrew/include/glm/ext/../detail/setup.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cassert \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/assert.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stdlib.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/stdlib.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/wait.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_pid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_id_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/appleapiopts.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/_mcontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/_mcontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine/_structs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/arm/_structs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_pthread/_pthread_attr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_sigaltstack.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ucontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_sigset_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_size_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_uid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/resource.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_timeval.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/libkern/_OSByteOrder.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/libkern/arm/OSByteOrder.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/arch.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/alloca.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ct_rune_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rune_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_wchar_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_null.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_malloc.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_malloc_type.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_ptrcheck.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_dev_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_mode_t.h \
+  /opt/homebrew/include/glm/ext/../detail/../simd/platform.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/type_traits \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/hash.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_const.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_cv.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_lvalue_reference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_referenceable.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_same.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_pointer.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_void.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/remove_reference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_rvalue_reference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_volatile.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/aligned_storage.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/conditional.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/nat.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/type_list.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/aligned_union.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/alignment_of.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/apply_cv.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_const.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_volatile.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/can_extract_key.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/pair.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/remove_const_ref.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/common_reference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/common_type.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/decay.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_array.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_reference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/remove_extent.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/remove_cvref.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/void_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__utility/declval.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/copy_cv.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/copy_cvref.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_convertible.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/conjunction.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/dependent_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/disjunction.h \
@@ -127,8 +151,11 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_member_function_pointer.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_member_object_pointer.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_reference_wrapper.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__utility/forward.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_abstract.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_aggregate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_arithmetic.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_floating_point.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_assignable.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_bounded_array.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_callable.h \
@@ -171,6 +198,7 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_polymorphic.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_scoped_enum.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/underlying_type.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_signed.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_specialization.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_swappable.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_trivially_assignable.h \
@@ -184,6 +212,7 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_trivially_move_constructible.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_unbounded_array.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_unsigned.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/make_const_lvalue_ref.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/make_signed.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/make_unsigned.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/maybe_const.h \
@@ -194,7 +223,17 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/invoke.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/type_identity.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/unwrap_ref.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ratio \
+  /opt/homebrew/include/glm/ext/../detail/type_vec3.inl \
+  /opt/homebrew/include/glm/ext/../detail/compute_vector_relational.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__undef_macros \
+  /opt/homebrew/include/glm/glm.hpp \
+  /opt/homebrew/include/glm/detail/_fixes.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cmath \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/promote.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/math.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/math.h \
+  /opt/homebrew/include/glm/detail/setup.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/climits \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/limits.h \
@@ -203,6 +242,167 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/limits.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/_limits.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/syslimits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cfloat \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/float.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/float.h \
+  /opt/homebrew/include/glm/fwd.hpp \
+  /opt/homebrew/include/glm/detail/qualifier.hpp \
+  /opt/homebrew/include/glm/vec2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec2.inl \
+  /opt/homebrew/include/glm/ext/../detail/./compute_vector_relational.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int2_sized.hpp \
+  /opt/homebrew/include/glm/ext/../ext/vector_int2.hpp \
+  /opt/homebrew/include/glm/ext/../ext/scalar_int_sized.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint2_sized.hpp \
+  /opt/homebrew/include/glm/ext/../ext/vector_uint2.hpp \
+  /opt/homebrew/include/glm/ext/../ext/scalar_uint_sized.hpp \
+  /opt/homebrew/include/glm/vec3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int3_sized.hpp \
+  /opt/homebrew/include/glm/ext/../ext/vector_int3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint3_sized.hpp \
+  /opt/homebrew/include/glm/ext/../ext/vector_uint3.hpp \
+  /opt/homebrew/include/glm/vec4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec4.inl \
+  /opt/homebrew/include/glm/./ext/vector_bool4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int4_sized.hpp \
+  /opt/homebrew/include/glm/ext/../ext/vector_int4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint4_sized.hpp \
+  /opt/homebrew/include/glm/ext/../ext/vector_uint4.hpp \
+  /opt/homebrew/include/glm/mat2x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double2x2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat2x2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat2x2.inl \
+  /opt/homebrew/include/glm/ext/../detail/../matrix.hpp \
+  /opt/homebrew/include/glm/mat2x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double2x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat2x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat2x3.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double2x3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x3_precision.hpp \
+  /opt/homebrew/include/glm/mat2x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double2x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat2x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat2x4.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double2x4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x4_precision.hpp \
+  /opt/homebrew/include/glm/mat3x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double3x2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x2.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double3x2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x2_precision.hpp \
+  /opt/homebrew/include/glm/mat3x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double3x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double3x3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x3_precision.hpp \
+  /opt/homebrew/include/glm/mat3x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double3x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat3x4.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double3x4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x4_precision.hpp \
+  /opt/homebrew/include/glm/mat4x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double4x2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x2.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x2.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double4x2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x2_precision.hpp \
+  /opt/homebrew/include/glm/mat4x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double4x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x3.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double4x3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x3_precision.hpp \
+  /opt/homebrew/include/glm/mat4x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double4x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double4x4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x4_precision.hpp \
+  /opt/homebrew/include/glm/detail/func_matrix.inl \
+  /opt/homebrew/include/glm/ext/../detail/../geometric.hpp \
+  /opt/homebrew/include/glm/detail/type_vec3.hpp \
+  /opt/homebrew/include/glm/detail/func_geometric.inl \
+  /opt/homebrew/include/glm/ext/../detail/../exponential.hpp \
+  /opt/homebrew/include/glm/detail/type_vec1.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec1.inl \
+  /opt/homebrew/include/glm/detail/type_vec2.hpp \
+  /opt/homebrew/include/glm/detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/detail/func_exponential.inl \
+  /opt/homebrew/include/glm/ext/../detail/../vector_relational.hpp \
+  /opt/homebrew/include/glm/detail/func_vector_relational.inl \
+  /opt/homebrew/include/glm/ext/../detail/_vectorize.hpp \
+  /opt/homebrew/include/glm/ext/../detail/../common.hpp \
+  /opt/homebrew/include/glm/detail/func_common.inl \
+  /opt/homebrew/include/glm/ext/../detail/compute_common.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec1.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double2x2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x2_precision.hpp \
+  /opt/homebrew/include/glm/trigonometric.hpp \
+  /opt/homebrew/include/glm/detail/func_trigonometric.inl \
+  /opt/homebrew/include/glm/exponential.hpp \
+  /opt/homebrew/include/glm/common.hpp \
+  /opt/homebrew/include/glm/packing.hpp \
+  /opt/homebrew/include/glm/detail/func_packing.inl \
+  /opt/homebrew/include/glm/ext/../detail/type_half.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_half.inl \
+  /opt/homebrew/include/glm/geometric.hpp \
+  /opt/homebrew/include/glm/matrix.hpp \
+  /opt/homebrew/include/glm/vector_relational.hpp \
+  /opt/homebrew/include/glm/integer.hpp \
+  /opt/homebrew/include/glm/detail/func_integer.inl \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/filesystem \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/time_point.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/duration.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/ordering.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/three_way_comparable.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/common_comparison_category.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/common_reference_with.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/convertible_to.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/same_as.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/equality_comparable.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/boolean_testable.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/totally_ordered.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ratio \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/file_status.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/file_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/perms.h \
@@ -211,10 +411,7 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/system_clock.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ctime \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/time.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_types.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_clock_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_null.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_size_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_time_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_timespec.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/filesystem_error.h \
@@ -298,41 +495,6 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/new \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__exception/exception.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cstdlib \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stdlib.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/stdlib.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/wait.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_pid_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_id_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/signal.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/appleapiopts.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/signal.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/signal.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/_mcontext.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/_mcontext.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/machine/_structs.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/mach/arm/_structs.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_pthread/_pthread_attr_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_sigaltstack.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ucontext.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_sigset_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_uid_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/resource.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_timeval.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/endian.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/endian.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_endian.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/libkern/_OSByteOrder.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/libkern/arm/OSByteOrder.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/arch.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/alloca.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ct_rune_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rune_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_wchar_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_malloc.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_malloc_type.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_ptrcheck.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_dev_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_mode_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/exception \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__exception/exception_ptr.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__exception/operations.h \
@@ -426,10 +588,6 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/strong_order.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__bit/bit_cast.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__utility/priority_tag.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cmath \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/promote.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/math.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/compare_strong_order_fallback.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/compare_weak_order_fallback.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__compare/is_eq.h \
@@ -848,177 +1006,6 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Player.h \
-  /opt/homebrew/include/glm/ext/vector_float3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/qualifier.hpp \
-  /opt/homebrew/include/glm/ext/../detail/setup.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cassert \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/assert.h \
-  /opt/homebrew/include/glm/ext/../detail/../simd/platform.h \
-  /opt/homebrew/include/glm/ext/../detail/type_vec3.inl \
-  /opt/homebrew/include/glm/ext/../detail/compute_vector_relational.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/BumperCar.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
-  /opt/homebrew/include/assimp/material.h \
-  /opt/homebrew/include/assimp/types.h \
-  /opt/homebrew/include/assimp/defs.h \
-  /opt/homebrew/include/assimp/config.h \
-  /opt/homebrew/include/assimp/vector2.h \
-  /opt/homebrew/include/assimp/vector3.h \
-  /opt/homebrew/include/assimp/color4.h \
-  /opt/homebrew/include/assimp/matrix3x3.h \
-  /opt/homebrew/include/assimp/matrix4x4.h \
-  /opt/homebrew/include/assimp/quaternion.h \
-  /opt/homebrew/include/assimp/vector2.inl \
-  /opt/homebrew/include/assimp/vector3.inl \
-  /opt/homebrew/include/assimp/color4.inl \
-  /opt/homebrew/include/assimp/matrix3x3.inl \
-  /opt/homebrew/include/assimp/matrix4x4.inl \
-  /opt/homebrew/include/assimp/MathFunctions.h \
-  /opt/homebrew/include/assimp/quaternion.inl \
-  /opt/homebrew/include/assimp/./Compiler/pushpack1.h \
-  /opt/homebrew/include/assimp/./Compiler/poppack1.h \
-  /opt/homebrew/include/assimp/material.inl \
-  /opt/homebrew/include/assimp/mesh.h \
-  /opt/homebrew/include/assimp/aabb.h \
-  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec4.inl \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.inl \
-  /opt/homebrew/include/glm/ext/../detail/../matrix.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/qualifier.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/setup.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../vec2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec2.inl \
-  /opt/homebrew/include/glm/ext/../detail/./compute_vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int2_sized.hpp \
-  /opt/homebrew/include/glm/ext/../ext/vector_int2.hpp \
-  /opt/homebrew/include/glm/ext/../ext/scalar_int_sized.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint2_sized.hpp \
-  /opt/homebrew/include/glm/ext/../ext/vector_uint2.hpp \
-  /opt/homebrew/include/glm/ext/../ext/scalar_uint_sized.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../vec3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int3_sized.hpp \
-  /opt/homebrew/include/glm/ext/../ext/vector_int3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint3_sized.hpp \
-  /opt/homebrew/include/glm/ext/../ext/vector_uint3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../vec4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int4_sized.hpp \
-  /opt/homebrew/include/glm/ext/../ext/vector_int4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint4_sized.hpp \
-  /opt/homebrew/include/glm/ext/../ext/vector_uint4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat2x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x2.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat2x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x3.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat2x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x4.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat3x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x2.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat3x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x4.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat4x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x2.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat4x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x3.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_matrix.inl \
-  /opt/homebrew/include/glm/ext/../detail/../geometric.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_geometric.inl \
-  /opt/homebrew/include/glm/ext/../detail/../exponential.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec1.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec1.inl \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_exponential.inl \
-  /opt/homebrew/include/glm/ext/../detail/../vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_vector_relational.inl \
-  /opt/homebrew/include/glm/ext/../detail/_vectorize.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../common.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/_fixes.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_common.inl \
-  /opt/homebrew/include/glm/ext/../detail/compute_common.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec1.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/unordered_map \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/is_transparent.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__hash_table \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__iterator/ranges_iterator_traits.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__node_handle \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/optional \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/vector \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__format/formatter.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__format/format_fwd.h \
@@ -1045,6 +1032,38 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/array \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/temp_value.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__split_buffer \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Player.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/BumperCar.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
+  /opt/homebrew/include/assimp/material.h \
+  /opt/homebrew/include/assimp/types.h \
+  /opt/homebrew/include/assimp/defs.h \
+  /opt/homebrew/include/assimp/config.h \
+  /opt/homebrew/include/assimp/vector2.h \
+  /opt/homebrew/include/assimp/vector3.h \
+  /opt/homebrew/include/assimp/color4.h \
+  /opt/homebrew/include/assimp/matrix3x3.h \
+  /opt/homebrew/include/assimp/matrix4x4.h \
+  /opt/homebrew/include/assimp/quaternion.h \
+  /opt/homebrew/include/assimp/vector2.inl \
+  /opt/homebrew/include/assimp/vector3.inl \
+  /opt/homebrew/include/assimp/color4.inl \
+  /opt/homebrew/include/assimp/matrix3x3.inl \
+  /opt/homebrew/include/assimp/matrix4x4.inl \
+  /opt/homebrew/include/assimp/MathFunctions.h \
+  /opt/homebrew/include/assimp/quaternion.inl \
+  /opt/homebrew/include/assimp/./Compiler/pushpack1.h \
+  /opt/homebrew/include/assimp/./Compiler/poppack1.h \
+  /opt/homebrew/include/assimp/material.inl \
+  /opt/homebrew/include/assimp/mesh.h \
+  /opt/homebrew/include/assimp/aabb.h \
+  /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/unordered_map \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/is_transparent.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__hash_table \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__iterator/ranges_iterator_traits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__node_handle \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/optional \
   /opt/homebrew/include/assimp/Importer.hpp \
   /opt/homebrew/include/assimp/scene.h \
   /opt/homebrew/include/assimp/texture.h \
@@ -1089,9 +1108,6 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/float.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/float.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/float.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ranges \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/all.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/owning_view.h \
