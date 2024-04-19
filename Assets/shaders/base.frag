@@ -1,5 +1,10 @@
 #version 410 core
 
+struct Light {
+    vec3 position;
+    vec3 color;
+};
+
 out vec4 FragColor;
 
 in vec2 TexCoords;
@@ -10,8 +15,9 @@ in vec4 FragPosLightSpace;
 
 uniform sampler2D shadowMap;
 
-uniform vec3 lightPos;
 uniform vec3 viewPos;
+
+uniform Light light;
 
 
 // points that have been pathed
@@ -20,6 +26,8 @@ uniform int pathedPointsCount = 0;
 uniform float pathedPointsRadius = 5.0;
 uniform float pathDarkness = 0.5;
 
+const vec3 grassColor = vec3(0.2, 0.8, 0.2);
+const vec3 pathColor = vec3(0.2, 0.1, 0.0);
 
 // noise funcs
 float rand(vec2 co){
@@ -72,14 +80,33 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 }
 
 void main() {
-    vec3 color = vec3(0.2, 0.8, 0.2);
+    vec3 color = grassColor;
     float shadow = ShadowCalculation(FragPosLightSpace);
 
+
+    /*
     for (int i = 0; i < pathedPointsCount; i++) {
         vec3 pathedPoint = pathedPoints[i];
         float dist = distance(pathedPoint, FragPos);
         if (dist < pathedPointsRadius) {
-            color = mix(color, vec3(0.2, 0.1, 0.0), pathDarkness);
+            color = mix(color, pathColor, pathDarkness);
+        }
+    }
+    */
+
+    for (int i = 0; i < pathedPointsCount - 1; i++) {
+        vec3 pathedPoint = pathedPoints[i];
+        vec3 nextPathedPoint = pathedPoints[i + 1];
+
+        float distToSegment = distance(nextPathedPoint, pathedPoint);
+        float distToStart = distance(FragPos, pathedPoint);
+        float distToEnd = distance(FragPos, nextPathedPoint);
+
+        float dotProduct = dot(normalize(nextPathedPoint - pathedPoint), normalize(FragPos - pathedPoint));
+
+        if (dotProduct >= 0.0 && dotProduct <= distToSegment && distToStart <= distToSegment && distToEnd <= distToSegment) {
+            color = mix(color, pathColor, pathDarkness);
+            break;
         }
     }
 
@@ -88,7 +115,7 @@ void main() {
 
     // diffuse
     vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(lightPos - FragPos);
+    vec3 lightDir = normalize(light.position - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * color;
 
@@ -104,6 +131,11 @@ void main() {
     // add random noise to the grass
     float noiseVal = fbm(TexCoords * 10.0);
     lighting += vec3(noiseVal * 0.1);
+
+    // if sun is below the horizon, make the grass darker, smooth
+    float sunHeight = light.position.y;
+    float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
+    lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
 
     FragColor = vec4(lighting, 1.0);
 }

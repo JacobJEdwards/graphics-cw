@@ -141,12 +141,17 @@ auto main() -> int {
         // render pass
         View::clearTarget(Color::BLACK);
 
+        const auto texture = shadowBuffer.getTexture();
+        glActiveTexture(GL_TEXTURE10);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
         shader = ShaderManager::Get("Base");
         shader->use();
         shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
+        shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
+        shader->setUniform("shadowMap", 10);
 
-        const auto texture = shadowBuffer.getTexture();
 
         for (const auto &model: models) {
             model->draw(viewMatrix, projectionMatrix);
