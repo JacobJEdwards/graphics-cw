@@ -1114,6 +1114,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
@@ -1158,5 +1159,4 @@ CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/zip_view.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/istream_view.h \
   /opt/homebrew/include/glm/vec2.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Particle.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Particle.h

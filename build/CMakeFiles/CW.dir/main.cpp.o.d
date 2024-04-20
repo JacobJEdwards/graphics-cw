@@ -1127,6 +1127,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/ProceduralTerrain.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Skybox.h \
@@ -1134,7 +1135,6 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/ShadowBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Particle.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Random.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ranges \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/all.h \

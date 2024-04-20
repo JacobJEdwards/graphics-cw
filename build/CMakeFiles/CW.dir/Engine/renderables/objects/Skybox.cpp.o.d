@@ -1107,4 +1107,5 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../matrix.hpp \
   /opt/homebrew/include/glm/ext/matrix_transform.inl \
   /opt/homebrew/include/glm/ext/matrix_float3x3.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h

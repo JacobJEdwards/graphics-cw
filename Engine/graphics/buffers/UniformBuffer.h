@@ -49,7 +49,7 @@ public:
 
     static void setUniformBlockBinding(const std::string &shaderName, const std::string &blockName, const GLuint
                                        bindingPoint) {
-        const auto shader = ShaderManager::Get(shaderName);
+        const auto shader = ShaderManager::GetInstance().get(shaderName);
         const GLuint blockIndex = glGetUniformBlockIndex(shader->getProgramID(), blockName.c_str());
         glUniformBlockBinding(shader->getProgramID(), blockIndex, bindingPoint);
     }

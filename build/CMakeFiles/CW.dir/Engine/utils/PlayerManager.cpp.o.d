@@ -1106,6 +1106,7 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ranges \

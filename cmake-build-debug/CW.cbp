@@ -228,9 +228,6 @@
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/BumperCar.h">
 			<Option target="CW"/>
 		</Unit>
-		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/InfinitePlane.h">
-			<Option target="CW"/>
-		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Player.cpp">
 			<Option target="CW"/>
 		</Unit>
@@ -295,9 +292,6 @@
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h">
-			<Option target="CW"/>
-		</Unit>
-		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h">
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.cpp">

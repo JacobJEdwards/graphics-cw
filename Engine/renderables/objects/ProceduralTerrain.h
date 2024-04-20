@@ -17,7 +17,7 @@
 #include "renderables/Renderable.h"
 
 constexpr auto DEFAULT_CENTRE = glm::vec2{0.0F, 0.0F};
-constexpr auto DEFAULT_CHUNK_SIZE = 32;
+constexpr auto DEFAULT_CHUNK_SIZE = 64;
 constexpr auto DEFAULT_NUM_CHUNKS_X = 16;
 constexpr auto DEFAULT_NUM_CHUNKS_Y = 16;
 

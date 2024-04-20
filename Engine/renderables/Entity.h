@@ -60,6 +60,8 @@ public:
 
     void rotate(const glm::vec3 &axis, float angle);
 
+    virtual void collisionResponse();
+
     Physics::Attributes attributes;
 
 protected:

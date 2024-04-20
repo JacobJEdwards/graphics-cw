@@ -5,6 +5,7 @@
 #include "ShaderManager.h"
 
 #include "graphics/Shader.h"
+#include <algorithm>
 #include <filesystem>
 #include <memory>
 #include "imgui/imgui.h"
@@ -12,22 +13,20 @@
 #include <string>
 #include <unordered_map>
 
-std::unordered_map<std::string, std::shared_ptr<Shader> > ShaderManager::Shaders;
-
-void ShaderManager::Add(const std::string &name, const std::filesystem::path &vertexPath,
+void ShaderManager::add(const std::string &name, const std::filesystem::path &vertexPath,
                         const std::filesystem::path &fragmentPath, const std::filesystem::path &geometryPath,
                         const std::filesystem::path &tessControlPath, const std::filesystem::path &tessEvalPath) {
-    Shaders[name] = std::make_shared<Shader>(vertexPath, fragmentPath, geometryPath, tessControlPath, tessEvalPath);
+    shaders[name] = std::make_shared<Shader>(vertexPath, fragmentPath, geometryPath, tessControlPath, tessEvalPath);
 }
 
-auto ShaderManager::Get(const std::string &name) -> std::shared_ptr<Shader> {
-    const auto it = Shaders.find(name);
+auto ShaderManager::get(const std::string &name) -> std::shared_ptr<Shader> {
+    const auto it = shaders.find(name);
 
-    return it != Shaders.end() ? it->second : nullptr;
+    return it != shaders.end() ? it->second : nullptr;
 }
 
-auto ShaderManager::Get(const GLuint id) -> std::shared_ptr<Shader> {
-    for (const auto &[name, shader]: Shaders) {
+auto ShaderManager::get(const GLuint id) -> std::shared_ptr<Shader> {
+    for (const auto &[name, shader]: shaders) {
         if (shader->getProgramID() == id) {
             return shader;
         }
@@ -36,16 +35,16 @@ auto ShaderManager::Get(const GLuint id) -> std::shared_ptr<Shader> {
     return nullptr;
 }
 
-auto ShaderManager::GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader> > {
-    return Shaders;
+auto ShaderManager::getAll() -> std::unordered_map<std::string, std::shared_ptr<Shader> > & {
+    return shaders;
 }
 
-void ShaderManager::Remove(const std::string &name) {
-    Shaders.erase(name);
+void ShaderManager::remove(const std::string &name) {
+    shaders.erase(name);
 }
 
-void ShaderManager::Clear() {
-    Shaders.clear();
+void ShaderManager::clear() {
+    shaders.clear();
 }
 
 auto ShaderManager::GetActiveShader() -> GLuint {
@@ -55,13 +54,14 @@ auto ShaderManager::GetActiveShader() -> GLuint {
     return static_cast<GLuint>(currentProgram);
 }
 
-void ShaderManager::Interface() {
+void ShaderManager::interface() {
     ImGui::Begin("Shader Manager");
     ImGui::Text("Current Shader: %d", GetActiveShader());
+
     if (ImGui::Button("Reload all shaders")) {
-        for (const auto &[name, shader]: Shaders) {
-            shader->reload();
-        }
+        std::ranges::for_each(shaders, [](const auto &shader) {
+            shader.second->reload();
+        });
     }
     ImGui::End();
 }

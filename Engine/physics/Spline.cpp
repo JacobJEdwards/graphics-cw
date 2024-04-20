@@ -71,7 +71,7 @@ Physics::Spline::Spline(std::span<const glm::vec3> points, const Type type, cons
     indices.push_back(0U);
 
     buffer->fill(vertices, indices);
-    shader = ShaderManager::Get("Base");
+    shader = ShaderManager::GetInstance().get("Base");
 }
 
 [[nodiscard]] auto Physics::Spline::getPoint() const -> glm::vec3 {

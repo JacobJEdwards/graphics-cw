@@ -29,7 +29,7 @@ ProceduralTerrain::ProceduralTerrain(const glm::vec2 center, const int chunkSize
                                      const int numChunksX,
                                      const int numChunksY)
     : centre(center), chunkSize(chunkSize), numChunksX(numChunksX), numChunksY(numChunksY) {
-    shader = ShaderManager::Get("Simple");
+    shader = ShaderManager::GetInstance().get("Simple");
     chunks.reserve(static_cast<std::size_t>(numChunksX) * static_cast<std::size_t>(numChunksY));
 
     worldSizeX = static_cast<float>(chunkSize * numChunksX);
@@ -41,7 +41,7 @@ ProceduralTerrain::ProceduralTerrain(const glm::vec2 center, const int chunkSize
 }
 
 void ProceduralTerrain::draw(const std::shared_ptr<Shader> shader) const {
-    const auto player = PlayerManager::GetCurrent();
+    const auto player = PlayerManager::GetInstance().getCurrent();
     const glm::vec3 position = player->attributes.position;
     const int renderDistance = static_cast<int>(player->getCamera().getRenderDistance());
 
@@ -127,6 +127,9 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
 
     // hills with valleys and mountains
     // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F) * 10.0F + Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 100.0F;
+
+    // extreme hills
+    // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 100.0F + Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F) * 10.0F;
 }
 
 [[nodiscard]] auto

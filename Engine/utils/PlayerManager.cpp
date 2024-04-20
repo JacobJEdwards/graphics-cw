@@ -11,114 +11,112 @@
 #include <string>
 #include <ranges>
 
-std::unordered_map<std::string, std::shared_ptr<Player> > PlayerManager::Players;
-std::shared_ptr<Player> PlayerManager::CurrentPlayer;
 
-void PlayerManager::Draw(const glm::mat4 &view, const glm::mat4 &projection) {
+void PlayerManager::draw(const glm::mat4 &view, const glm::mat4 &projection) {
     using namespace std::ranges;
 
-    for_each(Players | views::values | views::filter([](const auto &player) {
-                 return player != CurrentPlayer && player->shouldDraw() && player->getMode() != Player::Mode::DRIVE &&
+    for_each(players | views::values | views::filter([&](const auto &player) {
+                 return player != currentPlayer && player->shouldDraw() && player->getMode() != Player::Mode::DRIVE &&
                         player->getMode() != Player::Mode::PATH;
              }), [&](const auto &player) {
                  player->draw(view, projection);
              });
 }
 
-void PlayerManager::Draw(std::shared_ptr<Shader> shader) {
+void PlayerManager::draw(std::shared_ptr<Shader> shader) {
     using namespace std::ranges;
 
-    for_each(Players | views::values | views::filter([](const auto &player) {
-                 return player != CurrentPlayer && player->shouldDraw() && player->getMode() != Player::Mode::DRIVE &&
+    for_each(players | views::values | views::filter([&](const auto &player) {
+                 return player != currentPlayer && player->shouldDraw() && player->getMode() != Player::Mode::DRIVE &&
                         player->getMode() != Player::Mode::PATH;
              }), [&](const auto &player) {
                  player->draw(shader);
              });
 }
 
-void PlayerManager::Update(float deltaTime) {
-    std::ranges::for_each(Players | std::views::values, [&](const auto &player) {
+void PlayerManager::update(float deltaTime) {
+    std::ranges::for_each(players | std::views::values, [&](const auto &player) {
         player->update(deltaTime);
     });
 }
 
-void PlayerManager::Add(const std::string &name, const std::shared_ptr<Player> &player) {
-    Players[name] = player;
+void PlayerManager::add(const std::string &name, const std::shared_ptr<Player> &player) {
+    players[name] = player;
 
-    if (Players.size() == 1) {
-        SetCurrent(name);
+    if (players.size() == 1) {
+        setCurrent(name);
     }
 }
 
-auto PlayerManager::Get(const std::string &name) -> std::shared_ptr<Player> {
-    const auto it = Players.find(name);
+auto PlayerManager::get(const std::string &name) -> std::shared_ptr<Player> {
+    const auto it = players.find(name);
 
-    return it != Players.end() ? it->second : nullptr;
+    return it != players.end() ? it->second : nullptr;
 }
 
-auto PlayerManager::GetAll() -> std::unordered_map<std::string, std::shared_ptr<Player> > & {
-    return Players;
+auto PlayerManager::getAll() -> std::unordered_map<std::string, std::shared_ptr<Player> > & {
+    return players;
 }
 
-auto PlayerManager::GetCurrent() -> std::shared_ptr<Player> { return CurrentPlayer; }
+auto PlayerManager::getCurrent() -> std::shared_ptr<Player> { return currentPlayer; }
 
-void PlayerManager::SetCurrent(const std::string &name) {
-    if (CurrentPlayer) {
-        CurrentPlayer->shouldDraw(true);
+void PlayerManager::setCurrent(const std::string &name) {
+    if (currentPlayer) {
+        currentPlayer->shouldDraw(true);
     }
 
-    if (const auto it = Players.find(name); it != Players.end()) {
-        CurrentPlayer = it->second;
-        if (CurrentPlayer) {
-            CurrentPlayer->shouldDraw(false);
+    if (const auto it = players.find(name); it != players.end()) {
+        currentPlayer = it->second;
+        if (currentPlayer) {
+            currentPlayer->shouldDraw(false);
         }
     }
 }
 
-void PlayerManager::SetCurrent(std::shared_ptr<Player> player) {
-    CurrentPlayer = std::move(player);
+void PlayerManager::setCurrent(std::shared_ptr<Player> player) {
+    currentPlayer = std::move(player);
 }
 
-auto PlayerManager::GetCurrentName() -> std::string {
+auto PlayerManager::getCurrentName() -> std::string {
     const auto it =
-            std::ranges::find_if(Players, [&](const auto &pair) {
-                return pair.second == CurrentPlayer;
+            std::ranges::find_if(players, [&](const auto &pair) {
+                return pair.second == currentPlayer;
             });
 
-    return it != Players.end() ? it->first : "";
+    return it != players.end() ? it->first : "";
 }
 
-void PlayerManager::Remove(const std::string &name) { Players.erase(name); }
+void PlayerManager::remove(const std::string &name) { players.erase(name); }
 
-void PlayerManager::Remove(const std::shared_ptr<Player> &player) {
-    Players.erase(
-        std::ranges::find_if(Players, [player](const auto &pair) {
+void PlayerManager::remove(const std::shared_ptr<Player> &player) {
+    players.erase(
+        std::ranges::find_if(players, [player](const auto &pair) {
             return pair.second == player;
         }));
 
-    if (CurrentPlayer == player) {
-        CurrentPlayer = Players.begin()->second;
+    if (currentPlayer == player) {
+        currentPlayer = players.begin()->second;
     }
 }
 
-void PlayerManager::Clear() { Players.clear(); }
+void PlayerManager::clear() { players.clear(); }
 
-void PlayerManager::Interface() {
+void PlayerManager::interface() {
     using namespace std::ranges;
     ImGui::Begin("Players");
 
-    for (const auto &[name, player]: Players) {
-        if (ImGui::RadioButton(name.c_str(), CurrentPlayer == player)) {
-            CurrentPlayer = player;
+    for (const auto &[name, player]: players) {
+        if (ImGui::RadioButton(name.c_str(), currentPlayer == player)) {
+            currentPlayer = player;
         }
     }
     ImGui::End();
 }
 
-void PlayerManager::SetAspect(float aspect) {
+void PlayerManager::setAspect(float aspect) {
     using namespace std::ranges;
 
-    for_each(Players | views::values, [&](const auto &player) {
+    for_each(players | views::values, [&](const auto &player) {
         player->getCamera().setAspect(aspect);
     });
 }

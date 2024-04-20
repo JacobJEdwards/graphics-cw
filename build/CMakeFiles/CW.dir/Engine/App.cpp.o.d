@@ -1112,4 +1112,5 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h

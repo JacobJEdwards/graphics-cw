@@ -8,44 +8,48 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include "utils/Singleton.h"
 
-class PlayerManager {
+class PlayerManager final : public Singleton<PlayerManager> {
+    friend class Singleton<PlayerManager>;
+
 public:
-    PlayerManager() = delete;
+    explicit PlayerManager(Token) {
+    }
 
-    static void Draw(const glm::mat4 &view, const glm::mat4 &projection);
+    void draw(const glm::mat4 &view, const glm::mat4 &projection);
 
-    static void Draw(std::shared_ptr<Shader> shader);
+    void draw(std::shared_ptr<Shader> shader);
 
-    static void Update(float deltaTime);
+    void update(float deltaTime);
 
-    static void Add(const std::string &name, const std::shared_ptr<Player> &player);
+    void add(const std::string &name, const std::shared_ptr<Player> &player);
 
-    static auto Get(const std::string &name) -> std::shared_ptr<Player>;
+    auto get(const std::string &name) -> std::shared_ptr<Player>;
 
-    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Player> > &;
+    auto getAll() -> std::unordered_map<std::string, std::shared_ptr<Player> > &;
 
-    static auto GetCurrent() -> std::shared_ptr<Player>;
+    auto getCurrent() -> std::shared_ptr<Player>;
 
-    static void SetCurrent(const std::string &name);
+    void setCurrent(const std::string &name);
 
-    static void SetCurrent(std::shared_ptr<Player> player);
+    void setCurrent(std::shared_ptr<Player> player);
 
-    static auto GetCurrentName() -> std::string;
+    auto getCurrentName() -> std::string;
 
-    static void Remove(const std::string &name);
+    void remove(const std::string &name);
 
-    static void Remove(const std::shared_ptr<Player> &player);
+    void remove(const std::shared_ptr<Player> &player);
 
-    static void Clear();
+    void clear();
 
-    static void SetAspect(float aspect);
+    void setAspect(float aspect);
 
-    static void Interface();
+    void interface();
 
 private:
-    static std::unordered_map<std::string, std::shared_ptr<Player> > Players;
-    static std::shared_ptr<Player> CurrentPlayer;
+    std::unordered_map<std::string, std::shared_ptr<Player> > players;
+    std::shared_ptr<Player> currentPlayer;
 };
 
 #endif

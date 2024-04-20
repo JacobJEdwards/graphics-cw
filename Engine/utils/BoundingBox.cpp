@@ -314,7 +314,7 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
                        const glm::mat4 &projection) const {
     const GLuint previousProgram = ShaderManager::GetActiveShader();
 
-    const std::shared_ptr<Shader> shader = ShaderManager::Get("BoundingBox");
+    const std::shared_ptr<Shader> shader = ShaderManager::GetInstance().get("BoundingBox");
 
     shader->use();
     shader->setUniform("view", view);

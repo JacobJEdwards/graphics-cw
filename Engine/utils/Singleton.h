@@ -13,7 +13,7 @@ class Singleton {
 public:
     static auto GetInstance() -> T & {
         std::call_once(onceFlag, [] {
-            instance = std::make_unique<T>();
+            instance = std::make_unique<T>(Token{});
         });
         return *instance;
     }
@@ -30,6 +30,9 @@ protected:
     Singleton() = default;
 
     virtual ~Singleton() = default;
+
+    struct Token {
+    };
 
 private:
     static std::unique_ptr<T> instance;

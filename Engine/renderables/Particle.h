@@ -38,16 +38,16 @@ struct Particle {
 };
 
 class ParticleSystem final : public Renderable, public Singleton<ParticleSystem> {
+    friend class Singleton;
+
 public:
+    using Renderable::draw;
+
     void add(const Particle &particle);
 
     void update(float deltaTime);
 
     void draw(std::shared_ptr<Shader> shader) const override;
-
-    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
-
-    void draw() const override;
 
     void generate(const Physics::Attributes &attributes, const glm::vec3 &offset = glm::vec3(0.0F),
                   int numParticles = 100,
@@ -58,9 +58,12 @@ public:
 
     void interface();
 
-    ParticleSystem();
+    explicit ParticleSystem(Token) : ParticleSystem() {
+    }
 
 private:
+    ParticleSystem();
+
     std::vector<Particle> particles;
     std::shared_ptr<Buffer> buffer;
 

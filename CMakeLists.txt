@@ -51,18 +51,11 @@ add_executable(CW main.cpp
         Engine/renderables/ImmovableObject.cpp
         Engine/renderables/Particle.cpp
         Engine/renderables/objects/ProceduralTerrain.cpp
-        Engine/renderables/objects/ProceduralTerrain.h
         Engine/utils/Noise.cpp
-        Engine/renderables/objects/BumperCar.h
         Engine/renderables/objects/BumperCar.cpp
         Engine/utils/Random.cpp
-        Engine/utils/Random.h
         Engine/graphics/buffers/UniformBuffer.cpp
-        Engine/graphics/buffers/UniformBuffer.h
         Engine/renderables/shapes/Plane.cpp
-        Engine/renderables/shapes/Plane.cpp
-        Engine/renderables/objects/InfinitePlane.h
-        Engine/utils/Singleton.h
 )
 
 # Link libraries

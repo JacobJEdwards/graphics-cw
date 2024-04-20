@@ -932,6 +932,7 @@ CMakeFiles/CW.dir/Engine/App.cpp.o: /Users/jacobedwards/University/Year2/Graphic
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /opt/homebrew/include/GL/glew.h \
@@ -12443,6 +12444,7 @@ CMakeFiles/CW.dir/Engine/graphics/buffers/UniformBuffer.cpp.o: /Users/jacobedwar
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Shader.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/UniformBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /opt/homebrew/include/GL/glew.h \
   /opt/homebrew/include/glm/ext/matrix_double2x2.hpp \
   /opt/homebrew/include/glm/ext/matrix_double2x2_precision.hpp \
@@ -15671,6 +15673,7 @@ CMakeFiles/CW.dir/Engine/physics/Spline.cpp.o: /Users/jacobedwards/University/Ye
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Random.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /opt/homebrew/include/GL/glew.h \
   /opt/homebrew/include/glm/ext/matrix_double2x2.hpp \
   /opt/homebrew/include/glm/ext/matrix_double2x2_precision.hpp \
@@ -16759,6 +16762,7 @@ CMakeFiles/CW.dir/Engine/renderables/Entity.cpp.o: /Users/jacobedwards/Universit
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/shapes/Plane.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /opt/homebrew/include/GL/glew.h \
@@ -23505,6 +23509,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.o: /Users/jac
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /opt/homebrew/include/GL/glew.h \
   /opt/homebrew/include/assimp/Compiler/poppack1.h \
   /opt/homebrew/include/assimp/Compiler/pushpack1.h \
@@ -24617,6 +24622,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.o: /Users/jacobedwards/U
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Sun.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /opt/homebrew/include/GL/glew.h \
   /opt/homebrew/include/assimp/Compiler/poppack1.h \
   /opt/homebrew/include/assimp/Compiler/pushpack1.h \
@@ -25726,6 +25732,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.o: /Users/jacobedwards/Univ
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Sun.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /opt/homebrew/include/GL/glew.h \
@@ -27903,6 +27910,7 @@ CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: /Users/jacobedwards/University
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/shapes/Plane.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /opt/homebrew/include/GL/glew.h \
@@ -30320,6 +30328,7 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: /Users/jacobedwards/Universi
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /opt/homebrew/include/GL/glew.h \
@@ -31488,6 +31497,7 @@ CMakeFiles/CW.dir/Engine/utils/Random.cpp.o: /Users/jacobedwards/University/Year
   /opt/homebrew/include/glm/ext/scalar_uint_sized.hpp \
   /opt/homebrew/include/glm/ext/vector_int2.hpp \
   /opt/homebrew/include/glm/ext/vector_uint2.hpp \
+  /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /opt/homebrew/include/glm/ext/vector_float3.hpp \
   /opt/homebrew/include/glm/ext/vector_float4.hpp \
   /opt/homebrew/include/glm/vec2.hpp
@@ -32432,6 +32442,7 @@ CMakeFiles/CW.dir/Engine/utils/ShaderManager.cpp.o: /Users/jacobedwards/Universi
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Shader.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
   /opt/homebrew/include/GL/glew.h \

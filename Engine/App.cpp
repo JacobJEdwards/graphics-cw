@@ -48,7 +48,7 @@ auto App::window(const std::string &title, const int width,
         return false;
     }
 
-    PlayerManager::SetAspect(static_cast<float>(width) / static_cast<float>(height));
+    PlayerManager::GetInstance().setAspect(static_cast<float>(width) / static_cast<float>(height));
 
     return true;
 }

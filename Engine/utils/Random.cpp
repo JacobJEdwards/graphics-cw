@@ -8,6 +8,7 @@
 // Created by Jacob Edwards on 08/04/2024.
 //
 
+#include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float4.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <random>

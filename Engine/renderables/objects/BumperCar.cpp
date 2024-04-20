@@ -125,7 +125,7 @@ void BumperCar::update(const float deltaTime) {
             moveTo(point);
             break;
         case Mode::TRACK:
-            moveTo(PlayerManager::GetCurrent()->getPosition());
+            moveTo(PlayerManager::GetInstance().getCurrent()->getPosition());
             break;
         case Mode::AUTO: {
             spline.update(deltaTime);

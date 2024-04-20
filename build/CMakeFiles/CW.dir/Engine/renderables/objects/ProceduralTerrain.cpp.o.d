@@ -1075,6 +1075,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
   /opt/homebrew/include/glm/geometric.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/PlayerManager.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/BumperCar.h \

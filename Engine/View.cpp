@@ -242,14 +242,10 @@ void View::optionsInterface() {
     postProcessor->interface();
     if (ImGui::Checkbox("Post Processing", &postProcessorEnabled)) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    } else {
-        ImGui::Checkbox("Wireframe", &wireframe);
-
-        if (wireframe) {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        } else {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        }
+        wireframe = false;
+    } else if (ImGui::Checkbox("Wireframe", &wireframe)) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        postProcessorEnabled = false;
     }
 
     if (ImGui::Button("Close")) {

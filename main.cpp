@@ -44,15 +44,18 @@ auto main() -> int {
     setupShaders();
     setupPlayers();
 
+    ShaderManager &shaderManager = ShaderManager::GetInstance();
+    PlayerManager &playerManager = PlayerManager::GetInstance();
+
     Skybox skybox;
     const ProceduralTerrain terrain;
 
     Texture::Loader::setFlip(true);
 
-    const auto pathedCar = PlayerManager::Get("Path")->getCar();
+    const auto pathedCar = playerManager.get("Path")->getCar();
     pathedCar->shouldDrawPlayer(false);
 
-    const auto driveable = PlayerManager::Get("Drive")->getCar();
+    const auto driveable = playerManager.get("Drive")->getCar();
 
     const std::vector models = {
         std::make_shared<BumperCar>(),
@@ -83,35 +86,35 @@ auto main() -> int {
     matrix = translate(matrix, newPosition);
     matrix = scale(matrix, glm::vec3(4.0F));
 
-    auto shader = ShaderManager::Get("Base");
+    auto shader = shaderManager.get("Base");
     for (const auto &model: models) {
         model->setShader(shader);
         model->transform(matrix);
         matrix = translate(matrix, glm::vec3(5.0F, 0.0F, 0.0F));
     }
 
-    PlayerManager::Get("Orbit")->setShader(shader);
-    PlayerManager::Get("Free")->setShader(shader);
-    PlayerManager::Get("FPS")->setShader(shader);
-    PlayerManager::Get("Fixed")->setShader(shader);
-    PlayerManager::Get("Path")->setShader(shader);
-    PlayerManager::Get("Drive")->setShader(shader);
+    playerManager.get("Orbit")->setShader(shader);
+    playerManager.get("Free")->setShader(shader);
+    playerManager.get("FPS")->setShader(shader);
+    playerManager.get("Fixed")->setShader(shader);
+    playerManager.get("Path")->setShader(shader);
+    playerManager.get("Drive")->setShader(shader);
 
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
     ShadowBuffer shadowBuffer(App::view.getWidth(), App::view.getHeight());
     // ShadowBuffer shadowBuffer(10000, 10000);
 
-    std::vector<glm::vec3> points;
+    std::vector<glm::vec3> pathPoints;
 
     for (const auto &model: models) {
-        points.insert(points.end(), model->getPoints().begin(), model->getPoints().end());
+        pathPoints.insert(pathPoints.end(), model->getPoints().begin(), model->getPoints().end());
     }
 
-    std::cout << "Points: " << points.size() << std::endl;
+    const auto lightProjection = glm::ortho(-200.0F, 200.0F, -200.0F, 200.0F, 1.0F, 1000.0F);
 
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
-        const auto player = PlayerManager::GetCurrent();
+        const auto player = playerManager.getCurrent();
         const auto projectionMatrix = player->getCamera().getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
 
@@ -119,10 +122,10 @@ auto main() -> int {
         shadowBuffer.bind();
 
         const auto lightPos = skybox.getSun().getPosition();
-        const auto lightProjection = glm::ortho(-100.0F, 100.0F, -100.0F, 100.0F, 1.0F, 200.0F);
+
         const auto lightView = lookAt(lightPos, player->getPosition(), glm::vec3(0.0F, 1.0F, 0.0F));
 
-        shader = ShaderManager::Get("Shadow");
+        shader = shaderManager.get("Shadow");
         shader->use();
         shader->setUniform("view", lightView);
         shader->setUniform("projection", lightProjection);
@@ -131,8 +134,7 @@ auto main() -> int {
             model->draw(shader);
         }
 
-
-        PlayerManager::Draw(shader);
+        playerManager.draw(shader);
 
         terrain.draw(shader);
 
@@ -145,7 +147,7 @@ auto main() -> int {
         glActiveTexture(GL_TEXTURE10);
         glBindTexture(GL_TEXTURE_2D, texture);
 
-        shader = ShaderManager::Get("Base");
+        shader = shaderManager.get("Base");
         shader->use();
         shader->setUniform("light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
@@ -157,11 +159,9 @@ auto main() -> int {
             model->draw(viewMatrix, projectionMatrix);
         }
 
-        // driveable->draw(viewMatrix, projectionMatrix);
-
         particleSystem.draw(viewMatrix, projectionMatrix);
 
-        PlayerManager::Draw(viewMatrix, projectionMatrix);
+        playerManager.draw(viewMatrix, projectionMatrix);
         particleSystem.draw(viewMatrix, projectionMatrix);
 
         shader = terrain.getShader();
@@ -173,25 +173,38 @@ auto main() -> int {
         shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
         shader->setUniform("shadowMap", 0);
 
-        // give points to terrain
-        shader->setVec3Array("pathedPoints", points);
-        shader->setUniform("pathedPointsCount", static_cast<int>(points.size()));
+        shader->setVec3Array("pathedPoints", pathPoints);
+        shader->setUniform("pathedPointsCount", static_cast<int>(pathPoints.size()));
         shader->setUniform("pathDarkness", models[0]->getLaps() / 1000.0F);
 
         terrain.draw(viewMatrix, projectionMatrix);
+
+        shader = shaderManager.get("Grass");
+        shader->use();
+        shader->setUniform("light.position", skybox.getSun().getPosition());
+        shader->setUniform("viewPos", player->getCamera().getPosition());
+
+        shader->setUniform("view", viewMatrix);
+        shader->setUniform("projection", projectionMatrix);
+        shader->setUniform("time", static_cast<float>(glfwGetTime()));
+
+        //terrain.draw(shader);
+
         skybox.draw(viewMatrix, projectionMatrix);
 
-        shader = ShaderManager::Get("PostProcess");
+        shader = shaderManager.get("PostProcess");
         shader->use();
         shader->setUniform("sunPosition", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
+
+        // post processing
     });
 
     App::view.setInterface([&] {
         if (App::paused) {
-            PlayerManager::GetCurrent()->getCamera().interface();
-            PlayerManager::Interface();
-            PlayerManager::GetCurrent()->interface();
+            playerManager.getCurrent()->getCamera().interface();
+            playerManager.interface();
+            playerManager.getCurrent()->interface();
             App::view.optionsInterface();
             BumperCar::Interface();
 
@@ -201,15 +214,15 @@ auto main() -> int {
         }
 
         if (App::debug) {
-            PlayerManager::GetCurrent()->debug();
-            ShaderManager::Interface();
+            playerManager.getCurrent()->debug();
+            ShaderManager::GetInstance().interface();
         }
     });
 
     try {
         App::loop([&] {
-            PlayerManager::Update(App::view.getDeltaTime());
-            const auto player = PlayerManager::GetCurrent();
+            playerManager.update(App::view.getDeltaTime());
+            const auto player = playerManager.getCurrent();
 
             for (const auto &model: models) {
                 model->clearTrackablePositions();
@@ -238,9 +251,9 @@ auto main() -> int {
                 }
 
                 if (Physics::Collisions::check(*player, *model)) {
-                    if (length(player->getAttributes().force) > 25.0F && (player->getMode() == Player::Mode::DRIVE ||
-                                                                          player->getMode() == Player::Mode::PATH ||
-                                                                          player->getMode() == Player::Mode::FPS)) {
+                    if (length(player->getAttributes().force) > 350.0F && (player->getMode() == Player::Mode::DRIVE ||
+                                                                           player->getMode() == Player::Mode::PATH ||
+                                                                           player->getMode() == Player::Mode::FPS)) {
                         App::view.blurScreen();
                         model->setBroken(true);
                     }
@@ -251,8 +264,11 @@ auto main() -> int {
                     const auto collisionPoint = Physics::Collisions::getCollisionPoint(*player, *model);
                     Physics::Collisions::resolve(*player, *model, collisionPoint);
 
+                    player->collisionResponse();
+                    model->collisionResponse();
+
                     particleSystem.generate(player->attributes.position - collisionPoint,
-                                            player->attributes.velocity, Color::ORANGE);
+                                            player->attributes.velocity, Color::SILVER);
                 } else {
                     player->attributes.isColliding = false;
                     model->attributes.isColliding = false;
@@ -268,8 +284,11 @@ auto main() -> int {
                         const auto collisionPoint = Physics::Collisions::getCollisionPoint(*models[i], *models[j]);
                         Physics::Collisions::resolve(*models[i], *models[j], collisionPoint);
 
-                        particleSystem.generate(models[i]->attributes.position + collisionPoint,
-                                                models[i]->attributes.velocity, Color::ORANGE);
+                        particleSystem.generate(models[i]->attributes.position - collisionPoint,
+                                                models[i]->attributes.velocity, Color::SILVER);
+
+                        models[i]->collisionResponse();
+                        models[j]->collisionResponse();
 
                         /*
                         if (length(models[i]->attributes.force) > 25.0F) {
@@ -295,12 +314,12 @@ auto main() -> int {
             }
 
 
-            for (const auto &player: PlayerManager::GetAll()) {
-                if (Physics::Collisions::check(*player.second, terrain)) {
-                    Physics::Collisions::resolve(*player.second, terrain);
-                    player.second->attributes.isGrounded = true;
+            for (const auto &[name, player]: playerManager.getAll()) {
+                if (Physics::Collisions::check(*player, terrain)) {
+                    Physics::Collisions::resolve(*player, terrain);
+                    player->attributes.isGrounded = true;
                 } else {
-                    player.second->attributes.isGrounded = false;
+                    player->attributes.isGrounded = false;
                 }
             }
 
@@ -322,6 +341,8 @@ auto main() -> int {
 
 void processInput() {
     bool moved = false;
+    PlayerManager &playerManager = PlayerManager::GetInstance();
+    const std::shared_ptr<Player> player = playerManager.getCurrent();
 
     if (App::view.getKey(GLFW_KEY_ESCAPE) == GLFW_PRESS || App::view.getKey(GLFW_KEY_Q) == GLFW_PRESS) {
         App::view.close();
@@ -332,51 +353,51 @@ void processInput() {
     }
 
     if (App::paused &&
-        PlayerManager::GetCurrent()->getCamera().getMode() != Camera::Mode::ORBIT) {
+        player->getCamera().getMode() != Camera::Mode::ORBIT) {
         return;
     }
 
     if (App::view.getKey(GLFW_KEY_W) == GLFW_PRESS) {
         moved = true;
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::FORWARD,
-                                                     App::view.getDeltaTime());
+        player->processKeyboard(Player::Direction::FORWARD,
+                                App::view.getDeltaTime());
     }
 
     if (App::view.getKey(GLFW_KEY_S) == GLFW_PRESS) {
         moved = true;
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::BACKWARD,
-                                                     App::view.getDeltaTime());
+        player->processKeyboard(Player::Direction::BACKWARD,
+                                App::view.getDeltaTime());
     }
 
     if (App::view.getKey(GLFW_KEY_A) == GLFW_PRESS) {
         moved = true;
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::LEFT,
-                                                     App::view.getDeltaTime());
+        player->processKeyboard(Player::Direction::LEFT,
+                                App::view.getDeltaTime());
     }
 
     if (App::view.getKey(GLFW_KEY_D) == GLFW_PRESS) {
         moved = true;
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::RIGHT,
-                                                     App::view.getDeltaTime());
+        player->processKeyboard(Player::Direction::RIGHT,
+                                App::view.getDeltaTime());
     }
 
     if (!moved) {
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::NONE,
-                                                     App::view.getDeltaTime());
+        player->processKeyboard(Player::Direction::NONE,
+                                App::view.getDeltaTime());
     }
 
     if (App::view.getKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::DOWN,
-                                                     App::view.getDeltaTime());
+        player->processKeyboard(Player::Direction::DOWN,
+                                App::view.getDeltaTime());
     }
 
     if (App::view.getKey(GLFW_KEY_SPACE) == GLFW_PRESS) {
-        PlayerManager::GetCurrent()->processKeyboard(Player::Direction::UP,
-                                                     App::view.getDeltaTime());
+        player->processKeyboard(Player::Direction::UP,
+                                App::view.getDeltaTime());
     }
 
     if (App::view.getKey(GLFW_KEY_N) == GLFW_PRESS) {
-        PlayerManager::GetCurrent()->nitro();
+        player->nitro();
     }
 }
 
@@ -384,49 +405,55 @@ void setupApp() {
     App::window("Coursework", Config::DEFAULT_WIDTH, Config::DEFAULT_HEIGHT);
     App::init();
 
+    PlayerManager &playerManager = PlayerManager::GetInstance();
+
     App::view.setKey(processInput);
     App::view.setMouse([&] {
         if (!App::paused) {
-            PlayerManager::GetCurrent()->getCamera().processMouseMovement(
+            playerManager.getCurrent()->getCamera().processMouseMovement(
                 App::view.getMouseOffsetX(), App::view.getMouseOffsetY());
         }
     });
 
     App::view.setScroll([&] {
-        PlayerManager::GetCurrent()->getCamera().processMouseScroll(
+        playerManager.getCurrent()->getCamera().processMouseScroll(
             App::view.getScrollY());
     });
 
     App::view.setResize([&] {
-        PlayerManager::SetAspect(static_cast<float>(App::view.getWidth()) /
-                                 static_cast<float>(App::view.getHeight()));
+        playerManager.setAspect(static_cast<float>(App::view.getWidth()) /
+                                static_cast<float>(App::view.getHeight()));
         glViewport(0, 0, static_cast<GLsizei>(App::view.getWidth()),
                    static_cast<GLsizei>(App::view.getHeight()));
     });
 }
 
 void setupShaders() {
-    ShaderManager::Add("Simple", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
-    ShaderManager::Add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
-    ShaderManager::Add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
-    ShaderManager::Add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
-    ShaderManager::Add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");
-    ShaderManager::Add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
-    ShaderManager::Add("Terrain", "../Assets/shaders/infinitePlane.vert", "../Assets/shaders/infinitePlane.frag");
-    ShaderManager::Add("Player", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
-    ShaderManager::Add("BoundingBox", "../Assets/shaders/boundingBox.vert", "../Assets/shaders/boundingBox.frag");
-    ShaderManager::Add("Shadow", "../Assets/shaders/shadow.vert", "../Assets/shaders/shadow.frag");
-    ShaderManager::Add("Particle", "../Assets/shaders/particle.vert", "../Assets/shaders/particle.frag");
+    ShaderManager &shaderManager = ShaderManager::GetInstance();
 
-    auto shader = ShaderManager::Get("PostProcess");
+    shaderManager.add("Simple", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    shaderManager.add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
+    shaderManager.add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
+    shaderManager.add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
+    shaderManager.add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");
+    shaderManager.add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
+    shaderManager.add("Terrain", "../Assets/shaders/infinitePlane.vert", "../Assets/shaders/infinitePlane.frag");
+    shaderManager.add("Player", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    shaderManager.add("BoundingBox", "../Assets/shaders/boundingBox.vert", "../Assets/shaders/boundingBox.frag");
+    shaderManager.add("Shadow", "../Assets/shaders/shadow.vert", "../Assets/shaders/shadow.frag");
+    shaderManager.add("Particle", "../Assets/shaders/particle.vert", "../Assets/shaders/particle.frag");
+    shaderManager.add("Grass", "../Assets/shaders/grass.vert", "../Assets/shaders/grass.frag",
+                      "../Assets/shaders/grass.geom");
+
+    auto shader = shaderManager.get("PostProcess");
     shader->use();
     shader->setUniform("screenTexture", 0);
 
-    shader = ShaderManager::Get("Terrain");
+    shader = shaderManager.get("Terrain");
     shader->use();
     shader->setUniform("shadowMap", 0);
 
-    shader = ShaderManager::Get("Base");
+    shader = shaderManager.get("Base");
     shader->use();
 
     shader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
@@ -438,36 +465,38 @@ void setupShaders() {
 }
 
 void setupPlayers() {
+    PlayerManager &playerManager = PlayerManager::GetInstance();
+
     const auto orbit = std::make_shared<Player>(Player::Mode::ORBIT);
     orbit->shouldDraw(false);
     orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F, 10.0F);
     orbit->attributes.gravityAffected = false;
-    PlayerManager::Add("Orbit", orbit);
+    playerManager.add("Orbit", orbit);
 
     const auto free = std::make_shared<Player>(Player::Mode::FREE);
     free->shouldDraw(true);
     free->getAttributes().gravityAffected = false;
-    PlayerManager::Add("Free", free);
+    playerManager.add("Free", free);
 
     const auto fps = std::make_shared<Player>(Player::Mode::FPS);
     fps->shouldDraw(true);
-    PlayerManager::Add("FPS", fps);
+    playerManager.add("FPS", fps);
 
     const auto fixed = std::make_shared<Player>(Player::Mode::FIXED);
     fixed->shouldDraw(true);
     fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3(0.0F, 10.0F, 10.0F));
     fixed->attributes.gravityAffected = false;
-    PlayerManager::Add("Fixed", fixed);
+    playerManager.add("Fixed", fixed);
 
     const auto path = std::make_shared<Player>(Player::Mode::PATH);
     path->shouldDraw(true);
     path->attributes.gravityAffected = true;
-    PlayerManager::Add("Path", path);
+    playerManager.add("Path", path);
 
     const auto drive = std::make_shared<Player>(Player::Mode::DRIVE);
     drive->shouldDraw(true);
     drive->attributes.gravityAffected = true;
-    PlayerManager::Add("Drive", drive);
+    playerManager.add("Drive", drive);
 
-    PlayerManager::SetCurrent("Free");
+    playerManager.setCurrent("Free");
 }

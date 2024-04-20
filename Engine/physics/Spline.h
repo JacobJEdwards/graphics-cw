@@ -42,8 +42,7 @@ namespace Physics {
 
         void randomise();
 
-    private
-    :
+    private:
         std::vector<glm::vec3> points;
         Type type = Type::CATMULLROM;
         float speed{};

@@ -1071,6 +1071,7 @@ CMakeFiles/CW.dir/Engine/physics/Spline.cpp.o: \
   /opt/homebrew/include/glm/gtx/optimum_pow.inl \
   /opt/homebrew/include/glm/gtx/spline.inl \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Random.h \
   /opt/homebrew/include/glm/ext/vector_float4.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ranges \

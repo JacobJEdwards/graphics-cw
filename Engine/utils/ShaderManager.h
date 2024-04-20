@@ -9,31 +9,37 @@
 #include <unordered_map>
 #include <filesystem>
 #include <string>
+#include "Singleton.h"
 
-class ShaderManager {
+class ShaderManager final : public Singleton<ShaderManager> {
 public:
-    static void Add(const std::string &name, const std::filesystem::path &vertexPath,
-                    const std::filesystem::path &fragmentPath, const std::filesystem::path &geometryPath = "",
-                    const std::filesystem::path &tessControlPath = "", const std::filesystem::path &tessEvalPath = "");
+    friend class Singleton<ShaderManager>;
 
-    static auto Get(const std::string &name) -> std::shared_ptr<Shader>;
+    void add(const std::string &name, const std::filesystem::path &vertexPath,
+             const std::filesystem::path &fragmentPath, const std::filesystem::path &geometryPath = "",
+             const std::filesystem::path &tessControlPath = "", const std::filesystem::path &tessEvalPath = "");
 
-    static auto Get(GLuint id) -> std::shared_ptr<Shader>;
+    auto get(const std::string &name) -> std::shared_ptr<Shader>;
 
-    static auto GetAll() -> std::unordered_map<std::string, std::shared_ptr<Shader> >;
+    auto get(GLuint id) -> std::shared_ptr<Shader>;
 
-    static void Remove(const std::string &name);
+    auto getAll() -> std::unordered_map<std::string, std::shared_ptr<Shader> > &;
 
-    static void Clear();
+    void remove(const std::string &name);
+
+    void clear();
 
     static auto GetActiveShader() -> GLuint;
 
-    static void Interface();
+    void interface();
+
+    explicit ShaderManager(Token) {
+    }
 
 private:
     ShaderManager() = default;
 
-    static std::unordered_map<std::string, std::shared_ptr<Shader> > Shaders;
+    std::unordered_map<std::string, std::shared_ptr<Shader> > shaders;
 };
 
 #endif

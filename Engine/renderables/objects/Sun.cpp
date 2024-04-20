@@ -18,7 +18,7 @@
 #include "renderables/Entity.h"
 
 Sun::Sun() : Entity("../Assets/objects/sun/sun.obj") {
-    shader = ShaderManager::Get("Sun");
+    shader = ShaderManager::GetInstance().get("Sun");
     moon = Entity("../Assets/objects/moon/moon.obj");
 
     auto transform = Config::IDENTITY_MATRIX;
@@ -34,6 +34,8 @@ Sun::Sun() : Entity("../Assets/objects/sun/sun.obj") {
     moon.attributes.position.x = 0.0F;
     moon.attributes.position.y = 0.0F;
     moon.attributes.position.z = 50.0F;
+
+    moon.setShader(ShaderManager::GetInstance().get("Base"));
 }
 
 void Sun::update(const float deltaTime) {
@@ -69,6 +71,7 @@ void Sun::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     const auto newView = glm::mat4(glm::mat3(view));
 
     Entity::draw(newView, projection);
+
 
     moon.draw(view, projection);
 

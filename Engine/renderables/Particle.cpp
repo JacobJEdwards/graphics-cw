@@ -56,7 +56,7 @@ void ParticleSystem::add(const Particle &particle) {
 }
 
 void ParticleSystem::update(const float deltaTime) {
-    const auto camera = PlayerManager::GetCurrent()->getCamera();
+    const auto camera = PlayerManager::GetInstance().getCurrent()->getCamera();
 
     const auto forward = camera.getFront();
     const auto up = camera.getUp();
@@ -143,25 +143,6 @@ void ParticleSystem::draw(const std::shared_ptr<Shader> shader) const {
     glBlendFunc(previousBlendSrc, previousBlendDst);
 }
 
-void ParticleSystem::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
-    if (!shouldDraw) {
-        return;
-    }
-
-    shader->use();
-    shader->setUniform("view", view);
-    shader->setUniform("projection", projection);
-
-    draw(shader);
-}
-
-void ParticleSystem::draw() const {
-    if (!shouldDraw) {
-        return;
-    }
-    draw(shader);
-}
-
 void ParticleSystem::generate(const Physics::Attributes &attributes, const glm::vec3 &offset, const int numParticles,
                               const glm::vec3 &color) {
     generate(attributes.position + offset, attributes.velocity, color, numParticles);
@@ -182,7 +163,7 @@ void ParticleSystem::generate(const glm::vec3 &position, const glm::vec3 &veloci
 
 void ParticleSystem::setup() {
     buffer = std::make_shared<Buffer>();
-    shader = ShaderManager::Get("Particle");
+    shader = ShaderManager::GetInstance().get("Particle");
     buffer->fill(vertices, indices);
 }
 

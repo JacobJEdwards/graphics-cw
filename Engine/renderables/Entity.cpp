@@ -21,7 +21,6 @@
 Entity::Entity(const std::filesystem::path &path) {
     model = std::make_unique<Model>(path);
     box = model->getBoundingBox();
-    shader = ShaderManager::Get("Base");
 }
 
 void Entity::update(const float deltaTime) {
@@ -101,4 +100,7 @@ void Entity::scale(const glm::vec3 &scale) {
 void Entity::rotate(const glm::vec3 &axis, const float angle) {
     attributes.applyRotation(axis * angle);
     box.rotate(axis, angle);
+}
+
+void Entity::collisionResponse() {
 }
