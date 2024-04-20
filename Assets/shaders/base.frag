@@ -110,7 +110,7 @@ void main() {
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0);
-    vec3 specular = spec * vec3(0.2);
+    vec3 specular = spec * vec3(0.2) * (0.2);
 
     // apply shadow
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;
@@ -124,9 +124,6 @@ void main() {
     float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
     lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
 
-    // just check shadw
-
-    lighting = color * (1.0 - shadow);
 
     FragColor = vec4(lighting, 1.0);
 }

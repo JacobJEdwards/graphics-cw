@@ -7,11 +7,6 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform mat4 lightSpaceMatrix;
 
-out vec2 TexCoords;
-out vec3 Normal;
-out vec3 FragPos;
-out vec4 FragPosLightSpace;
-
 out VS_OUT {
     vec2 TexCoords;
     vec3 Normal;
@@ -26,5 +21,5 @@ void main()
     vs_out.TexCoords = aTexCoords;
     vs_out.Normal = aNormal;
     vs_out.FragPos = vec3(vec4(aPos, 1.0));
-    vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
+    vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
 }

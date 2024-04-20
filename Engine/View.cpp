@@ -248,6 +248,8 @@ void View::optionsInterface() {
         postProcessorEnabled = false;
     }
 
+    ImGui::Checkbox("High Quality", &highQuality);
+
     if (ImGui::Button("Close")) {
         close();
     }

@@ -102,7 +102,7 @@ auto main() -> int {
 
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
     ShadowBuffer shadowBuffer(App::view.getWidth(), App::view.getHeight());
-    // ShadowBuffer shadowBuffer(10000, 10000);
+    //ShadowBuffer shadowBuffer(10000, 10000);
 
     std::vector<glm::vec3> pathPoints;
 
@@ -179,16 +179,18 @@ auto main() -> int {
 
         terrain.draw(viewMatrix, projectionMatrix);
 
-        shader = shaderManager.get("Grass");
-        shader->use();
-        shader->setUniform("light.position", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
+        if (App::view.highQuality) {
+            shader = shaderManager.get("Grass");
+            shader->use();
+            shader->setUniform("light.position", skybox.getSun().getPosition());
+            shader->setUniform("viewPos", player->getCamera().getPosition());
 
-        shader->setUniform("view", viewMatrix);
-        shader->setUniform("projection", projectionMatrix);
-        shader->setUniform("time", static_cast<float>(glfwGetTime()));
+            shader->setUniform("view", viewMatrix);
+            shader->setUniform("projection", projectionMatrix);
+            shader->setUniform("time", static_cast<float>(glfwGetTime()));
 
-        //terrain.draw(shader);
+            terrain.draw(shader);
+        }
 
         skybox.draw(viewMatrix, projectionMatrix);
 
@@ -290,20 +292,8 @@ auto main() -> int {
                         models[i]->collisionResponse();
                         models[j]->collisionResponse();
 
-                        /*
-                        if (length(models[i]->attributes.force) > 25.0F) {
-                            models[j]->setBroken(true);
-                        }
-
-                        if (length(models[j]->attributes.force) > 25.0F) {
-                            models[i]->setBroken(true);
-                        }
-                        */
-
                         // if player car, blur screen
                         if ((models[i] == player->getCar() || models[j] == player->getCar())) {
-                            models[i]->setBroken(true);
-                            models[j]->setBroken(true);
                             App::view.blurScreen();
                         }
                     } else {
@@ -432,7 +422,8 @@ void setupShaders() {
     ShaderManager &shaderManager = ShaderManager::GetInstance();
 
     shaderManager.add("Simple", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
-    shaderManager.add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag");
+    shaderManager.add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag",
+                      "../Assets/shaders/backpack.geom");
     shaderManager.add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
     shaderManager.add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
     shaderManager.add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");

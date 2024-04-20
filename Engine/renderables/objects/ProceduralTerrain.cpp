@@ -117,10 +117,10 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     // return 0.0F;
 
     // hills
-    // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 10.0F;
+    return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 10.0F;
 
     // fairly flat terrain
-    return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F);
+    // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F);
 
     // hills with valleys
     // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F) * 10.0F;

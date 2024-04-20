@@ -28,9 +28,9 @@ public:
 
     void update(float deltaTime) override;
 
-    void draw(std::shared_ptr<Shader> shader) const override;
+    void reset();
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
+    void draw(std::shared_ptr<Shader> shader) const override;
 
     void setMode(Mode mode);
 

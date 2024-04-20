@@ -19,12 +19,14 @@ struct Light {
     vec3 specular;
 };
 
-in vec3 FragPos;
-in vec2 TexCoords;
-in vec3 Normal;
-in vec3 Tangent;
-in vec3 Bitangent;
-in vec4 FragPosLightSpace;
+in VS_OUT {
+    vec3 FragPos;
+    vec2 TexCoords;
+    vec3 Normal;
+    vec3 Tangent;
+    vec3 Bitangent;
+    vec4 FragPosLightSpace;
+} fs_in;
 
 uniform sampler2D shadowMap;
 
@@ -81,11 +83,11 @@ vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 s
 void main() {
     // float shadow = ShadowCalculation(FragPosLightSpace);
 
-    vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(light.position - FragPos);
+    vec3 norm = normalize(fs_in.Normal);
+    vec3 lightDir = normalize(light.position - fs_in.FragPos);
 
-    vec3 viewDir = normalize(viewPos - FragPos);
-    vec4 texColor = texture(material.texture_diffuse1, TexCoords);
+    vec3 viewDir = normalize(viewPos - fs_in.FragPos);
+    vec4 texColor = texture(material.texture_diffuse1, fs_in.TexCoords);
 
     vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, norm, light.diffuse * 2.0, texColor.xyz, material.shininess);
 

@@ -4,6 +4,7 @@
 
 #include "BumperCar.h"
 
+#include <GLFW/glfw3.h>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/vector_float3.hpp>
@@ -91,6 +92,18 @@ BumperCar::BumperCar(std::vector<glm::vec3> points, const float speed) : Entity(
     attributes.mass = 10.0F;
 }
 
+void BumperCar::reset() {
+    spline = Physics::Spline(points, Physics::Spline::Type::CATMULLROM, speed);
+    spline.randomise();
+    attributes.position = points[0];
+    attributes.velocity = glm::vec3(0.0F);
+    attributes.acceleration = glm::vec3(0.0F);
+    attributes.rotation = glm::vec3(0.0F);
+    attributes.angularVelocity = glm::vec3(0.0F);
+    attributes.angularAcceleration = glm::vec3(0.0F);
+    attributes.isColliding = false;
+}
+
 // add random particles
 void BumperCar::update(const float deltaTime) {
     if (paused) {
@@ -99,12 +112,15 @@ void BumperCar::update(const float deltaTime) {
 
     if (isBroken) {
         brokenTime += deltaTime;
-        // fire
-        // num based on time, big at start, small at end
-        const int numParticles = std::max(1, static_cast<int>(10.0F - (brokenTime * 2.0F)));
 
-        ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(1.0F, 10.0F, 1.0F), Color::ORANGE,
-                                               numParticles);
+        if (brokenTime >= 15.0F) {
+            isBroken = false;
+            brokenTime = 0.0F;
+            reset();
+        } else {
+            ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(1.0F, 10.0F, 1.0F), Color::ORANGE,
+                                                   25);
+        }
         Entity::update(deltaTime);
         return;
     }
@@ -181,28 +197,25 @@ void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
     mat = glm::translate(mat, glm::vec3(0.0F, -1.0F, 0.0F));
     mat = glm::scale(mat, glm::vec3(0.5F, 0.5F, 0.5F));
     shader->setUniform("model", mat);
-    if (drawPlayer) {
+    if (drawPlayer && !isBroken) {
         person->draw(shader);
     }
 
     mat = attributes.transform;
     mat = glm::rotate(mat, glm::radians(-90.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     shader->setUniform("model", mat);
+    if (brokenTime >= 10.0F) {
+        shader->setUniform("time", brokenTime);
+        if (brokenTime >= 14.0F) {
+            shader->setUniform("time", 1.0F);
+        }
+    } else {
+        shader->setUniform("time", 0.0F);
+    }
     model->draw(shader);
 
     if (App::debug) {
         spline.draw(shader);
-    }
-}
-
-void BumperCar::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
-    shader->use();
-    shader->setUniform("view", view);
-    shader->setUniform("projection", projection);
-    draw(shader);
-
-    if (App::debug) {
-        box.draw(attributes.transform, view, projection);
     }
 }
 

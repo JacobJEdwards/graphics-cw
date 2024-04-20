@@ -106,6 +106,8 @@ public:
         postProcessor->isBlurred();
     }
 
+    bool highQuality = true;
+
 private:
     GLFWwindow *window = nullptr;
 
