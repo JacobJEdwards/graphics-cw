@@ -31,11 +31,13 @@ namespace Physics::Collisions {
             return;
         }
 
-        constexpr float e = 0.3F;
+        constexpr float e = 0.2F;
         float j = -(1 + e) * relativeVelocityAlongNormal;
         j /= 1 / a.mass;
 
         const glm::vec3 impulse = j * normal;
+
+        // calc roll and pitch to fit with ground
 
         a.applyImpulse(impulse);
     }
@@ -69,6 +71,7 @@ namespace Physics::Collisions {
         }
 
         const glm::vec3 impulse = j * normal;
+
 
         if (a.mass != 0.0F) {
             a.applyImpulse(-impulse);

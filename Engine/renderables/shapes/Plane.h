@@ -1,7 +1,7 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Vertex.h"
 #include <memory>
 #include <vector>
@@ -14,7 +14,7 @@ public:
     void draw() const override;
 
 private:
-    std::unique_ptr<Buffer> buffer;
+    std::unique_ptr<VertexBuffer> buffer;
 
     std::vector<Vertex::Data> vertices{
         Vertex::Data{glm::vec3(-1.0F, 1.0F, 0.0F), glm::vec2(0.0F, 1.0F)},

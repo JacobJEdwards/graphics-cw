@@ -15,7 +15,7 @@
 #include "renderables/Entity.h"
 #include "graphics/Shader.h"
 #include "utils/ShaderManager.h"
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include <GL/glew.h>
 #include "utils/PlayerManager.h"
 #include "graphics/Color.h"
@@ -162,7 +162,7 @@ void ParticleSystem::generate(const glm::vec3 &position, const glm::vec3 &veloci
 
 
 void ParticleSystem::setup() {
-    buffer = std::make_shared<Buffer>();
+    buffer = std::make_shared<VertexBuffer>();
     shader = ShaderManager::GetInstance().get("Particle");
     buffer->fill(vertices, indices);
 }

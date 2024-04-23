@@ -14,12 +14,12 @@
 #include <utility>
 #include <vector>
 #include <iostream>
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
            std::vector<Texture::Data> textures, BoundingBox box)
     : textures(std::move(textures)), box(std::move(box)) {
-    buffer = std::make_unique<Buffer>();
+    buffer = std::make_unique<VertexBuffer>();
     buffer->fill(std::move(vertices), std::move(indices));
 }
 

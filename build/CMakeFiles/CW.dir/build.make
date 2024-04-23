@@ -349,19 +349,19 @@ CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.cpp -o CMakeFiles/CW.dir/Engine/graphics/Color.cpp.s
 
-CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o: CMakeFiles/CW.dir/flags.make
-CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.cpp
-CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.cpp
+CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.cpp
+CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o -MF CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o.d -o CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.cpp
 
-CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.cpp > CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.i
+CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.cpp > CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.i
 
-CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.cpp -o CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.s
+CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.cpp -o CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.s
 
 CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: CMakeFiles/CW.dir/flags.make
 CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.cpp
@@ -693,7 +693,7 @@ CW_OBJECTS = \
 "CMakeFiles/CW.dir/Engine/App.cpp.o" \
 "CMakeFiles/CW.dir/Engine/View.cpp.o" \
 "CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o" \
-"CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o" \
+"CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o" \
 "CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o" \
 "CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o" \
 "CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o" \
@@ -740,7 +740,7 @@ CW: CMakeFiles/CW.dir/external/imgui/imgui_impl_opengl3.cpp.o
 CW: CMakeFiles/CW.dir/Engine/App.cpp.o
 CW: CMakeFiles/CW.dir/Engine/View.cpp.o
 CW: CMakeFiles/CW.dir/Engine/graphics/Color.cpp.o
-CW: CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o
+CW: CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o
 CW: CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o
 CW: CMakeFiles/CW.dir/Engine/physics/Gravity.cpp.o

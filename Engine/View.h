@@ -106,6 +106,10 @@ public:
         postProcessor->isBlurred();
     }
 
+    [[nodiscard]] auto getTime() const -> float {
+        return lastFrame;
+    }
+
     bool highQuality = true;
 
 private:

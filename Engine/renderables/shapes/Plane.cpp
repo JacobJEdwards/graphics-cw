@@ -3,10 +3,10 @@
 //
 
 #include "Plane.h"
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 
 Plane::Plane() {
-    buffer = std::make_unique<Buffer>();
+    buffer = std::make_unique<VertexBuffer>();
     buffer->fill(vertices);
 }
 

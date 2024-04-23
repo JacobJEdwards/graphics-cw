@@ -13,7 +13,7 @@
 
 #include <span>
 
-class Buffer {
+class VertexBuffer {
 public:
     GLuint VAO = 0;
     GLuint VBO = 0;
@@ -28,17 +28,17 @@ public:
 
     Data data;
 
-    Buffer();
+    VertexBuffer();
 
-    ~Buffer();
+    ~VertexBuffer();
 
-    Buffer(const Buffer &other);
+    VertexBuffer(const VertexBuffer &other);
 
-    auto operator=(const Buffer &other) -> Buffer &;
+    auto operator=(const VertexBuffer &other) -> VertexBuffer &;
 
-    Buffer(Buffer &&other) noexcept;
+    VertexBuffer(VertexBuffer &&other) noexcept;
 
-    auto operator=(Buffer &&other) noexcept -> Buffer &;
+    auto operator=(VertexBuffer &&other) noexcept -> VertexBuffer &;
 
     void fill(std::initializer_list<Vertex::Data> vertices, std::initializer_list<GLuint> indices);
 
@@ -55,7 +55,7 @@ public:
     void draw() const;
 
     template<typename T>
-    void setInstanceData(std::size_t index, const T &data) const {
+    void setInstanceData(const std::size_t index, const T &data) const {
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, index * sizeof(T), sizeof(T), &data);
         glBindBuffer(GL_ARRAY_BUFFER, 0);

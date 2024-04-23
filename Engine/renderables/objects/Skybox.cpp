@@ -10,18 +10,15 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <memory>
 #include "renderables/Entity.h"
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Shader.h"
 #include "utils/ShaderManager.h"
 #include "Sun.h"
 
 
 Skybox::Skybox() {
-    skyBuffer = std::make_unique<Buffer>();
+    skyBuffer = std::make_unique<VertexBuffer>();
     skyBuffer->fill(vertices, indices);
-
-    mountainBuffer = std::make_unique<Buffer>();
-    mountainBuffer->fill(vertices, indices);
 
     shader = ShaderManager::GetInstance().get("Sky");
 }

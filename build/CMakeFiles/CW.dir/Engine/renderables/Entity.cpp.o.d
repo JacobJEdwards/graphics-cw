@@ -1032,7 +1032,7 @@ CMakeFiles/CW.dir/Engine/renderables/Entity.cpp.o: \
   /opt/homebrew/include/assimp/vector3.h \
   /opt/homebrew/include/assimp/defs.h \
   /opt/homebrew/include/assimp/config.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
@@ -1104,8 +1104,6 @@ CMakeFiles/CW.dir/Engine/renderables/Entity.cpp.o: \
   /opt/homebrew/include/glm/ext/../trigonometric.hpp \
   /opt/homebrew/include/glm/ext/../matrix.hpp \
   /opt/homebrew/include/glm/ext/matrix_transform.inl \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \

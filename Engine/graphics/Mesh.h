@@ -12,7 +12,7 @@
 
 #include "graphics/Texture.h"
 #include "utils/BoundingBox.h"
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Shader.h"
 #include "graphics/Vertex.h"
 
@@ -32,7 +32,7 @@ private:
 
     BoundingBox box{glm::vec3(0.0F), glm::vec3(0.0F)};
 
-    std::unique_ptr<Buffer> buffer;
+    std::unique_ptr<VertexBuffer> buffer;
 };
 
 #endif // CW_MESH_H

@@ -10,6 +10,7 @@ out vec4 FragColor;
 in VS_OUT {
     vec3 FragPos;
     vec3 Normal;
+    vec2 TexCoords;
 } fs_in;
 
 uniform Light light;
@@ -32,15 +33,15 @@ void main() {
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0);
-    vec3 specular = spec * vec3(0.2);
+    vec3 specular = spec * vec3(0.2) * (0.2);
 
-    // apply shadow
-    vec3 lighting = (ambient * (diffuse + specular)) * color;
+    vec3 lighting = (ambient + diffuse + specular) * color;
 
     // if sun is below the horizon, make the grass darker, smooth
     float sunHeight = light.position.y;
     float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
     lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
 
-    FragColor = vec4(color * 0.3, 1.0);
+
+    FragColor = vec4(lighting, 1.0);
 }

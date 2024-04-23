@@ -72,7 +72,12 @@ void Player::processKeyboard(const Direction direction, const float /*deltaTime*
     const glm::vec3 front = mode == Mode::DRIVE ? car->attributes.getFront() : camera->getFront();
     const auto right = glm::normalize(glm::cross(front, glm::vec3(0.0F, 1.0F, 0.0F)));
 
-    switch (direction) {
+    if (!attributes.isGrounded && mode == Mode::FPS) {
+        return;
+    }
+
+    switch
+    (direction) {
         case Direction::FORWARD:
             if (mode == Mode::DRIVE) {
                 car->attributes.applyForce(front * 50.0F);

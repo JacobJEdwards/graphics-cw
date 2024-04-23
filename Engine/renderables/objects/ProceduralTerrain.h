@@ -10,7 +10,7 @@
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <vector>
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Vertex.h"
 #include "graphics/Shader.h"
 #include <memory>
@@ -23,7 +23,7 @@ constexpr auto DEFAULT_NUM_CHUNKS_Y = 16;
 
 class ProceduralTerrain final : public Renderable {
     struct Chunk {
-        std::unique_ptr<Buffer> buffer = nullptr;
+        std::unique_ptr<VertexBuffer> buffer = nullptr;
         std::vector<Vertex::Data> vertices;
         std::vector<GLuint> indices;
         glm::vec2 centre = glm::vec2(0.0F, 0.0F);

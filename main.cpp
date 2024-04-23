@@ -30,6 +30,7 @@
 #include "renderables/Particle.h"
 #include "renderables/objects/BumperCar.h"
 #include "utils/Random.h"
+#include "graphics/buffers/UniformBuffer.h"
 
 void processInput();
 
@@ -39,9 +40,12 @@ void setupShaders();
 
 void setupPlayers();
 
+// TODO dont apply force when midair
+
 auto main() -> int {
     setupApp();
     setupShaders();
+    Texture::Loader::setFlip(true);
     setupPlayers();
 
     ShaderManager &shaderManager = ShaderManager::GetInstance();
@@ -50,7 +54,6 @@ auto main() -> int {
     Skybox skybox;
     const ProceduralTerrain terrain;
 
-    Texture::Loader::setFlip(true);
 
     const auto pathedCar = playerManager.get("Path")->getCar();
     pathedCar->shouldDrawPlayer(false);
@@ -101,8 +104,8 @@ auto main() -> int {
     playerManager.get("Drive")->setShader(shader);
 
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
-    ShadowBuffer shadowBuffer(App::view.getWidth(), App::view.getHeight());
-    //ShadowBuffer shadowBuffer(10000, 10000);
+    // ShadowBuffer shadowBuffer(App::view.getWidth(), App::view.getHeight());
+    ShadowBuffer shadowBuffer(10000, 10000);
 
     std::vector<glm::vec3> pathPoints;
 
@@ -110,12 +113,11 @@ auto main() -> int {
         pathPoints.insert(pathPoints.end(), model->getPoints().begin(), model->getPoints().end());
     }
 
-    const auto lightProjection = glm::ortho(-200.0F, 200.0F, -200.0F, 200.0F, 1.0F, 1000.0F);
-
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
         const auto player = playerManager.getCurrent();
-        const auto projectionMatrix = player->getCamera().getProjectionMatrix();
+        const auto projectionMatrix = player->getCamera().
+                getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
 
         // shadow pass
@@ -123,7 +125,8 @@ auto main() -> int {
 
         const auto lightPos = skybox.getSun().getPosition();
 
-        const auto lightView = lookAt(lightPos, player->getPosition(), glm::vec3(0.0F, 1.0F, 0.0F));
+        const auto lightView = lookAt(lightPos, player->attributes.position, glm::vec3(0.0F, 1.0F, 0.0F));
+        const auto lightProjection = glm::ortho(-200.0F, 200.0F, -200.0F, 200.0F, 1.0F, 200.0F);
 
         shader = shaderManager.get("Shadow");
         shader->use();
@@ -131,6 +134,9 @@ auto main() -> int {
         shader->setUniform("projection", lightProjection);
 
         for (const auto &model: models) {
+            if (model->hasBroke()) {
+                continue;
+            }
             model->draw(shader);
         }
 
@@ -149,9 +155,11 @@ auto main() -> int {
 
         shader = shaderManager.get("Base");
         shader->use();
-        shader->setUniform("light.position", skybox.getSun().getPosition());
+        shader->setUniform(
+            "light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
-        shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
+        shader->setUniform(
+            "lightSpaceMatrix", lightProjection * lightView);
         shader->setUniform("shadowMap", 10);
 
 
@@ -168,26 +176,39 @@ auto main() -> int {
         shader->use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
-        shader->setUniform("light.position", skybox.getSun().getPosition());
+        shader->setUniform(
+            "light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
-        shader->setUniform("lightSpaceMatrix", lightProjection * lightView);
+        shader->setUniform(
+            "lightSpaceMatrix", lightProjection * lightView);
         shader->setUniform("shadowMap", 0);
 
         shader->setVec3Array("pathedPoints", pathPoints);
-        shader->setUniform("pathedPointsCount", static_cast<int>(pathPoints.size()));
-        shader->setUniform("pathDarkness", models[0]->getLaps() / 1000.0F);
+        shader->setUniform(
+            "pathedPointsCount", static_cast<int>(pathPoints.size()));
+        shader->setUniform(
+            "pathDarkness", models[0]->getLaps() / 1000.0F);
 
         terrain.draw(viewMatrix, projectionMatrix);
 
         if (App::view.highQuality) {
             shader = shaderManager.get("Grass");
             shader->use();
-            shader->setUniform("light.position", skybox.getSun().getPosition());
-            shader->setUniform("viewPos", player->getCamera().getPosition());
+            shader->setUniform(
+                "light.position", skybox.getSun().getPosition());
+            shader->setUniform(
+                "viewPos", player->getCamera().getPosition());
+            shader->setUniform(
+                "lightSpaceMatrix", lightProjection * lightView);
 
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture);
+            shader->setUniform("shadowMap", 0);
             shader->setUniform("view", viewMatrix);
             shader->setUniform("projection", projectionMatrix);
-            shader->setUniform("time", static_cast<float>(glfwGetTime()));
+            if (!App::paused) {
+                shader->setUniform("time", App::view.getTime());
+            }
 
             terrain.draw(shader);
         }
@@ -198,6 +219,8 @@ auto main() -> int {
         shader->use();
         shader->setUniform("sunPosition", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
+
+        // App::view.getPostProcessor().setTexture(texture);
 
         // post processing
     });

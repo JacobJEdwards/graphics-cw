@@ -11,14 +11,13 @@
 #include "View.h"
 
 namespace App {
-
     extern View view;
 
     extern bool paused;
 
     extern bool debug;
 
-// query retina display !!!!!!!
+    // query retina display !!!!!!!
     auto init() -> bool;
 
     auto window(const std::string &title,
@@ -34,7 +33,7 @@ namespace App {
     void debugInterface();
 
     template<typename F, typename... Args>
-    void loop(F &&func, Args &&...args) {
+    void loop(F &&func, Args &&... args) {
         finalise();
         while (!view.shouldClose()) {
             View::pollEvents();

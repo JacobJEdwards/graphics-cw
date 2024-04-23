@@ -17,7 +17,7 @@
 #include <mutex>
 #include <vector>
 #include "graphics/Shader.h"
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Vertex.h"
 #include <GL/glew.h>
 #include "graphics/Color.h"
@@ -65,7 +65,7 @@ private:
     ParticleSystem();
 
     std::vector<Particle> particles;
-    std::shared_ptr<Buffer> buffer;
+    std::shared_ptr<VertexBuffer> buffer;
 
     int MAX_PARTICLES = 10000;
 

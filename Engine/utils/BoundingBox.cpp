@@ -5,7 +5,7 @@
 #include "BoundingBox.h"
 
 #include "Config.h"
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Shader.h"
 #include "helpers/AssimpGLMHelpers.h"
 #include <algorithm>
@@ -39,7 +39,7 @@ BoundingBox::BoundingBox(const aiVector3D &min, const aiVector3D &max)
 BoundingBox::BoundingBox(const BoundingBox &other) {
     min = other.min;
     max = other.max;
-    buffer = std::make_unique<Buffer>(*other.buffer);
+    buffer = std::make_unique<VertexBuffer>(*other.buffer);
     children.clear();
     for (const auto &child: other.children) {
         children.push_back(std::make_unique<BoundingBox>(*child));
@@ -54,7 +54,7 @@ auto BoundingBox::operator=(const BoundingBox &other) -> BoundingBox & {
     if (this != &other) {
         min = other.min;
         max = other.max;
-        buffer = std::make_unique<Buffer>(*other.buffer);
+        buffer = std::make_unique<VertexBuffer>(*other.buffer);
 
         children.clear();
         for (const auto &child: other.children) {
@@ -288,7 +288,7 @@ void BoundingBox::expand(const BoundingBox &other) {
 }
 
 void BoundingBox::initBuffer() {
-    buffer = std::make_unique<Buffer>();
+    buffer = std::make_unique<VertexBuffer>();
     buffer->drawMode = GL_LINES;
 
     const std::vector<Vertex::Data> vertices = {
@@ -322,7 +322,7 @@ void BoundingBox::draw(const glm::mat4 &model, const glm::mat4 &view,
 
     if (App::debug) {
         shader->setUniform("model", Config::IDENTITY_MATRIX);
-        const auto buffer = std::make_unique<Buffer>();
+        const auto buffer = std::make_unique<VertexBuffer>();
         buffer->drawMode = GL_LINES;
 
         std::vector<Vertex::Data> vertices = {

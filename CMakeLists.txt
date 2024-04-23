@@ -33,7 +33,7 @@ add_executable(CW main.cpp
         Engine/App.cpp
         Engine/View.cpp
         Engine/graphics/Color.cpp
-        Engine/graphics/buffers/Buffer.cpp
+        Engine/graphics/buffers/VertexBuffer.cpp
         Engine/utils/BoundingBox.cpp
         Engine/physics/ModelAttributes.cpp
         Engine/physics/Gravity.cpp

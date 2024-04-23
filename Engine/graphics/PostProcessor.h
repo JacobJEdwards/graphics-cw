@@ -72,6 +72,10 @@ public:
         this->blurTime = 0.8F;
     }
 
+    void setTexture(const GLuint texture) {
+        this->texture = texture;
+    }
+
 private:
     std::shared_ptr<Shader> shader;
     std::shared_ptr<FrameBuffer> frameBuffer;
@@ -91,6 +95,8 @@ private:
     float bloomThreshold = BLOOM_THRESHOLD;
     float bloomIntensity = BLOOM_INTENSITY;
     float vignetteStrength = VIGNETTE_STRENGTH;
+
+    GLuint texture;
 
     bool blur = false;
     float blurTime = 0.0F;

@@ -29,7 +29,10 @@
 #include "graphics/Shader.h"
 #include "graphics/Vertex.h"
 
-Model::Model(const std::filesystem::path &path) { loadModel(path); }
+
+Model::Model(const std::filesystem::path &path) {
+    loadModel(path);
+}
 
 void Model::draw(const std::shared_ptr<Shader> shader) const {
     for (const auto &mesh: meshes) {
@@ -52,9 +55,9 @@ void Model::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
 void Model::loadModel(const std::filesystem::path &path) {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(
-            path.string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals |
-                           aiProcess_FlipUVs | aiProcess_CalcTangentSpace |
-                           aiProcess_GenBoundingBoxes);
+        path.string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals |
+                       aiProcess_FlipUVs | aiProcess_CalcTangentSpace |
+                       aiProcess_GenBoundingBoxes);
 
     if (scene == nullptr ||
         (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) != 0U ||
@@ -92,8 +95,10 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     std::vector<GLuint> indices;
     std::vector<Texture::Data> textures;
 
-    const BoundingBox box{AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMin),
-                          AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMax)};
+    const BoundingBox box{
+        AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMin),
+        AssimpGLMHelpers::getGLMVec(mesh->mAABB.mMax)
+    };
 
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex::Data vertex{};
@@ -136,28 +141,28 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
     std::vector<Texture::Data> diffuseMaps = loadMaterialTextures(
-            material, aiTextureType_DIFFUSE, Texture::Type::DIFFUSE);
+        material, aiTextureType_DIFFUSE, Texture::Type::DIFFUSE);
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
     // 2. specular maps
     std::vector<Texture::Data> specularMaps = loadMaterialTextures(
-            material, aiTextureType_SPECULAR, Texture::Type::SPECULAR);
+        material, aiTextureType_SPECULAR, Texture::Type::SPECULAR);
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     // 3. height maps
     std::vector<Texture::Data> heightMaps = loadMaterialTextures(
-            material, aiTextureType_HEIGHT, Texture::Type::HEIGHT);
+        material, aiTextureType_HEIGHT, Texture::Type::HEIGHT);
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
     // 4. normal maps
     std::vector<Texture::Data> normalMaps = loadMaterialTextures(
-            material, aiTextureType_NORMALS, Texture::Type::NORMAL);
+        material, aiTextureType_NORMALS, Texture::Type::NORMAL);
     textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
     // 5. ambient occlusion maps
     std::vector<Texture::Data> ambientOcclusionMaps = loadMaterialTextures(
-            material, aiTextureType_AMBIENT, Texture::Type::AMBIENT_OCCLUSION);
+        material, aiTextureType_AMBIENT, Texture::Type::AMBIENT_OCCLUSION);
     textures.insert(textures.end(), ambientOcclusionMaps.begin(),
                     ambientOcclusionMaps.end());
     // 6. emissive maps
     std::vector<Texture::Data> emissiveMaps = loadMaterialTextures(
-            material, aiTextureType_EMISSIVE, Texture::Type::EMISSIVE);
+        material, aiTextureType_EMISSIVE, Texture::Type::EMISSIVE);
     textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
     return {vertices, indices, textures, box};
 }
@@ -165,7 +170,7 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
 auto Model::loadMaterialTextures(const aiMaterial *const mat,
                                  const aiTextureType type,
                                  const Texture::Type texType)
--> std::vector<Texture::Data> {
+    -> std::vector<Texture::Data> {
     std::vector<Texture::Data> textures;
 
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
@@ -174,24 +179,28 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat,
 
         const std::string path(str.C_Str());
 
-        auto loaded = textures_loaded.find(path);
-
-        if (loaded != textures_loaded.end()) {
+        if (const auto loaded = texturesLoaded.find(path); loaded != texturesLoaded.end()) {
             textures.push_back(loaded->second);
             continue;
         }
 
-        const Texture::Data texture{Texture::Loader::load(path, directory), texType,
-                                    str.C_Str()};
+        const Texture::Data texture{
+            Texture::Loader::load(path, directory), texType,
+            str.C_Str()
+        };
 
         textures.push_back(texture);
-        textures_loaded[path] = texture;
+        texturesLoaded[path] = texture;
     }
 
     return textures;
 }
 
 [[nodiscard]] auto Model::getBoundingBox() const -> BoundingBox {
+    if (boundingBox != nullptr) {
+        return *boundingBox;
+    }
+
     // add children
     auto min = glm::vec3(std::numeric_limits<float>::max());
     auto max = glm::vec3(std::numeric_limits<float>::min());

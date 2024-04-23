@@ -11,7 +11,7 @@
 #include <glm/ext/vector_float3.hpp>
 #include <memory>
 
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Shader.h"
 #include "graphics/Vertex.h"
 #include "renderables/Renderable.h"
@@ -33,8 +33,7 @@ public:
 
 private:
     Sun sun;
-    std::unique_ptr<Buffer> skyBuffer;
-    std::unique_ptr<Buffer> mountainBuffer;
+    std::unique_ptr<VertexBuffer> skyBuffer;
 
     static constexpr std::array<Vertex::Data, NUM_VERTEX> vertices = {
         Vertex::Data{glm::vec3(-1.0F, 1.0F, -1.0F)},

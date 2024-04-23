@@ -889,7 +889,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.o: \
   /opt/homebrew/include/glm/ext/../detail/compute_common.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_vec1.hpp \
   /opt/homebrew/include/glm/ext/vector_float3.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/vector \

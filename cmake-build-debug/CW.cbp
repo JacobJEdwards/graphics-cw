@@ -138,12 +138,6 @@
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h">
 			<Option target="CW"/>
 		</Unit>
-		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.cpp">
-			<Option target="CW"/>
-		</Unit>
-		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/Buffer.h">
-			<Option target="CW"/>
-		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/DepthBuffer.cpp">
 			<Option target="CW"/>
 		</Unit>
@@ -166,6 +160,12 @@
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/UniformBuffer.h">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.h">
 			<Option target="CW"/>
 		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/helpers/AssimpGLMHelpers.cpp">

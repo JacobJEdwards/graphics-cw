@@ -15,7 +15,7 @@
 
 #include <GL/glew.h>
 
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 
 class BoundingBox {
 public:
@@ -106,7 +106,7 @@ private:
     glm::vec3 min{};
     glm::vec3 max{};
 
-    std::unique_ptr<Buffer> buffer;
+    std::unique_ptr<VertexBuffer> buffer;
 
     std::vector<std::unique_ptr<BoundingBox> > children;
     BoundingBox *parent = nullptr;

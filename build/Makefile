@@ -345,30 +345,6 @@ Engine/graphics/Vertex.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/Vertex.cpp.s
 .PHONY : Engine/graphics/Vertex.cpp.s
 
-Engine/graphics/buffers/Buffer.o: Engine/graphics/buffers/Buffer.cpp.o
-.PHONY : Engine/graphics/buffers/Buffer.o
-
-# target to build an object file
-Engine/graphics/buffers/Buffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.o
-.PHONY : Engine/graphics/buffers/Buffer.cpp.o
-
-Engine/graphics/buffers/Buffer.i: Engine/graphics/buffers/Buffer.cpp.i
-.PHONY : Engine/graphics/buffers/Buffer.i
-
-# target to preprocess a source file
-Engine/graphics/buffers/Buffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.i
-.PHONY : Engine/graphics/buffers/Buffer.cpp.i
-
-Engine/graphics/buffers/Buffer.s: Engine/graphics/buffers/Buffer.cpp.s
-.PHONY : Engine/graphics/buffers/Buffer.s
-
-# target to generate assembly for a file
-Engine/graphics/buffers/Buffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/Buffer.cpp.s
-.PHONY : Engine/graphics/buffers/Buffer.cpp.s
-
 Engine/graphics/buffers/DepthBuffer.o: Engine/graphics/buffers/DepthBuffer.cpp.o
 .PHONY : Engine/graphics/buffers/DepthBuffer.o
 
@@ -464,6 +440,30 @@ Engine/graphics/buffers/UniformBuffer.s: Engine/graphics/buffers/UniformBuffer.c
 Engine/graphics/buffers/UniformBuffer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/UniformBuffer.cpp.s
 .PHONY : Engine/graphics/buffers/UniformBuffer.cpp.s
+
+Engine/graphics/buffers/VertexBuffer.o: Engine/graphics/buffers/VertexBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/VertexBuffer.o
+
+# target to build an object file
+Engine/graphics/buffers/VertexBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.o
+.PHONY : Engine/graphics/buffers/VertexBuffer.cpp.o
+
+Engine/graphics/buffers/VertexBuffer.i: Engine/graphics/buffers/VertexBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/VertexBuffer.i
+
+# target to preprocess a source file
+Engine/graphics/buffers/VertexBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.i
+.PHONY : Engine/graphics/buffers/VertexBuffer.cpp.i
+
+Engine/graphics/buffers/VertexBuffer.s: Engine/graphics/buffers/VertexBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/VertexBuffer.s
+
+# target to generate assembly for a file
+Engine/graphics/buffers/VertexBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/graphics/buffers/VertexBuffer.cpp.s
+.PHONY : Engine/graphics/buffers/VertexBuffer.cpp.s
 
 Engine/helpers/AssimpGLMHelpers.o: Engine/helpers/AssimpGLMHelpers.cpp.o
 .PHONY : Engine/helpers/AssimpGLMHelpers.o
@@ -1197,9 +1197,6 @@ help:
 	@echo "... Engine/graphics/Vertex.o"
 	@echo "... Engine/graphics/Vertex.i"
 	@echo "... Engine/graphics/Vertex.s"
-	@echo "... Engine/graphics/buffers/Buffer.o"
-	@echo "... Engine/graphics/buffers/Buffer.i"
-	@echo "... Engine/graphics/buffers/Buffer.s"
 	@echo "... Engine/graphics/buffers/DepthBuffer.o"
 	@echo "... Engine/graphics/buffers/DepthBuffer.i"
 	@echo "... Engine/graphics/buffers/DepthBuffer.s"
@@ -1212,6 +1209,9 @@ help:
 	@echo "... Engine/graphics/buffers/UniformBuffer.o"
 	@echo "... Engine/graphics/buffers/UniformBuffer.i"
 	@echo "... Engine/graphics/buffers/UniformBuffer.s"
+	@echo "... Engine/graphics/buffers/VertexBuffer.o"
+	@echo "... Engine/graphics/buffers/VertexBuffer.i"
+	@echo "... Engine/graphics/buffers/VertexBuffer.s"
 	@echo "... Engine/helpers/AssimpGLMHelpers.o"
 	@echo "... Engine/helpers/AssimpGLMHelpers.i"
 	@echo "... Engine/helpers/AssimpGLMHelpers.s"

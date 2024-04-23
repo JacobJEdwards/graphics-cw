@@ -22,9 +22,9 @@ public:
         NONE
     };
 
-    explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 50.0F, float speed = 1.0F);
+    explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 60.0F, float speed = 2.0F);
 
-    explicit BumperCar(std::vector<glm::vec3> points, float speed = 1.0F);
+    explicit BumperCar(std::vector<glm::vec3> points, float speed = 2.0F);
 
     void update(float deltaTime) override;
 
@@ -104,6 +104,9 @@ private:
 
     bool isBroken = false;
     float brokenTime = 0.0F;
+
+    bool isExploding = false;
+    float explodeTime = 0.0F;
 
     bool drawPlayer = true;
 };

@@ -62,6 +62,7 @@ void App::finalise() {
     view.setDimensions(view.getWidth(), view.getHeight());
 }
 
+
 void App::loop() {
     finalise();
     while (!view.shouldClose()) {

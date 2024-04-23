@@ -2,7 +2,7 @@
 // Created by Jacob Edwards on 02/03/2024.
 //
 
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include <cstddef>
 #include <initializer_list>
 #include <span>
@@ -11,20 +11,20 @@
 #include <vector>
 #include "graphics/Vertex.h"
 
-Buffer::Buffer() {
+VertexBuffer::VertexBuffer() {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
 }
 
-Buffer::~Buffer() {
+VertexBuffer::~VertexBuffer() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
 }
 
 
-Buffer::Buffer(const Buffer &other) {
+VertexBuffer::VertexBuffer(const VertexBuffer &other) {
     if (this != &other) {
         data = other.data;
         drawMode = other.drawMode;
@@ -32,7 +32,7 @@ Buffer::Buffer(const Buffer &other) {
     }
 }
 
-auto Buffer::operator=(const Buffer &other) -> Buffer & {
+auto VertexBuffer::operator=(const VertexBuffer &other) -> VertexBuffer & {
     if (this != &other) {
         data = other.data;
         drawMode = other.drawMode;
@@ -42,7 +42,7 @@ auto Buffer::operator=(const Buffer &other) -> Buffer & {
 }
 
 
-Buffer::Buffer(Buffer &&other) noexcept {
+VertexBuffer::VertexBuffer(VertexBuffer &&other) noexcept {
     data = std::move(other.data);
     drawMode = other.drawMode;
     VAO = other.VAO;
@@ -55,7 +55,7 @@ Buffer::Buffer(Buffer &&other) noexcept {
 }
 
 
-auto Buffer::operator=(Buffer &&other) noexcept -> Buffer & {
+auto VertexBuffer::operator=(VertexBuffer &&other) noexcept -> VertexBuffer & {
     if (this != &other) {
         data = std::move(other.data);
         drawMode = other.drawMode;
@@ -72,41 +72,41 @@ auto Buffer::operator=(Buffer &&other) noexcept -> Buffer & {
 }
 
 
-void Buffer::fill(const std::initializer_list<Vertex::Data> vertices,
-                  const std::initializer_list<GLuint> indices) {
+void VertexBuffer::fill(const std::initializer_list<Vertex::Data> vertices,
+                        const std::initializer_list<GLuint> indices) {
     data.vertices = std::vector(vertices.begin(), vertices.end());
     data.indices = std::vector(indices.begin(), indices.end());
 
     setup();
 }
 
-void Buffer::fill(std::span<const Vertex::Data> vertices,
-                  std::span<const GLuint> indices) {
+void VertexBuffer::fill(std::span<const Vertex::Data> vertices,
+                        std::span<const GLuint> indices) {
     data.vertices = std::vector(vertices.begin(), vertices.end());
     data.indices = std::vector(indices.begin(), indices.end());
 
     setup();
 }
 
-void Buffer::fill(const std::initializer_list<Vertex::Data> vertices) {
+void VertexBuffer::fill(const std::initializer_list<Vertex::Data> vertices) {
     data.vertices = std::vector(vertices.begin(), vertices.end());
     setup();
 }
 
-void Buffer::fill(std::span<const Vertex::Data> vertices) {
+void VertexBuffer::fill(std::span<const Vertex::Data> vertices) {
     data.vertices = std::vector(vertices.begin(), vertices.end());
     setup();
 }
 
-void Buffer::bind() const {
+void VertexBuffer::bind() const {
     glBindVertexArray(VAO);
 }
 
-void Buffer::unbind() const {
+void VertexBuffer::unbind() const {
     glBindVertexArray(0);
 }
 
-void Buffer::draw() const {
+void VertexBuffer::draw() const {
     if (!data.indices.empty()) {
         glDrawElements(drawMode, static_cast<GLsizei>(data.indices.size()),
                        GL_UNSIGNED_INT, nullptr);
@@ -115,7 +115,7 @@ void Buffer::draw() const {
     }
 }
 
-void Buffer::setup() const {
+void VertexBuffer::setup() const {
     bind();
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
@@ -162,7 +162,7 @@ void Buffer::setup() const {
     unbind();
 }
 
-void Buffer::drawInstanced(const std::size_t num) const {
+void VertexBuffer::drawInstanced(const std::size_t num) const {
     if (!data.indices.empty()) {
         glDrawElementsInstanced(drawMode, static_cast<GLsizei>(data.indices.size()), GL_UNSIGNED_INT, nullptr,
                                 static_cast<GLsizei>(num));

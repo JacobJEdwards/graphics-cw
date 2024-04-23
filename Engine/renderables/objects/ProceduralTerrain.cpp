@@ -14,14 +14,14 @@
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include <utility>
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Vertex.h"
 #include "graphics/Shader.h"
 #include "utils/ShaderManager.h"
 #include "utils/PlayerManager.h"
 
 void ProceduralTerrain::Chunk::init() {
-    buffer = std::make_unique<Buffer>();
+    buffer = std::make_unique<VertexBuffer>();
     buffer->fill(vertices, indices);
 }
 
@@ -173,7 +173,6 @@ void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
     chunk.chunkSize = chunkSize;
 
     const auto worldCentre = glm::vec2(worldSizeX / 2.0F, worldSizeY / 2.0F);
-
 
     // generate vertices
     for (int i = 0; i < chunkSize + 1; i++) {

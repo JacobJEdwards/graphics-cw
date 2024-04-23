@@ -37,9 +37,10 @@ public:
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
 private:
-    std::unordered_map<std::string, Texture::Data> textures_loaded;
-    std::vector<std::unique_ptr<Mesh>> meshes;
+    std::unordered_map<std::string, Texture::Data> texturesLoaded;
+    std::vector<std::unique_ptr<Mesh> > meshes;
     std::filesystem::path directory;
+    std::shared_ptr<BoundingBox> boundingBox;
 
     void loadModel(const std::filesystem::path &path);
 
@@ -49,7 +50,7 @@ private:
 
     auto loadMaterialTextures(const aiMaterial *mat, aiTextureType type,
                               Texture::Type texType)
-    -> std::vector<Texture::Data>;
+        -> std::vector<Texture::Data>;
 };
 
 #endif // MODEL_H

@@ -7,7 +7,7 @@
 #include <vector>
 #include <span>
 #include <memory>
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Shader.h"
 #include "renderables/Renderable.h"
 
@@ -55,7 +55,7 @@ namespace Physics {
 
         std::size_t laps = 0U;
 
-        std::unique_ptr<Buffer> buffer;
+        std::unique_ptr<VertexBuffer> buffer;
 
         float t = 0.0F;
     };

@@ -95,6 +95,11 @@ BumperCar::BumperCar(std::vector<glm::vec3> points, const float speed) : Entity(
 void BumperCar::reset() {
     spline = Physics::Spline(points, Physics::Spline::Type::CATMULLROM, speed);
     spline.randomise();
+    isBroken = false;
+    brokenTime = 0.0F;
+    isExploding = false;
+    explodeTime = 0.0F;
+
     attributes.position = points[0];
     attributes.velocity = glm::vec3(0.0F);
     attributes.acceleration = glm::vec3(0.0F);
@@ -102,6 +107,7 @@ void BumperCar::reset() {
     attributes.angularVelocity = glm::vec3(0.0F);
     attributes.angularAcceleration = glm::vec3(0.0F);
     attributes.isColliding = false;
+    attributes.mass = 10.0F;
 }
 
 // add random particles
@@ -110,14 +116,19 @@ void BumperCar::update(const float deltaTime) {
         return;
     }
 
+    if (isExploding) {
+        explodeTime += deltaTime;
+    }
+
     if (isBroken) {
         brokenTime += deltaTime;
+        if (brokenTime >= 5.0F) {
+            isExploding = true;
+        }
 
-        if (brokenTime >= 15.0F) {
-            isBroken = false;
-            brokenTime = 0.0F;
+        if (brokenTime >= 10.0F) {
             reset();
-        } else {
+        } else if (!isExploding) {
             ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(1.0F, 10.0F, 1.0F), Color::ORANGE,
                                                    25);
         }
@@ -134,6 +145,12 @@ void BumperCar::update(const float deltaTime) {
     const auto currentPos = attributes.position;
 
     const auto forward = attributes.getFront();
+
+    if (!attributes.isGrounded) {
+        Entity::update(deltaTime);
+        return;
+    }
+
 
     switch (mode) {
         case Mode::PATHED:
@@ -204,14 +221,7 @@ void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
     mat = attributes.transform;
     mat = glm::rotate(mat, glm::radians(-90.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     shader->setUniform("model", mat);
-    if (brokenTime >= 10.0F) {
-        shader->setUniform("time", brokenTime);
-        if (brokenTime >= 14.0F) {
-            shader->setUniform("time", 1.0F);
-        }
-    } else {
-        shader->setUniform("time", 0.0F);
-    }
+    shader->setUniform("time", explodeTime / 2.0F);
     model->draw(shader);
 
     if (App::debug) {

@@ -15,6 +15,7 @@
 #include "graphics/Model.h"
 #include "physics/ModelAttributes.h"
 #include "renderables/Renderable.h"
+#include "unordered_map"
 
 class Entity : public Renderable {
 public:
@@ -65,10 +66,13 @@ public:
     Physics::Attributes attributes;
 
 protected:
-    std::unique_ptr<Model> model;
+    std::shared_ptr<Model> model;
+
+    static std::unordered_map<std::filesystem::path, std::shared_ptr<Model> > models;
+
     BoundingBox box;
 
-    std::vector<std::unique_ptr<Entity> > children;
+    std::vector<std::unique_ptr<Entity> > children = {};
     Entity *parent = nullptr;
 };
 

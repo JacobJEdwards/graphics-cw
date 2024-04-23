@@ -26,13 +26,10 @@ out VS_OUT {
     vec4 FragPosLightSpace;
 } fs_in;
 
-vec4 explode(vec4 position, vec3 normal) {
-    if (time == 0.0) {
-        return position;
-    }
+const float magnitude = 50.0;
 
-    float magnitude = 50.0;
-    vec3 direction = normal * ((sin(time) + 1.0) / 2.0) * magnitude;
+vec4 explode(vec4 position, vec3 normal) {
+    vec3 direction = normal * time * magnitude;
     return position + vec4(direction, 0.0);
 }
 

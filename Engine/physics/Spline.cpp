@@ -17,7 +17,7 @@
 #include <glm/gtx/spline.hpp>
 
 #include <span>
-#include "graphics/buffers/Buffer.h"
+#include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Shader.h"
 #include "utils/ShaderManager.h"
 #include <GL/glew.h>
@@ -50,7 +50,7 @@ Physics::Spline::Spline(std::span<const glm::vec3> points, const Type type, cons
         throw std::runtime_error("Spline must have at least 4 points");
     }
 
-    buffer = std::make_unique<Buffer>();
+    buffer = std::make_unique<VertexBuffer>();
     std::vector<Vertex::Data> vertices;
     vertices.reserve(numPoints + 1U);
 

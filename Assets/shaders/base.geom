@@ -19,28 +19,39 @@ out VS_OUT {
 uniform mat4 projection;
 uniform mat4 view;
 
+const float density = 0.1;
+const float grassHeight = 1.0;
+const float grassWidth = 10;
+
 void main() {
     for (int i = 0; i < 3; i++) {
         // Calculate the grass blade direction perpendicular to the triangle face
         vec3 normal = normalize(cross(gs_in[1].FragPos - gs_in[0].FragPos, gs_in[2].FragPos - gs_in[0].FragPos));
 
-        // Grass blade length and width (you can adjust these)
-        float bladeLength = 1.0;
-        float bladeWidth = 0.1;
+        // Calculate the position of the grass blade
+        vec3 grassPos = gs_in[i].FragPos;
+        vec3 grassDir = normal;
+        vec3 grassOffset = vec3(0.0, 0.0, 0.0);
+        grassOffset.x = sin(grassPos.x * 0.1) * 0.1;
+        grassOffset.z = cos(grassPos.z * 0.1) * 0.1;
+        grassPos += grassOffset;
 
-        // Grass blade positions
-        vec3 p0 = gs_in[i].FragPos;
-        vec3 p1 = p0 + normal * bladeLength;
+        // Calculate the position of the grass blade in light space
+        vec4 fragPosLightSpace = gs_in[i].FragPosLightSpace;
+        vec3 fragPosLightSpace3 = fragPosLightSpace.xyz / fragPosLightSpace.w;
+        vec3 lightDir = normalize(vec3(0.0, 0.0, 0.0) - fragPosLightSpace3);
+        float d = dot(normal, lightDir);
+        float bias = max(0.05 * (1.0 - d), 0.005);
+        fragPosLightSpace3 = fragPosLightSpace3 + normal * bias;
+        fragPosLightSpace = vec4(fragPosLightSpace3, 1.0);
 
-        // Grass blade width direction
-        vec3 right = cross(normal, vec3(0.0, 1.0, 0.0));
-
-        // Calculate quad vertices
+        // Calculate the grass blade vertices
         vec3 quadVertices[4];
-        quadVertices[0] = p0 - right * bladeWidth;
-        quadVertices[1] = p0 + right * bladeWidth;
-        quadVertices[2] = p1 - right * bladeWidth;
-        quadVertices[3] = p1 + right * bladeWidth;
+        quadVertices[0] = grassPos + vec3(-grassWidth, 0.0, 0.0);
+        quadVertices[1] = grassPos + vec3(grassWidth, 0.0, 0.0);
+        quadVertices[2] = grassPos + vec3(-grassWidth, grassHeight, 0.0);
+        quadVertices[3] = grassPos + vec3(grassWidth, grassHeight, 0.0);
+
 
         // Emit the grass blade as two triangles
         for (int j = 0; j < 4; j++) {

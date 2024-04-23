@@ -5,74 +5,61 @@
 #ifndef CW_UNIFORMBUFFER_H
 #define CW_UNIFORMBUFFER_H
 
+#include <cstddef>
+#include <vector>
 #include <GL/glew.h>
-#include <string>
-#include <memory>
-#include "graphics/Shader.h"
-#include "utils/ShaderManager.h"
-
 
 class UniformBuffer {
 public:
-    UniformBuffer();
-
-    ~UniformBuffer();
-
-    void bind() const;
-
-    static void unbind();
-
-    static void Create(const std::shared_ptr<Shader> &shader, const std::string &blockName, const GLuint bindingPoint) {
-        const GLuint blockIndex = glGetUniformBlockIndex(shader->getProgramID(), blockName.c_str());
-        glUniformBlockBinding(shader->getProgramID(), blockIndex, bindingPoint);
+    explicit UniformBuffer(const size_t size) : size(size) {
+        glGenBuffers(1, &id);
+        glBindBuffer(GL_UNIFORM_BUFFER, id);
+        glBufferData(GL_UNIFORM_BUFFER, size, nullptr, GL_STATIC_DRAW);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
 
-    template<typename T>
-    void setData(const T &data) {
+    void bind() const {
+        glBindBuffer(GL_UNIFORM_BUFFER, id);
+    }
+
+    void unbind() const {
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    }
+
+    void setOffset(const GLint offset, const GLint size) {
+        offsets.push_back(offset);
+        sizes.push_back(size);
+    }
+
+    void set(const GLint offset, const void *data, const size_t size) {
         bind();
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(T), &data, GL_STATIC_DRAW);
+        glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);
         unbind();
     }
 
-    template<typename T>
-    void setSubData(const T &data, const GLuint offset) {
+    void set(const GLint index, const void *data) {
+        set(offsets[index], data, sizes[index]);
+    }
+
+    // update the entire buffer
+    void update(const void *data) const {
         bind();
-        glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), &data);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, size, data);
         unbind();
     }
 
-    static void setUniformBlockBinding(const std::shared_ptr<Shader> &shader, const std::string &blockName, const GLuint
-                                       bindingPoint) {
-        const GLuint blockIndex = glGetUniformBlockIndex(shader->getProgramID(), blockName.c_str());
-        glUniformBlockBinding(shader->getProgramID(), blockIndex, bindingPoint);
-    }
-
-    static void setUniformBlockBinding(const std::string &shaderName, const std::string &blockName, const GLuint
-                                       bindingPoint) {
-        const auto shader = ShaderManager::GetInstance().get(shaderName);
-        const GLuint blockIndex = glGetUniformBlockIndex(shader->getProgramID(), blockName.c_str());
-        glUniformBlockBinding(shader->getProgramID(), blockIndex, bindingPoint);
-    }
-
-    void bindBufferBase(const GLuint bindingPoint) const {
-        glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, UBO);
-    }
-
-    void bindBufferRange(const GLuint bindingPoint, const GLuint offset, const GLuint size) const {
-        glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, UBO, offset, size);
-    }
-
-    static void unbindBufferBase(const GLuint bindingPoint) {
-        glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, 0);
-    }
-
-    static void unbindBufferRange(const GLuint bindingPoint, const GLuint offset, const GLuint size) {
-        glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, 0, offset, size);
+    void bindToShader(const GLuint bindingPoint, const GLuint shaderProgram, const std::string &blockName) const {
+        const auto blockIndex = glGetUniformBlockIndex(shaderProgram, blockName.c_str());
+        glUniformBlockBinding(shaderProgram, blockIndex, bindingPoint);
+        glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, id);
     }
 
 private:
-    GLuint UBO = 0;
+    GLuint id;
+    size_t size;
+    std::vector<GLint> offsets;
+    std::vector<GLint> sizes;
 };
 
 
-#endif //CW_UNIFORMBUFFER_H
+#endif

@@ -10,16 +10,24 @@
 #include <glm/ext/vector_float3.hpp>
 #include <memory>
 #include <filesystem>
+#include <unordered_map>
 #include <utility>
 #include "graphics/Shader.h"
 #include "utils/BoundingBox.h"
-#include "utils/ShaderManager.h"
 #include "graphics/Model.h"
 #include "physics/ModelAttributes.h"
 #include "App.h"
 
+std::unordered_map<std::filesystem::path, std::shared_ptr<Model> > Entity::models;
+
 Entity::Entity(const std::filesystem::path &path) {
-    model = std::make_unique<Model>(path);
+    if (const auto it = models.find(path); it != models.end()) {
+        model = it->second;
+    } else {
+        model = std::make_shared<Model>(path);
+        models.emplace(path, model);
+    }
+
     box = model->getBoundingBox();
 }
 

@@ -60,19 +60,43 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     projCoords = projCoords * 0.5 + 0.5;
 
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+
+    float currentDepth = projCoords.z;
+
+    vec3 normal = normalize(fs_in.Normal);
+    vec3 lightDir = normalize(light.position - fs_in.FragPos);
+    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+
     float shadow = 0.0;
-    float bias = 0.005;
+    float texelSize = 1.0 / textureSize(shadowMap, 0).x;
+
     for (int i = -1; i <= 1; ++i)
     {
         for (int j = -1; j <= 1; ++j)
         {
-            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(i, j) * 1.0/1024.0).r;
-            shadow += projCoords.z - bias > pcfDepth  ? 1.0 : 0.0;
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(i, j) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;
         }
     }
     shadow /= 9.0;
 
+    // Apply PCF
+    const int numSamples = 16;
+    for (int i = -numSamples/2; i <= numSamples/2; ++i)
+    {
+        for (int j = -numSamples/2; j <= numSamples/2; ++j)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(i, j) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;
+        }
+    }
+    shadow /= float(numSamples * numSamples);
+
     shadow = clamp(shadow + bias, 0.0, 1.0);
+    if (projCoords.z > 1.0) {
+        shadow = 0.0;
+    }
 
     return shadow;
 }
