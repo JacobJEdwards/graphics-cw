@@ -14,6 +14,8 @@
 #include "graphics/Vertex.h"
 #include "graphics/Shader.h"
 #include <memory>
+
+#include "renderables/objects/Trees.h"
 #include "renderables/Renderable.h"
 
 constexpr auto DEFAULT_CENTRE = glm::vec2{0.0F, 0.0F};
@@ -54,6 +56,10 @@ public:
 
     [[nodiscard]] auto getWorldCoordinates(const glm::vec3 &position) const -> glm::vec2;
 
+    [[nodiscard]] auto getWorldCoordinates(float xPos, float zPos) const -> glm::vec2;
+
+    [[nodiscard]] auto getWorldCoordinates(const glm::vec2 &position) const -> glm::vec2;
+
     [[nodiscard]] auto getTerrainHeight(const glm::vec3 &position) const -> float;
 
     [[nodiscard]] auto getTerrainHeight(float xPos, float zPos) const -> float;
@@ -61,6 +67,8 @@ public:
     [[nodiscard]] auto getIntersectionPoint(const glm::vec3 &rayStart, const glm::vec3 &rayEnd) const -> glm::vec3;
 
     [[nodiscard]] auto getTerrainNormal(float x, float y) const -> glm::vec3;
+
+    [[nodiscard]] auto getTrees() const -> const Trees &;
 
 private:
     std::vector<Chunk> chunks;
@@ -79,6 +87,8 @@ private:
     void generate();
 
     void generateChunk(int chunkX, int chunkY);
+
+    Trees trees;
 };
 
 #endif //CW_PROCEDURALTERRAIN_H

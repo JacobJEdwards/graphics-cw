@@ -56,6 +56,7 @@ add_executable(CW main.cpp
         Engine/utils/Random.cpp
         Engine/graphics/buffers/UniformBuffer.cpp
         Engine/renderables/shapes/Plane.cpp
+        Engine/renderables/objects/Trees.cpp
 )
 
 # Link libraries

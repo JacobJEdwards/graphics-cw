@@ -29,34 +29,66 @@ in VS_OUT {
 } fs_in;
 
 uniform sampler2D shadowMap;
+uniform sampler2D damageTexture;
 
 uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
+
+uniform float damage = 0.9;
+
+
 
 float ShadowCalculation(vec4 fragPosLightSpace)
 {
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     projCoords = projCoords * 0.5 + 0.5;
 
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+
+    float currentDepth = projCoords.z;
+
+    vec3 normal = normalize(fs_in.Normal);
+    vec3 lightDir = normalize(light.position - fs_in.FragPos);
+    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+
     float shadow = 0.0;
-    float bias = 0.005;
+    float texelSize = 1.0 / textureSize(shadowMap, 0).x;
+
     for (int i = -1; i <= 1; ++i)
     {
         for (int j = -1; j <= 1; ++j)
         {
-            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(i, j) * 1.0/1024.0).r;
-            shadow += projCoords.z - bias > pcfDepth  ? 1.0 : 0.0;
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(i, j) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;
         }
     }
     shadow /= 9.0;
 
+    // Apply PCF
+    const int numSamples = 16;
+    for (int i = -numSamples/2; i <= numSamples/2; ++i)
+    {
+        for (int j = -numSamples/2; j <= numSamples/2; ++j)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(i, j) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;
+        }
+    }
+    shadow /= float(numSamples * numSamples);
+
     shadow = clamp(shadow + bias, 0.0, 1.0);
+    if (projCoords.z > 1.0) {
+        shadow = 0.0;
+    }
 
     return shadow;
 }
 
-vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3 surfaceColor, float shininess) {
+
+
+vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3
+surfaceColor, float shininess) {
     // Normalize vectors
     lightDirection = normalize(lightDirection);
     viewDirection = normalize(viewDirection);
@@ -76,13 +108,16 @@ vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 s
     vec3 diffuse = diffuseFactor * lightColor * surfaceColor;
     vec3 specular = specularFactor * lightColor;
 
-    return ambient + diffuse + specular;
+    // shadow
+    // float shadowFactor = ShadowCalculation(fs_in.FragPosLightSpace);
+
+
+    // return (ambient + (1.0 - shadowFactor) * (diffuse + specular));
+    return (ambient + diffuse + specular);
 }
 
 
 void main() {
-    // float shadow = ShadowCalculation(FragPosLightSpace);
-
     vec3 norm = normalize(fs_in.Normal);
     vec3 lightDir = normalize(light.position - fs_in.FragPos);
 
@@ -93,8 +128,9 @@ void main() {
 
     result *= texColor.a;
 
-    // Apply shadow
-    // result *= shadow;
+    // make it look like the object is damaged
+    float damageFactor = texture(damageTexture, fs_in.TexCoords).r;
+    result *= mix(1.0, damageFactor, damage);
 
     // light is sun, descrease if below horizon
     float sunHeight = light.position.y;

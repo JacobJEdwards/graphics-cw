@@ -55,6 +55,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.o"
   "CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.o"
+  "CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/shapes/Plane.cpp.o"
   "CMakeFiles/CW.dir/Engine/renderables/shapes/Plane.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o"

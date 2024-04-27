@@ -43,8 +43,11 @@ void PostProcess::render(const float deltaTime, const float time) {
     }
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, frameBuffer->getTexture());
-    // glBindTexture(GL_TEXTURE_2D, texture);
+    if (texture == 0) {
+        glBindTexture(GL_TEXTURE_2D, frameBuffer->getTexture());
+    } else {
+        glBindTexture(GL_TEXTURE_2D, texture);
+    }
     renderPlane.draw();
     frameBuffer->unbind();
     glEnable(GL_DEPTH_TEST);

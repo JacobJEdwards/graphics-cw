@@ -30,6 +30,8 @@ public:
 
     void reset();
 
+    void generateTexture();
+
     void draw(std::shared_ptr<Shader> shader) const override;
 
     void setMode(Mode mode);
@@ -76,9 +78,7 @@ public:
 
     static void Interface();
 
-    void setBroken(const bool broken) {
-        isBroken = broken;
-    }
+    void takeDamage(float damage);
 
     [[nodiscard]] auto hasBroke() const -> bool {
         return isBroken;
@@ -96,11 +96,16 @@ private:
 
     std::unique_ptr<Model> person;
 
+    Texture::Data damageTexture;
+
     static float coneRadius;
     static float coneHeight;
     static bool paused;
     static float trackingDistance;
     static float ventureDistance;
+
+    // between 0 and 1
+    float damageTaken = 0.0F;
 
     bool isBroken = false;
     float brokenTime = 0.0F;

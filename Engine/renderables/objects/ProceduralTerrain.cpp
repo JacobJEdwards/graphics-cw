@@ -19,6 +19,7 @@
 #include "graphics/Shader.h"
 #include "utils/ShaderManager.h"
 #include "utils/PlayerManager.h"
+#include "utils/Random.h"
 
 void ProceduralTerrain::Chunk::init() {
     buffer = std::make_unique<VertexBuffer>();
@@ -74,6 +75,8 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     shader->setUniform("projection", projection);
 
     draw(shader);
+
+    trees.draw(view, projection);
 }
 
 [[nodiscard]] auto ProceduralTerrain::getCentre() const -> glm::vec2 {
@@ -100,6 +103,14 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
 
 [[nodiscard]] auto ProceduralTerrain::getWorldCoordinates(const glm::vec3 &position) const -> glm::vec2 {
     return {position.x + static_cast<float>(worldSizeX) / 2.0F, position.z + static_cast<float>(worldSizeY) / 2.0F};
+}
+
+[[nodiscard]] auto ProceduralTerrain::getWorldCoordinates(const glm::vec2 &position) const -> glm::vec2 {
+    return getWorldCoordinates(glm::vec3(position.x, 0.0F, position.y));
+}
+
+[[nodiscard]] auto ProceduralTerrain::getWorldCoordinates(const float xPos, const float zPos) const -> glm::vec2 {
+    return getWorldCoordinates(glm::vec2(xPos, zPos));
 }
 
 [[nodiscard]] auto ProceduralTerrain::getTerrainHeight(const glm::vec3 &position) const -> float {
@@ -154,6 +165,10 @@ ProceduralTerrain::getIntersectionPoint(const glm::vec3 &rayStart, const glm::ve
     return normal;
 }
 
+[[nodiscard]] auto ProceduralTerrain::getTrees() const -> const Trees & {
+    return trees;
+}
+
 
 void ProceduralTerrain::generate() {
     for (int y = 0; y < numChunksY; y++) {
@@ -161,6 +176,35 @@ void ProceduralTerrain::generate() {
             generateChunk(x, y);
         }
     }
+
+    std::vector<glm::vec3> treePositions;
+    for (int i = 0; i < 200; i++) {
+        const float x = Random::Float(-worldSizeX / 2.0F, worldSizeX / 2.0F);
+        const float z = Random::Float(-worldSizeY / 2.0F, worldSizeY / 2.0F);
+        const float y = getTerrainHeight(x, z);
+
+        // check if existing tree is too close
+        bool tooClose = false;
+
+        for (const auto &pos: treePositions) {
+            if (glm::distance(glm::vec2(x, z), glm::vec2(pos.x, pos.z)) < 10.0F) {
+                tooClose = true;
+                break;
+            }
+        }
+
+        if (tooClose) {
+            continue;
+        }
+
+        if (glm::distance(getWorldCoordinates(glm::vec3(0.0F)), getWorldCoordinates(glm::vec3(x, y, z))) < 100.0F) {
+            continue;
+        }
+
+        treePositions.emplace_back(x, y, z);
+    }
+
+    trees.generateTrees(treePositions);
 }
 
 void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {

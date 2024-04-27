@@ -23,6 +23,7 @@
 #include "graphics/Shader.h"
 #include "imgui/imgui.h"
 #include "utils/Random.h"
+#include <GL/glew.h>
 #include "renderables/Particle.h"
 
 float BumperCar::coneRadius = 45.0F;
@@ -78,6 +79,7 @@ BumperCar::BumperCar(const glm::vec2 centre, const float radius, const float spe
     spline.randomise();
 
     attributes.mass = 10.0F;
+    generateTexture();
 }
 
 BumperCar::BumperCar(std::vector<glm::vec3> points, const float speed) : Entity(
@@ -90,6 +92,7 @@ BumperCar::BumperCar(std::vector<glm::vec3> points, const float speed) : Entity(
     spline.randomise();
     this->speed *= Random::Float(0.8F, 1.2F);
     attributes.mass = 10.0F;
+    generateTexture();
 }
 
 void BumperCar::reset() {
@@ -108,6 +111,34 @@ void BumperCar::reset() {
     attributes.angularAcceleration = glm::vec3(0.0F);
     attributes.isColliding = false;
     attributes.mass = 10.0F;
+    damageTaken = 0.0F;
+}
+
+void BumperCar::generateTexture() {
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    damageTexture.id = texture;
+
+    std::vector<unsigned char> data(4 * 512 * 512, 255);
+    for (int i = 0; i < 512; i++) {
+        for (int j = 0; j < 512; j++) {
+            // random noise
+            data[4 * (512 * i + j) + 0] = Random::Int(0, 255);
+            data[4 * (512 * i + j) + 1] = Random::Int(0, 255);
+            data[4 * (512 * i + j) + 2] = Random::Int(0, 255);
+            data[4 * (512 * i + j) + 3] = 255;
+        }
+    }
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+    glGenerateMipmap(GL_TEXTURE_2D);
+    // parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
 // add random particles
@@ -118,6 +149,10 @@ void BumperCar::update(const float deltaTime) {
 
     if (isExploding) {
         explodeTime += deltaTime;
+    }
+
+    if (damageTaken >= 1.0F) {
+        isBroken = true;
     }
 
     if (isBroken) {
@@ -138,6 +173,14 @@ void BumperCar::update(const float deltaTime) {
 
     if (Random::Int(0, 150) == 0) {
         ParticleSystem::GetInstance().generate(attributes.position, -attributes.velocity / 5.0F, Color::WHITE, 10);
+    }
+
+    // be slightly on fire if damaged
+    if (damageTaken > 0.0F) {
+        ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(-attributes.velocity.x, 8.0F,
+                                                                              -attributes.velocity.y),
+                                               Color::ORANGE,
+                                               static_cast<int>(damageTaken * 5.0F));
     }
 
 
@@ -208,6 +251,11 @@ void BumperCar::update(const float deltaTime) {
     Entity::update(deltaTime);
 }
 
+void BumperCar::takeDamage(const float damage) {
+    this->damageTaken += damage;
+}
+
+
 void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
     auto mat = attributes.transform;
@@ -218,10 +266,17 @@ void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
         person->draw(shader);
     }
 
+    // damage texture
     mat = attributes.transform;
     mat = glm::rotate(mat, glm::radians(-90.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     shader->setUniform("model", mat);
     shader->setUniform("time", explodeTime / 2.0F);
+    shader->setUniform("damage", damageTaken);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, damageTexture.id);
+    shader->setUniform("damageTexture", 1);
+
     model->draw(shader);
 
     if (App::debug) {

@@ -36,6 +36,8 @@ public:
 
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
+    [[nodiscard]] auto getMeshes() const -> const std::vector<std::unique_ptr<Mesh> > &;
+
 private:
     std::unordered_map<std::string, Texture::Data> texturesLoaded;
     std::vector<std::unique_ptr<Mesh> > meshes;

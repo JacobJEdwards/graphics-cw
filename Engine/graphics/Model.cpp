@@ -226,3 +226,7 @@ auto Model::loadMaterialTextures(const aiMaterial *const mat,
 
     return box;
 }
+
+[[nodiscard]] auto Model::getMeshes() const -> const std::vector<std::unique_ptr<Mesh> > & {
+    return meshes;
+}

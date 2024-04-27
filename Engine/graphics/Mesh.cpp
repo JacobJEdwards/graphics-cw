@@ -88,3 +88,9 @@ void Mesh::draw() const {
 }
 
 auto Mesh::getBoundingBox() const -> BoundingBox { return box; }
+
+[[nodiscard]] auto Mesh::getTextures() const -> const std::vector<Texture::Data> & {
+    return textures;
+}
+
+[[nodiscard]] auto Mesh::getBuffer() const -> const VertexBuffer & { return *buffer; }

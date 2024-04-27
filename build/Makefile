@@ -801,6 +801,30 @@ Engine/renderables/objects/Sun.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.s
 .PHONY : Engine/renderables/objects/Sun.cpp.s
 
+Engine/renderables/objects/Trees.o: Engine/renderables/objects/Trees.cpp.o
+.PHONY : Engine/renderables/objects/Trees.o
+
+# target to build an object file
+Engine/renderables/objects/Trees.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.o
+.PHONY : Engine/renderables/objects/Trees.cpp.o
+
+Engine/renderables/objects/Trees.i: Engine/renderables/objects/Trees.cpp.i
+.PHONY : Engine/renderables/objects/Trees.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Trees.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.i
+.PHONY : Engine/renderables/objects/Trees.cpp.i
+
+Engine/renderables/objects/Trees.s: Engine/renderables/objects/Trees.cpp.s
+.PHONY : Engine/renderables/objects/Trees.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Trees.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.s
+.PHONY : Engine/renderables/objects/Trees.cpp.s
+
 Engine/renderables/shapes/Plane.o: Engine/renderables/shapes/Plane.cpp.o
 .PHONY : Engine/renderables/shapes/Plane.o
 
@@ -1254,6 +1278,9 @@ help:
 	@echo "... Engine/renderables/objects/Sun.o"
 	@echo "... Engine/renderables/objects/Sun.i"
 	@echo "... Engine/renderables/objects/Sun.s"
+	@echo "... Engine/renderables/objects/Trees.o"
+	@echo "... Engine/renderables/objects/Trees.i"
+	@echo "... Engine/renderables/objects/Trees.s"
 	@echo "... Engine/renderables/shapes/Plane.o"
 	@echo "... Engine/renderables/shapes/Plane.i"
 	@echo "... Engine/renderables/shapes/Plane.s"

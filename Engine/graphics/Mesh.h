@@ -27,6 +27,10 @@ public:
 
     [[nodiscard]] auto getBoundingBox() const -> BoundingBox;
 
+    [[nodiscard]] auto getTextures() const -> const std::vector<Texture::Data> &;
+
+    [[nodiscard]] auto getBuffer() const -> const VertexBuffer &;
+
 private:
     std::vector<Texture::Data> textures;
 

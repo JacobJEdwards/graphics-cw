@@ -252,6 +252,12 @@
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Sun.h">
 			<Option target="CW"/>
 		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.h">
+			<Option target="CW"/>
+		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/shapes/Plane.cpp">
 			<Option target="CW"/>
 		</Unit>

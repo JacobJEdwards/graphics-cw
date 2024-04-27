@@ -96,7 +96,7 @@ private:
     float bloomIntensity = BLOOM_INTENSITY;
     float vignetteStrength = VIGNETTE_STRENGTH;
 
-    GLuint texture;
+    GLuint texture = 0;
 
     bool blur = false;
     float blurTime = 0.0F;

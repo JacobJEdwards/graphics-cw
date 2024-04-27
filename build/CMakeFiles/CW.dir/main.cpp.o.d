@@ -1130,11 +1130,21 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/ProceduralTerrain.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Skybox.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Sun.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.h \
+  /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../mat4x4.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../vec2.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../vec3.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../vec4.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_projection.hpp \
+  /opt/homebrew/include/glm/ext/matrix_projection.inl \
+  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_clip_space.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_transform.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/matrix_transform.inl \
+  /opt/homebrew/include/glm/ext/../gtc/../geometric.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../trigonometric.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/../matrix.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/ShadowBuffer.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Particle.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Random.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ranges \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/all.h \
@@ -1169,4 +1179,8 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/zip_view.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__ranges/istream_view.h \
   /opt/homebrew/include/glm/vec2.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Skybox.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Sun.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/ShadowBuffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Particle.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/UniformBuffer.h

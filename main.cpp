@@ -30,6 +30,7 @@
 #include "renderables/Particle.h"
 #include "renderables/objects/BumperCar.h"
 #include "utils/Random.h"
+#include "renderables/objects/Trees.h"
 #include "graphics/buffers/UniformBuffer.h"
 
 void processInput();
@@ -39,8 +40,6 @@ void setupApp();
 void setupShaders();
 
 void setupPlayers();
-
-// TODO dont apply force when midair
 
 auto main() -> int {
     setupApp();
@@ -53,7 +52,6 @@ auto main() -> int {
 
     Skybox skybox;
     const ProceduralTerrain terrain;
-
 
     const auto pathedCar = playerManager.get("Path")->getCar();
     pathedCar->shouldDrawPlayer(false);
@@ -96,15 +94,11 @@ auto main() -> int {
         matrix = translate(matrix, glm::vec3(5.0F, 0.0F, 0.0F));
     }
 
-    playerManager.get("Orbit")->setShader(shader);
-    playerManager.get("Free")->setShader(shader);
-    playerManager.get("FPS")->setShader(shader);
-    playerManager.get("Fixed")->setShader(shader);
-    playerManager.get("Path")->setShader(shader);
-    playerManager.get("Drive")->setShader(shader);
+    for (auto &[name, player]: playerManager.getAll()) {
+        player->setShader(shader);
+    }
 
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
-    // ShadowBuffer shadowBuffer(App::view.getWidth(), App::view.getHeight());
     ShadowBuffer shadowBuffer(10000, 10000);
 
     std::vector<glm::vec3> pathPoints;
@@ -112,6 +106,8 @@ auto main() -> int {
     for (const auto &model: models) {
         pathPoints.insert(pathPoints.end(), model->getPoints().begin(), model->getPoints().end());
     }
+
+    const auto lightProjection = glm::ortho(-1000.0F, 1000.0F, -1000.0F, 1000.0F, 1.0F, 200.0F);
 
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
@@ -125,8 +121,8 @@ auto main() -> int {
 
         const auto lightPos = skybox.getSun().getPosition();
 
-        const auto lightView = lookAt(lightPos, player->attributes.position, glm::vec3(0.0F, 1.0F, 0.0F));
-        const auto lightProjection = glm::ortho(-200.0F, 200.0F, -200.0F, 200.0F, 1.0F, 200.0F);
+        // const auto lightView = lookAt(lightPos, player->attributes.position, glm::vec3(0.0F, 1.0F, 0.0F));
+        const auto lightView = lookAt(lightPos, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
 
         shader = shaderManager.get("Shadow");
         shader->use();
@@ -143,6 +139,8 @@ auto main() -> int {
         playerManager.draw(shader);
 
         terrain.draw(shader);
+
+        terrain.getTrees().draw(lightView, lightProjection);
 
         shadowBuffer.unbind();
 
@@ -248,6 +246,7 @@ auto main() -> int {
         App::loop([&] {
             playerManager.update(App::view.getDeltaTime());
             const auto player = playerManager.getCurrent();
+            const auto &trees = terrain.getTrees();
 
             for (const auto &model: models) {
                 model->clearTrackablePositions();
@@ -270,6 +269,12 @@ auto main() -> int {
             skybox.update(App::view.getDeltaTime());
             particleSystem.update(App::view.getDeltaTime());
 
+            for (const auto &tree: trees.getBoundingBoxes()) {
+                if (Physics::Collisions::check(player->getBoundingBox(), tree)) {
+                    Physics::Collisions::resolve(*player, -player->attributes.velocity);
+                }
+            }
+
             for (const auto &model: models) {
                 if (model == player->getCar()) {
                     continue;
@@ -280,7 +285,7 @@ auto main() -> int {
                                                                            player->getMode() == Player::Mode::PATH ||
                                                                            player->getMode() == Player::Mode::FPS)) {
                         App::view.blurScreen();
-                        model->setBroken(true);
+                        model->takeDamage(0.3F);
                     }
 
                     player->attributes.isColliding = true;
@@ -297,6 +302,12 @@ auto main() -> int {
                 } else {
                     player->attributes.isColliding = false;
                     model->attributes.isColliding = false;
+                }
+
+                for (const auto &tree: trees.getBoundingBoxes()) {
+                    if (Physics::Collisions::check(model->getBoundingBox(), tree)) {
+                        // Physics::Collisions::resolve(*model, -model->attributes.velocity);
+                    }
                 }
             }
 
@@ -444,28 +455,23 @@ void setupApp() {
 void setupShaders() {
     ShaderManager &shaderManager = ShaderManager::GetInstance();
 
-    shaderManager.add("Simple", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
+    shaderManager.add("Simple", "../Assets/shaders/terrain.vert", "../Assets/shaders/terrain.frag");
     shaderManager.add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag",
                       "../Assets/shaders/backpack.geom");
     shaderManager.add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
-    shaderManager.add("Skybox", "../Assets/shaders/skybox.vert", "../Assets/shaders/skybox.frag");
     shaderManager.add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");
     shaderManager.add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
-    shaderManager.add("Terrain", "../Assets/shaders/infinitePlane.vert", "../Assets/shaders/infinitePlane.frag");
-    shaderManager.add("Player", "../Assets/shaders/base.vert", "../Assets/shaders/base.frag");
     shaderManager.add("BoundingBox", "../Assets/shaders/boundingBox.vert", "../Assets/shaders/boundingBox.frag");
     shaderManager.add("Shadow", "../Assets/shaders/shadow.vert", "../Assets/shaders/shadow.frag");
     shaderManager.add("Particle", "../Assets/shaders/particle.vert", "../Assets/shaders/particle.frag");
     shaderManager.add("Grass", "../Assets/shaders/grass.vert", "../Assets/shaders/grass.frag",
                       "../Assets/shaders/grass.geom");
+    shaderManager.add("Tree", "../Assets/shaders/tree.vert", "../Assets/shaders/tree.frag");
+    // "../Assets/shaders/tree.geom");
 
     auto shader = shaderManager.get("PostProcess");
     shader->use();
     shader->setUniform("screenTexture", 0);
-
-    shader = shaderManager.get("Terrain");
-    shader->use();
-    shader->setUniform("shadowMap", 0);
 
     shader = shaderManager.get("Base");
     shader->use();
@@ -473,7 +479,7 @@ void setupShaders() {
     shader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
     shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
     shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
-    // material properties
+
     shader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
     shader->setUniform("material.shininess", 64.0F);
 }
