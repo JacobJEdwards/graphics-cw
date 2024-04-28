@@ -4,11 +4,13 @@
 
 #include "Model.h"
 
+#include <assimp/color4.h>
 #include <assimp/material.h>
 #include <assimp/mesh.h>
 #include <assimp/types.h>
 #include <glm/common.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/vector_float4.hpp>
 #include <iostream>
 #include <limits>
 #include <memory>
@@ -29,8 +31,7 @@
 #include "graphics/Shader.h"
 #include "graphics/Vertex.h"
 
-
-Model::Model(const std::filesystem::path &path) {
+Model::Model(const std::filesystem::path &path) : path(path) {
     loadModel(path);
 }
 
@@ -57,7 +58,7 @@ void Model::loadModel(const std::filesystem::path &path) {
     const aiScene *scene = importer.ReadFile(
         path.string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals |
                        aiProcess_FlipUVs | aiProcess_CalcTangentSpace |
-                       aiProcess_GenBoundingBoxes);
+                       aiProcess_GenBoundingBoxes | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph);
 
     if (scene == nullptr ||
         (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) != 0U ||
@@ -164,7 +165,27 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     std::vector<Texture::Data> emissiveMaps = loadMaterialTextures(
         material, aiTextureType_EMISSIVE, Texture::Type::EMISSIVE);
     textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
-    return {vertices, indices, textures, box};
+
+    // get material properties
+    aiColor4D color(0.0F, 0.0F, 0.0F, 0.0F);
+    material->Get(AI_MATKEY_COLOR_AMBIENT, color);
+    const glm::vec4 ambient = AssimpGLMHelpers::getGLMVec(color);
+
+    material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+    const glm::vec4 diffuse = AssimpGLMHelpers::getGLMVec(color);
+
+    material->Get(AI_MATKEY_COLOR_SPECULAR, color);
+    const glm::vec4 specular = AssimpGLMHelpers::getGLMVec(color);
+
+    material->Get(AI_MATKEY_COLOR_EMISSIVE, color);
+    const glm::vec4 emissive = AssimpGLMHelpers::getGLMVec(color);
+
+    material->Get(AI_MATKEY_SHININESS, color);
+    const float shininess = color.r;
+
+    const Material meshMaterial = {ambient, diffuse, specular, emissive, shininess};
+
+    return {vertices, indices, textures, box, meshMaterial};
 }
 
 auto Model::loadMaterialTextures(const aiMaterial *const mat,

@@ -685,6 +685,34 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.cpp -o CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.s
 
+CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/FerrisWheel.cpp
+CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o -MF CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o.d -o CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/FerrisWheel.cpp
+
+CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/FerrisWheel.cpp > CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.i
+
+CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/FerrisWheel.cpp -o CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.s
+
+CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o: CMakeFiles/CW.dir/flags.make
+CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/RollerCoaster.cpp
+CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o: CMakeFiles/CW.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o -MF CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o.d -o CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/RollerCoaster.cpp
+
+CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/RollerCoaster.cpp > CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.i
+
+CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/RollerCoaster.cpp -o CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.s
+
 # Object files for target CW
 CW_OBJECTS = \
 "CMakeFiles/CW.dir/main.cpp.o" \
@@ -730,7 +758,9 @@ CW_OBJECTS = \
 "CMakeFiles/CW.dir/Engine/utils/Random.cpp.o" \
 "CMakeFiles/CW.dir/Engine/graphics/buffers/UniformBuffer.cpp.o" \
 "CMakeFiles/CW.dir/Engine/renderables/shapes/Plane.cpp.o" \
-"CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.o"
+"CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.o" \
+"CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o" \
+"CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o"
 
 # External object files for target CW
 CW_EXTERNAL_OBJECTS =
@@ -779,6 +809,8 @@ CW: CMakeFiles/CW.dir/Engine/utils/Random.cpp.o
 CW: CMakeFiles/CW.dir/Engine/graphics/buffers/UniformBuffer.cpp.o
 CW: CMakeFiles/CW.dir/Engine/renderables/shapes/Plane.cpp.o
 CW: CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.o
+CW: CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o
+CW: CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o
 CW: CMakeFiles/CW.dir/build.make
 CW: /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework
 CW: /opt/homebrew/lib/libGLEW.2.2.0.dylib
@@ -787,7 +819,7 @@ CW: /opt/homebrew/lib/libglm.dylib
 CW: /opt/homebrew/lib/libassimp.5.3.0.dylib
 CW: /opt/homebrew/lib/libzlibstatic.a
 CW: CMakeFiles/CW.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Linking CXX executable CW"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Linking CXX executable CW"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CW.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

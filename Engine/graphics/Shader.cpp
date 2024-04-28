@@ -77,19 +77,49 @@ void Shader::setUniform(const std::string &name, T /*value*/) const {
 
 template<>
 void Shader::setUniform(const std::string &name, const glm::mat4 value) const {
-    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                       value_ptr(value));
+    // check if name is already in the cache
+
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glUniformMatrix4fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            uniformLocations[name] = location;
+            glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name, const glm::mat3 value) const {
-    glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                       value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glUniformMatrix3fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            uniformLocations[name] = location;
+            glUniformMatrix3fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name, const glm::vec4 value) const {
-    glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glUniform4fv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            uniformLocations[name] = location;
+            glUniform4fv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>

@@ -42,6 +42,7 @@ private:
     std::unordered_map<std::string, Texture::Data> texturesLoaded;
     std::vector<std::unique_ptr<Mesh> > meshes;
     std::filesystem::path directory;
+    std::filesystem::path path;
     std::shared_ptr<BoundingBox> boundingBox;
 
     void loadModel(const std::filesystem::path &path);

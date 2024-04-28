@@ -7,7 +7,10 @@ struct Material {
     sampler2D texture_specular1;
     sampler2D texture_normal1;
     sampler2D texture_height1;
-    vec3 specular;
+    vec4 ambient;
+    vec4 specular;
+    vec4 emmisive;
+    vec4 diffuse;
     float shininess;
 };
 
@@ -37,8 +40,6 @@ uniform vec3 viewPos;
 
 uniform float damage = 0.9;
 
-
-
 float ShadowCalculation(vec4 fragPosLightSpace)
 {
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -65,7 +66,6 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     }
     shadow /= 9.0;
 
-    // Apply PCF
     const int numSamples = 16;
     for (int i = -numSamples/2; i <= numSamples/2; ++i)
     {

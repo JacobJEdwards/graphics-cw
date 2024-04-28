@@ -705,6 +705,30 @@ Engine/renderables/objects/BumperCar.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.s
 .PHONY : Engine/renderables/objects/BumperCar.cpp.s
 
+Engine/renderables/objects/FerrisWheel.o: Engine/renderables/objects/FerrisWheel.cpp.o
+.PHONY : Engine/renderables/objects/FerrisWheel.o
+
+# target to build an object file
+Engine/renderables/objects/FerrisWheel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o
+.PHONY : Engine/renderables/objects/FerrisWheel.cpp.o
+
+Engine/renderables/objects/FerrisWheel.i: Engine/renderables/objects/FerrisWheel.cpp.i
+.PHONY : Engine/renderables/objects/FerrisWheel.i
+
+# target to preprocess a source file
+Engine/renderables/objects/FerrisWheel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.i
+.PHONY : Engine/renderables/objects/FerrisWheel.cpp.i
+
+Engine/renderables/objects/FerrisWheel.s: Engine/renderables/objects/FerrisWheel.cpp.s
+.PHONY : Engine/renderables/objects/FerrisWheel.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/FerrisWheel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.s
+.PHONY : Engine/renderables/objects/FerrisWheel.cpp.s
+
 Engine/renderables/objects/Player.o: Engine/renderables/objects/Player.cpp.o
 .PHONY : Engine/renderables/objects/Player.o
 
@@ -752,6 +776,30 @@ Engine/renderables/objects/ProceduralTerrain.s: Engine/renderables/objects/Proce
 Engine/renderables/objects/ProceduralTerrain.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.s
 .PHONY : Engine/renderables/objects/ProceduralTerrain.cpp.s
+
+Engine/renderables/objects/RollerCoaster.o: Engine/renderables/objects/RollerCoaster.cpp.o
+.PHONY : Engine/renderables/objects/RollerCoaster.o
+
+# target to build an object file
+Engine/renderables/objects/RollerCoaster.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.o
+.PHONY : Engine/renderables/objects/RollerCoaster.cpp.o
+
+Engine/renderables/objects/RollerCoaster.i: Engine/renderables/objects/RollerCoaster.cpp.i
+.PHONY : Engine/renderables/objects/RollerCoaster.i
+
+# target to preprocess a source file
+Engine/renderables/objects/RollerCoaster.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.i
+.PHONY : Engine/renderables/objects/RollerCoaster.cpp.i
+
+Engine/renderables/objects/RollerCoaster.s: Engine/renderables/objects/RollerCoaster.cpp.s
+.PHONY : Engine/renderables/objects/RollerCoaster.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/RollerCoaster.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.s
+.PHONY : Engine/renderables/objects/RollerCoaster.cpp.s
 
 Engine/renderables/objects/Skybox.o: Engine/renderables/objects/Skybox.cpp.o
 .PHONY : Engine/renderables/objects/Skybox.o
@@ -1266,12 +1314,18 @@ help:
 	@echo "... Engine/renderables/objects/BumperCar.o"
 	@echo "... Engine/renderables/objects/BumperCar.i"
 	@echo "... Engine/renderables/objects/BumperCar.s"
+	@echo "... Engine/renderables/objects/FerrisWheel.o"
+	@echo "... Engine/renderables/objects/FerrisWheel.i"
+	@echo "... Engine/renderables/objects/FerrisWheel.s"
 	@echo "... Engine/renderables/objects/Player.o"
 	@echo "... Engine/renderables/objects/Player.i"
 	@echo "... Engine/renderables/objects/Player.s"
 	@echo "... Engine/renderables/objects/ProceduralTerrain.o"
 	@echo "... Engine/renderables/objects/ProceduralTerrain.i"
 	@echo "... Engine/renderables/objects/ProceduralTerrain.s"
+	@echo "... Engine/renderables/objects/RollerCoaster.o"
+	@echo "... Engine/renderables/objects/RollerCoaster.i"
+	@echo "... Engine/renderables/objects/RollerCoaster.s"
 	@echo "... Engine/renderables/objects/Skybox.o"
 	@echo "... Engine/renderables/objects/Skybox.i"
 	@echo "... Engine/renderables/objects/Skybox.s"

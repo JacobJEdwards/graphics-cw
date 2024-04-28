@@ -12,6 +12,7 @@
 
 #include <filesystem>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class Shader {
@@ -66,6 +67,8 @@ private:
     std::string geometryCode;
     std::string tessControlCode;
     std::string tessEvalCode;
+
+    std::unordered_map<std::string, GLint> uniformLocations;
 
     GLuint ID = 0;
 

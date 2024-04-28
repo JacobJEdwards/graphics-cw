@@ -17,8 +17,8 @@
 #include "graphics/buffers/VertexBuffer.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
-           std::vector<Texture::Data> textures, BoundingBox box)
-    : textures(std::move(textures)), box(std::move(box)) {
+           std::vector<Texture::Data> textures, BoundingBox box, Material material)
+    : textures(std::move(textures)), box(std::move(box)), material(material) {
     buffer = std::make_unique<VertexBuffer>();
     buffer->fill(std::move(vertices), std::move(indices));
 }
@@ -36,7 +36,6 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
 
         std::string number;
 
-        // structured binding
         const auto [id, type, path, target] = textures[i];
 
         switch (type) {
@@ -73,6 +72,13 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
         shader->setUniform("material.texture_" + toString(type) + number,
                            static_cast<GLint>(i));
     }
+
+    // bind the material
+    shader->setUniform("material.ambient", material.ambient);
+    shader->setUniform("material.diffuse", material.diffuse);
+    shader->setUniform("material.specular", material.specular);
+    shader->setUniform("material.emissive", material.emissive);
+    shader->setUniform("material.shininess", material.shininess);
 
     buffer->bind();
     buffer->draw();

@@ -32,6 +32,8 @@
 #include "utils/Random.h"
 #include "renderables/objects/Trees.h"
 #include "graphics/buffers/UniformBuffer.h"
+#include "renderables/objects/FerrisWheel.h"
+#include "renderables/objects/RollerCoaster.h"
 
 void processInput();
 
@@ -52,6 +54,8 @@ auto main() -> int {
 
     Skybox skybox;
     const ProceduralTerrain terrain;
+    FerrisWheel ferrisWheel;
+    const RollerCoaster rollerCoaster;
 
     const auto pathedCar = playerManager.get("Path")->getCar();
     pathedCar->shouldDrawPlayer(false);
@@ -94,9 +98,12 @@ auto main() -> int {
         matrix = translate(matrix, glm::vec3(5.0F, 0.0F, 0.0F));
     }
 
+    shader = shaderManager.get("Untextured");
     for (auto &[name, player]: playerManager.getAll()) {
         player->setShader(shader);
     }
+
+    ferrisWheel.setShader(shader);
 
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
     ShadowBuffer shadowBuffer(10000, 10000);
@@ -138,9 +145,12 @@ auto main() -> int {
 
         playerManager.draw(shader);
 
-        terrain.draw(shader);
 
         terrain.getTrees().draw(lightView, lightProjection);
+
+        terrain.draw(shader);
+        ferrisWheel.draw(shader);
+        rollerCoaster.draw(shader);
 
         shadowBuffer.unbind();
 
@@ -166,14 +176,26 @@ auto main() -> int {
         }
 
         particleSystem.draw(viewMatrix, projectionMatrix);
+        rollerCoaster.draw(viewMatrix, projectionMatrix);
+
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        shader = shaderManager.get("Untextured");
+        shader->use();
+        shader->setUniform(
+            "light.position", skybox.getSun().getPosition());
+        shader->setUniform("viewPos", player->getCamera().getPosition());
+        shader->setUniform(
+            "lightSpaceMatrix", lightProjection * lightView);
+        shader->setUniform("shadowMap", 0);
 
         playerManager.draw(viewMatrix, projectionMatrix);
-        particleSystem.draw(viewMatrix, projectionMatrix);
+        ferrisWheel.draw(viewMatrix, projectionMatrix);
 
         shader = terrain.getShader();
         shader->use();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
         shader->setUniform(
             "light.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
@@ -246,7 +268,6 @@ auto main() -> int {
         App::loop([&] {
             playerManager.update(App::view.getDeltaTime());
             const auto player = playerManager.getCurrent();
-            const auto &trees = terrain.getTrees();
 
             for (const auto &model: models) {
                 model->clearTrackablePositions();
@@ -268,12 +289,7 @@ auto main() -> int {
 
             skybox.update(App::view.getDeltaTime());
             particleSystem.update(App::view.getDeltaTime());
-
-            for (const auto &tree: trees.getBoundingBoxes()) {
-                if (Physics::Collisions::check(player->getBoundingBox(), tree)) {
-                    Physics::Collisions::resolve(*player, -player->attributes.velocity);
-                }
-            }
+            ferrisWheel.update(App::view.getDeltaTime());
 
             for (const auto &model: models) {
                 if (model == player->getCar()) {
@@ -302,12 +318,6 @@ auto main() -> int {
                 } else {
                     player->attributes.isColliding = false;
                     model->attributes.isColliding = false;
-                }
-
-                for (const auto &tree: trees.getBoundingBoxes()) {
-                    if (Physics::Collisions::check(model->getBoundingBox(), tree)) {
-                        // Physics::Collisions::resolve(*model, -model->attributes.velocity);
-                    }
                 }
             }
 
@@ -456,8 +466,8 @@ void setupShaders() {
     ShaderManager &shaderManager = ShaderManager::GetInstance();
 
     shaderManager.add("Simple", "../Assets/shaders/terrain.vert", "../Assets/shaders/terrain.frag");
-    shaderManager.add("Base", "../Assets/shaders/backpack.vert", "../Assets/shaders/backpack.frag",
-                      "../Assets/shaders/backpack.geom");
+    shaderManager.add("Base", "../Assets/shaders/textured.vert", "../Assets/shaders/textured.frag",
+                      "../Assets/shaders/textured.geom");
     shaderManager.add("PostProcess", "../Assets/shaders/postProcessing.vert", "../assets/shaders/postProcessing.frag");
     shaderManager.add("Sky", "../Assets/shaders/Sky.vert", "../Assets/shaders/Sky.frag");
     shaderManager.add("Sun", "../Assets/shaders/sun.vert", "../Assets/shaders/sun.frag");
@@ -467,7 +477,7 @@ void setupShaders() {
     shaderManager.add("Grass", "../Assets/shaders/grass.vert", "../Assets/shaders/grass.frag",
                       "../Assets/shaders/grass.geom");
     shaderManager.add("Tree", "../Assets/shaders/tree.vert", "../Assets/shaders/tree.frag");
-    // "../Assets/shaders/tree.geom");
+    shaderManager.add("Untextured", "../Assets/shaders/materialed.vert", "../Assets/shaders/materialed.frag");
 
     auto shader = shaderManager.get("PostProcess");
     shader->use();
@@ -480,8 +490,12 @@ void setupShaders() {
     shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
     shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
 
-    shader->setUniform("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("material.shininess", 64.0F);
+    shader = shaderManager.get("Untextured");
+    shader->use();
+
+    shader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
+    shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
 }
 
 void setupPlayers() {

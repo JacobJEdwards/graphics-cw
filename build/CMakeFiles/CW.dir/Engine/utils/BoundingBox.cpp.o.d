@@ -1066,6 +1066,17 @@ CMakeFiles/CW.dir/Engine/utils/BoundingBox.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/helpers/AssimpGLMHelpers.h \
   /opt/homebrew/include/assimp/matrix4x4.h \
   /opt/homebrew/include/assimp/quaternion.h \
+  /opt/homebrew/include/assimp/types.h \
+  /opt/homebrew/include/assimp/vector2.h \
+  /opt/homebrew/include/assimp/color4.h \
+  /opt/homebrew/include/assimp/matrix3x3.h \
+  /opt/homebrew/include/assimp/vector2.inl \
+  /opt/homebrew/include/assimp/vector3.inl \
+  /opt/homebrew/include/assimp/color4.inl \
+  /opt/homebrew/include/assimp/matrix3x3.inl \
+  /opt/homebrew/include/assimp/matrix4x4.inl \
+  /opt/homebrew/include/assimp/MathFunctions.h \
+  /opt/homebrew/include/assimp/quaternion.inl \
   /opt/homebrew/include/glm/fwd.hpp \
   /opt/homebrew/include/glm/ext/matrix_transform.hpp \
   /opt/homebrew/include/glm/ext/../gtc/constants.hpp \

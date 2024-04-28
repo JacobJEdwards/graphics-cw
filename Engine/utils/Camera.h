@@ -27,7 +27,7 @@ constexpr float MINYAW = -360.0F;
 constexpr float MAXSPEED = 10.0F;
 constexpr float MINSPEED = 0.0F;
 
-constexpr float FARPLANE = 300.0F;
+constexpr float FARPLANE = 500.0F;
 constexpr float NEARPLANE = 0.1F;
 
 

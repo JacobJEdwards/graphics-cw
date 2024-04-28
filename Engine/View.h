@@ -110,7 +110,7 @@ public:
         return lastFrame;
     }
 
-    bool highQuality = true;
+    bool highQuality = false;
 
 private:
     GLFWwindow *window = nullptr;
@@ -121,7 +121,7 @@ private:
 
     ImGuiIO io;
 
-    std::unique_ptr<PostProcess> postProcessor{};
+    std::unique_ptr<PostProcess> postProcessor;
     bool postProcessorEnabled = true;
 
     bool showInterface = true;

@@ -6,6 +6,7 @@
 
 #include <assimp/matrix4x4.h>
 #include <assimp/quaternion.h>
+#include <assimp/types.h>
 #include <assimp/vector3.h>
 #include <glm/fwd.hpp>
 #include <glm/ext/vector_float3.hpp>
@@ -39,3 +40,10 @@ auto AssimpGLMHelpers::getGLMVec(const aiVector3D &from) -> glm::vec3 {
     return {from.x, from.y, from.z};
 }
 
+auto AssimpGLMHelpers::getGLMVec(const aiColor3D &from) -> glm::vec3 {
+    return {from.r, from.g, from.b};
+}
+
+auto AssimpGLMHelpers::getGLMVec(const aiColor4D &from) -> glm::vec4 {
+    return {from.r, from.g, from.b, from.a};
+}

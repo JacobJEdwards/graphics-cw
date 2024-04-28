@@ -57,6 +57,8 @@ void ProceduralTerrain::draw(const std::shared_ptr<Shader> shader) const {
 
     shader->use();
 
+    shader->setUniform("model", glm::mat4(1.0F));
+
     for (int i = startY; i < endY; i++) {
         for (int j = startX; j < endX; j++) {
             const std::size_t index = i * numChunksX + j;
