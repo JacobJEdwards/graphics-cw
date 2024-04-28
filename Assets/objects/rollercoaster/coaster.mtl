@@ -1,0 +1,33 @@
+# Blender 4.0.2 MTL File: 'None'
+# www.blender.org
+
+newmtl cart
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 1
+map_Kd textures/cart_cart_BaseColor.png
+map_Ns textures/cart_cart_Roughness.png
+map_refl textures/cart_cart_Metallic.png
+map_d textures/cart_cart_BaseColor.png
+
+newmtl coaster.tex
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd textures/coaster-tex-demon.png
+map_d textures/coaster-tex-demon.png
+
+newmtl coaster.tracks
+Ns 0.000000
+Ka 0.635593 0.635593 0.635593
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd textures/tracks_coaster.tracks_BaseColor.png
+map_d textures/tracks_coaster.tracks_BaseColor.png
