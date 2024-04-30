@@ -232,6 +232,10 @@ auto Camera::getNear() const -> float {
 }
 
 void Camera::rotate(const float angle, const glm::vec3 &axis) {
+    if (angle == 0.0F || glm::length(axis) == 0.0F) {
+        return;
+    }
+
     const auto rotation = glm::rotate(glm::mat4(1.0F), angle, axis);
     front = glm::vec3(rotation * glm::vec4(front, 1.0F));
     right = glm::vec3(rotation * glm::vec4(right, 1.0F));

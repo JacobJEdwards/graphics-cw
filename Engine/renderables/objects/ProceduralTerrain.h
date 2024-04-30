@@ -22,6 +22,7 @@ constexpr auto DEFAULT_CENTRE = glm::vec2{0.0F, 0.0F};
 constexpr auto DEFAULT_CHUNK_SIZE = 64;
 constexpr auto DEFAULT_NUM_CHUNKS_X = 16;
 constexpr auto DEFAULT_NUM_CHUNKS_Y = 16;
+constexpr auto NUM_TREE_INSTANCES = 200;
 
 class ProceduralTerrain final : public Renderable {
     struct Chunk {
@@ -77,6 +78,9 @@ private:
     glm::vec2 centre;
     glm::vec2 worldCentre;
 
+    // grass
+    Texture::Data noiseTexture;
+
     int chunkSize;
     int numChunksX;
     int numChunksY;
@@ -89,6 +93,8 @@ private:
     void generateChunk(int chunkX, int chunkY);
 
     Trees trees;
+
+    void generateGrass();
 };
 
 #endif //CW_PROCEDURALTERRAIN_H

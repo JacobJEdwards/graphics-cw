@@ -12,11 +12,13 @@ out VS_OUT {
     vec3 Normal;
     vec3 Tangent;
     vec3 Bitangent;
+    vec4 FragPosLightSpace;
 } vs_out;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 lightSpaceMatrix;
 
 
 void main() {
@@ -26,4 +28,5 @@ void main() {
     gl_Position = projection * view * model * vec4(aPos, 1.0);
     vs_out.Tangent = aTangent;
     vs_out.Bitangent = aBitangent;
+    vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
 }

@@ -15,7 +15,7 @@
 FerrisWheel::FerrisWheel() : staticPart("../Assets/objects/ferris/ferris-static.obj"),
                              rotatingPart("../Assets/objects/ferris/ferris-moving.obj"),
                              cabin("../Assets/objects/ferris/ferris-cart.obj") {
-    shader = ShaderManager::GetInstance().get("Base");
+    shader = ShaderManager::GetInstance().get("Untextured");
 
     staticPartTransform = glm::scale(staticPartTransform, scale);
     rotatingPartTransform = glm::scale(rotatingPartTransform, scale);

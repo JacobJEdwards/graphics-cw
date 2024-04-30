@@ -14,6 +14,7 @@
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include <utility>
+#include <vector>
 #include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Vertex.h"
 #include "graphics/Shader.h"
@@ -58,6 +59,9 @@ void ProceduralTerrain::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
 
     shader->setUniform("model", glm::mat4(1.0F));
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, noiseTexture.id);
+    shader->setUniform("noiseTexture", 1);
 
     for (int i = startY; i < endY; i++) {
         for (int j = startX; j < endX; j++) {
@@ -180,7 +184,7 @@ void ProceduralTerrain::generate() {
     }
 
     std::vector<glm::vec3> treePositions;
-    for (int i = 0; i < 200; i++) {
+    for (int i = 0; i < NUM_TREE_INSTANCES; i++) {
         const float x = Random::Float(-worldSizeX / 2.0F, worldSizeX / 2.0F);
         const float z = Random::Float(-worldSizeY / 2.0F, worldSizeY / 2.0F);
         const float y = getTerrainHeight(x, z);
@@ -305,4 +309,35 @@ void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
 
     chunk.init();
     chunks.push_back(std::move(chunk));
+}
+
+
+void ProceduralTerrain::generateGrass() {
+    // use noise texture
+    // vec4 noiseVal = texture(noiseTexture, fs_in.TexCoords);
+    // lighting += vec3(noiseVal * 0.1);
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    noiseTexture.id = texture;
+
+    std::vector<unsigned char> data(4 * 512 * 512, 255);
+    for (int i = 0; i < 512; i++) {
+        for (int j = 0; j < 512; j++) {
+            // random noise
+            data[4 * (512 * i + j) + 0] = Random::Int(0, 255);
+            data[4 * (512 * i + j) + 1] = Random::Int(0, 255);
+            data[4 * (512 * i + j) + 2] = Random::Int(0, 255);
+            data[4 * (512 * i + j) + 3] = 255;
+        }
+    }
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+    glGenerateMipmap(GL_TEXTURE_2D);
+    // parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }

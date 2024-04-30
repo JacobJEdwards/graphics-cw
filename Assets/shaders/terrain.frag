@@ -15,6 +15,8 @@ in VS_OUT {
 } fs_in;
 
 uniform sampler2D shadowMap;
+uniform sampler2D noiseTexture;
+
 uniform vec3 viewPos;
 uniform Light light;
 
@@ -46,7 +48,6 @@ float noise(vec2 p) {
 }
 
 float fbm(vec2 p) {
-    float z = 2.0;
     float f = 0.0;
     f += 0.5000 * noise(p); p = p * 2.02;
     f += 0.2500 * noise(p); p = p * 2.03;
@@ -81,7 +82,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     }
     shadow /= 9.0;
 
-    // Apply PCF
+    // apply PCF
     const int numSamples = 16;
     for (int i = -numSamples/2; i <= numSamples/2; ++i)
     {
@@ -101,6 +102,40 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     return shadow;
 }
 
+vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, float shadow) {
+    vec3 ambient = 0.3 * color;
+
+    vec3 lightDir = normalize(light.position - fragPos);
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = diff * color;
+
+    vec3 viewDir = normalize(viewPos - fragPos);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    vec3 specular = spec * vec3(0.2);
+
+    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;
+
+    float noiseVal = fbm(fs_in.TexCoords * 10.0);
+    lighting += vec3(noiseVal * 0.1);
+
+    float sunHeight = light.position.y;
+    float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
+    lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
+
+    return lighting;
+}
+
+bool isOnPath(vec3 fragPos, vec3 pathedPoint, vec3 nextPathedPoint) {
+    float distToSegment = distance(nextPathedPoint, pathedPoint);
+    float distToStart = distance(fragPos, pathedPoint);
+    float distToEnd = distance(fragPos, nextPathedPoint);
+
+    float dotProduct = dot(normalize(nextPathedPoint - pathedPoint), normalize(fragPos - pathedPoint));
+
+    return (dotProduct >= 0.0 && dotProduct <= distToSegment && distToStart <= distToSegment && distToEnd <= distToSegment);
+}
+
 void main() {
     vec3 color = grassColor;
     float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
@@ -109,45 +144,13 @@ void main() {
         vec3 pathedPoint = pathedPoints[i];
         vec3 nextPathedPoint = pathedPoints[i + 1];
 
-        float distToSegment = distance(nextPathedPoint, pathedPoint);
-        float distToStart = distance(fs_in.FragPos, pathedPoint);
-        float distToEnd = distance(fs_in.FragPos, nextPathedPoint);
-
-        float dotProduct = dot(normalize(nextPathedPoint - pathedPoint), normalize(fs_in.FragPos - pathedPoint));
-
-        if (dotProduct >= 0.0 && dotProduct <= distToSegment && distToStart <= distToSegment && distToEnd <= distToSegment) {
+        if (isOnPath(fs_in.FragPos, pathedPoint, nextPathedPoint)) {
             color = mix(color, pathColor, pathDarkness);
             break;
         }
     }
 
-
-    vec3 ambient = 0.3 * color;
-
-    // diffuse
-    vec3 norm = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(light.position - fs_in.FragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * color;
-
-    // specular
-    vec3 viewDir = normalize(viewPos - fs_in.FragPos);
-    vec3 halfwayDir = normalize(lightDir + viewDir);
-    float spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0);
-    vec3 specular = spec * vec3(0.2) * (0.2);
-
-    // apply shadow
-    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;
-
-    // add random noise to the grass
-    float noiseVal = fbm(fs_in.TexCoords * 10.0);
-    lighting += vec3(noiseVal * 0.1);
-
-    // if sun is below the horizon, make the grass darker, smooth
-    float sunHeight = light.position.y;
-    float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
-    lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
-
+    vec3 lighting = calculateLighting(fs_in.FragPos, normalize(fs_in.Normal), viewPos, color, shadow);
 
     FragColor = vec4(lighting, 1.0);
 }

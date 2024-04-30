@@ -70,241 +70,619 @@ void Shader::reload() {
 [[nodiscard]] auto Shader::getProgramID() const -> GLuint { return ID; }
 
 template<typename T>
-void Shader::setUniform(const std::string &name, T /*value*/) const {
+void Shader::setUniform(const std::string &name, T /*value*/) {
     const std::string error = "Invalid type for uniform " + name;
     std::cerr << error << std::endl;
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::mat4 value) const {
-    // check if name is already in the cache
-
+void Shader::setUniform(const std::string &name, const glm::mat4 value) {
     if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+
         glUniformMatrix4fv(it->second, 1, GL_FALSE, value_ptr(value));
     } else {
         const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+
         if (location == -1) {
             std::cerr << "Uniform " << name << " not found" << std::endl;
         } else {
-            uniformLocations[name] = location;
             glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(value));
         }
     }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::mat3 value) const {
+void Shader::setUniform(const std::string &name, const glm::mat3 value) {
     if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
         glUniformMatrix3fv(it->second, 1, GL_FALSE, value_ptr(value));
     } else {
         const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+
         if (location == -1) {
             std::cerr << "Uniform " << name << " not found" << std::endl;
         } else {
-            uniformLocations[name] = location;
             glUniformMatrix3fv(location, 1, GL_FALSE, value_ptr(value));
         }
     }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::vec4 value) const {
+void Shader::setUniform(const std::string &name, const glm::vec4 value) {
     if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
         glUniform4fv(it->second, 1, value_ptr(value));
     } else {
         const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+
         if (location == -1) {
             std::cerr << "Uniform " << name << " not found" << std::endl;
         } else {
-            uniformLocations[name] = location;
             glUniform4fv(location, 1, value_ptr(value));
         }
     }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::vec3 value) const {
-    glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
+void Shader::setUniform(const std::string &name, const glm::vec3 value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform3fv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform3fv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::vec2 value) const {
-    glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
+void Shader::setUniform(const std::string &name, const glm::vec2 value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform2fv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform2fv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const float value) const {
-    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+void Shader::setUniform(const std::string &name, const float value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform1f(it->second, value);
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform1f(location, value);
+        }
+    }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const int value) const {
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const unsigned int value) const {
-    glUniform1ui(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-template<>
-void Shader::setUniform(const std::string &name, const bool value) const {
-    glUniform1i(glGetUniformLocation(ID, name.c_str()),
-                static_cast<GLint>(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const glm::ivec2 &value) const {
-    glUniform2iv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const glm::ivec3 &value) const {
-    glUniform3iv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const glm::ivec4 &value) const {
-    glUniform4iv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const glm::uvec2 &value) const {
-    glUniform2uiv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const glm::uvec3 &value) const {
-    glUniform3uiv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const glm::uvec4 &value) const {
-    glUniform4uiv(glGetUniformLocation(ID, name.c_str()), 1, value_ptr(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name, const glm::mat2 &value) const {
-    glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                       value_ptr(value));
-}
-
-template<>
-void Shader::setUniform(const std::string &name,
-                        const glm::mat2x3 &value) const {
-    glUniformMatrix2x3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+void Shader::setUniform(const std::string &name, const int value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform1i(it->second, value);
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform1i(location, value);
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::mat2x4 &value) const {
-    glUniformMatrix2x4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+                        const unsigned int value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform1ui(it->second, value);
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform1ui(location, value);
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name, const bool value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform1i(it->second, static_cast<GLint>(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform1i(location, static_cast<GLint>(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::mat3x2 &value) const {
-    glUniformMatrix3x2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+                        const glm::ivec2 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform2iv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform2iv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::mat3x4 &value) const {
-    glUniformMatrix3x4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+                        const glm::ivec3 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform3iv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform3iv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::mat4x2 &value) const {
-    glUniformMatrix4x2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+                        const glm::ivec4 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform4iv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform4iv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::mat4x3 &value) const {
-    glUniformMatrix4x3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+                        const glm::uvec2 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform2uiv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform2uiv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::dmat2 &value) const {
-    glUniformMatrix2dv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                       value_ptr(value));
+                        const glm::uvec3 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform3uiv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform3uiv(location, 1, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::dmat3 &value) const {
-    glUniformMatrix3dv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                       value_ptr(value));
+                        const glm::uvec4 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform4uiv(it->second, 1, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniform4uiv(location, 1, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name, const glm::mat2 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix2fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix2fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::dmat4 &value) const {
-    glUniformMatrix4dv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                       value_ptr(value));
+                        const glm::mat2x3 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix2x3fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix2x3fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::dmat2x3 &value) const {
-    glUniformMatrix2x3dv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+                        const glm::mat2x4 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix2x4fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix2x4fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 template<>
 void Shader::setUniform(const std::string &name,
-                        const glm::dmat2x4 &value) const {
-    glUniformMatrix2x4dv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
-                         value_ptr(value));
+                        const glm::mat3x2 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix3x2fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix3x2fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::mat3x4 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix3x4fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix3x4fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::mat4x2 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix4x2fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix4x2fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::mat4x3 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix4x3fv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix4x3fv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::dmat2 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix2dv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix2dv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::dmat3 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix3dv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix3dv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::dmat4 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix4dv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix4dv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::dmat2x3 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix2x3dv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix2x3dv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
+}
+
+template<>
+void Shader::setUniform(const std::string &name,
+                        const glm::dmat2x4 &value) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix2x4dv(it->second, 1, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix2x4dv(location, 1, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 
 template<typename T>
-void Shader::setUniform(const std::string &name, T /*value*/, std::size_t /*count*/) const {
+void Shader::setUniform(const std::string &name, T /*value*/, std::size_t /*count*/) {
     const std::string error = "Invalid type for uniform " + name;
     std::cerr << error << std::endl;
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::mat4 value, const std::size_t count) const {
-    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), count, GL_FALSE,
-                       value_ptr(value));
+void Shader::setUniform(const std::string &name, const glm::mat4 value, const std::size_t count) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix4fv(it->second, count, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            glUniformMatrix4fv(location, count, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::mat3 value, const std::size_t count) const {
-    glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), count, GL_FALSE,
-                       value_ptr(value));
+void Shader::setUniform(const std::string &name, const glm::mat3 value, const std::size_t count) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniformMatrix3fv(it->second, count, GL_FALSE, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            uniformLocations[name] = location;
+            glUniformMatrix3fv(location, count, GL_FALSE, value_ptr(value));
+        }
+    }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::vec4 value, const std::size_t count) const {
-    glUniform4fv(glGetUniformLocation(ID, name.c_str()), count, value_ptr(value));
+void Shader::setUniform(const std::string &name, const glm::vec4 value, const std::size_t count) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform4fv(it->second, count, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            uniformLocations[name] = location;
+            glUniform4fv(location, count, value_ptr(value));
+        }
+    }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::vec3 value, const std::size_t count) const {
-    glUniform3fv(glGetUniformLocation(ID, name.c_str()), count, value_ptr(value));
+void Shader::setUniform(const std::string &name, const glm::vec3 value, const std::size_t count) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform3fv(it->second, count, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            uniformLocations[name] = location;
+            glUniform3fv(location, count, value_ptr(value));
+        }
+    }
 }
 
 template<>
-void Shader::setUniform(const std::string &name, const glm::vec2 value, const std::size_t count) const {
-    glUniform2fv(glGetUniformLocation(ID, name.c_str()), count, value_ptr(value));
+void Shader::setUniform(const std::string &name, const glm::vec2 value, const std::size_t count) {
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        if (it->second == -1) {
+            return;
+        }
+        glUniform2fv(it->second, count, value_ptr(value));
+    } else {
+        const GLint location = glGetUniformLocation(ID, name.c_str());
+        uniformLocations[name] = location;
+        if (location == -1) {
+            std::cerr << "Uniform " << name << " not found" << std::endl;
+        } else {
+            uniformLocations[name] = location;
+            glUniform2fv(location, count, value_ptr(value));
+        }
+    }
 }
 
 
@@ -319,70 +697,110 @@ auto Shader::getUniform(const std::string &name) const -> T {
 template<>
 auto Shader::getUniform(const std::string &name) const -> glm::mat4 {
     glm::mat4 value;
-    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformfv(ID, it->second, value_ptr(value));
+    } else {
+        glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    }
     return value;
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> glm::mat3 {
     glm::mat3 value;
-    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformfv(ID, it->second, value_ptr(value));
+    } else {
+        glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    }
     return value;
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> glm::vec4 {
     glm::vec4 value;
-    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformfv(ID, it->second, value_ptr(value));
+    } else {
+        glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    }
     return value;
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> glm::vec3 {
     glm::vec3 value;
-    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformfv(ID, it->second, value_ptr(value));
+    } else {
+        glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    }
     return value;
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> glm::vec2 {
     glm::vec2 value;
-    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformfv(ID, it->second, value_ptr(value));
+    } else {
+        glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    }
     return value;
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> float {
     float value;
-    glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformfv(ID, it->second, &value);
+    } else {
+        glGetUniformfv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    }
     return value;
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> int {
     int value;
-    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformiv(ID, it->second, &value);
+    } else {
+        glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    }
     return value;
 }
 
 template<>
-auto Shader::getUniform(const std::string &name) const -> unsigned int {
-    unsigned int value;
-    glGetUniformuiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+auto Shader::getUniform(const std::string &name) const -> GLuint {
+    GLuint value;
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformuiv(ID, it->second, &value);
+    } else {
+        glGetUniformuiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    }
     return value;
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> bool {
     int value;
-    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformiv(ID, it->second, &value);
+    } else {
+        glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), &value);
+    }
     return static_cast<bool>(value);
 }
 
 template<>
 auto Shader::getUniform(const std::string &name) const -> glm::ivec2 {
     glm::ivec2 value;
-    glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
+        glGetUniformiv(ID, it->second, value_ptr(value));
+    } else {
+        glGetUniformiv(ID, glGetUniformLocation(ID, name.c_str()), value_ptr(value));
+    }
     return value;
 }
 

@@ -109,11 +109,10 @@ surfaceColor, float shininess) {
     vec3 specular = specularFactor * lightColor;
 
     // shadow
-    // float shadowFactor = ShadowCalculation(fs_in.FragPosLightSpace);
+    float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
 
-
-    // return (ambient + (1.0 - shadowFactor) * (diffuse + specular));
-    return (ambient + diffuse + specular);
+    return lighting;
 }
 
 

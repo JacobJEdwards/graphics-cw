@@ -26,7 +26,7 @@ public:
 
     void processKeyboard(Direction direction, float deltaTime);
 
-    [[nodiscard]] auto getCamera() const -> Camera &;
+    [[nodiscard]] auto getCamera() -> Camera &;
 
     [[nodiscard]] auto getPosition() const -> glm::vec3;
 
@@ -62,8 +62,7 @@ private:
     float speed = 10.0F;
 
 
-    std::unique_ptr<Camera> camera =
-            std::make_unique<Camera>(glm::vec3(0.0F, 5.0F, 3.0F));
+    Camera camera{glm::vec3(0.0F, 5.0F, 3.0F)};
 
     std::shared_ptr<BumperCar> car = nullptr;
 };
