@@ -11,7 +11,7 @@
 #include "utils/Singleton.h"
 
 class PlayerManager final : public Singleton<PlayerManager> {
-    friend class Singleton<PlayerManager>;
+    friend class Singleton;
 
 public:
     explicit PlayerManager(Token) {

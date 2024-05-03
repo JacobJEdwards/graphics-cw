@@ -14,6 +14,8 @@
 
 class Player final : public Entity {
 public:
+    using Entity::draw;
+
     enum class Mode {
         FPS, FREE, ORBIT, FIXED, PATH, DRIVE
     };
@@ -23,6 +25,8 @@ public:
     };
 
     explicit Player(Mode mode = Mode::FPS);
+
+    void draw(std::shared_ptr<Shader> shader) const override;
 
     void processKeyboard(Direction direction, float deltaTime);
 
@@ -51,7 +55,7 @@ public:
 private:
     Mode mode = Mode::FPS;
 
-    bool drawModel = true;
+    bool drawModel = false;
     float jumpForce = 100.0F;
 
     float nitroForce = 500.0F;

@@ -14,7 +14,8 @@
 
 FerrisWheel::FerrisWheel() : staticPart("../Assets/objects/ferris/ferris-static.obj"),
                              rotatingPart("../Assets/objects/ferris/ferris-moving.obj"),
-                             cabin("../Assets/objects/ferris/ferris-cart.obj") {
+                             cabin("../Assets/objects/ferris/ferris-cart.obj"),
+                             entrance("../Assets/objects/enterance/enterance.obj") {
     shader = ShaderManager::GetInstance().get("Untextured");
 
     staticPartTransform = glm::scale(staticPartTransform, scale);
@@ -24,10 +25,13 @@ FerrisWheel::FerrisWheel() : staticPart("../Assets/objects/ferris/ferris-static.
     staticPartTransform = glm::translate(staticPartTransform, translation);
     rotatingPartTransform = glm::translate(rotatingPartTransform, translation);
     cabinTransform = glm::translate(cabinTransform, translation);
+
+    entranceTransform = glm::translate(entranceTransform, glm::vec3(-10.0F, 0.0F, 40.0F));
 }
 
 void FerrisWheel::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
+    shader->setUniform("color", glm::vec4(1.0F, 1.0F, 1.0F, 1.0F));
     shader->setUniform("model", staticPartTransform);
     staticPart.draw(shader);
 

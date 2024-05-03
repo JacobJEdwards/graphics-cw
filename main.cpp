@@ -34,6 +34,7 @@
 #include "graphics/buffers/UniformBuffer.h"
 #include "renderables/objects/FerrisWheel.h"
 #include "renderables/objects/RollerCoaster.h"
+#include "renderables/objects/Walls.h"
 
 void processInput();
 
@@ -56,10 +57,9 @@ auto main() -> int {
     const ProceduralTerrain terrain;
     FerrisWheel ferrisWheel;
     const RollerCoaster rollerCoaster;
+    const Walls walls;
 
     const auto pathedCar = playerManager.get("Path")->getCar();
-    pathedCar->shouldDrawPlayer(false);
-
     const auto driveable = playerManager.get("Drive")->getCar();
 
     const std::vector models = {
@@ -86,21 +86,32 @@ auto main() -> int {
         }
     }
 
-    auto matrix = Config::IDENTITY_MATRIX;
-    constexpr auto newPosition = glm::vec3(20.0F, 10.0F, 8.0F);
-    matrix = translate(matrix, newPosition);
-    matrix = scale(matrix, glm::vec3(4.0F));
+    float angle = 0.0F;
+    const float angleIncrement = glm::radians(360.0F / static_cast<float>(models.size()));
 
     auto shader = shaderManager.get("Base");
-    for (const auto &model: models) {
-        model->setShader(shader);
-        model->transform(matrix);
-        matrix = translate(matrix, glm::vec3(5.0F, 0.0F, 0.0F));
+    for (const auto &i: models) {
+        constexpr float radius = 30.0F;
+        i->setShader(shader);
+        const float xPos = 0.0F + radius * glm::cos(angle);
+        const float zPos = 0.0F + radius * glm::sin(angle);
+        constexpr float yPos = 10.0F;
+        const auto translation = glm::vec3(xPos, yPos, zPos);
+        glm::mat4 model = translate(Config::IDENTITY_MATRIX, translation);
+        model = scale(model, glm::vec3(4.0F));
+        i->transform(model);
+
+        angle += angleIncrement;
     }
+
 
     shader = shaderManager.get("Untextured");
     for (auto &[name, player]: playerManager.getAll()) {
         player->setShader(shader);
+    }
+
+    for (const auto &model: models) {
+        model->setPersonShader(shader);
     }
 
     ferrisWheel.setShader(shader);
@@ -210,6 +221,7 @@ auto main() -> int {
             "pathDarkness", models[0]->getLaps() / 1000.0F);
 
         terrain.draw(viewMatrix, projectionMatrix);
+        walls.draw(viewMatrix, projectionMatrix);
 
         if (App::view.highQuality) {
             shader = shaderManager.get("Grass");
@@ -339,6 +351,10 @@ auto main() -> int {
                         // if player car, blur screen
                         if ((models[i] == player->getCar() || models[j] == player->getCar())) {
                             App::view.blurScreen();
+                            if (glm::length(player->getAttributes().force) > 350.0F) {
+                                models[i]->takeDamage(0.3F);
+                                models[j]->takeDamage(0.3F);
+                            }
                         }
                     } else {
                         models[i]->attributes.isColliding = false;
@@ -363,6 +379,12 @@ auto main() -> int {
                     model->attributes.isGrounded = true;
                 } else {
                     model->attributes.isGrounded = false;
+                }
+            }
+
+            for (const Walls::Wall &wall: walls.getWalls()) {
+                if (Physics::Collisions::check(player->getBoundingBox(), wall.box)) {
+                    Physics::Collisions::resolve(*player, wall.normal);
                 }
             }
         });
@@ -504,12 +526,10 @@ void setupPlayers() {
     const auto orbit = std::make_shared<Player>(Player::Mode::ORBIT);
     orbit->shouldDraw(false);
     orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F, 10.0F);
-    orbit->attributes.gravityAffected = false;
     playerManager.add("Orbit", orbit);
 
     const auto free = std::make_shared<Player>(Player::Mode::FREE);
-    free->shouldDraw(true);
-    free->getAttributes().gravityAffected = false;
+    free->shouldDraw(false);
     playerManager.add("Free", free);
 
     const auto fps = std::make_shared<Player>(Player::Mode::FPS);
@@ -517,19 +537,17 @@ void setupPlayers() {
     playerManager.add("FPS", fps);
 
     const auto fixed = std::make_shared<Player>(Player::Mode::FIXED);
-    fixed->shouldDraw(true);
+    fixed->shouldDraw(false);
     fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3(0.0F, 10.0F, 10.0F));
-    fixed->attributes.gravityAffected = false;
     playerManager.add("Fixed", fixed);
 
     const auto path = std::make_shared<Player>(Player::Mode::PATH);
-    path->shouldDraw(true);
-    path->attributes.gravityAffected = true;
+    path->shouldDraw(false);
     playerManager.add("Path", path);
 
     const auto drive = std::make_shared<Player>(Player::Mode::DRIVE);
-    drive->shouldDraw(true);
-    drive->attributes.gravityAffected = true;
+    path->shouldDraw(false);
+    path->getCar()->setMode(BumperCar::Mode::AUTO);
     playerManager.add("Drive", drive);
 
     playerManager.setCurrent("Free");

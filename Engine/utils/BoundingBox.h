@@ -14,19 +14,22 @@
 #include <memory>
 
 #include <GL/glew.h>
+#include <renderables/Renderable.h>
 
 #include "graphics/buffers/VertexBuffer.h"
 
-class BoundingBox {
+class BoundingBox final : public Renderable {
 public:
-    BoundingBox() = default;
+    using Renderable::draw;
+
+    BoundingBox();
 
     BoundingBox(glm::vec3 min, glm::vec3 max);
 
     BoundingBox(const aiVector3D &min, const aiVector3D &max);
 
     // destructor
-    ~BoundingBox() = default;
+    ~BoundingBox() override = default;
 
     // copy constructor
     BoundingBox(const BoundingBox &other);
@@ -84,9 +87,9 @@ public:
 
     void expand(const BoundingBox &other);
 
-    void draw(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection) const;
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    void draw() const;
+    void draw() const override;
 
     [[nodiscard]] auto getCollisionPoint(const BoundingBox &box) const -> glm::vec3;
 

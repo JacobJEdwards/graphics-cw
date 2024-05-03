@@ -5,6 +5,7 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <unordered_map>
 #include <utility>
+#include "renderables/objects/BumperCar.h"
 #include "renderables/objects/Player.h"
 #include "graphics/Shader.h"
 #include <memory>
@@ -16,8 +17,7 @@ void PlayerManager::draw(const glm::mat4 &view, const glm::mat4 &projection) {
     using namespace std::ranges;
 
     for_each(players | views::values | views::filter([&](const auto &player) {
-                 return player != currentPlayer && player->shouldDraw() && player->getMode() != Player::Mode::DRIVE &&
-                        player->getMode() != Player::Mode::PATH;
+                 return player != currentPlayer;
              }), [&](const auto &player) {
                  player->draw(view, projection);
              });
@@ -27,8 +27,7 @@ void PlayerManager::draw(std::shared_ptr<Shader> shader) {
     using namespace std::ranges;
 
     for_each(players | views::values | views::filter([&](const auto &player) {
-                 return player != currentPlayer && player->shouldDraw() && player->getMode() != Player::Mode::DRIVE &&
-                        player->getMode() != Player::Mode::PATH;
+                 return player != currentPlayer;
              }), [&](const auto &player) {
                  player->draw(shader);
              });
@@ -61,14 +60,30 @@ auto PlayerManager::getAll() -> std::unordered_map<std::string, std::shared_ptr<
 auto PlayerManager::getCurrent() -> std::shared_ptr<Player> { return currentPlayer; }
 
 void PlayerManager::setCurrent(const std::string &name) {
-    if (currentPlayer) {
-        currentPlayer->shouldDraw(true);
-    }
-
     if (const auto it = players.find(name); it != players.end()) {
         currentPlayer = it->second;
         if (currentPlayer) {
-            currentPlayer->shouldDraw(false);
+            if (currentPlayer->getMode() == Player::Mode::DRIVE) {
+                currentPlayer->getCar()->setMode(BumperCar::Mode::NONE);
+                currentPlayer->getCar()->isCurrentPlayer(true);
+            }
+
+            if (currentPlayer->getMode() == Player::Mode::PATH) {
+                currentPlayer->getCar()->isCurrentPlayer(true);
+            }
+        }
+    }
+
+    for (const auto &[key, player]: players) {
+        if (key != name) {
+            if (player->getMode() == Player::Mode::DRIVE) {
+                player->getCar()->setMode(BumperCar::Mode::AUTO);
+                player->getCar()->isCurrentPlayer(false);
+            }
+
+            if (player->getMode() == Player::Mode::PATH) {
+                player->getCar()->isCurrentPlayer(false);
+            }
         }
     }
 }
@@ -86,7 +101,9 @@ auto PlayerManager::getCurrentName() -> std::string {
     return it != players.end() ? it->first : "";
 }
 
-void PlayerManager::remove(const std::string &name) { players.erase(name); }
+void PlayerManager::remove(const std::string &name) {
+    players.erase(name);
+}
 
 void PlayerManager::remove(const std::shared_ptr<Player> &player) {
     players.erase(
@@ -99,17 +116,19 @@ void PlayerManager::remove(const std::shared_ptr<Player> &player) {
     }
 }
 
-void PlayerManager::clear() { players.clear(); }
+void PlayerManager::clear() {
+    players.clear();
+}
 
 void PlayerManager::interface() {
-    using namespace std::ranges;
     ImGui::Begin("Players");
 
     for (const auto &[name, player]: players) {
         if (ImGui::RadioButton(name.c_str(), currentPlayer == player)) {
-            currentPlayer = player;
+            setCurrent(name);
         }
     }
+
     ImGui::End();
 }
 

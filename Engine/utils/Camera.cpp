@@ -53,18 +53,19 @@ void Camera::circleOrbit(const float deltaTime) {
     updateOrbitPosition();
 }
 
-void Camera::processMouseMovement(float xOffset, float yOffset,
-                                  const bool constrainPitch) {
+void Camera::processMouseMovement(float xOffset, float yOffset) {
     xOffset *= mouseSensitivity;
     yOffset *= mouseSensitivity;
 
     yaw += xOffset;
     pitch += yOffset;
 
-    if (constrainPitch) {
-        pitch = std::min(pitch, maxPitch);
-        pitch = std::max(pitch, minPitch);
-    }
+    pitch = std::min(pitch, maxPitch);
+    pitch = std::max(pitch, minPitch);
+
+    // contrain yaw with max and min
+    yaw = std::min(yaw, maxYaw);
+    yaw = std::max(yaw, minYaw);
 
     yaw = std::fmod(yaw, 360.0F);
 
@@ -153,6 +154,16 @@ void Camera::setRight(const glm::vec3 &right) {
 void Camera::setPitch(const float pitch) {
     Camera::pitch = pitch;
     updateCameraVectors();
+}
+
+void Camera::setPitchLimits(const float min, const float max) {
+    minPitch = min;
+    maxPitch = max;
+}
+
+void Camera::setYawLimits(const float min, const float max) {
+    minYaw = min;
+    maxYaw = max;
 }
 
 void Camera::setYaw(const float yaw) {

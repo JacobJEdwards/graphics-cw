@@ -801,6 +801,30 @@ Engine/renderables/objects/RollerCoaster.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/RollerCoaster.cpp.s
 .PHONY : Engine/renderables/objects/RollerCoaster.cpp.s
 
+Engine/renderables/objects/Scene.o: Engine/renderables/objects/Scene.cpp.o
+.PHONY : Engine/renderables/objects/Scene.o
+
+# target to build an object file
+Engine/renderables/objects/Scene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Scene.cpp.o
+.PHONY : Engine/renderables/objects/Scene.cpp.o
+
+Engine/renderables/objects/Scene.i: Engine/renderables/objects/Scene.cpp.i
+.PHONY : Engine/renderables/objects/Scene.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Scene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Scene.cpp.i
+.PHONY : Engine/renderables/objects/Scene.cpp.i
+
+Engine/renderables/objects/Scene.s: Engine/renderables/objects/Scene.cpp.s
+.PHONY : Engine/renderables/objects/Scene.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Scene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Scene.cpp.s
+.PHONY : Engine/renderables/objects/Scene.cpp.s
+
 Engine/renderables/objects/Skybox.o: Engine/renderables/objects/Skybox.cpp.o
 .PHONY : Engine/renderables/objects/Skybox.o
 
@@ -872,6 +896,30 @@ Engine/renderables/objects/Trees.s: Engine/renderables/objects/Trees.cpp.s
 Engine/renderables/objects/Trees.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Trees.cpp.s
 .PHONY : Engine/renderables/objects/Trees.cpp.s
+
+Engine/renderables/objects/Walls.o: Engine/renderables/objects/Walls.cpp.o
+.PHONY : Engine/renderables/objects/Walls.o
+
+# target to build an object file
+Engine/renderables/objects/Walls.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Walls.cpp.o
+.PHONY : Engine/renderables/objects/Walls.cpp.o
+
+Engine/renderables/objects/Walls.i: Engine/renderables/objects/Walls.cpp.i
+.PHONY : Engine/renderables/objects/Walls.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Walls.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Walls.cpp.i
+.PHONY : Engine/renderables/objects/Walls.cpp.i
+
+Engine/renderables/objects/Walls.s: Engine/renderables/objects/Walls.cpp.s
+.PHONY : Engine/renderables/objects/Walls.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Walls.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Walls.cpp.s
+.PHONY : Engine/renderables/objects/Walls.cpp.s
 
 Engine/renderables/shapes/Plane.o: Engine/renderables/shapes/Plane.cpp.o
 .PHONY : Engine/renderables/shapes/Plane.o
@@ -1326,6 +1374,9 @@ help:
 	@echo "... Engine/renderables/objects/RollerCoaster.o"
 	@echo "... Engine/renderables/objects/RollerCoaster.i"
 	@echo "... Engine/renderables/objects/RollerCoaster.s"
+	@echo "... Engine/renderables/objects/Scene.o"
+	@echo "... Engine/renderables/objects/Scene.i"
+	@echo "... Engine/renderables/objects/Scene.s"
 	@echo "... Engine/renderables/objects/Skybox.o"
 	@echo "... Engine/renderables/objects/Skybox.i"
 	@echo "... Engine/renderables/objects/Skybox.s"
@@ -1335,6 +1386,9 @@ help:
 	@echo "... Engine/renderables/objects/Trees.o"
 	@echo "... Engine/renderables/objects/Trees.i"
 	@echo "... Engine/renderables/objects/Trees.s"
+	@echo "... Engine/renderables/objects/Walls.o"
+	@echo "... Engine/renderables/objects/Walls.i"
+	@echo "... Engine/renderables/objects/Walls.s"
 	@echo "... Engine/renderables/shapes/Plane.o"
 	@echo "... Engine/renderables/shapes/Plane.i"
 	@echo "... Engine/renderables/shapes/Plane.s"

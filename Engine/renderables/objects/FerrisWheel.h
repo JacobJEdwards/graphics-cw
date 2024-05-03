@@ -30,9 +30,13 @@ private:
     Model rotatingPart;
     Model cabin;
 
+    Model entrance;
+
     glm::mat4 staticPartTransform = Config::IDENTITY_MATRIX;
     glm::mat4 rotatingPartTransform = Config::IDENTITY_MATRIX;
     glm::mat4 cabinTransform = Config::IDENTITY_MATRIX;
+
+    glm::mat4 entranceTransform = Config::IDENTITY_MATRIX;
 
     glm::vec3 scale = glm::vec3(10.0F);
     glm::vec3 translation = glm::vec3(20.0F, 0.0F, 0.0F);

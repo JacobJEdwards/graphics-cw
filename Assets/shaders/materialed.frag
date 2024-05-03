@@ -28,6 +28,7 @@ in VS_OUT {
 uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
+uniform vec4 color;
 
 uniform sampler2D shadowMap;
 
@@ -97,13 +98,15 @@ surfaceColor, float shininess) {
     }
 
     vec3 ambient = 0.1 * lightColor;
-    vec3 diffuse = diffuseFactor * lightColor * surfaceColor;
+    vec3 diffuse = diffuseFactor * lightColor * surfaceColor * color.rgb;
     vec3 specular = specularFactor * lightColor;
 
     // shadow calculation
-    float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+    // float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
 
-    return (ambient + (1.0 - shadow) * (diffuse + specular));
+    //return (ambient + (1.0 - shadow) * (diffuse + specular));
+
+    return (ambient + diffuse + specular);
 
 }
 

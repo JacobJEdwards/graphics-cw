@@ -72,7 +72,7 @@ protected:
 
     BoundingBox box;
 
-    std::vector<std::unique_ptr<Entity> > children = {};
+    std::vector<std::unique_ptr<Entity> > children;
     Entity *parent = nullptr;
 };
 

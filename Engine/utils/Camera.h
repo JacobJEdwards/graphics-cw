@@ -45,8 +45,7 @@ public:
 
     [[nodiscard]] auto getOrthoMatrix() const -> glm::mat4;
 
-    void processMouseMovement(float xOffset, float yOffset,
-                              bool constrainPitch = true);
+    void processMouseMovement(float xOffset, float yOffset);
 
     void processMouseScroll(float yOffset);
 
@@ -92,6 +91,10 @@ public:
     void setYaw(float yaw);
 
     void setPitch(float pitch);
+
+    void setPitchLimits(float min, float max);
+
+    void setYawLimits(float min, float max);
 
     void circleOrbit(float deltaTime);
 

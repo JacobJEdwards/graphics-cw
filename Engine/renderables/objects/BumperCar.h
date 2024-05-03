@@ -4,6 +4,7 @@
 #include "graphics/Model.h"
 #include "physics/Spline.h"
 #include "graphics/Shader.h"
+#include <cstddef>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
@@ -44,37 +45,17 @@ public:
 
     void shouldDrawPlayer(bool draw);
 
-    void addTrackablePosition(const glm::vec3 position) {
-        trackablePositions.push_back(position);
-    }
+    void addTrackablePosition(glm::vec3 position);
 
-    void addTrackableEntity(const std::shared_ptr<Entity> &entity) {
-        if (entity == nullptr) {
-            return;
-        }
+    void addTrackableEntity(const std::shared_ptr<Entity> &entity);
 
-        if (std::ranges::find(trackableEntities, entity) != trackableEntities.end()) {
-            return;
-        }
+    void clearTrackablePositions();
 
-        if (entity.get() == this) {
-            return;
-        }
+    void setPersonShader(const std::shared_ptr<Shader> &shader);
 
-        trackableEntities.push_back(entity);
-    }
+    [[nodiscard]] auto getPoints() const -> const std::vector<glm::vec3> &;
 
-    void clearTrackablePositions() {
-        trackablePositions.clear();
-    }
-
-    [[nodiscard]] auto getPoints() const -> const std::vector<glm::vec3> & {
-        return points;
-    }
-
-    [[nodiscard]] auto getLaps() const -> std::size_t {
-        return spline.getLaps();
-    }
+    [[nodiscard]] auto getLaps() const -> std::size_t;
 
     static void Interface();
 
@@ -82,6 +63,18 @@ public:
 
     [[nodiscard]] auto hasBroke() const -> bool {
         return isBroken;
+    }
+
+    void setIsPlayer(const bool isPlayer) {
+        this->isPlayer = isPlayer;
+    }
+
+    void isCurrentPlayer(const bool isCurrentPlayer) {
+        if (isCurrentPlayer) {
+            person = Model("../Assets/objects/person-sitting/bodyless.obj");
+        } else {
+            person = Model("../Assets/objects/person-sitting/person.obj");
+        }
     }
 
 private:
@@ -94,7 +87,8 @@ private:
     std::vector<glm::vec3> trackablePositions;
     std::vector<std::shared_ptr<Entity> > trackableEntities;
 
-    std::unique_ptr<Model> person;
+    Model person;
+    std::shared_ptr<Shader> personShader;
 
     Texture::Data damageTexture;
 
@@ -114,6 +108,8 @@ private:
     float explodeTime = 0.0F;
 
     bool drawPlayer = true;
+
+    bool isPlayer = false;
 };
 
 #endif

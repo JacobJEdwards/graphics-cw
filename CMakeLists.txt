@@ -61,6 +61,10 @@ add_executable(CW main.cpp
         Engine/renderables/objects/FerrisWheel.h
         Engine/renderables/objects/RollerCoaster.cpp
         Engine/renderables/objects/RollerCoaster.h
+        Engine/renderables/objects/Walls.cpp
+        Engine/renderables/objects/Walls.h
+        Engine/renderables/objects/Scene.cpp
+        Engine/renderables/objects/Scene.h
 )
 
 # Link libraries

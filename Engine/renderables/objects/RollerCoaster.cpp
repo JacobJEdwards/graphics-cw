@@ -24,5 +24,7 @@ RollerCoaster::RollerCoaster() : model("../Assets/objects/rollercoaster/coaster.
 void RollerCoaster::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
     shader->setUniform("model", modelMatrix);
+    shader->setUniform("time", 0.0F);
+    shader->setUniform("damage", 0.0F);
     model.draw(shader);
 }

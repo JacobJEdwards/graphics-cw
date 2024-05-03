@@ -184,6 +184,13 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     const float shininess = color.r;
 
     const Material meshMaterial = {ambient, diffuse, specular, emissive, shininess};
+    std::cout << path << std::endl;
+    // vout material properties
+    std::cout << "ambient: " << ambient.x << ", " << ambient.y << ", " << ambient.z << ambient.w << std::endl;
+    std::cout << "diffuse: " << diffuse.x << ", " << diffuse.y << ", " << diffuse.z << diffuse.w << std::endl;
+    std::cout << "specular: " << specular.x << ", " << specular.y << ", " << specular.z << specular.w << std::endl;
+    std::cout << "emissive: " << emissive.x << ", " << emissive.y << ", " << emissive.z << emissive.w << std::endl;
+    std::cout << "shininess: " << shininess << std::endl;
 
     return {vertices, indices, textures, box, meshMaterial};
 }

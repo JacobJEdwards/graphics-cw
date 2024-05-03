@@ -20,7 +20,7 @@
 #include "renderables/Entity.h"
 #include "renderables/Particle.h"
 
-Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") {
+Player::Player(const Mode mode) : Entity("../Assets/objects/person/person2.obj") {
     this->mode = mode;
 
     auto carModelMat = Config::IDENTITY_MATRIX;
@@ -32,7 +32,6 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") 
             break;
         case Mode::ORBIT:
             attributes.gravityAffected = false;
-            drawModel = false;
             camera.setMode(Camera::Mode::ORBIT);
             break;
         case Mode::FREE:
@@ -40,26 +39,29 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person.obj") 
             camera.setMode(Camera::Mode::FREE);
             break;
         case Mode::FIXED:
-            drawModel = false;
             attributes.gravityAffected = false;
             camera.setMode(Camera::Mode::FIXED);
             break;
         case Mode::PATH:
+            attributes.gravityAffected = false;
             camera.setMode(Camera::Mode::PATH);
+            camera.setPitchLimits(-45.0F, 45.0F);
+            camera.setYawLimits(45.0F, 135.0F);
+            camera.setYaw(90.0F);
             car = std::make_shared<BumperCar>();
-
             car->setMode(BumperCar::Mode::PATHED);
-            car->transform(carModelMat);
-            car->shouldDrawPlayer(false);
+            car->setIsPlayer(true);
             box = car->getBoundingBox();
             break;
         case Mode::DRIVE:
+            attributes.gravityAffected = false;
             camera.setMode(Camera::Mode::DRIVE);
+            camera.setPitchLimits(-45.0F, 45.0F);
+            camera.setYawLimits(45.0F, 135.0F);
+            camera.setYaw(90.0F);
             car = std::make_shared<BumperCar>();
-            car->setMode(BumperCar::Mode::NONE);
-            carModelMat = glm::translate(carModelMat, glm::vec3(0.0F, 10.0F, 0.0F));
-            car->transform(carModelMat);
-            car->shouldDrawPlayer(false);
+            car->setMode(BumperCar::Mode::PATHED);
+            car->setIsPlayer(true);
             box = car->getBoundingBox();
             break;
     }
@@ -136,6 +138,16 @@ void Player::processKeyboard(const Direction direction, const float /*deltaTime*
     return attributes.position;
 }
 
+void Player::draw(const std::shared_ptr<Shader> shader) const {
+    if (!drawModel) {
+        return;
+    }
+
+    shader->use();
+    shader->setUniform("color", glm::vec4(1.0F, 0.0F, 0.0F, 1.0F));
+    Entity::draw(shader);
+}
+
 void Player::update(const float dt) {
     Entity::update(dt);
 
@@ -164,7 +176,7 @@ void Player::update(const float dt) {
 
         // set pos to car position, up 5.0 and back a bit based on front
         attributes.position = pos;
-        glm::vec3 backTranslation = front * -2.0F;
+        glm::vec3 backTranslation = -front; // * -2.0F;
         glm::vec3 upTranslation = glm::vec3(0.0F, 5.0F, 0.0F);
         attributes.position += backTranslation + upTranslation;
         camera.setPosition(attributes.position);

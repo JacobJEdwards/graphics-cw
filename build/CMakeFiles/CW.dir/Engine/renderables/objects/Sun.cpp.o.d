@@ -1040,6 +1040,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.o: \
   /opt/homebrew/include/assimp/vector3.h \
   /opt/homebrew/include/assimp/defs.h \
   /opt/homebrew/include/assimp/config.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/VertexBuffer.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
@@ -1096,7 +1097,6 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Sun.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h \
   /opt/homebrew/include/glm/ext/matrix_float3x3.hpp \
   /opt/homebrew/include/glm/ext/matrix_transform.hpp \
   /opt/homebrew/include/glm/ext/../gtc/constants.hpp \

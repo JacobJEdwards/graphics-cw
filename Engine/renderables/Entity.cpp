@@ -49,7 +49,7 @@ void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     draw(shader);
 
     if (App::debug) {
-        box.draw(attributes.transform, view, projection);
+        box.draw(view, projection);
     }
 }
 
