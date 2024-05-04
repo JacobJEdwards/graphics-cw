@@ -3,9 +3,11 @@
 //
 
 #include "Camera.h"
+#include <array>
 #include <cmath>
 
 #include <algorithm>
+#include <glm/matrix.hpp>
 #include <iostream>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
@@ -25,7 +27,6 @@ Camera::Camera(const glm::vec3 position, const glm::vec3 worldUp, const float ya
     return glm::ortho(-aspect, aspect, -1.0F, 1.0F, -1.0F, 1.0F);
 }
 
-// TODO debug this for fixed and orbit
 [[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
     switch (mode) {
         case Mode::FPS:
@@ -39,6 +40,35 @@ Camera::Camera(const glm::vec3 position, const glm::vec3 worldUp, const float ya
             return lookAt(position, target + front, worldUp);
     }
 }
+
+auto Camera::getFrustumCorners() const -> std::array<glm::vec3, 4> {
+    const auto view = getViewMatrix();
+    const auto projection = getProjectionMatrix();
+
+    const auto inverseViewProjection = inverse(projection * view);
+
+    std::array<glm::vec3, 4> corners{};
+
+    for (int i = 0; i < 4; i++) {
+        const auto corner = glm::vec4((i < 2) ? -1.0F : 1.0F, (i % 2 == 0) ? -1.0F : 1.0F, -1.0F, 1.0F);
+        const auto worldSpace = inverseViewProjection * corner;
+        corners[i] = glm::vec3(worldSpace) / worldSpace.w;
+    }
+
+    return corners;
+}
+
+auto Camera::getLightViewMatrix(const glm::vec3 lightDirection) const -> glm::mat4 {
+    auto centre = glm::vec3(0.0F);
+
+    const auto corners = getFrustumCorners();
+
+    std::ranges::for_each(corners, [&centre](auto &corner) { centre += corner; });
+    centre /= corners.size();
+
+    return glm::lookAt(centre - lightDirection, centre, worldUp);
+}
+
 
 [[nodiscard]] auto Camera::getRenderDistance() const -> float {
     return renderDistance;

@@ -18,7 +18,7 @@ uniform sampler2D shadowMap;
 uniform sampler2D noiseTexture;
 
 uniform vec3 viewPos;
-uniform Light light;
+uniform Light sun;
 
 // points that have been pathed
 uniform vec3 pathedPoints[256];
@@ -66,7 +66,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     float currentDepth = projCoords.z;
 
     vec3 normal = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(light.position - fs_in.FragPos);
+    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
     float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
 
     float shadow = 0.0;
@@ -105,7 +105,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, float shadow) {
     vec3 ambient = 0.3 * color;
 
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = normalize(sun.position - fragPos);
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * color;
 
@@ -119,7 +119,7 @@ vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, floa
     float noiseVal = fbm(fs_in.TexCoords * 10.0);
     lighting += vec3(noiseVal * 0.1);
 
-    float sunHeight = light.position.y;
+    float sunHeight = sun.position.y;
     float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
     lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
 

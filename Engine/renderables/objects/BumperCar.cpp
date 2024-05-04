@@ -371,3 +371,19 @@ void BumperCar::Interface() {
     ImGui::Checkbox("Paused", &paused);
     ImGui::End();
 }
+
+auto BumperCar::hasBroke() const -> bool {
+    return isBroken;
+}
+
+void BumperCar::setIsPlayer(const bool isPlayer) {
+    this->isPlayer = isPlayer;
+}
+
+void BumperCar::isCurrentPlayer(const bool isCurrentPlayer) {
+    if (isCurrentPlayer) {
+        person = Model("../Assets/objects/person-sitting/bodyless.obj");
+    } else {
+        person = Model("../Assets/objects/person-sitting/person.obj");
+    }
+}

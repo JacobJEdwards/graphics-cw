@@ -16,6 +16,7 @@
 #include "Config.h"
 
 #include "App.h"
+#include "imgui/imgui.h"
 #include "utils/Camera.h"
 #include "utils/PlayerManager.h"
 
@@ -35,6 +36,11 @@
 #include "renderables/objects/FerrisWheel.h"
 #include "renderables/objects/RollerCoaster.h"
 #include "renderables/objects/Walls.h"
+
+// light projection parameters
+float near_plane = 1.0F;
+float far_plane = 200.0F;
+float side_size = 580.0F;
 
 void processInput();
 
@@ -118,14 +124,13 @@ auto main() -> int {
 
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
     ShadowBuffer shadowBuffer(10000, 10000);
+    // ShadowBuffer shadowBuffer(1000, 1000);
 
     std::vector<glm::vec3> pathPoints;
 
     for (const auto &model: models) {
         pathPoints.insert(pathPoints.end(), model->getPoints().begin(), model->getPoints().end());
     }
-
-    const auto lightProjection = glm::ortho(-1000.0F, 1000.0F, -1000.0F, 1000.0F, 1.0F, 200.0F);
 
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
@@ -140,6 +145,7 @@ auto main() -> int {
         const auto lightPos = skybox.getSun().getPosition();
 
         // const auto lightView = lookAt(lightPos, player->attributes.position, glm::vec3(0.0F, 1.0F, 0.0F));
+        const auto lightProjection = glm::ortho(-side_size, side_size, -side_size, side_size, near_plane, far_plane);
         const auto lightView = lookAt(lightPos, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
 
         shader = shaderManager.get("Shadow");
@@ -175,7 +181,7 @@ auto main() -> int {
         shader = shaderManager.get("Base");
         shader->use();
         shader->setUniform(
-            "light.position", skybox.getSun().getPosition());
+            "sun.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform(
             "lightSpaceMatrix", lightProjection * lightView);
@@ -196,7 +202,7 @@ auto main() -> int {
         shader = shaderManager.get("Untextured");
         shader->use();
         shader->setUniform(
-            "light.position", skybox.getSun().getPosition());
+            "sun.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform(
             "lightSpaceMatrix", lightProjection * lightView);
@@ -208,7 +214,7 @@ auto main() -> int {
         shader = terrain.getShader();
         shader->use();
         shader->setUniform(
-            "light.position", skybox.getSun().getPosition());
+            "sun.position", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform(
             "lightSpaceMatrix", lightProjection * lightView);
@@ -227,7 +233,7 @@ auto main() -> int {
             shader = shaderManager.get("Grass");
             shader->use();
             shader->setUniform(
-                "light.position", skybox.getSun().getPosition());
+                "sun.position", skybox.getSun().getPosition());
             shader->setUniform(
                 "viewPos", player->getCamera().getPosition());
             shader->setUniform(
@@ -268,11 +274,20 @@ auto main() -> int {
             App::debugInterface();
             skybox.getSun().interface();
             particleSystem.interface();
+
+            ImGui::Begin("Shadow Buffer");
+            ImGui::SliderFloat("Near Plane", &near_plane, 0.0F, 10.0F);
+            ImGui::SliderFloat("Far Plane", &far_plane, 0.0F, 10000.0F);
+            ImGui::SliderFloat("Side Size", &side_size, 0.0F, 10000.0F);
+            ImGui::End();
         }
 
         if (App::debug) {
             playerManager.getCurrent()->debug();
             ShaderManager::GetInstance().interface();
+            ImGui::Begin("Shadow Buffer");
+            ImGui::Image(reinterpret_cast<void *>(shadowBuffer.getTexture()), ImVec2(200, 200));
+            ImGui::End();
         }
     });
 
@@ -508,16 +523,16 @@ void setupShaders() {
     shader = shaderManager.get("Base");
     shader->use();
 
-    shader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
+    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
 
     shader = shaderManager.get("Untextured");
     shader->use();
 
-    shader->setUniform("light.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    shader->setUniform("light.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
+    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
 }
 
 void setupPlayers() {

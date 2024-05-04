@@ -26,7 +26,7 @@ in VS_OUT {
 } fs_in;
 
 uniform Material material;
-uniform Light light;
+uniform Light sun;
 uniform vec3 viewPos;
 uniform vec4 color;
 
@@ -44,7 +44,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     float currentDepth = projCoords.z;
 
     vec3 normal = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(light.position - fs_in.FragPos);
+    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
     float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
 
     float shadow = 0.0;
@@ -112,7 +112,7 @@ surfaceColor, float shininess) {
 
 void main() {
     vec3 normal = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(light.position - fs_in.FragPos);
+    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
 
     vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, normal, vec3(material.diffuse), vec3(material.specular), material.shininess);

@@ -34049,6 +34049,7 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: /Users/jacobedwards/University/Year
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__variant/monostate.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__verbose_abort \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/algorithm \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/array \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/atomic \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/bit \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/bitset \
@@ -34399,6 +34400,7 @@ CMakeFiles/CW.dir/Engine/utils/Camera.cpp.o: /Users/jacobedwards/University/Year
   /opt/homebrew/include/glm/ext/scalar_constants.inl \
   /opt/homebrew/include/glm/ext/vector_float3.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
+  /opt/homebrew/include/glm/matrix.hpp \
   /opt/homebrew/include/glm/trigonometric.hpp
 
 CMakeFiles/CW.dir/Engine/utils/Noise.cpp.o: /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.cpp \

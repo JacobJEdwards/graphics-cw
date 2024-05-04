@@ -5,6 +5,7 @@
 #ifndef CW_CAMERA_H
 #define CW_CAMERA_H
 
+#include <array>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float3.hpp>
 
@@ -44,6 +45,10 @@ public:
     [[nodiscard]] auto getViewMatrix() const -> glm::mat4;
 
     [[nodiscard]] auto getOrthoMatrix() const -> glm::mat4;
+
+    [[nodiscard]] auto getFrustumCorners() const -> std::array<glm::vec3, 4>;
+
+    [[nodiscard]] auto getLightViewMatrix(glm::vec3 lightDirection) const -> glm::mat4;
 
     void processMouseMovement(float xOffset, float yOffset);
 

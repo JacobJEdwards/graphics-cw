@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "BumperCar.h"
+#include "graphics/Shader.h"
 #include "utils/Camera.h"
 #include "renderables/Entity.h"
 

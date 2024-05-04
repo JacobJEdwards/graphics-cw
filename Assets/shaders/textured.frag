@@ -35,7 +35,7 @@ uniform sampler2D shadowMap;
 uniform sampler2D damageTexture;
 
 uniform Material material;
-uniform Light light;
+uniform Light sun;
 uniform vec3 viewPos;
 
 uniform float damage = 0.9;
@@ -50,7 +50,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     float currentDepth = projCoords.z;
 
     vec3 normal = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(light.position - fs_in.FragPos);
+    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
     float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
 
     float shadow = 0.0;
@@ -119,12 +119,13 @@ surfaceColor, float shininess) {
 
 void main() {
     vec3 norm = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(light.position - fs_in.FragPos);
+    vec3 sunDir = normalize(sun.position - fs_in.FragPos);
 
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec4 texColor = texture(material.texture_diffuse1, fs_in.TexCoords);
 
-    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, norm, light.diffuse * 2.0, texColor.xyz, material.shininess);
+    vec3 result = calculateBlinnPhongLighting(sunDir, viewDir, norm, sun.diffuse * 2.0, texColor.xyz, material
+    .shininess);
 
     result *= texColor.a;
 
@@ -133,7 +134,7 @@ void main() {
     result *= mix(1.0, damageFactor, damage);
 
     // light is sun, descrease if below horizon
-    float sunHeight = light.position.y;
+    float sunHeight = sun.position.y;
     float sunFactor = clamp(sunHeight, 0.3, 1.0);
     result *= sunFactor;
 

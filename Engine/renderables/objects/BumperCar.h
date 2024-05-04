@@ -61,21 +61,11 @@ public:
 
     void takeDamage(float damage);
 
-    [[nodiscard]] auto hasBroke() const -> bool {
-        return isBroken;
-    }
+    [[nodiscard]] auto hasBroke() const -> bool;
 
-    void setIsPlayer(const bool isPlayer) {
-        this->isPlayer = isPlayer;
-    }
+    void setIsPlayer(bool isPlayer);
 
-    void isCurrentPlayer(const bool isCurrentPlayer) {
-        if (isCurrentPlayer) {
-            person = Model("../Assets/objects/person-sitting/bodyless.obj");
-        } else {
-            person = Model("../Assets/objects/person-sitting/person.obj");
-        }
-    }
+    void isCurrentPlayer(bool isCurrentPlayer);
 
 private:
     Mode mode = Mode::AUTO;

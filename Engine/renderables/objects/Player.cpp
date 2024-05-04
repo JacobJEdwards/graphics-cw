@@ -80,6 +80,10 @@ void Player::processKeyboard(const Direction direction, const float /*deltaTime*
         return;
     }
 
+    if (mode == Mode::DRIVE && car->hasBroke()) {
+        return;
+    }
+
     switch
     (direction) {
         case Direction::FORWARD:
@@ -176,8 +180,10 @@ void Player::update(const float dt) {
 
         // set pos to car position, up 5.0 and back a bit based on front
         attributes.position = pos;
+        // third person
+        // glm::vec3 backTranslation = -front * 10.0F; // * -2.0F;
         glm::vec3 backTranslation = -front; // * -2.0F;
-        glm::vec3 upTranslation = glm::vec3(0.0F, 5.0F, 0.0F);
+        glm::vec3 upTranslation = glm::vec3(0.0F, 6.0F, 0.0F);
         attributes.position += backTranslation + upTranslation;
         camera.setPosition(attributes.position);
 

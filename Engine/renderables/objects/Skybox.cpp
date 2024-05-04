@@ -49,7 +49,6 @@ void Skybox::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
 
     shader->use();
     shader->setUniform("sunPos", sun.getPosition());
-    shader->setUniform("sunDir", sun.getDirection());
 
     shader->setUniform("time", time);
 
