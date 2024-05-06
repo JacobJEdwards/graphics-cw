@@ -4,7 +4,8 @@
 
 #include "DepthBuffer.h"
 
-#include <iostream>
+#include <cstdio>
+#include <print>
 
 DepthBuffer::DepthBuffer(const unsigned int width, const unsigned int height) {
     glGenFramebuffers(1, &DBO);
@@ -20,12 +21,11 @@ DepthBuffer::DepthBuffer(const unsigned int width, const unsigned int height) {
     glReadBuffer(GL_NONE);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cerr << "Framebuffer is not complete!" << std::endl;
+        std::println(stderr, "Framebuffer is not complete!");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-    // Store the dimensions
     this->width = width;
     this->height = height;
 }

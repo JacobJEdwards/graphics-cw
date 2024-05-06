@@ -3,8 +3,10 @@
 //
 #include "App.h"
 
+#include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <print>
 
 #include "imgui/imgui.h"
 #include "utils/PlayerManager.h"
@@ -85,7 +87,7 @@ void App::setPaused(const bool value) {
 
 void setupGLFW() {
     if (glfwInit() == 0) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
+        std::println(stderr, "Failed to initialize GLFW");
         exit(EXIT_FAILURE);
     }
 }
@@ -97,7 +99,6 @@ void App::debugInterface() {
     if (debug) {
         ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
     }
-
 
     ImGui::End();
 }

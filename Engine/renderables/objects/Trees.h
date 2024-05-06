@@ -8,15 +8,12 @@
 #include <memory>
 #include <vector>
 #include "graphics/Model.h"
+#include "graphics/Shader.h"
 #include "renderables/Renderable.h"
 #include <glm/ext/vector_float3.hpp>
-#include <glm/ext/matrix_float4x4.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <span>
 #include <GL/glew.h>
-#include <utils/ShaderManager.h>
 #include "utils/BoundingBox.h"
-#include "utils/Random.h"
 
 
 // instanced trees
@@ -30,7 +27,7 @@ public:
 
     void draw(std::shared_ptr<Shader> shader) const override;
 
-    auto getBoundingBoxes() const -> const std::vector<BoundingBox> &;
+    [[nodiscard]] auto getBoundingBoxes() const -> const std::vector<BoundingBox> &;
 
 private
 :

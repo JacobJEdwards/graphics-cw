@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <iostream>
 
+
 #include <filesystem>
 #include <string>
 #include <unordered_map>
@@ -48,22 +49,7 @@ public:
     template<typename T>
     void setUniform(const std::string &name, T value, std::size_t count);
 
-    void setVec3Array(const std::string &name, const std::vector<glm::vec3> &values) {
-        if (const auto it = uniformLocations.find(name); it != uniformLocations.end()) {
-            glUniform3fv(it->second, static_cast<GLsizei>(values.size()), &values[0][0]);
-        } else {
-            if (const GLint location = glGetUniformLocation(ID, name.c_str()); location == -1) {
-                std::cerr << "Uniform " << name << " not found in shader" << std::endl;
-            } else {
-                uniformLocations[name] = location;
-                glUniform3fv(location, static_cast<GLsizei>(values.size()), &values[0][0]);
-            }
-        }
-
-
-        const auto location = glGetUniformLocation(ID, name.c_str());
-        glUniform3fv(location, static_cast<GLsizei>(values.size()), &values[0][0]);
-    }
+    void setVec3Array(const std::string &name, const std::vector<glm::vec3> &values);
 
     template<typename T>
     auto getUniform(const std::string &name) const -> T;

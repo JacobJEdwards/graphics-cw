@@ -5,10 +5,12 @@
 #include "View.h"
 
 #include <GLFW/glfw3.h>
+#include <cstdio>
 #include <cstdlib>
 #include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <memory>
+#include <print>
 #include <string>
 #include <utility>
 
@@ -25,7 +27,7 @@ auto setupGLEW() -> bool {
 auto createWindow(const std::string &title, const int width, const int height)
     -> GLFWwindow * {
     if (glfwInit() == 0) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
+        std::println(stderr, "Failed to initialize GLFW");
         exit(EXIT_FAILURE);
     }
 
@@ -39,7 +41,7 @@ auto createWindow(const std::string &title, const int width, const int height)
     GLFWwindow *window =
             glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     if (window == nullptr) {
-        std::cerr << "Failed to create GLFW window" << std::endl;
+        std::println(stderr, "Failed to create GLFW window");
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
@@ -78,7 +80,7 @@ auto View::init(const std::string &title, const int width, const int height) -> 
     this->title = title;
 
     if (!setupGLEW()) {
-        std::cerr << "Failed to initialize GLEW" << std::endl;
+        std::println(stderr, "Failed to initialize GLEW");
         return false;
     }
 

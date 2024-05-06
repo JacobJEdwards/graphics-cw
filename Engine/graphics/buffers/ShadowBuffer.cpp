@@ -4,8 +4,10 @@
 
 #include "graphics/buffers/ShadowBuffer.h"
 
+#include <cstdio>
 #include <iostream>
 #include <array>
+#include <print>
 
 ShadowBuffer::ShadowBuffer(const unsigned int width, const unsigned int height) {
     glGenFramebuffers(1, &FBO);
@@ -29,7 +31,7 @@ ShadowBuffer::ShadowBuffer(const unsigned int width, const unsigned int height) 
     glReadBuffer(GL_NONE);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cerr << "Framebuffer is not complete!" << std::endl;
+        std::println(stderr, "Framebuffer is not complete!");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

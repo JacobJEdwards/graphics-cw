@@ -5,10 +5,12 @@
 #ifndef CW_VIEW_H
 #define CW_VIEW_H
 
+#include <cstdio>
 #include <functional>
 #include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <memory>
+#include <print>
 #include <string>
 
 #include <GL/glew.h>
@@ -163,7 +165,7 @@ private:
     };
 
     ErrorHandle error = [](const int err, const char *description) {
-        std::cerr << "Error: " << err << " - " << description << std::endl;
+        std::println(stderr, "Error: {} - {}", err, description);
     };
 
     bool setup = false;

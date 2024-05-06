@@ -8,6 +8,7 @@
 #include <assimp/material.h>
 #include <assimp/mesh.h>
 #include <assimp/types.h>
+#include <cstdio>
 #include <glm/common.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float4.hpp>
@@ -19,6 +20,7 @@
 #include <utility>
 #include <vector>
 #include <filesystem>
+#include <print>
 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
@@ -63,7 +65,7 @@ void Model::loadModel(const std::filesystem::path &path) {
     if (scene == nullptr ||
         (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) != 0U ||
         scene->mRootNode == nullptr) {
-        std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
+        std::println(stderr, "ERROR::ASSIMP::{}", importer.GetErrorString());
         return;
     }
 
@@ -184,13 +186,6 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     const float shininess = color.r;
 
     const Material meshMaterial = {ambient, diffuse, specular, emissive, shininess};
-    std::cout << path << std::endl;
-    // vout material properties
-    std::cout << "ambient: " << ambient.x << ", " << ambient.y << ", " << ambient.z << ambient.w << std::endl;
-    std::cout << "diffuse: " << diffuse.x << ", " << diffuse.y << ", " << diffuse.z << diffuse.w << std::endl;
-    std::cout << "specular: " << specular.x << ", " << specular.y << ", " << specular.z << specular.w << std::endl;
-    std::cout << "emissive: " << emissive.x << ", " << emissive.y << ", " << emissive.z << emissive.w << std::endl;
-    std::cout << "shininess: " << shininess << std::endl;
 
     return {vertices, indices, textures, box, meshMaterial};
 }

@@ -14,6 +14,8 @@
 #include <utility>
 #include <vector>
 #include <iostream>
+#include <print>
+
 #include "graphics/buffers/VertexBuffer.h"
 
 Mesh::Mesh(std::vector<Vertex::Data> vertices, std::vector<GLuint> indices,
@@ -64,7 +66,7 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
                 emissiveNr++;
                 break;
             default:
-                std::cerr << "Unknown texture type" << std::endl;
+                std::println(stderr, "Unknown texture type");
                 continue;
         }
 

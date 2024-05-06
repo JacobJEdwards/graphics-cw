@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <span>
 #include <string>
+#include <string_view>
 
 namespace Texture {
     namespace Loader {
@@ -23,9 +24,22 @@ namespace Texture {
 
         auto loadCubemap(const std::filesystem::path &path) -> GLuint;
 
-        auto loadCubemap(std::span<const std::string, CUBE_MAP_FACES> faces) -> GLuint;
+        auto loadCubemap(std::span<const std::filesystem::path, CUBE_MAP_FACES> faces) -> GLuint;
 
-        auto getFormat(int nrChannels) -> GLint;
+        constexpr auto getFormat(const int nrChannels) -> GLint {
+            switch (nrChannels) {
+                case 1:
+                    return GL_RED;
+                case 2:
+                    return GL_RG;
+                case 3:
+                    return GL_RGB;
+                case 4:
+                    return GL_RGBA;
+                default:
+                    return GL_RGB;
+            }
+        }
 
         void setFlip(bool flip);
     }
@@ -40,7 +54,20 @@ namespace Texture {
         EMISSIVE,
     };
 
-    auto toString(Type type) -> std::string;
+    constexpr auto toString(const Type type) -> std::string {
+        switch (type) {
+            case Type::DIFFUSE:
+                return "diffuse";
+            case Type::SPECULAR:
+                return "specular";
+            case Type::NORMAL:
+                return "normal";
+            case Type::HEIGHT:
+                return "height";
+            default:
+                return "";
+        }
+    }
 
     struct Data {
         GLuint id = 0U;

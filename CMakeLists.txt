@@ -71,9 +71,9 @@ add_executable(CW main.cpp
 target_link_libraries(CW PRIVATE OpenGL::GL GLEW::GLEW glfw glm::glm assimp::assimp) #${SOIL2_LIB})
 
 # Set C++ standard
-set_target_properties(CW PROPERTIES CXX_STANDARD 20)
+set_target_properties(CW PROPERTIES CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++23")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 

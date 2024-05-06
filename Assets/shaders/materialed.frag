@@ -118,6 +118,10 @@ void main() {
     vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, normal, vec3(material.diffuse), vec3(material.specular), material.shininess);
 
     FragColor = vec4(result, 1.0);
+    
+    if (FragColor.a < 0.1) {
+        discard;
+    }
 }
 
 

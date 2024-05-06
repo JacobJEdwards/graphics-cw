@@ -6,10 +6,11 @@
 
 #include <GL/glew.h>
 #include <iostream>
+#include <print>
 
 FrameBuffer::FrameBuffer(const unsigned int width,
                          const unsigned int height, const bool multisample)
-        : width(width), height(height), multisample(multisample) {
+    : width(width), height(height), multisample(multisample) {
     setup();
 }
 
@@ -99,7 +100,6 @@ void FrameBuffer::bind() {
 }
 
 void FrameBuffer::unbind() const {
-
     if (multisample) {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, MSFBO);
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, FBO);
@@ -149,7 +149,7 @@ void FrameBuffer::setup() {
                            texture.id, 0);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cerr << "Framebuffer is not complete!" << std::endl;
+        std::println(stderr, "Framebuffer is not complete!");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -170,7 +170,7 @@ void FrameBuffer::setup() {
                               GL_RENDERBUFFER, MSRBO_depth);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cerr << "Framebuffer is not complete!" << std::endl;
+        std::println(stderr, "Framebuffer is not complete!");
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 }

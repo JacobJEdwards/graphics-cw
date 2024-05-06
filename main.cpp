@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <exception>
 
 #include <GL/glew.h>
@@ -8,6 +9,7 @@
 #include <glm/geometric.hpp>
 #include <iostream>
 #include <memory>
+#include <print>
 
 #include <glm/ext/matrix_transform.hpp>
 #include <vector>
@@ -211,6 +213,15 @@ auto main() -> int {
         playerManager.draw(viewMatrix, projectionMatrix);
         ferrisWheel.draw(viewMatrix, projectionMatrix);
 
+        shader = shaderManager.get("Tree");
+        shader->use();
+        shader->setUniform(
+            "sun.position", skybox.getSun().getPosition());
+        shader->setUniform("viewPos", player->getCamera().getPosition());
+        shader->setUniform(
+            "lightSpaceMatrix", lightProjection * lightView);
+        shader->setUniform("shadowMap", 0);
+
         shader = terrain.getShader();
         shader->use();
         shader->setUniform(
@@ -404,7 +415,7 @@ auto main() -> int {
             }
         });
     } catch (const std::exception &e) {
-        std::cerr << e.what() << std::endl;
+        std::println(stderr, "{}", e.what());
     }
 
     App::quit();
@@ -528,6 +539,13 @@ void setupShaders() {
     shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
 
     shader = shaderManager.get("Untextured");
+    shader->use();
+
+    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
+    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+
+    shader = shaderManager.get("Tree");
     shader->use();
 
     shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));

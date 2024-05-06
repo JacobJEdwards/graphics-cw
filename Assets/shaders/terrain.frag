@@ -2,7 +2,10 @@
 
 struct Light {
     vec3 position;
-    vec3 color;
+    vec3 direction;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
 };
 
 out vec4 FragColor;
@@ -11,6 +14,8 @@ in VS_OUT {
     vec2 TexCoords;
     vec3 FragPos;
     vec3 Normal;
+    vec3 Tangent;
+    vec3 Bitangent;
     vec4 FragPosLightSpace;
 } fs_in;
 
@@ -120,7 +125,7 @@ vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, floa
     lighting += vec3(noiseVal * 0.1);
 
     float sunHeight = sun.position.y;
-    float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
+    float sunHeightFactor = clamp(sunHeight, 0.3, 1.0);
     lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
 
     return lighting;

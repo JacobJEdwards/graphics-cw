@@ -1,11 +1,14 @@
 //
 // Created by Jacob Edwards on 26/04/2024.
 //
+/*
+ * https://learnopengl.com/Advanced-OpenGL/Instancing
+ */
 
 #include "Trees.h"
 
-#include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 #include "graphics/Model.h"
 #include <glm/ext/vector_float3.hpp>
@@ -14,6 +17,7 @@
 #include <span>
 #include <GL/glew.h>
 #include <utils/ShaderManager.h>
+#include "graphics/Shader.h"
 #include "utils/BoundingBox.h"
 #include "utils/Random.h"
 
@@ -27,7 +31,7 @@ void Trees::generateTrees(const std::span<const glm::vec3> positions) {
 
     // bounding boxes
     for (const auto &tree: trees) {
-        BoundingBox box(tree - glm::vec3(0.5F), tree + glm::vec3(0.5F));
+        const BoundingBox box(tree - glm::vec3(0.5F), tree + glm::vec3(0.5F));
         boundingBoxes.push_back(box);
     }
 }
@@ -40,11 +44,13 @@ void Trees::draw(const std::shared_ptr<Shader> shader) const {
         for (int i = 0; i < mesh->getTextures().size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i);
             glBindTexture(GL_TEXTURE_2D, mesh->getTextures()[i].id);
-            shader->setUniform("texture_diffuse" + std::to_string(i), i);
+            shader->setUniform("material.texture_diffuse" + std::to_string(i), i);
         }
 
         glBindVertexArray(mesh->getBuffer().VAO);
-        glDrawElementsInstanced(GL_TRIANGLES, mesh->getBuffer().data.indices.size(), GL_UNSIGNED_INT, nullptr,
+        glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(mesh->getBuffer().data.indices.size()),
+                                GL_UNSIGNED_INT,
+                                nullptr,
                                 static_cast<GLsizei>(trees.size()));
         glBindVertexArray(0);
     }
@@ -81,22 +87,22 @@ void Trees::setupInstanceData() {
     for (const auto &mesh: model.getMeshes()) {
         const GLuint VAO = mesh->getBuffer().VAO;
         glBindVertexArray(VAO);
-        glEnableVertexAttribArray(6); // Change to attribute position 6
+        glEnableVertexAttribArray(6);
         glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), nullptr); // Change position to 6
-        glEnableVertexAttribArray(7); // Increment to the next attribute position
+        glEnableVertexAttribArray(7);
         glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4),
                               reinterpret_cast<void *>(sizeof(glm::vec4))); // Increment position to 7
-        glEnableVertexAttribArray(8); // Increment to the next attribute position
+        glEnableVertexAttribArray(8);
         glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4),
                               reinterpret_cast<void *>(2 * sizeof(glm::vec4))); // Increment position to 8
-        glEnableVertexAttribArray(9); // Increment to the next attribute position
+        glEnableVertexAttribArray(9);
         glVertexAttribPointer(9, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4),
                               reinterpret_cast<void *>(3 * sizeof(glm::vec4))); // Increment position to 9
 
-        glVertexAttribDivisor(6, 1); // Change to attribute position 6
-        glVertexAttribDivisor(7, 1); // Increment to the next attribute position
-        glVertexAttribDivisor(8, 1); // Increment to the next attribute position
-        glVertexAttribDivisor(9, 1); // Increment to the next attribute position
+        glVertexAttribDivisor(6, 1);
+        glVertexAttribDivisor(7, 1);
+        glVertexAttribDivisor(8, 1);
+        glVertexAttribDivisor(9, 1);
 
         glBindVertexArray(0);
     }

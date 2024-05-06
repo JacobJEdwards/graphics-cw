@@ -98,20 +98,19 @@ surfaceColor, float shininess) {
 
     float diffuseFactor = max(dot(lightDirection, surfaceNormal), 0.0);
 
-    float specularFactor = 0.0;
 
-    if (diffuseFactor > 0.0) {
-        specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
-    }
+    float specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
+
+    specularFactor *= diffuseFactor;
 
     vec3 ambient = 0.1 * lightColor;
     vec3 diffuse = diffuseFactor * lightColor * surfaceColor;
     vec3 specular = specularFactor * lightColor;
 
     // shadow
-    // float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
-    // vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
-    vec3 lighting = (ambient + diffuse + specular);
+    float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
+    //vec3 lighting = (ambient + diffuse + specular);
 
     return lighting;
 }
@@ -129,14 +128,16 @@ void main() {
 
     result *= texColor.a;
 
-    // make it look like the object is damaged
     float damageFactor = texture(damageTexture, fs_in.TexCoords).r;
     result *= mix(1.0, damageFactor, damage);
 
-    // light is sun, descrease if below horizon
     float sunHeight = sun.position.y;
     float sunFactor = clamp(sunHeight, 0.3, 1.0);
     result *= sunFactor;
 
     FragColor = vec4(result, 1.0);
+
+    if (FragColor.a < 0.1) {
+        discard;
+    }
 }
