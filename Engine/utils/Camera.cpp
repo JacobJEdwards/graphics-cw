@@ -33,6 +33,10 @@ Camera::Camera(const glm::vec3 position, const glm::vec3 worldUp, const float ya
         case Mode::FREE:
         case Mode::DRIVE:
         case Mode::PATH:
+            if (thirdPersonMode) {
+                return glm::lookAt(position, target + front, worldUp);
+            }
+
             return lookAt(position, position + front, up);
         case Mode::ORBIT:
         case Mode::FIXED:
@@ -67,6 +71,10 @@ auto Camera::getLightViewMatrix(const glm::vec3 lightDirection) const -> glm::ma
     centre /= corners.size();
 
     return glm::lookAt(centre - lightDirection, centre, worldUp);
+}
+
+void Camera::setTarget(const glm::vec3 target) {
+    this->target = target;
 }
 
 
@@ -139,21 +147,21 @@ void Camera::setFixed(const glm::vec3 target, const glm::vec3 position) {
 [[nodiscard]] auto Camera::getPosition() const -> glm::vec3 { return position; }
 
 [[nodiscard]] auto Camera::getFront() const -> glm::vec3 {
-    if (mode == Mode::ORBIT) {
+    if (mode == Mode::ORBIT || thirdPersonMode || mode == Mode::FIXED) {
         return normalize(target - position);
     }
     return front;
 }
 
 [[nodiscard]] auto Camera::getUp() const -> glm::vec3 {
-    if (mode == Mode::ORBIT) {
+    if (mode == Mode::ORBIT || thirdPersonMode || mode == Mode::FIXED) {
         return {0.0F, 1.0F, 0.0F};
     }
     return up;
 }
 
 [[nodiscard]] auto Camera::getRight() const -> glm::vec3 {
-    if (mode == Mode::ORBIT) {
+    if (mode == Mode::ORBIT || thirdPersonMode || mode == Mode::FIXED) {
         return normalize(cross(getFront(), getUp()));
     }
 
@@ -291,4 +299,8 @@ void Camera::rotate(const glm::vec3 &rotation) {
     front = glm::vec3(zRotation * yRotation * xRotation * glm::vec4(front, 1.0F));
     right = glm::vec3(zRotation * yRotation * xRotation * glm::vec4(right, 1.0F));
     up = glm::vec3(zRotation * yRotation * xRotation * glm::vec4(up, 1.0F));
+}
+
+void Camera::isThirdPerson(const bool thirdPersonMode) {
+    this->thirdPersonMode = thirdPersonMode;
 }

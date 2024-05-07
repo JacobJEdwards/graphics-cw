@@ -113,6 +113,10 @@ public:
 
     void rotate(const glm::vec3 &rotation);
 
+    void isThirdPerson(bool thirdPersonMode);
+
+    void setTarget(glm::vec3 target);
+
 private:
     Mode mode = Mode::FREE;
 
@@ -152,6 +156,8 @@ private:
     float yPosition = 1.0F;
 
     bool downwards = false;
+
+    bool thirdPersonMode = false;
 
     void updateCameraVectors();
 

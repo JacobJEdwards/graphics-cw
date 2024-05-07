@@ -145,15 +145,19 @@ void main() {
     vec3 color = grassColor;
     float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
 
-    for (int i = 0; i < pathedPointsCount - 1; i++) {
-        vec3 pathedPoint = pathedPoints[i];
-        vec3 nextPathedPoint = pathedPoints[i + 1];
+    vec3 pathedPoint = pathedPoints[0];
+    vec3 nextPathedPoint;
+    int i = 0;
 
-        if (isOnPath(fs_in.FragPos, pathedPoint, nextPathedPoint)) {
-            color = mix(color, pathColor, pathDarkness);
-            break;
-        }
+    vec3 onPath = vec3(0.0);
+    for (i = 0; i < pathedPointsCount - 1; i++) {
+        nextPathedPoint = pathedPoints[i + 1];
+        onPath += vec3(isOnPath(fs_in.FragPos, pathedPoint, nextPathedPoint));
+        pathedPoint = nextPathedPoint;
     }
+
+    color = mix(color, pathColor, onPath.x * pathDarkness);
+
 
     vec3 lighting = calculateLighting(fs_in.FragPos, normalize(fs_in.Normal), viewPos, color, shadow);
 

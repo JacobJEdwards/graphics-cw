@@ -1,5 +1,6 @@
 #include "physics/ModelAttributes.h"
 
+#include <algorithm>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/quaternion_trigonometric.hpp>
@@ -12,9 +13,12 @@
 #include "physics/Constants.h"
 #include "physics/Gravity.h"
 
+// constexpr float ZERO_THRESHHOLD = 0.00000000000000000001;
+
 void Physics::Attributes::update(const float dt) {
     previousTransform = transform;
 
+    // force += impulse / (std::min(dt, ZERO_THRESHHOLD));
     velocity += acceleration * dt;
     position += velocity * dt;
     acceleration = force / mass;
@@ -50,6 +54,12 @@ void Physics::Attributes::update(const float dt) {
             applyGravity();
         }
     }
+
+    /*
+    if (glm::length(velocity) < ZERO_THRESHHOLD) {
+        velocity = glm::vec3(0.0F);
+    }
+    */
 }
 
 void Physics::Attributes::applyForce(const glm::vec3 &f) { force += f; }

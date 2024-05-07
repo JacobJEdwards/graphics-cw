@@ -52,6 +52,7 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person2.obj")
             car->setMode(BumperCar::Mode::PATHED);
             car->setIsPlayer(true);
             box = car->getBoundingBox();
+            isDriving = true;
             break;
         case Mode::DRIVE:
             attributes.gravityAffected = false;
@@ -63,7 +64,14 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person2.obj")
             car->setMode(BumperCar::Mode::PATHED);
             car->setIsPlayer(true);
             box = car->getBoundingBox();
+            isDriving = true;
             break;
+        case Mode::DUEL:
+            attributes.gravityAffected = true;
+            camera.setMode(Camera::Mode::FPS);
+            car = std::make_shared<BumperCar>();
+            car->setMode(BumperCar::Mode::NONE);
+            car->shouldDrawPlayer(false);
     }
 }
 
@@ -174,42 +182,32 @@ void Player::update(const float dt) {
     }
 
     if (mode == Mode::PATH || mode == Mode::DRIVE) {
-        camera.update(dt);
         const glm::vec3 pos = car->attributes.position;
         const auto front = car->attributes.getFront();
-
-        // set pos to car position, up 5.0 and back a bit based on front
-        attributes.position = pos;
-        // third person
-        // glm::vec3 backTranslation = -front * 10.0F; // * -2.0F;
-        glm::vec3 backTranslation = -front; // * -2.0F;
-        glm::vec3 upTranslation = glm::vec3(0.0F, 6.0F, 0.0F);
-        attributes.position += backTranslation + upTranslation;
-        camera.setPosition(attributes.position);
 
         const auto angle = glm::acos(glm::dot(front, glm::vec3(0.0F, 0.0F, 1.0F)));
         const auto axis = glm::cross(front, glm::vec3(0.0F, 0.0F, 1.0F));
 
         camera.rotate(-angle, axis);
 
+        if (thirdPersonMode) {
+            camera.setTarget(pos);
+        }
+
+        attributes.position = pos;
+        const glm::vec3 backTranslation = thirdPersonMode ? -front * 30.0F : -front;
+        const auto upTranslation = thirdPersonMode ? glm::vec3(0.0F, 12.0F, 0.0F) : glm::vec3(0.0F, 6.0F, 0.0F);
+
+        attributes.position += backTranslation + upTranslation;
+        camera.setPosition(attributes.position);
+
         attributes.force = car->attributes.force;
         attributes.velocity = car->attributes.velocity;
 
-        return;
-    }
-
-    /*
-    if (mode == Mode::DRIVE) {
-        const auto pos = car->attributes.position;
-        attributes.position = pos;
-        const auto front = car->attributes.getFront();
-
-        attributes.position = pos;
-        camera.setPosition(attributes.position + glm::vec3(0.0F, 4.5F, 0.0F));
+        camera.update(dt);
 
         return;
     }
-    */
 
     if (mode == Mode::ORBIT) {
         camera.circleOrbit(dt);
@@ -243,6 +241,23 @@ void Player::update(const float dt) {
     camera.update(dt);
 }
 
+void Player::startDriving(const bool should) {
+    if (should) {
+        mode = Mode::DRIVE;
+        attributes.gravityAffected = false;
+        camera.setMode(Camera::Mode::DRIVE);
+        camera.setPitchLimits(-45.0F, 45.0F);
+        camera.setYawLimits(45.0F, 135.0F);
+        camera.setYaw(90.0F);
+        car = std::make_shared<BumperCar>();
+        car->setMode(BumperCar::Mode::NONE);
+        car->setIsPlayer(true);
+        box = car->getBoundingBox();
+        isDriving = true;
+    }
+}
+
+
 [[nodiscard]] auto Player::shouldDraw() const -> bool {
     return drawModel;
 }
@@ -256,6 +271,11 @@ void Player::jump() {
         attributes.applyForce(glm::vec3(0.0F, jumpForce, 0.0F));
     }
 }
+
+auto Player::isThirdPerson() const -> bool {
+    return thirdPersonMode;
+}
+
 
 void Player::debug() const {
     ImGui::Begin("Player Debug");
@@ -277,6 +297,13 @@ void Player::interface() {
     ImGui::SliderFloat("Mass", &attributes.mass, 0.1F, 1000.0F);
     ImGui::SliderFloat("Speed", &speed, 0.0F, 100.0F);
     ImGui::SliderFloat("Nitro Force", &nitroForce, 0.0F, 1000.0F);
+    if (mode == Mode::DRIVE || mode == Mode::PATH) {
+        if (ImGui::Checkbox("Third Person Mode", &thirdPersonMode)) {
+            camera.isThirdPerson(thirdPersonMode);
+            // camera.setMode(Camera::Mode::ORBIT);
+            // camera.setOrbit(car->attributes.position, 50.0F, 0.0F, 0.0F, 10.0F);
+        }
+    }
     ImGui::End();
 }
 

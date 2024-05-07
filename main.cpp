@@ -69,6 +69,7 @@ auto main() -> int {
 
     const auto pathedCar = playerManager.get("Path")->getCar();
     const auto driveable = playerManager.get("Drive")->getCar();
+    const auto duel = playerManager.get("Interactable")->getCar();
 
     const std::vector models = {
         std::make_shared<BumperCar>(),
@@ -79,7 +80,8 @@ auto main() -> int {
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
         pathedCar,
-        driveable
+        driveable,
+        duel
     };
 
     for (const auto &model: models) {
@@ -330,12 +332,16 @@ auto main() -> int {
             ferrisWheel.update(App::view.getDeltaTime());
 
             for (const auto &model: models) {
-                if (model == player->getCar()) {
+                if (model == player->getCar() && player->getMode() != Player::Mode::DUEL) {
                     continue;
                 }
 
                 if (Physics::Collisions::check(*player, *model)) {
-                    if (length(player->getAttributes().force) > 350.0F && (player->getMode() == Player::Mode::DRIVE ||
+                    if (model == player->getCar()) {
+                        player->startDriving(true);
+                    }
+
+                    if (length(player->getAttributes().force) > 200.0F && (player->getMode() == Player::Mode::DRIVE ||
                                                                            player->getMode() == Player::Mode::PATH ||
                                                                            player->getMode() == Player::Mode::FPS)) {
                         App::view.blurScreen();
@@ -374,10 +380,9 @@ auto main() -> int {
                         models[i]->collisionResponse();
                         models[j]->collisionResponse();
 
-                        // if player car, blur screen
                         if ((models[i] == player->getCar() || models[j] == player->getCar())) {
                             App::view.blurScreen();
-                            if (glm::length(player->getAttributes().force) > 350.0F) {
+                            if (glm::length(player->getAttributes().force) > 200.0F) {
                                 models[i]->takeDamage(0.3F);
                                 models[j]->takeDamage(0.3F);
                             }
@@ -576,12 +581,15 @@ void setupPlayers() {
 
     const auto path = std::make_shared<Player>(Player::Mode::PATH);
     path->shouldDraw(false);
+    path->getCar()->setMode(BumperCar::Mode::AUTO);
     playerManager.add("Path", path);
 
     const auto drive = std::make_shared<Player>(Player::Mode::DRIVE);
-    path->shouldDraw(false);
-    path->getCar()->setMode(BumperCar::Mode::AUTO);
     playerManager.add("Drive", drive);
+
+    const auto interactable = std::make_shared<Player>(Player::Mode::DUEL);
+    playerManager.add("Interactable", interactable);
+
 
     playerManager.setCurrent("Free");
 }

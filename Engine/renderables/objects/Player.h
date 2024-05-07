@@ -18,7 +18,7 @@ public:
     using Entity::draw;
 
     enum class Mode {
-        FPS, FREE, ORBIT, FIXED, PATH, DRIVE
+        FPS, FREE, ORBIT, FIXED, PATH, DRIVE, DUEL
     };
 
     enum class Direction {
@@ -39,6 +39,8 @@ public:
 
     void jump();
 
+    void startDriving(bool should);
+
     [[nodiscard]] auto shouldDraw() const -> bool;
 
     void shouldDraw(bool draw);
@@ -53,19 +55,24 @@ public:
 
     [[nodiscard]] auto getCar() const -> std::shared_ptr<BumperCar>;
 
+    [[nodiscard]] auto isThirdPerson() const -> bool;
+
 private:
     Mode mode = Mode::FPS;
 
     bool drawModel = false;
     float jumpForce = 100.0F;
 
-    float nitroForce = 500.0F;
+    float nitroForce = 250.0F;
     float nitroDuration = 0.0F;
     float nitroMaxDuration = 5.0F;
     bool nitroActive = false;
 
     float speed = 10.0F;
 
+    bool isDriving = false;
+
+    bool thirdPersonMode = false;
 
     Camera camera{glm::vec3(0.0F, 5.0F, 3.0F)};
 

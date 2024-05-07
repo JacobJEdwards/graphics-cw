@@ -4,6 +4,7 @@
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
 #include "renderables/objects/ProceduralTerrain.h"
+#include <algorithm>
 #include <glm/geometric.hpp>
 
 namespace {
