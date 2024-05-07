@@ -32,9 +32,9 @@ Entity::Entity(const std::filesystem::path &path) {
 }
 
 void Entity::update(const float deltaTime) {
-    const glm::mat4 oldTransform = attributes.transform;
+    const glm::mat4 oldTransform = attributes.getTransform();
     attributes.update(deltaTime);
-    const glm::mat4 newTransform = attributes.transform;
+    const glm::mat4 newTransform = attributes.getTransform();
 
     const auto translation = glm::vec3(newTransform[3]) - glm::vec3(oldTransform[3]);
 
@@ -56,7 +56,7 @@ void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
 
 void Entity::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
-    shader->setUniform("model", attributes.transform);
+    shader->setUniform("model", attributes.getTransform());
     model->draw(shader);
 }
 
@@ -87,21 +87,21 @@ void Entity::setAttributes(const Physics::Attributes &attributes) {
 }
 
 void Entity::translate(const glm::vec3 &translation) {
-    attributes.transform = glm::translate(attributes.transform, translation);
+    attributes.transform = glm::translate(attributes.getTransform(), translation);
 
     box.translate(translation);
 }
 
 void Entity::transform(const glm::mat4 &transformation) {
-    attributes.transform = transformation * attributes.transform;
+    attributes.transform = transformation * attributes.getTransform();
     attributes.position =
-            glm::vec3(attributes.transform * glm::vec4(attributes.position, 1.0F));
+            glm::vec3(attributes.getTransform() * glm::vec4(attributes.position, 1.0F));
 
     box.transform(transformation);
 }
 
 void Entity::scale(const glm::vec3 &scale) {
-    attributes.transform = glm::scale(attributes.transform, scale);
+    attributes.scale = scale;
     box.scale(scale);
 }
 

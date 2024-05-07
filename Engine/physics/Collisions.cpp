@@ -5,7 +5,12 @@
 #include "utils/BoundingBox.h"
 #include "renderables/objects/ProceduralTerrain.h"
 #include <algorithm>
+#include <glm/ext/quaternion_common.hpp>
+#include <glm/ext/vector_float4.hpp>
+#include <glm/fwd.hpp>
 #include <glm/geometric.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 namespace {
     void resolveWithFloor(Physics::Attributes &a, const float floorY) {
@@ -22,7 +27,7 @@ namespace Physics::Collisions {
         const glm::vec3 relativeVelocity = a.velocity;
         const float relativeVelocityAlongNormal = glm::dot(relativeVelocity, normal);
 
-        if (relativeVelocityAlongNormal > 0) {
+        if (relativeVelocityAlongNormal > 0.0F) {
             a.applyFriction(Physics::FRICTION);
             return;
         }
@@ -38,7 +43,31 @@ namespace Physics::Collisions {
 
         const glm::vec3 impulse = j * normal;
 
-        // calc roll and pitch to fit with ground
+        const auto currentFront = a.getFront();
+        const auto currentRight = a.getRight();
+        const auto currentUp = a.getUp();
+
+        const auto newFront = glm::normalize(glm::cross(currentRight, normal));
+        const auto newRight = glm::normalize(glm::cross(normal, currentFront));
+
+        const glm::quat currentOrientation = glm::quat_cast(glm::mat3(currentRight, currentUp, currentFront));
+
+        const glm::quat targetOrientation = glm::quat_cast(glm::mat3(newRight, normal, newFront));
+
+        a.currentOrientation = currentOrientation;
+        a.targetOrientation = targetOrientation;
+
+        const glm::quat interpolatedOrientation = glm::slerp(currentOrientation, targetOrientation, 0.1F);
+
+        const glm::mat4 interpolatedRotationMatrix = glm::mat4_cast(interpolatedOrientation);
+
+        const auto scale = glm::vec3(glm::length(a.transform[0]), glm::length(a.transform[1]),
+                                     glm::length(a.transform[2]));
+
+        a.transform[0] = glm::vec4(interpolatedRotationMatrix[0] * scale.x);
+        a.transform[1] = glm::vec4(interpolatedRotationMatrix[1] * scale.y);
+        a.transform[2] = glm::vec4(interpolatedRotationMatrix[2] * scale.z);
+        a.transform[3] = glm::vec4(a.position, 1.0F);
 
         a.applyImpulse(impulse);
     }

@@ -7,6 +7,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
+#include <glm/trigonometric.hpp>
 #include <iostream>
 #include <memory>
 #include <print>
@@ -135,6 +136,10 @@ auto main() -> int {
     for (const auto &model: models) {
         pathPoints.insert(pathPoints.end(), model->getPoints().begin(), model->getPoints().end());
     }
+
+    std::ranges::sort(pathPoints, [](const auto &a, const auto &b) {
+        return a.z < b.z;
+    });
 
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
@@ -587,6 +592,7 @@ void setupPlayers() {
     const auto drive = std::make_shared<Player>(Player::Mode::DRIVE);
     playerManager.add("Drive", drive);
 
+    // TODO fix
     const auto interactable = std::make_shared<Player>(Player::Mode::DUEL);
     playerManager.add("Interactable", interactable);
 

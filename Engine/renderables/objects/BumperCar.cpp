@@ -292,7 +292,7 @@ void BumperCar::clearTrackablePositions() {
 
 void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
     personShader->use();
-    auto mat = attributes.transform;
+    auto mat = attributes.getTransform();
     // tranlte back based on front of car
     mat = glm::translate(mat, glm::vec3(0.0F, -0.25F, -0.45F));
 
@@ -311,7 +311,7 @@ void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
 
     shader->use();
     // damage texture
-    mat = attributes.transform;
+    mat = attributes.getTransform();
     mat = glm::rotate(mat, glm::radians(-90.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     shader->setUniform("model", mat);
     shader->setUniform("time", explodeTime / 2.0F);

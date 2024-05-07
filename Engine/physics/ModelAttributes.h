@@ -1,9 +1,13 @@
 #ifndef PHYSICSATTRIBUTES_H
 #define PHYSICSATTRIBUTES_H
 
+#include <glm/fwd.hpp>
+
 #include "Config.h"
 #include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/quaternion_trigonometric.hpp>
 #include <glm/ext/vector_float3.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 namespace Physics {
     struct Attributes {
@@ -19,6 +23,13 @@ namespace Physics {
 
         glm::mat4 transform = Config::IDENTITY_MATRIX;
         glm::mat4 previousTransform = Config::IDENTITY_MATRIX;
+
+        glm::mat4 targetRotation = Config::IDENTITY_MATRIX;
+
+        glm::quat currentOrientation = glm::quat_cast(transform);
+        glm::quat targetOrientation = glm::quat_cast(targetRotation);
+
+        glm::vec3 scale = glm::vec3(1.0F);
 
         float radius = 1.0F;
         float mass = 1.0F;
@@ -49,9 +60,17 @@ namespace Physics {
 
         void applyRotation(const glm::vec3 &rotation);
 
+        void applyPitch(float angle);
+
+        void applyYaw(float angle);
+
+        void applyRoll(float angle);
+
         void applyTorque(const glm::vec3 &torque);
 
         auto calculateRotation(const glm::vec3 &point) -> glm::vec3;
+
+        auto calculateRotation(const glm::vec3 &normal, const glm::vec3 &axis) -> glm::vec3;
 
         [[nodiscard]] auto getTransform() const -> glm::mat4;
 

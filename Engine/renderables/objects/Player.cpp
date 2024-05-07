@@ -7,11 +7,13 @@
 #include "BumperCar.h"
 #include "Config.h"
 #include "graphics/Color.h"
+#include "graphics/Shader.h"
 #include "imgui/imgui.h"
 #include <cmath>
 #include <glm/geometric.hpp>
 #include <glm/trigonometric.hpp>
 #include <memory>
+#include <print>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/quaternion_trigonometric.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -181,7 +183,7 @@ void Player::update(const float dt) {
         particleSystem.generate(attributes, glm::vec3(0.0F), 20, Color::YELLOW);
     }
 
-    if (mode == Mode::PATH || mode == Mode::DRIVE) {
+    if (mode == Mode::PATH || mode == Mode::DRIVE || mode == Mode::DUEL && isDriving) {
         const glm::vec3 pos = car->attributes.position;
         const auto front = car->attributes.getFront();
 
@@ -254,6 +256,7 @@ void Player::startDriving(const bool should) {
         car->setIsPlayer(true);
         box = car->getBoundingBox();
         isDriving = true;
+        car->isCurrentPlayer(true);
     }
 }
 
@@ -300,8 +303,6 @@ void Player::interface() {
     if (mode == Mode::DRIVE || mode == Mode::PATH) {
         if (ImGui::Checkbox("Third Person Mode", &thirdPersonMode)) {
             camera.isThirdPerson(thirdPersonMode);
-            // camera.setMode(Camera::Mode::ORBIT);
-            // camera.setOrbit(car->attributes.position, 50.0F, 0.0F, 0.0F, 10.0F);
         }
     }
     ImGui::End();

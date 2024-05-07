@@ -109,7 +109,6 @@ void BoundingBox::setMin(const glm::vec3 &min) { BoundingBox::min = min; }
 void BoundingBox::setMax(const glm::vec3 &max) { BoundingBox::max = max; }
 
 void BoundingBox::transform(const glm::mat4 &model) {
-    // Transform the min and max points by the model
     min = glm::vec3(model * glm::vec4(min, 1.0F));
     max = glm::vec3(model * glm::vec4(max, 1.0F));
 
@@ -154,19 +153,11 @@ auto BoundingBox::getSize() const -> glm::vec3 { return max - min; }
 void BoundingBox::translate(const glm::vec3 &translation) {
     min += translation;
     max += translation;
-
-    for (const auto &child: children) {
-        child->translate(translation);
-    }
 }
 
 void BoundingBox::scale(const glm::vec3 &scale) {
     min *= scale;
     max *= scale;
-
-    for (const auto &child: children) {
-        child->scale(scale);
-    }
 }
 
 void BoundingBox::rotate(const glm::vec3 &rotation) {
@@ -176,10 +167,6 @@ void BoundingBox::rotate(const glm::vec3 &rotation) {
     rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0F, 0.0F, 1.0F));
     min = glm::vec3(rotationMatrix * glm::vec4(min - center, 1.0F)) + center;
     max = glm::vec3(rotationMatrix * glm::vec4(max - center, 1.0F)) + center;
-
-    for (const auto &child: children) {
-        child->rotate(rotation);
-    }
 }
 
 void BoundingBox::rotate(const glm::vec3 &axis, const float angle) {
@@ -188,9 +175,11 @@ void BoundingBox::rotate(const glm::vec3 &axis, const float angle) {
     min = glm::vec3(rotationMatrix * glm::vec4(min - center, 1.0F)) + center;
     max = glm::vec3(rotationMatrix * glm::vec4(max - center, 1.0F)) + center;
 
+    /*
     for (const auto &child: children) {
         child->rotate(axis, angle);
     }
+    */
 }
 
 auto BoundingBox::getCorners() const -> std::vector<glm::vec3> {

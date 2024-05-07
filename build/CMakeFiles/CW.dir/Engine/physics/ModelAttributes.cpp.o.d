@@ -1,11 +1,9 @@
 CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.cpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
-  /opt/homebrew/include/glm/ext/vector_float3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/qualifier.hpp \
-  /opt/homebrew/include/glm/ext/../detail/setup.hpp \
+  /opt/homebrew/include/glm/fwd.hpp \
+  /opt/homebrew/include/glm/detail/qualifier.hpp \
+  /opt/homebrew/include/glm/detail/setup.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cassert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__assert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__config \
@@ -94,7 +92,7 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stddef.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/__stddef_max_align_t.h \
-  /opt/homebrew/include/glm/ext/../detail/../simd/platform.h \
+  /opt/homebrew/include/glm/detail/../simd/platform.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cstdint \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/type_traits \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/hash.h \
@@ -218,145 +216,223 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/invoke.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/type_identity.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/unwrap_ref.h \
-  /opt/homebrew/include/glm/ext/../detail/type_vec3.inl \
-  /opt/homebrew/include/glm/ext/../detail/compute_vector_relational.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
+  /opt/homebrew/include/glm/ext/vector_float3.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec3.hpp \
+  /opt/homebrew/include/glm/detail/type_vec3.inl \
+  /opt/homebrew/include/glm/detail/compute_vector_relational.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/limits \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__undef_macros \
   /opt/homebrew/include/glm/ext/matrix_float4x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec4.inl \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x4.inl \
-  /opt/homebrew/include/glm/ext/../detail/../matrix.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/qualifier.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/setup.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../vec2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool2.hpp \
+  /opt/homebrew/include/glm/detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/detail/type_vec4.inl \
+  /opt/homebrew/include/glm/detail/type_mat4x4.inl \
+  /opt/homebrew/include/glm/detail/../matrix.hpp \
+  /opt/homebrew/include/glm/vec2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool2.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_vec2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec2.inl \
-  /opt/homebrew/include/glm/ext/../detail/./compute_vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int2_sized.hpp \
+  /opt/homebrew/include/glm/detail/type_vec2.inl \
+  /opt/homebrew/include/glm/detail/./compute_vector_relational.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int2_sized.hpp \
   /opt/homebrew/include/glm/ext/../ext/vector_int2.hpp \
   /opt/homebrew/include/glm/ext/../ext/scalar_int_sized.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint2_sized.hpp \
+  /opt/homebrew/include/glm/ext/../detail/setup.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint2.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint2_sized.hpp \
   /opt/homebrew/include/glm/ext/../ext/vector_uint2.hpp \
   /opt/homebrew/include/glm/ext/../ext/scalar_uint_sized.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../vec3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int3_sized.hpp \
+  /opt/homebrew/include/glm/vec3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int3_sized.hpp \
   /opt/homebrew/include/glm/ext/../ext/vector_int3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint3_sized.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint3.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint3_sized.hpp \
   /opt/homebrew/include/glm/ext/../ext/vector_uint3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../vec4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_bool4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_float4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_double4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_int4_sized.hpp \
+  /opt/homebrew/include/glm/vec4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool4.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_bool4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_float4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_double4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_int4_sized.hpp \
   /opt/homebrew/include/glm/ext/../ext/vector_int4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/vector_uint4_sized.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint4.hpp \
+  /opt/homebrew/include/glm/./ext/vector_uint4_sized.hpp \
   /opt/homebrew/include/glm/ext/../ext/vector_uint4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat2x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x2.hpp \
+  /opt/homebrew/include/glm/mat2x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double2x2.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat2x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x2.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat2x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x3.hpp \
+  /opt/homebrew/include/glm/detail/type_vec2.hpp \
+  /opt/homebrew/include/glm/detail/type_mat2x2.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double2x2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x2_precision.hpp \
+  /opt/homebrew/include/glm/mat2x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double2x3.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat2x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x3.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat2x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x4.hpp \
+  /opt/homebrew/include/glm/detail/type_vec3.hpp \
+  /opt/homebrew/include/glm/detail/type_mat2x3.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double2x3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x3_precision.hpp \
+  /opt/homebrew/include/glm/mat2x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double2x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat2x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat2x4.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double2x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float2x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat3x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x2.hpp \
+  /opt/homebrew/include/glm/detail/type_mat2x4.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double2x4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float2x4_precision.hpp \
+  /opt/homebrew/include/glm/mat3x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double3x2.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat3x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x2.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x3.hpp \
+  /opt/homebrew/include/glm/detail/type_mat3x2.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double3x2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x2_precision.hpp \
+  /opt/homebrew/include/glm/mat3x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double3x3.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x3.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat3x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x4.hpp \
+  /opt/homebrew/include/glm/detail/type_mat3x3.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double3x3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x3_precision.hpp \
+  /opt/homebrew/include/glm/mat3x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double3x4.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat3x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat3x4.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double3x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float3x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat4x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x2.hpp \
+  /opt/homebrew/include/glm/detail/type_mat3x4.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double3x4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float3x4_precision.hpp \
+  /opt/homebrew/include/glm/mat4x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double4x2.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat4x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x2.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x2_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat4x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x3.hpp \
+  /opt/homebrew/include/glm/detail/type_mat4x2.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double4x2_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x2.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x2_precision.hpp \
+  /opt/homebrew/include/glm/mat4x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double4x3.hpp \
   /opt/homebrew/include/glm/ext/../detail/type_mat4x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_mat4x3.inl \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x3_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_double4x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/.././ext/matrix_float4x4_precision.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_matrix.inl \
-  /opt/homebrew/include/glm/ext/../detail/../geometric.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_geometric.inl \
-  /opt/homebrew/include/glm/ext/../detail/../exponential.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec1.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec1.inl \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec2.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/detail/type_mat4x3.inl \
+  /opt/homebrew/include/glm/./ext/matrix_double4x3_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x3.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x3_precision.hpp \
+  /opt/homebrew/include/glm/mat4x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double4x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_double4x4_precision.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x4.hpp \
+  /opt/homebrew/include/glm/./ext/matrix_float4x4_precision.hpp \
+  /opt/homebrew/include/glm/detail/func_matrix.inl \
+  /opt/homebrew/include/glm/detail/../geometric.hpp \
+  /opt/homebrew/include/glm/detail/func_geometric.inl \
+  /opt/homebrew/include/glm/detail/../exponential.hpp \
+  /opt/homebrew/include/glm/detail/type_vec1.hpp \
+  /opt/homebrew/include/glm/detail/type_vec1.inl \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cmath \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/promote.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/math.h \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_exponential.inl \
-  /opt/homebrew/include/glm/ext/../detail/../vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_vector_relational.inl \
-  /opt/homebrew/include/glm/ext/../detail/_vectorize.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../common.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/_fixes.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_common.inl \
-  /opt/homebrew/include/glm/ext/../detail/compute_common.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_vec1.hpp \
+  /opt/homebrew/include/glm/detail/func_exponential.inl \
+  /opt/homebrew/include/glm/detail/../vector_relational.hpp \
+  /opt/homebrew/include/glm/detail/func_vector_relational.inl \
+  /opt/homebrew/include/glm/detail/_vectorize.hpp \
+  /opt/homebrew/include/glm/detail/../common.hpp \
+  /opt/homebrew/include/glm/detail/_fixes.hpp \
+  /opt/homebrew/include/glm/detail/func_common.inl \
+  /opt/homebrew/include/glm/detail/compute_common.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_trigonometric.hpp \
+  /opt/homebrew/include/glm/ext/../trigonometric.hpp \
+  /opt/homebrew/include/glm/detail/func_trigonometric.inl \
+  /opt/homebrew/include/glm/ext/../exponential.hpp \
+  /opt/homebrew/include/glm/ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/ext/scalar_constants.inl \
+  /opt/homebrew/include/glm/ext/vector_relational.hpp \
+  /opt/homebrew/include/glm/ext/../detail/qualifier.hpp \
+  /opt/homebrew/include/glm/ext/vector_relational.inl \
+  /opt/homebrew/include/glm/ext/../vector_relational.hpp \
+  /opt/homebrew/include/glm/ext/../common.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_float.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_trigonometric.inl \
+  /opt/homebrew/include/glm/gtc/quaternion.hpp \
+  /opt/homebrew/include/glm/gtc/../gtc/constants.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/gtc/constants.inl \
+  /opt/homebrew/include/glm/gtc/../gtc/matrix_transform.hpp \
+  /opt/homebrew/include/glm/gtc/../mat4x4.hpp \
+  /opt/homebrew/include/glm/gtc/../vec2.hpp \
+  /opt/homebrew/include/glm/gtc/../vec3.hpp \
+  /opt/homebrew/include/glm/gtc/../vec4.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/matrix_projection.hpp \
+  /opt/homebrew/include/glm/ext/../gtc/constants.hpp \
+  /opt/homebrew/include/glm/ext/../geometric.hpp \
+  /opt/homebrew/include/glm/ext/../matrix.hpp \
+  /opt/homebrew/include/glm/ext/matrix_projection.inl \
+  /opt/homebrew/include/glm/gtc/../ext/matrix_clip_space.hpp \
+  /opt/homebrew/include/glm/ext/../ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/ext/matrix_clip_space.inl \
+  /opt/homebrew/include/glm/gtc/../ext/matrix_transform.hpp \
+  /opt/homebrew/include/glm/ext/matrix_transform.inl \
+  /opt/homebrew/include/glm/gtc/matrix_transform.inl \
+  /opt/homebrew/include/glm/gtc/../geometric.hpp \
+  /opt/homebrew/include/glm/gtc/../trigonometric.hpp \
+  /opt/homebrew/include/glm/gtc/../matrix.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/vector_relational.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_common.hpp \
+  /opt/homebrew/include/glm/ext/../ext/quaternion_geometric.hpp \
+  /opt/homebrew/include/glm/ext/../ext/vector_relational.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_geometric.inl \
+  /opt/homebrew/include/glm/ext/quaternion_common.inl \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_float.hpp \
+  /opt/homebrew/include/glm/ext/../detail/type_quat.hpp \
+  /opt/homebrew/include/glm/detail/../detail/type_mat3x3.hpp \
+  /opt/homebrew/include/glm/detail/../detail/type_mat4x4.hpp \
+  /opt/homebrew/include/glm/detail/../detail/type_vec3.hpp \
+  /opt/homebrew/include/glm/detail/../detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/detail/../ext/vector_relational.hpp \
+  /opt/homebrew/include/glm/detail/../ext/quaternion_relational.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_relational.inl \
+  /opt/homebrew/include/glm/detail/../gtc/constants.hpp \
+  /opt/homebrew/include/glm/detail/../gtc/matrix_transform.hpp \
+  /opt/homebrew/include/glm/detail/type_quat.inl \
+  /opt/homebrew/include/glm/detail/../trigonometric.hpp \
+  /opt/homebrew/include/glm/detail/../ext/quaternion_common.hpp \
+  /opt/homebrew/include/glm/detail/../ext/quaternion_geometric.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_float_precision.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_double.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_double_precision.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_relational.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_geometric.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_trigonometric.hpp \
+  /opt/homebrew/include/glm/gtc/../ext/quaternion_transform.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_transform.inl \
+  /opt/homebrew/include/glm/gtc/../detail/type_mat3x3.hpp \
+  /opt/homebrew/include/glm/gtc/../detail/type_mat4x4.hpp \
+  /opt/homebrew/include/glm/gtc/../detail/type_vec3.hpp \
+  /opt/homebrew/include/glm/gtc/../detail/type_vec4.hpp \
+  /opt/homebrew/include/glm/gtc/quaternion.inl \
+  /opt/homebrew/include/glm/gtc/../exponential.hpp \
+  /opt/homebrew/include/glm/gtc/epsilon.hpp \
+  /opt/homebrew/include/glm/gtc/../detail/setup.hpp \
+  /opt/homebrew/include/glm/gtc/../detail/qualifier.hpp \
+  /opt/homebrew/include/glm/gtc/epsilon.inl \
+  /opt/homebrew/include/glm/gtc/../vector_relational.hpp \
+  /opt/homebrew/include/glm/gtc/../common.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/algorithm \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/adjacent_find.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/comp.h \
@@ -809,82 +885,7 @@ CMakeFiles/CW.dir/Engine/physics/ModelAttributes.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/shift_left.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/shift_right.h \
   /opt/homebrew/include/glm/ext/matrix_transform.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/constants.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/scalar_constants.hpp \
-  /opt/homebrew/include/glm/ext/scalar_constants.inl \
-  /opt/homebrew/include/glm/ext/../gtc/constants.inl \
-  /opt/homebrew/include/glm/ext/../geometric.hpp \
-  /opt/homebrew/include/glm/ext/../trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/func_trigonometric.inl \
-  /opt/homebrew/include/glm/ext/../matrix.hpp \
-  /opt/homebrew/include/glm/ext/matrix_transform.inl \
-  /opt/homebrew/include/glm/ext/quaternion_trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/../exponential.hpp \
-  /opt/homebrew/include/glm/ext/scalar_constants.hpp \
-  /opt/homebrew/include/glm/ext/vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/vector_relational.inl \
-  /opt/homebrew/include/glm/ext/../vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../common.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_float.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_trigonometric.inl \
-  /opt/homebrew/include/glm/fwd.hpp \
   /opt/homebrew/include/glm/geometric.hpp \
-  /opt/homebrew/include/glm/gtc/quaternion.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../gtc/constants.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../gtc/matrix_transform.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../vec2.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../vec3.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../vec4.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_projection.hpp \
-  /opt/homebrew/include/glm/ext/matrix_projection.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_clip_space.hpp \
-  /opt/homebrew/include/glm/ext/../ext/scalar_constants.hpp \
-  /opt/homebrew/include/glm/ext/matrix_clip_space.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/matrix_transform.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/matrix_transform.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../geometric.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../matrix.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_common.hpp \
-  /opt/homebrew/include/glm/ext/../ext/quaternion_geometric.hpp \
-  /opt/homebrew/include/glm/ext/../ext/vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_geometric.inl \
-  /opt/homebrew/include/glm/ext/quaternion_common.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_float.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_quat.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_mat3x3.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../detail/type_mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../ext/vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../ext/quaternion_relational.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_relational.inl \
-  /opt/homebrew/include/glm/ext/../detail/../gtc/constants.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../gtc/matrix_transform.hpp \
-  /opt/homebrew/include/glm/ext/../detail/type_quat.inl \
-  /opt/homebrew/include/glm/ext/../detail/../trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../ext/quaternion_common.hpp \
-  /opt/homebrew/include/glm/ext/../detail/../ext/quaternion_geometric.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_float_precision.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_double.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_double_precision.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_relational.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_geometric.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_trigonometric.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../ext/quaternion_transform.hpp \
-  /opt/homebrew/include/glm/ext/quaternion_transform.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../detail/type_mat3x3.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../detail/type_mat4x4.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../detail/type_vec3.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../detail/type_vec4.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/quaternion.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../exponential.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/epsilon.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../detail/setup.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../detail/qualifier.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/epsilon.inl \
-  /opt/homebrew/include/glm/ext/../gtc/../vector_relational.hpp \
-  /opt/homebrew/include/glm/ext/../gtc/../common.hpp \
   /opt/homebrew/include/glm/trigonometric.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Constants.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Gravity.h

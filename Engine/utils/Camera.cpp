@@ -157,6 +157,7 @@ void Camera::setFixed(const glm::vec3 target, const glm::vec3 position) {
     if (mode == Mode::ORBIT || thirdPersonMode || mode == Mode::FIXED) {
         return {0.0F, 1.0F, 0.0F};
     }
+
     return up;
 }
 

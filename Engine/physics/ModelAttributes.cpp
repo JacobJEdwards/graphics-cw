@@ -18,7 +18,6 @@
 void Physics::Attributes::update(const float dt) {
     previousTransform = transform;
 
-    // force += impulse / (std::min(dt, ZERO_THRESHHOLD));
     velocity += acceleration * dt;
     position += velocity * dt;
     acceleration = force / mass;
@@ -30,6 +29,7 @@ void Physics::Attributes::update(const float dt) {
     glm::mat4 rotationMatrix = Config::IDENTITY_MATRIX;
 
     constexpr float rotationDamping = 1.0F - Physics::ANGULAR_DAMPING;
+
     rotation *= rotationDamping;
 
     rotationMatrix = glm::rotate(rotationMatrix, rotation.x * dt, glm::vec3(1.0F, 0.0F, 0.0F));
@@ -54,12 +54,6 @@ void Physics::Attributes::update(const float dt) {
             applyGravity();
         }
     }
-
-    /*
-    if (glm::length(velocity) < ZERO_THRESHHOLD) {
-        velocity = glm::vec3(0.0F);
-    }
-    */
 }
 
 void Physics::Attributes::applyForce(const glm::vec3 &f) { force += f; }
@@ -121,6 +115,23 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point) const
     return force;
 }
 
+auto Physics::Attributes::calculateRotation(const glm::vec3 &normal, const glm::vec3 &axis) -> glm::vec3 {
+    const glm::vec3 direction = glm::normalize(normal - glm::normalize(position));
+    const glm::vec3 forward = glm::normalize(glm::vec3(transform[1]));
+
+    auto rotation = glm::vec3(0.0F);
+
+    if (direction != forward) {
+        const float angle = glm::acos(glm::dot(forward, direction));
+
+        const glm::quat rotationQuat = glm::angleAxis(angle, axis);
+
+        rotation = glm::eulerAngles(rotationQuat);
+    }
+
+    return rotation;
+}
+
 auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
     const glm::vec3 direction = glm::normalize(point - position);
     const glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
@@ -142,6 +153,18 @@ auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3
 
 void Physics::Attributes::applyRotation(const glm::vec3 &rotation) {
     this->rotation += rotation;
+}
+
+void Physics::Attributes::applyPitch(const float angle) {
+    rotation.x = angle;
+}
+
+void Physics::Attributes::applyRoll(const float angle) {
+    rotation.z = angle;
+}
+
+void Physics::Attributes::applyYaw(const float angle) {
+    rotation.y += angle;
 }
 
 void Physics::Attributes::applyTorque(const glm::vec3 &torque) {
