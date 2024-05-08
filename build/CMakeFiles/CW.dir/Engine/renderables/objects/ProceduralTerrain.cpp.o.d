@@ -808,7 +808,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/raw_storage_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/temporary_buffer.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/uses_allocator_construction.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Clouds.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Model.h \
   /opt/homebrew/include/assimp/material.h \
   /opt/homebrew/include/assimp/types.h \
@@ -1123,6 +1123,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/ProceduralTerrain.cpp.o: \
   /opt/homebrew/include/glm/gtc/epsilon.inl \
   /opt/homebrew/include/glm/gtc/../vector_relational.hpp \
   /opt/homebrew/include/glm/gtc/../common.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Noise.h \
   /opt/homebrew/include/glm/gtc/noise.hpp \
   /opt/homebrew/include/glm/gtc/../detail/_noise.hpp \

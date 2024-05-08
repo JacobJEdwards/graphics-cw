@@ -44,8 +44,16 @@ void Trees::draw(const std::shared_ptr<Shader> shader) const {
         for (int i = 0; i < mesh->getTextures().size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i);
             glBindTexture(GL_TEXTURE_2D, mesh->getTextures()[i].id);
-            shader->setUniform("material.texture_diffuse" + std::to_string(i), i);
+            const auto type = mesh->getTextures()[i].type;
+            const std::string typeName = Texture::toString(type);
+            shader->setUniform("material.texture_" + typeName + std::to_string(i + 1), i);
         }
+        const auto &[ambient, diffuse, specular, emissive, shininess] = mesh->getMaterial();
+        shader->setUniform("material.ambient", ambient);
+        shader->setUniform("material.diffuse", diffuse);
+        shader->setUniform("material.specular", specular);
+        shader->setUniform("material.emissive", emissive);
+        shader->setUniform("material.shininess", shininess);
 
         glBindVertexArray(mesh->getBuffer().VAO);
         glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(mesh->getBuffer().data.indices.size()),

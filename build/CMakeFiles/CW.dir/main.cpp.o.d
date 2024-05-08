@@ -1187,6 +1187,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/ProceduralTerrain.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Clouds.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Skybox.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Sun.h \

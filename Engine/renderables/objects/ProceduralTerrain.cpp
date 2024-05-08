@@ -5,6 +5,7 @@
 #include "ProceduralTerrain.h"
 
 
+#include "Clouds.h"
 #include "utils/Noise.h"
 #include <algorithm>
 #include <cstddef>
@@ -82,6 +83,8 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
 
     draw(shader);
 
+
+    clouds.draw(view, projection);
     trees.draw(view, projection);
 }
 
@@ -175,6 +178,10 @@ ProceduralTerrain::getIntersectionPoint(const glm::vec3 &rayStart, const glm::ve
     return trees;
 }
 
+[[nodiscard]] auto ProceduralTerrain::getClouds() const -> const Clouds & {
+    return clouds;
+}
+
 
 constexpr void ProceduralTerrain::generate() {
     for (int y = 0; y < numChunksY; y++) {
@@ -211,6 +218,17 @@ constexpr void ProceduralTerrain::generate() {
     }
 
     trees.generateTrees(treePositions);
+
+    std::vector<glm::vec3> cloudPositions;
+    for (int i = 0; i < NUM_CLOUD_INSTANCES; i++) {
+        const float x = Random::Float(-worldSizeX / 2.0F, worldSizeX / 2.0F);
+        const float z = Random::Float(-worldSizeY / 2.0F, worldSizeY / 2.0F);
+        const float y = getTerrainHeight(x, z) + Random::Float(125.0F, 250.0F);
+
+        cloudPositions.emplace_back(x, y, z);
+    }
+
+    clouds.generateClouds(cloudPositions);
 }
 
 constexpr void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {

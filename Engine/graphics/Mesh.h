@@ -39,6 +39,8 @@ public:
 
     [[nodiscard]] auto getBuffer() const -> const VertexBuffer &;
 
+    [[nodiscard]] auto getMaterial() const -> Material;
+
 private:
     std::vector<Texture::Data> textures;
 

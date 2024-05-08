@@ -228,6 +228,12 @@
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/BumperCar.h">
 			<Option target="CW"/>
 		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Clouds.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Clouds.h">
+			<Option target="CW"/>
+		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/FerrisWheel.cpp">
 			<Option target="CW"/>
 		</Unit>

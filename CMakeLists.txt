@@ -65,6 +65,8 @@ add_executable(CW main.cpp
         Engine/renderables/objects/Walls.h
         Engine/renderables/objects/Scene.cpp
         Engine/renderables/objects/Scene.h
+        Engine/renderables/objects/Clouds.cpp
+        Engine/renderables/objects/Clouds.h
 )
 
 # Link libraries

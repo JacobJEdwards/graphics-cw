@@ -5,6 +5,7 @@
 #ifndef BOUNDINGBOX_H
 #define BOUNDINGBOX_H
 
+#include <Config.h>
 #include <assimp/vector3.h>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
@@ -108,6 +109,7 @@ public:
 private:
     glm::vec3 min{};
     glm::vec3 max{};
+    glm::mat4 model = Config::IDENTITY_MATRIX;
 
     std::unique_ptr<VertexBuffer> buffer;
 

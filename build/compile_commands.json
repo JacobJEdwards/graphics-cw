@@ -286,5 +286,11 @@
   "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks -isystem /opt/homebrew/include  -std=c++23 -g -std=gnu++2b -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/renderables/objects/Scene.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Scene.cpp",
   "file": "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Scene.cpp",
   "output": "CMakeFiles/CW.dir/Engine/renderables/objects/Scene.cpp.o"
+},
+{
+  "directory": "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/external -I/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks -isystem /opt/homebrew/include  -std=c++23 -g -std=gnu++2b -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk/System/Library/Frameworks  -o CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.o -c /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Clouds.cpp",
+  "file": "/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Clouds.cpp",
+  "output": "CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.o"
 }
 ]

@@ -9,6 +9,7 @@
 #include "graphics/Shader.h"
 #include "graphics/Vertex.h"
 #include <GL/glew.h>
+#include <cstdio>
 #include <memory>
 #include <string>
 #include <utility>
@@ -102,3 +103,5 @@ auto Mesh::getBoundingBox() const -> BoundingBox { return box; }
 }
 
 [[nodiscard]] auto Mesh::getBuffer() const -> const VertexBuffer & { return *buffer; }
+
+[[nodiscard]] auto Mesh::getMaterial() const -> Material { return material; }

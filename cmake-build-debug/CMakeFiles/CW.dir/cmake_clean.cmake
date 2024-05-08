@@ -47,6 +47,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/renderables/Renderable.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o"
   "CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.o"
+  "CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o"
   "CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o"

@@ -11,7 +11,7 @@ struct Light {
 struct Material {
     vec4 ambient;
     vec4 specular;
-    vec4 emmisive;
+    vec4 emissive;
     vec4 diffuse;
     float shininess;
 };
@@ -102,11 +102,11 @@ surfaceColor, float shininess) {
     vec3 specular = specularFactor * lightColor;
 
     // shadow calculation
-    // float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+    float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
 
-    //return (ambient + (1.0 - shadow) * (diffuse + specular));
+    return (ambient + (1.0 - shadow) * (diffuse + specular));
 
-    return (ambient + diffuse + specular);
+    // return (ambient + diffuse + specular);
 
 }
 
@@ -118,7 +118,7 @@ void main() {
     vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, normal, vec3(material.diffuse), vec3(material.specular), material.shininess);
 
     FragColor = vec4(result, 1.0);
-    
+
     if (FragColor.a < 0.1) {
         discard;
     }

@@ -15,6 +15,7 @@
 #include "graphics/Shader.h"
 #include <memory>
 
+#include "Clouds.h"
 #include "renderables/objects/Trees.h"
 #include "renderables/Renderable.h"
 
@@ -23,6 +24,7 @@ constexpr auto DEFAULT_CHUNK_SIZE = 64;
 constexpr auto DEFAULT_NUM_CHUNKS_X = 16;
 constexpr auto DEFAULT_NUM_CHUNKS_Y = 16;
 constexpr auto NUM_TREE_INSTANCES = 200;
+constexpr auto NUM_CLOUD_INSTANCES = 50;
 
 class ProceduralTerrain final : public Renderable {
     struct Chunk {
@@ -71,6 +73,8 @@ public:
 
     [[nodiscard]] auto getTrees() const -> const Trees &;
 
+    [[nodiscard]] auto getClouds() const -> const Clouds &;
+
 private:
     std::vector<Chunk> chunks;
     std::vector<Chunk> distantChunks;
@@ -93,6 +97,7 @@ private:
     constexpr void generateChunk(int chunkX, int chunkY);
 
     Trees trees;
+    Clouds clouds;
 
     void generateGrass();
 };

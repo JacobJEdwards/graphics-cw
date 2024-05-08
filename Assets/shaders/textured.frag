@@ -9,7 +9,7 @@ struct Material {
     sampler2D texture_height1;
     vec4 ambient;
     vec4 specular;
-    vec4 emmisive;
+    vec4 emissive;
     vec4 diffuse;
     float shininess;
 };

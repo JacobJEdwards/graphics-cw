@@ -1130,6 +1130,7 @@ CMakeFiles/CW.dir/Engine/physics/Collisions.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Mesh.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Texture.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/ProceduralTerrain.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Clouds.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Trees.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Constants.h \
   /opt/homebrew/include/glm/ext/quaternion_common.hpp \

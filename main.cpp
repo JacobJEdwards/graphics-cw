@@ -147,6 +147,9 @@ auto main() -> int {
         const auto projectionMatrix = player->getCamera().
                 getProjectionMatrix();
         const auto viewMatrix = player->getCamera().getViewMatrix();
+        const auto sunPos = skybox.getSun().getPosition();
+        const auto sunDir = skybox.getSun().getDirection();
+        const auto viewPos = player->getCamera().getPosition();
 
         // shadow pass
         shadowBuffer.bind();
@@ -156,6 +159,7 @@ auto main() -> int {
         // const auto lightView = lookAt(lightPos, player->attributes.position, glm::vec3(0.0F, 1.0F, 0.0F));
         const auto lightProjection = glm::ortho(-side_size, side_size, -side_size, side_size, near_plane, far_plane);
         const auto lightView = lookAt(lightPos, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+        const auto lightSpaceMatrix = lightProjection * lightView;
 
         shader = shaderManager.get("Shadow");
         shader->use();
@@ -173,6 +177,7 @@ auto main() -> int {
 
 
         terrain.getTrees().draw(lightView, lightProjection);
+        terrain.getClouds().draw(lightView, lightProjection);
 
         terrain.draw(shader);
         ferrisWheel.draw(shader);
@@ -190,10 +195,12 @@ auto main() -> int {
         shader = shaderManager.get("Base");
         shader->use();
         shader->setUniform(
-            "sun.position", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
+            "sun.position", sunPos);
+        shader->setUniform("sun.direction", sunDir);
+        shader->setUniform("viewPos", viewPos);
+
         shader->setUniform(
-            "lightSpaceMatrix", lightProjection * lightView);
+            "lightSpaceMatrix", lightSpaceMatrix);
         shader->setUniform("shadowMap", 10);
 
 
@@ -211,10 +218,12 @@ auto main() -> int {
         shader = shaderManager.get("Untextured");
         shader->use();
         shader->setUniform(
-            "sun.position", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
+            "sun.position", sunPos);
+        shader->setUniform("sun.direction", sunDir);
+        shader->setUniform("viewPos", viewPos);
+
         shader->setUniform(
-            "lightSpaceMatrix", lightProjection * lightView);
+            "lightSpaceMatrix", lightSpaceMatrix);
         shader->setUniform("shadowMap", 0);
 
         playerManager.draw(viewMatrix, projectionMatrix);
@@ -223,19 +232,35 @@ auto main() -> int {
         shader = shaderManager.get("Tree");
         shader->use();
         shader->setUniform(
-            "sun.position", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
+            "sun.position", sunPos);
+        shader->setUniform("sun.direction", sunDir);
+        shader->setUniform("viewPos", viewPos);
+
         shader->setUniform(
-            "lightSpaceMatrix", lightProjection * lightView);
+            "lightSpaceMatrix", lightSpaceMatrix);
         shader->setUniform("shadowMap", 0);
+
+        shader = shaderManager.get("Cloud");
+        shader->use();
+        shader->setUniform(
+            "sun.position", sunPos);
+        shader->setUniform("sun.direction", sunDir);
+        shader->setUniform("viewPos", viewPos);
+
+        shader->setUniform(
+            "lightSpaceMatrix", lightSpaceMatrix);
+        shader->setUniform("shadowMap", 0);
+        shader->setUniform("time", App::view.getTime());
+
 
         shader = terrain.getShader();
         shader->use();
         shader->setUniform(
-            "sun.position", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
+            "sun.position", sunPos);
+        shader->setUniform("sun.direction", sunDir);
+        shader->setUniform("viewPos", viewPos);
         shader->setUniform(
-            "lightSpaceMatrix", lightProjection * lightView);
+            "lightSpaceMatrix", lightSpaceMatrix);
         shader->setUniform("shadowMap", 0);
 
         shader->setVec3Array("pathedPoints", pathPoints);
@@ -251,11 +276,11 @@ auto main() -> int {
             shader = shaderManager.get("Grass");
             shader->use();
             shader->setUniform(
-                "sun.position", skybox.getSun().getPosition());
+                "sun.position", sunPos);
             shader->setUniform(
-                "viewPos", player->getCamera().getPosition());
+                "viewPos", viewPos);
             shader->setUniform(
-                "lightSpaceMatrix", lightProjection * lightView);
+                "lightSpaceMatrix", lightSpaceMatrix);
 
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);
@@ -276,6 +301,8 @@ auto main() -> int {
         shader->setUniform("sunPosition", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
         shader->setUniform("viewDir", player->getCamera().getFront());
+        shader->setUniform(
+            "lightSpaceMatrix", lightSpaceMatrix);
         // view proj
         shader->setUniform("viewMatrix", viewMatrix);
         shader->setUniform("projectionMatrix", projectionMatrix);
@@ -540,6 +567,7 @@ void setupShaders() {
                       "../Assets/shaders/grass.geom");
     shaderManager.add("Tree", "../Assets/shaders/tree.vert", "../Assets/shaders/tree.frag");
     shaderManager.add("Untextured", "../Assets/shaders/materialed.vert", "../Assets/shaders/materialed.frag");
+    shaderManager.add("Cloud", "../Assets/shaders/cloud.vert", "../Assets/shaders/cloud.frag");
 
     auto shader = shaderManager.get("PostProcess");
     shader->use();
@@ -560,6 +588,13 @@ void setupShaders() {
     shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
 
     shader = shaderManager.get("Tree");
+    shader->use();
+
+    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
+    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
+    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+
+    shader = shaderManager.get("Cloud");
     shader->use();
 
     shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));

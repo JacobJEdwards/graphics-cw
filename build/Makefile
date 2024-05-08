@@ -705,6 +705,30 @@ Engine/renderables/objects/BumperCar.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.s
 .PHONY : Engine/renderables/objects/BumperCar.cpp.s
 
+Engine/renderables/objects/Clouds.o: Engine/renderables/objects/Clouds.cpp.o
+.PHONY : Engine/renderables/objects/Clouds.o
+
+# target to build an object file
+Engine/renderables/objects/Clouds.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.o
+.PHONY : Engine/renderables/objects/Clouds.cpp.o
+
+Engine/renderables/objects/Clouds.i: Engine/renderables/objects/Clouds.cpp.i
+.PHONY : Engine/renderables/objects/Clouds.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Clouds.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.i
+.PHONY : Engine/renderables/objects/Clouds.cpp.i
+
+Engine/renderables/objects/Clouds.s: Engine/renderables/objects/Clouds.cpp.s
+.PHONY : Engine/renderables/objects/Clouds.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Clouds.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.s
+.PHONY : Engine/renderables/objects/Clouds.cpp.s
+
 Engine/renderables/objects/FerrisWheel.o: Engine/renderables/objects/FerrisWheel.cpp.o
 .PHONY : Engine/renderables/objects/FerrisWheel.o
 
@@ -1362,6 +1386,9 @@ help:
 	@echo "... Engine/renderables/objects/BumperCar.o"
 	@echo "... Engine/renderables/objects/BumperCar.i"
 	@echo "... Engine/renderables/objects/BumperCar.s"
+	@echo "... Engine/renderables/objects/Clouds.o"
+	@echo "... Engine/renderables/objects/Clouds.i"
+	@echo "... Engine/renderables/objects/Clouds.s"
 	@echo "... Engine/renderables/objects/FerrisWheel.o"
 	@echo "... Engine/renderables/objects/FerrisWheel.i"
 	@echo "... Engine/renderables/objects/FerrisWheel.s"
