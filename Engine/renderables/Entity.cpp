@@ -32,13 +32,8 @@ Entity::Entity(const std::filesystem::path &path) {
 }
 
 void Entity::update(const float deltaTime) {
-    const glm::mat4 oldTransform = attributes.getTransform();
     attributes.update(deltaTime);
-    const glm::mat4 newTransform = attributes.getTransform();
-
-    const auto translation = glm::vec3(newTransform[3]) - glm::vec3(oldTransform[3]);
-
-    box.translate(translation);
+    box.transform(attributes.getTransform());
 }
 
 void Entity::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
@@ -89,25 +84,24 @@ void Entity::setAttributes(const Physics::Attributes &attributes) {
 void Entity::translate(const glm::vec3 &translation) {
     attributes.transform = glm::translate(attributes.getTransform(), translation);
 
-    box.translate(translation);
+    box.transform(attributes.getTransform());
 }
 
 void Entity::transform(const glm::mat4 &transformation) {
     attributes.transform = transformation * attributes.getTransform();
     attributes.position =
             glm::vec3(attributes.getTransform() * glm::vec4(attributes.position, 1.0F));
-
-    box.transform(transformation);
+    box.transform(attributes.getTransform());
 }
 
 void Entity::scale(const glm::vec3 &scale) {
     attributes.scale = scale;
-    box.scale(scale);
+    box.transform(attributes.getTransform());
 }
 
 void Entity::rotate(const glm::vec3 &axis, const float angle) {
     attributes.applyRotation(axis * angle);
-    box.rotate(axis, angle);
+    box.transform(attributes.getTransform());
 }
 
 void Entity::collisionResponse() {
