@@ -7,7 +7,6 @@
 
 #include <glm/gtc/noise.hpp>
 #include <glm/ext/vector_float2.hpp>
-#include <glm/ext/vector_float3.hpp>
 #include <glm/trigonometric.hpp>
 
 namespace Noise {

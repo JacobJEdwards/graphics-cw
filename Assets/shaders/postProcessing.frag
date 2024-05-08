@@ -6,11 +6,15 @@ out vec4 FragColor;
 uniform sampler2D screenTexture;
 uniform vec3 sunPosition;
 uniform vec3 viewPos;
+uniform vec3 viewDir;
+
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
 
 uniform float gamma = 2.2;
 uniform float exposure = 1.0;
-uniform float contrast = 1.2;// Adjusted contrast for better visibility
-uniform float saturation = 1.5;// Increased saturation for more vibrant colors
+uniform float contrast = 1.2;
+uniform float saturation = 1.5;
 uniform float brightness = 1.0;
 uniform float bloomThreshold = 0.98;
 uniform float bloomIntensity = 1.4;
@@ -62,6 +66,8 @@ vec4 applyBlur(sampler2D tex, vec2 texCoords, vec2 direction, float blurAmount) 
 
     return color / 11.0;
 }
+
+
 
 void main() {
     vec4 color = texture(screenTexture, TexCoords);

@@ -61,9 +61,9 @@ public:
 
     [[nodiscard]] auto getWorldCoordinates(const glm::vec2 &position) const -> glm::vec2;
 
-    [[nodiscard]] auto getTerrainHeight(const glm::vec3 &position) const -> float;
+    [[nodiscard]] constexpr auto getTerrainHeight(const glm::vec3 &position) const -> float;
 
-    [[nodiscard]] auto getTerrainHeight(float xPos, float zPos) const -> float;
+    [[nodiscard]] constexpr auto getTerrainHeight(float xPos, float zPos) const -> float;
 
     [[nodiscard]] auto getIntersectionPoint(const glm::vec3 &rayStart, const glm::vec3 &rayEnd) const -> glm::vec3;
 
@@ -88,9 +88,9 @@ private:
     float worldSizeX;
     float worldSizeY;
 
-    void generate();
+    constexpr void generate();
 
-    void generateChunk(int chunkX, int chunkY);
+    constexpr void generateChunk(int chunkX, int chunkY);
 
     Trees trees;
 

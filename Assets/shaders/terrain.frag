@@ -107,12 +107,47 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     return shadow;
 }
 
+const float PI = 3.14159265359;
+
+vec3 calculateAmbient(vec3 color) {
+    return 0.3 * color;
+}
+
+vec3 calculateDiffuse(vec3 normal, vec3 color, vec3 fragPos) {
+    vec3 lightDir = normalize(sun.position - fragPos);
+    float diff = max(dot(normal, lightDir), 0.0);
+    return diff * color;
+}
+
+vec3 calculateSpecular(vec3 normal, vec3 viewPos, vec3 fragPos) {
+    vec3 lightDir = normalize(sun.position - fragPos);
+    vec3 viewDir = normalize(viewPos - fragPos);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+
+    float NdotH = max(dot(normal, halfwayDir), 0.0);
+    float NdotV = max(dot(normal, viewDir), 0.0);
+    float NdotL = max(dot(normal, lightDir), 0.0);
+
+    vec3 specular = vec3(0.0);
+    if (NdotH > 0.0 && NdotV > 0.0) {
+        float roughness = 0.3;
+        float F = 0.04 + (1.0 - 0.04) * pow(1.0 - NdotV, 5.0);
+        float D = exp(-pow((1.0 - NdotH) / (roughness * roughness * NdotH), 2.0)) /
+        (PI * roughness * roughness * pow(NdotH, 4.0));
+        float G = min(1.0, min(2.0 * NdotH * NdotV / NdotL, 2.0 * NdotH * NdotL / NdotV));
+        specular = vec3(F * D * G / (4.0 * NdotV * NdotL));
+    }
+    return specular * vec3(0.8);// Adjust specular intensity as needed
+}
+
+
 vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, float shadow) {
-    vec3 ambient = 0.3 * color;
+    vec3 ambient = calculateAmbient(color);
 
     vec3 lightDir = normalize(sun.position - fragPos);
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * color;
+
 
     vec3 viewDir = normalize(viewPos - fragPos);
     vec3 halfwayDir = normalize(lightDir + viewDir);
@@ -145,18 +180,15 @@ void main() {
     vec3 color = grassColor;
     float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
 
-    vec3 pathedPoint = pathedPoints[0];
-    vec3 nextPathedPoint;
-    int i = 0;
+    for (int i = 0; i < pathedPointsCount - 1; i++) {
+        vec3 pathedPoint = pathedPoints[i];
+        vec3 nextPathedPoint = pathedPoints[i + 1];
 
-    vec3 onPath = vec3(0.0);
-    for (i = 0; i < pathedPointsCount - 1; i++) {
-        nextPathedPoint = pathedPoints[i + 1];
-        onPath += vec3(isOnPath(fs_in.FragPos, pathedPoint, nextPathedPoint));
-        pathedPoint = nextPathedPoint;
+        if (isOnPath(fs_in.FragPos, pathedPoint, nextPathedPoint)) {
+            color = mix(color, pathColor, pathDarkness);
+            break;
+        }
     }
-
-    color = mix(color, pathColor, onPath.x * pathDarkness);
 
 
     vec3 lighting = calculateLighting(fs_in.FragPos, normalize(fs_in.Normal), viewPos, color, shadow);

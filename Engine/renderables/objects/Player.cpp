@@ -183,30 +183,38 @@ void Player::update(const float dt) {
         particleSystem.generate(attributes, glm::vec3(0.0F), 20, Color::YELLOW);
     }
 
-    if (mode == Mode::PATH || mode == Mode::DRIVE || mode == Mode::DUEL && isDriving) {
+    if (mode == Mode::PATH || mode == Mode::DRIVE || (mode == Mode::DUEL && isDriving)) {
+        camera.update(dt);
+
         const glm::vec3 pos = car->attributes.position;
         const auto front = car->attributes.getFront();
+        const auto up = car->attributes.getUp();
+        const auto right = car->attributes.getRight();
+
+        attributes.position = pos;
+
+        const glm::vec3 backTranslation = thirdPersonMode ? -front * 30.0F : -front * 2.0F;
+        const auto upTranslation = thirdPersonMode ? glm::vec3(0.0F, 12.0F, 0.0F) : up * 6.0F;
+
+
+        attributes.position += backTranslation + upTranslation;
+        camera.setPosition(attributes.position);
 
         const auto angle = glm::acos(glm::dot(front, glm::vec3(0.0F, 0.0F, 1.0F)));
         const auto axis = glm::cross(front, glm::vec3(0.0F, 0.0F, 1.0F));
 
         camera.rotate(-angle, axis);
+        camera.setUp(up);
+        camera.setRight(right);
 
         if (thirdPersonMode) {
             camera.setTarget(pos);
         }
 
-        attributes.position = pos;
-        const glm::vec3 backTranslation = thirdPersonMode ? -front * 30.0F : -front;
-        const auto upTranslation = thirdPersonMode ? glm::vec3(0.0F, 12.0F, 0.0F) : glm::vec3(0.0F, 6.0F, 0.0F);
-
-        attributes.position += backTranslation + upTranslation;
-        camera.setPosition(attributes.position);
 
         attributes.force = car->attributes.force;
         attributes.velocity = car->attributes.velocity;
 
-        camera.update(dt);
 
         return;
     }

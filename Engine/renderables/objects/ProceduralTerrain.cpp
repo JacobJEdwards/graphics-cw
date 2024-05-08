@@ -119,11 +119,11 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     return getWorldCoordinates(glm::vec2(xPos, zPos));
 }
 
-[[nodiscard]] auto ProceduralTerrain::getTerrainHeight(const glm::vec3 &position) const -> float {
+[[nodiscard]] constexpr auto ProceduralTerrain::getTerrainHeight(const glm::vec3 &position) const -> float {
     return getTerrainHeight(position.x, position.z);
 }
 
-[[nodiscard]] auto ProceduralTerrain::getTerrainHeight(const float xPos, const float zPos) const -> float {
+[[nodiscard]] constexpr auto ProceduralTerrain::getTerrainHeight(const float xPos, const float zPos) const -> float {
     const float xCoord = xPos + static_cast<float>(worldSizeX) / 2.0F;
     const float zCoord = zPos + static_cast<float>(worldSizeY) / 2.0F;
 
@@ -176,7 +176,7 @@ ProceduralTerrain::getIntersectionPoint(const glm::vec3 &rayStart, const glm::ve
 }
 
 
-void ProceduralTerrain::generate() {
+constexpr void ProceduralTerrain::generate() {
     for (int y = 0; y < numChunksY; y++) {
         for (int x = 0; x < numChunksX; x++) {
             generateChunk(x, y);
@@ -213,7 +213,7 @@ void ProceduralTerrain::generate() {
     trees.generateTrees(treePositions);
 }
 
-void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
+constexpr void ProceduralTerrain::generateChunk(const int chunkX, const int chunkY) {
     const int xOffset = chunkX * chunkSize;
     const int yOffset = chunkY * chunkSize;
 

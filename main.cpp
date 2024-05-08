@@ -275,6 +275,10 @@ auto main() -> int {
         shader->use();
         shader->setUniform("sunPosition", skybox.getSun().getPosition());
         shader->setUniform("viewPos", player->getCamera().getPosition());
+        shader->setUniform("viewDir", player->getCamera().getFront());
+        // view proj
+        shader->setUniform("viewMatrix", viewMatrix);
+        shader->setUniform("projectionMatrix", projectionMatrix);
 
         // App::view.getPostProcessor().setTexture(texture);
 
