@@ -1005,6 +1005,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Walls.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /opt/homebrew/include/assimp/vector3.h \
   /opt/homebrew/include/assimp/defs.h \
   /opt/homebrew/include/assimp/config.h \
@@ -1019,7 +1020,6 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Walls.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/span.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/functional \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/binary_negate.h \

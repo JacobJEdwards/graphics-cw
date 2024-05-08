@@ -312,7 +312,6 @@ void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
     // damage texture
     mat = attributes.getTransform();
-    mat = glm::rotate(mat, glm::radians(-90.0F), glm::vec3(0.0F, 1.0F, 0.0F));
     shader->setUniform("model", mat);
     shader->setUniform("time", explodeTime / 2.0F);
     shader->setUniform("damage", damageTaken);

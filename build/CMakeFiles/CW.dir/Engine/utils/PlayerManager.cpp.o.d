@@ -1045,6 +1045,7 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/span \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/span.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/BoundingBox.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/utility \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__utility/cmp.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__utility/forward_like.h \
@@ -1055,7 +1056,6 @@ CMakeFiles/CW.dir/Engine/utils/PlayerManager.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Vertex.h \
   /opt/homebrew/include/glm/ext/vector_float2.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/ModelAttributes.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/Config.h \
   /opt/homebrew/include/glm/ext/quaternion_trigonometric.hpp \
   /opt/homebrew/include/glm/ext/../trigonometric.hpp \
   /opt/homebrew/include/glm/ext/../exponential.hpp \
