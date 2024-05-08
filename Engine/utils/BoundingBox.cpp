@@ -97,11 +97,11 @@ auto BoundingBox::operator=(BoundingBox &&other) noexcept -> BoundingBox & {
 
 
 [[nodiscard]] auto BoundingBox::getMin() const -> glm::vec3 {
-    return glm::vec3(model * glm::vec4(min, 1.0F));
+    return glm::min(min, max);
 }
 
 [[nodiscard]] auto BoundingBox::getMax() const -> glm::vec3 {
-    return glm::vec3(model * glm::vec4(max, 1.0F));
+    return glm::max(min, max);
 }
 
 void BoundingBox::setMin(const glm::vec3 &min) { BoundingBox::min = min; }
@@ -109,11 +109,8 @@ void BoundingBox::setMin(const glm::vec3 &min) { BoundingBox::min = min; }
 void BoundingBox::setMax(const glm::vec3 &max) { BoundingBox::max = max; }
 
 void BoundingBox::transform(const glm::mat4 &model) {
-    /*
     min = glm::vec3(model * glm::vec4(min, 1.0F));
     max = glm::vec3(model * glm::vec4(max, 1.0F));
-    */
-    this->model = model;
 
     for (const auto &child: children) {
         child->transform(model);
@@ -122,7 +119,7 @@ void BoundingBox::transform(const glm::mat4 &model) {
 
 auto BoundingBox::collides(const BoundingBox &other) const -> bool {
     for (int i = 0; i < 3; ++i) {
-        if (getMax()[i] < other.getMin()[i] || getMin()[i] > other.getMax()[i]) {
+        if (max[i] < other.min[i] || min[i] > other.max[i]) {
             return false;
         }
     }
@@ -412,4 +409,3 @@ void BoundingBox::addChild(const BoundingBox &box) {
 void BoundingBox::setParent(BoundingBox *parent) {
     BoundingBox::parent = parent;
 }
-
