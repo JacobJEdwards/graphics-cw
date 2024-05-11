@@ -18,6 +18,20 @@
 void Physics::Attributes::update(const float dt) {
     previousTransform = transform;
 
+
+    const glm::quat interpolatedOrientation = glm::slerp(currentOrientation, targetOrientation, 0.1F);
+
+    const glm::mat4 interpolatedRotationMatrix = glm::mat4_cast(interpolatedOrientation);
+
+    const auto scale = glm::vec3(glm::length(transform[0]), glm::length(transform[1]),
+                                 glm::length(transform[2]));
+
+    transform[0] = glm::vec4(interpolatedRotationMatrix[0] * scale.x);
+    transform[1] = glm::vec4(interpolatedRotationMatrix[1] * scale.y);
+    transform[2] = glm::vec4(interpolatedRotationMatrix[2] * scale.z);
+    transform[3] = glm::vec4(position, 1.0F);
+
+
     velocity += acceleration * dt;
     position += velocity * dt;
     acceleration = force / mass;
@@ -115,7 +129,7 @@ auto Physics::Attributes::calculateForce(const glm::vec3 &point) const
     return force;
 }
 
-auto Physics::Attributes::calculateRotation(const glm::vec3 &normal, const glm::vec3 &axis) -> glm::vec3 {
+auto Physics::Attributes::calculateRotation(const glm::vec3 &normal, const glm::vec3 &axis) const -> glm::vec3 {
     const glm::vec3 direction = glm::normalize(normal - glm::normalize(position));
     const glm::vec3 forward = glm::normalize(glm::vec3(transform[1]));
 
@@ -132,9 +146,9 @@ auto Physics::Attributes::calculateRotation(const glm::vec3 &normal, const glm::
     return rotation;
 }
 
-auto Physics::Attributes::calculateRotation(const glm::vec3 &point) -> glm::vec3 {
+auto Physics::Attributes::calculateRotation(const glm::vec3 &point) const -> glm::vec3 {
     const glm::vec3 direction = glm::normalize(point - position);
-    const glm::vec3 forward = glm::normalize(glm::vec3(transform[2]));
+    const glm::vec3 forward = getFront();
 
     auto rotation = glm::vec3(0.0F);
 

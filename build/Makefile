@@ -681,6 +681,30 @@ Engine/renderables/Renderable.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/Renderable.cpp.s
 .PHONY : Engine/renderables/Renderable.cpp.s
 
+Engine/renderables/objects/Barriers.o: Engine/renderables/objects/Barriers.cpp.o
+.PHONY : Engine/renderables/objects/Barriers.o
+
+# target to build an object file
+Engine/renderables/objects/Barriers.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Barriers.cpp.o
+.PHONY : Engine/renderables/objects/Barriers.cpp.o
+
+Engine/renderables/objects/Barriers.i: Engine/renderables/objects/Barriers.cpp.i
+.PHONY : Engine/renderables/objects/Barriers.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Barriers.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Barriers.cpp.i
+.PHONY : Engine/renderables/objects/Barriers.cpp.i
+
+Engine/renderables/objects/Barriers.s: Engine/renderables/objects/Barriers.cpp.s
+.PHONY : Engine/renderables/objects/Barriers.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Barriers.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Barriers.cpp.s
+.PHONY : Engine/renderables/objects/Barriers.cpp.s
+
 Engine/renderables/objects/BumperCar.o: Engine/renderables/objects/BumperCar.cpp.o
 .PHONY : Engine/renderables/objects/BumperCar.o
 
@@ -1383,6 +1407,9 @@ help:
 	@echo "... Engine/renderables/Renderable.o"
 	@echo "... Engine/renderables/Renderable.i"
 	@echo "... Engine/renderables/Renderable.s"
+	@echo "... Engine/renderables/objects/Barriers.o"
+	@echo "... Engine/renderables/objects/Barriers.i"
+	@echo "... Engine/renderables/objects/Barriers.s"
 	@echo "... Engine/renderables/objects/BumperCar.o"
 	@echo "... Engine/renderables/objects/BumperCar.i"
 	@echo "... Engine/renderables/objects/BumperCar.s"

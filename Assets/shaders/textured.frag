@@ -38,7 +38,7 @@ uniform Material material;
 uniform Light sun;
 uniform vec3 viewPos;
 
-uniform float damage = 0.9;
+uniform float damage = 0.0;
 
 float ShadowCalculation(vec4 fragPosLightSpace)
 {
@@ -86,31 +86,23 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 }
 
 
-
 vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3
 surfaceColor, float shininess) {
-    // Normalize vectors
-    lightDirection = normalize(lightDirection);
-    viewDirection = normalize(viewDirection);
-    surfaceNormal = normalize(surfaceNormal);
-
     vec3 halfwayDir = normalize(lightDirection + viewDirection);
 
     float diffuseFactor = max(dot(lightDirection, surfaceNormal), 0.0);
-
 
     float specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
 
     specularFactor *= diffuseFactor;
 
-    vec3 ambient = 0.1 * lightColor;
-    vec3 diffuse = diffuseFactor * lightColor * surfaceColor;
-    vec3 specular = specularFactor * lightColor;
+    vec3 ambient = 0.1 * material.ambient.rgb * sun.ambient;
+    vec3 diffuse = diffuseFactor * surfaceColor;
+    vec3 specular = specularFactor * lightColor * sun.specular;
 
     // shadow
     float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
-    //vec3 lighting = (ambient + diffuse + specular);
 
     return lighting;
 }
@@ -118,15 +110,13 @@ surfaceColor, float shininess) {
 
 void main() {
     vec3 norm = normalize(fs_in.Normal);
-    vec3 sunDir = normalize(sun.position - fs_in.FragPos);
 
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec4 texColor = texture(material.texture_diffuse1, fs_in.TexCoords);
+    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
 
-    vec3 result = calculateBlinnPhongLighting(sunDir, viewDir, norm, sun.diffuse * 2.0, texColor.xyz, material
+    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, norm, sun.diffuse, texColor.xyz, material
     .shininess);
-
-    result *= texColor.a;
 
     float damageFactor = texture(damageTexture, fs_in.TexCoords).r;
     result *= mix(1.0, damageFactor, damage);

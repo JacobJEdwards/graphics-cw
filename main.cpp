@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstdio>
 #include <exception>
 
@@ -15,6 +16,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <vector>
 #include <glm/ext/quaternion_geometric.hpp>
+#include <graphics/buffers/DepthBuffer.h>
 
 #include "Config.h"
 
@@ -38,6 +40,7 @@
 #include "graphics/buffers/UniformBuffer.h"
 #include "renderables/objects/FerrisWheel.h"
 #include "renderables/objects/RollerCoaster.h"
+#include "renderables/objects/Scene.h"
 #include "renderables/objects/Walls.h"
 
 // light projection parameters
@@ -62,17 +65,16 @@ auto main() -> int {
     ShaderManager &shaderManager = ShaderManager::GetInstance();
     PlayerManager &playerManager = PlayerManager::GetInstance();
 
-    Skybox skybox;
-    const ProceduralTerrain terrain;
-    FerrisWheel ferrisWheel;
-    const RollerCoaster rollerCoaster;
     const Walls walls;
+    Scene scene;
 
     const auto pathedCar = playerManager.get("Path")->getCar();
     const auto driveable = playerManager.get("Drive")->getCar();
     const auto duel = playerManager.get("Interactable")->getCar();
 
     const std::vector models = {
+        std::make_shared<BumperCar>(),
+        std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
         std::make_shared<BumperCar>(),
@@ -87,23 +89,38 @@ auto main() -> int {
 
     for (const auto &model: models) {
         model->addTrackableEntity(Random::Element(models));
+        model->addTrackableEntity(PlayerManager::GetInstance().get("FPS"));
 
         if (Random::Int(0, 5) == 0) {
             model->addTrackableEntity(Random::Element(models));
         }
 
-        if (Random::Int(0, 5) == 0) {
+        if (Random::Int(0, 10) == 0) {
+            model->addTrackableEntity(Random::Element(models));
+        }
+
+        if (Random::Int(0, 10) == 0) {
             model->addTrackableEntity(pathedCar);
+        }
+
+        if (Random::Int(0, 25) == 0) {
+            model->setMode(BumperCar::Mode::RANDOM);
+        }
+
+        if (Random::Int(0, 100) == 0) {
+            model->setMode(BumperCar::Mode::FOLLOW);
+        }
+
+        if (Random::Int(0, 50) == 0) {
+            model->setMode(BumperCar::Mode::NONE);
         }
     }
 
     float angle = 0.0F;
     const float angleIncrement = glm::radians(360.0F / static_cast<float>(models.size()));
 
-    auto shader = shaderManager.get("Base");
     for (const auto &i: models) {
         constexpr float radius = 30.0F;
-        i->setShader(shader);
         const float xPos = 0.0F + radius * glm::cos(angle);
         const float zPos = 0.0F + radius * glm::sin(angle);
         constexpr float yPos = 10.0F;
@@ -115,21 +132,10 @@ auto main() -> int {
         angle += angleIncrement;
     }
 
-
-    shader = shaderManager.get("Untextured");
-    for (auto &[name, player]: playerManager.getAll()) {
-        player->setShader(shader);
-    }
-
-    for (const auto &model: models) {
-        model->setPersonShader(shader);
-    }
-
-    ferrisWheel.setShader(shader);
-
     ParticleSystem &particleSystem = ParticleSystem::GetInstance();
     ShadowBuffer shadowBuffer(10000, 10000);
-    // ShadowBuffer shadowBuffer(1000, 1000);
+    DepthBuffer viewBuffer(App::view.getWidth(), App::view.getHeight());
+    // DepthBuffer viewBuffer(10000, 10000);
 
     std::vector<glm::vec3> pathPoints;
 
@@ -137,28 +143,52 @@ auto main() -> int {
         pathPoints.insert(pathPoints.end(), model->getPoints().begin(), model->getPoints().end());
     }
 
-    std::ranges::sort(pathPoints, [](const auto &a, const auto &b) {
-        return a.z < b.z;
-    });
+    auto shader = scene.getTerrain()->getShader();
+    for (std::size_t i = 0; i < pathPoints.size(); i++) {
+        auto worldLoc = pathPoints[i];
+        worldLoc.y = scene.getTerrain()->getTerrainHeight(pathPoints[i].x, pathPoints[i].z);
+        shader->setUniform("pathedPoints[" + std::to_string(i) + "]", worldLoc);
+    }
+
+    shader->setUniform(
+        "pathedPointsCount", static_cast<int>(pathPoints.size()));
+
+
+    std::vector<std::shared_ptr<Entity> > entities;
+    entities.insert(entities.end(), models.begin(), models.end());
+
+    for (const auto &[name, player]: playerManager.getAll()) {
+        entities.push_back(player);
+    }
+
+    entities.push_back(scene.getFerrisWheel());
+
 
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
         const auto player = playerManager.getCurrent();
         const auto projectionMatrix = player->getCamera().
                 getProjectionMatrix();
+        const auto projectionMatrixDepth = player->getCamera().
+                getProjectionDepthMatrix();
+        // gen an ortho matrix for the view depth map
+        const auto orthoMatrix = glm::ortho(-15.0F, 15.0F, -15.0F, 15.0F, near_plane, far_plane);
+
         const auto viewMatrix = player->getCamera().getViewMatrix();
-        const auto sunPos = skybox.getSun().getPosition();
-        const auto sunDir = skybox.getSun().getDirection();
+        const auto sunPos = scene.getSkybox()->getSun().getPosition();
+        const auto sunDir = scene.getSkybox()->getSun().getDirection();
+        const auto sunDiffuse = scene.getSkybox()->getSun().getDiffuse();
+        const auto sunAmbient = scene.getSkybox()->getSun().getAmbient();
+        const auto sunSpecular = scene.getSkybox()->getSun().getSpecular();
+
         const auto viewPos = player->getCamera().getPosition();
+        const auto viewDir = player->getCamera().getFront();
 
         // shadow pass
         shadowBuffer.bind();
 
-        const auto lightPos = skybox.getSun().getPosition();
-
-        // const auto lightView = lookAt(lightPos, player->attributes.position, glm::vec3(0.0F, 1.0F, 0.0F));
         const auto lightProjection = glm::ortho(-side_size, side_size, -side_size, side_size, near_plane, far_plane);
-        const auto lightView = lookAt(lightPos, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+        const auto lightView = lookAt(sunPos / 20.0F, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
         const auto lightSpaceMatrix = lightProjection * lightView;
 
         shader = shaderManager.get("Shadow");
@@ -175,141 +205,97 @@ auto main() -> int {
 
         playerManager.draw(shader);
 
-
-        terrain.getTrees().draw(lightView, lightProjection);
-        terrain.getClouds().draw(lightView, lightProjection);
-
-        terrain.draw(shader);
-        ferrisWheel.draw(shader);
-        rollerCoaster.draw(shader);
+        scene.getTerrain()->getTrees().draw(lightView, lightProjection);
+        scene.getTerrain()->getClouds().draw(lightView, lightProjection);
+        scene.draw(shader);
 
         shadowBuffer.unbind();
 
-        // render pass
+        viewBuffer.bind();
+
+        DepthBuffer::Clear();
+
+        shader->use();
+        shader->setUniform("view", viewMatrix);
+        shader->setUniform("projection", projectionMatrixDepth);
+
+        for (const auto &model: models) {
+            model->draw(shader);
+        }
+
+        playerManager.draw(shader);
+
+        scene.getTerrain()->getTrees().draw(viewMatrix, projectionMatrixDepth);
+        scene.getTerrain()->getClouds().draw(viewMatrix, projectionMatrixDepth);
+        scene.draw(shader);
+
+        viewBuffer.unbind();
+
         View::clearTarget(Color::BLACK);
 
-        const auto texture = shadowBuffer.getTexture();
-        glActiveTexture(GL_TEXTURE10);
+        auto texture = shadowBuffer.getTexture();
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
 
-        shader = shaderManager.get("Base");
-        shader->use();
-        shader->setUniform(
-            "sun.position", sunPos);
-        shader->setUniform("sun.direction", sunDir);
-        shader->setUniform("viewPos", viewPos);
+        for (const auto &[name, shader]: shaderManager.getAll()) {
+            shader->use();
+            shader->setUniform("sun.position", sunPos);
+            shader->setUniform("sun.direction", sunDir);
+            shader->setUniform("sun.diffuse", sunDiffuse);
+            shader->setUniform("sun.ambient", sunAmbient);
+            shader->setUniform("sun.specular", sunSpecular);
 
-        shader->setUniform(
-            "lightSpaceMatrix", lightSpaceMatrix);
-        shader->setUniform("shadowMap", 10);
+            shader->setUniform("viewPos", viewPos);
+            shader->setUniform("viewDir", viewDir);
 
+            shader->setUniform(
+                "lightSpaceMatrix", lightSpaceMatrix);
+            shader->setUniform("shadowMap", 0);
+            if (!App::paused) {
+                shader->setUniform("time", App::view.getTime());
+            }
+        }
 
         for (const auto &model: models) {
             model->draw(viewMatrix, projectionMatrix);
         }
 
         particleSystem.draw(viewMatrix, projectionMatrix);
-        rollerCoaster.draw(viewMatrix, projectionMatrix);
+        playerManager.draw(viewMatrix, projectionMatrix);
 
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
+        shader = scene.getTerrain()->getShader();
+        shader->use();
+        shader->setUniform(
+            "pathDarkness", models[0]->getLaps() / 10.0F);
 
         shader = shaderManager.get("Untextured");
         shader->use();
-        shader->setUniform(
-            "sun.position", sunPos);
-        shader->setUniform("sun.direction", sunDir);
-        shader->setUniform("viewPos", viewPos);
-
-        shader->setUniform(
-            "lightSpaceMatrix", lightSpaceMatrix);
-        shader->setUniform("shadowMap", 0);
-
-        playerManager.draw(viewMatrix, projectionMatrix);
-        ferrisWheel.draw(viewMatrix, projectionMatrix);
-
-        shader = shaderManager.get("Tree");
-        shader->use();
-        shader->setUniform(
-            "sun.position", sunPos);
-        shader->setUniform("sun.direction", sunDir);
-        shader->setUniform("viewPos", viewPos);
-
-        shader->setUniform(
-            "lightSpaceMatrix", lightSpaceMatrix);
-        shader->setUniform("shadowMap", 0);
-
-        shader = shaderManager.get("Cloud");
-        shader->use();
-        shader->setUniform(
-            "sun.position", sunPos);
-        shader->setUniform("sun.direction", sunDir);
-        shader->setUniform("viewPos", viewPos);
-
-        shader->setUniform(
-            "lightSpaceMatrix", lightSpaceMatrix);
-        shader->setUniform("shadowMap", 0);
-        shader->setUniform("time", App::view.getTime());
-
-
-        shader = terrain.getShader();
-        shader->use();
-        shader->setUniform(
-            "sun.position", sunPos);
-        shader->setUniform("sun.direction", sunDir);
-        shader->setUniform("viewPos", viewPos);
-        shader->setUniform(
-            "lightSpaceMatrix", lightSpaceMatrix);
-        shader->setUniform("shadowMap", 0);
-
-        shader->setVec3Array("pathedPoints", pathPoints);
-        shader->setUniform(
-            "pathedPointsCount", static_cast<int>(pathPoints.size()));
-        shader->setUniform(
-            "pathDarkness", models[0]->getLaps() / 1000.0F);
-
-        terrain.draw(viewMatrix, projectionMatrix);
+        shader->setUniform("color", glm::vec3(1.0F, 1.0F, 1.0F));
+        scene.draw(viewMatrix, projectionMatrix);
         walls.draw(viewMatrix, projectionMatrix);
 
         if (App::view.highQuality) {
             shader = shaderManager.get("Grass");
             shader->use();
-            shader->setUniform(
-                "sun.position", sunPos);
-            shader->setUniform(
-                "viewPos", viewPos);
-            shader->setUniform(
-                "lightSpaceMatrix", lightSpaceMatrix);
 
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture);
-            shader->setUniform("shadowMap", 0);
             shader->setUniform("view", viewMatrix);
             shader->setUniform("projection", projectionMatrix);
-            if (!App::paused) {
-                shader->setUniform("time", App::view.getTime());
-            }
 
-            terrain.draw(shader);
+            scene.getTerrain()->draw(shader);
         }
 
-        skybox.draw(viewMatrix, projectionMatrix);
-
+        texture = viewBuffer.getTexture();
         shader = shaderManager.get("PostProcess");
         shader->use();
-        shader->setUniform("sunPosition", skybox.getSun().getPosition());
-        shader->setUniform("viewPos", player->getCamera().getPosition());
-        shader->setUniform("viewDir", player->getCamera().getFront());
-        shader->setUniform(
-            "lightSpaceMatrix", lightSpaceMatrix);
-        // view proj
         shader->setUniform("viewMatrix", viewMatrix);
         shader->setUniform("projectionMatrix", projectionMatrix);
 
-        // App::view.getPostProcessor().setTexture(texture);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture);
 
-        // post processing
+        shader->setUniform("depthTexture", 1);
+
+        // App::view.getPostProcessor().setTexture(texture);
     });
 
     App::view.setInterface([&] {
@@ -321,7 +307,7 @@ auto main() -> int {
             BumperCar::Interface();
 
             App::debugInterface();
-            skybox.getSun().interface();
+            scene.getSkybox()->getSun().interface();
             particleSystem.interface();
 
             ImGui::Begin("Shadow Buffer");
@@ -337,37 +323,19 @@ auto main() -> int {
             ImGui::Begin("Shadow Buffer");
             ImGui::Image(reinterpret_cast<void *>(shadowBuffer.getTexture()), ImVec2(200, 200));
             ImGui::End();
+            ImGui::Begin("View Buffer");
+            ImGui::Image(reinterpret_cast<void *>(viewBuffer.getTexture()), ImVec2(200, 200));
+            ImGui::End();
         }
     });
 
     try {
         App::loop([&] {
-            playerManager.update(App::view.getDeltaTime());
             const auto player = playerManager.getCurrent();
 
             for (const auto &model: models) {
                 model->clearTrackablePositions();
-                // add trackable positions of all other models
-                for (const auto &m: models) {
-                    if (m != model) {
-                        model->addTrackablePosition(m->attributes.position);
-                    }
-                }
 
-                if (player->getMode() != Player::Mode::ORBIT && player->getMode() != Player::Mode::FIXED &&
-                    player->getMode() != Player::Mode::PATH && player->getMode() != Player::Mode::FREE) {
-                    model->addTrackablePosition(player->attributes.position);
-                }
-                model->addTrackablePosition(player->attributes.position);
-
-                model->update(App::view.getDeltaTime());
-            }
-
-            skybox.update(App::view.getDeltaTime());
-            particleSystem.update(App::view.getDeltaTime());
-            ferrisWheel.update(App::view.getDeltaTime());
-
-            for (const auto &model: models) {
                 if (model == player->getCar() && player->getMode() != Player::Mode::DUEL) {
                     continue;
                 }
@@ -376,16 +344,6 @@ auto main() -> int {
                     if (model == player->getCar()) {
                         player->startDriving(true);
                     }
-
-                    if (length(player->getAttributes().force) > 200.0F && (player->getMode() == Player::Mode::DRIVE ||
-                                                                           player->getMode() == Player::Mode::PATH ||
-                                                                           player->getMode() == Player::Mode::FPS)) {
-                        App::view.blurScreen();
-                        model->takeDamage(0.3F);
-                    }
-
-                    player->attributes.isColliding = true;
-                    model->attributes.isColliding = true;
 
                     const auto collisionPoint = Physics::Collisions::getCollisionPoint(*player, *model);
                     Physics::Collisions::resolve(*player, *model, collisionPoint);
@@ -401,12 +359,12 @@ auto main() -> int {
                 }
             }
 
+            particleSystem.update(App::view.getDeltaTime());
+            scene.update(App::view.getDeltaTime());
+
             for (int i = 0; i < models.size(); i++) {
                 for (int j = i + 1; j < models.size(); j++) {
                     if (Physics::Collisions::check(*models[i], *models[j])) {
-                        models[i]->attributes.isColliding = true;
-                        models[j]->attributes.isColliding = true;
-
                         const auto collisionPoint = Physics::Collisions::getCollisionPoint(*models[i], *models[j]);
                         Physics::Collisions::resolve(*models[i], *models[j], collisionPoint);
 
@@ -415,14 +373,6 @@ auto main() -> int {
 
                         models[i]->collisionResponse();
                         models[j]->collisionResponse();
-
-                        if ((models[i] == player->getCar() || models[j] == player->getCar())) {
-                            App::view.blurScreen();
-                            if (glm::length(player->getAttributes().force) > 200.0F) {
-                                models[i]->takeDamage(0.3F);
-                                models[j]->takeDamage(0.3F);
-                            }
-                        }
                     } else {
                         models[i]->attributes.isColliding = false;
                         models[j]->attributes.isColliding = false;
@@ -430,10 +380,9 @@ auto main() -> int {
                 }
             }
 
-
             for (const auto &[name, player]: playerManager.getAll()) {
-                if (Physics::Collisions::check(*player, terrain)) {
-                    Physics::Collisions::resolve(*player, terrain);
+                if (Physics::Collisions::check(*player, *scene.getTerrain())) {
+                    Physics::Collisions::resolve(*player, *scene.getTerrain());
                     player->attributes.isGrounded = true;
                 } else {
                     player->attributes.isGrounded = false;
@@ -441,8 +390,8 @@ auto main() -> int {
             }
 
             for (const auto &model: models) {
-                if (Physics::Collisions::check(*model, terrain)) {
-                    Physics::Collisions::resolve(*model, terrain);
+                if (Physics::Collisions::check(*model, *scene.getTerrain())) {
+                    Physics::Collisions::resolve(*model, *scene.getTerrain());
                     model->attributes.isGrounded = true;
                 } else {
                     model->attributes.isGrounded = false;
@@ -453,6 +402,18 @@ auto main() -> int {
                 if (Physics::Collisions::check(player->getBoundingBox(), wall.box)) {
                     Physics::Collisions::resolve(*player, wall.normal);
                 }
+            }
+
+            for (const auto &model: models) {
+                for (const Walls::Wall &wall: walls.getWalls()) {
+                    if (Physics::Collisions::check(model->getBoundingBox(), wall.box)) {
+                        Physics::Collisions::resolve(*model, wall.normal);
+                    }
+                }
+            }
+
+            for (const auto &enitity: entities) {
+                enitity->update(App::view.getDeltaTime());
             }
         });
     } catch (const std::exception &e) {
@@ -568,38 +529,18 @@ void setupShaders() {
     shaderManager.add("Tree", "../Assets/shaders/tree.vert", "../Assets/shaders/tree.frag");
     shaderManager.add("Untextured", "../Assets/shaders/materialed.vert", "../Assets/shaders/materialed.frag");
     shaderManager.add("Cloud", "../Assets/shaders/cloud.vert", "../Assets/shaders/cloud.frag");
+    shaderManager.add("Moon", "../Assets/shaders/Moon.vert", "../Assets/shaders/Moon.frag");
 
-    auto shader = shaderManager.get("PostProcess");
+    const auto shader = shaderManager.get("PostProcess");
     shader->use();
     shader->setUniform("screenTexture", 0);
 
-    shader = shaderManager.get("Base");
-    shader->use();
-
-    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
-
-    shader = shaderManager.get("Untextured");
-    shader->use();
-
-    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
-
-    shader = shaderManager.get("Tree");
-    shader->use();
-
-    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
-
-    shader = shaderManager.get("Cloud");
-    shader->use();
-
-    shader->setUniform("sun.ambient", glm::vec3(0.8F, 0.8F, 0.8F));
-    shader->setUniform("sun.diffuse", glm::vec3(0.5F, 0.5F, 0.5F));
-    shader->setUniform("sun.specular", glm::vec3(1.0F, 1.0F, 1.0F));
+    for (const auto &[name, shader]: shaderManager.getAll()) {
+        shader->use();
+        shader->setUniform("sun.ambient", Color::WHITE);
+        shader->setUniform("sun.diffuse", Color::ORANGE);
+        shader->setUniform("sun.specular", Color::WHITE);
+    }
 }
 
 void setupPlayers() {

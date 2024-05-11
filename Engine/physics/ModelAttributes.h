@@ -68,9 +68,9 @@ namespace Physics {
 
         void applyTorque(const glm::vec3 &torque);
 
-        auto calculateRotation(const glm::vec3 &point) -> glm::vec3;
+        auto calculateRotation(const glm::vec3 &point) const -> glm::vec3;
 
-        auto calculateRotation(const glm::vec3 &normal, const glm::vec3 &axis) -> glm::vec3;
+        auto calculateRotation(const glm::vec3 &normal, const glm::vec3 &axis) const -> glm::vec3;
 
         [[nodiscard]] auto getTransform() const -> glm::mat4;
 

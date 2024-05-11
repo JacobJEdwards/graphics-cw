@@ -14,9 +14,10 @@ PostProcess::PostProcess(unsigned int width, unsigned int height,
 
     shader->use();
     shader->setUniform("screenTexture", 0);
+    shader->setUniform("depthTexture", 1);
 }
 
-void PostProcess::render(const float deltaTime, const float time) {
+void PostProcess::render(const float deltaTime) {
     glDisable(GL_DEPTH_TEST);
     shader->use();
     shader->setUniform("gamma", gamma);
@@ -27,7 +28,6 @@ void PostProcess::render(const float deltaTime, const float time) {
     shader->setUniform("bloomThreshold", bloomThreshold);
     shader->setUniform("bloomIntensity", bloomIntensity);
     shader->setUniform("vignetteStrength", vignetteStrength);
-    shader->setUniform("time", time);
 
     if (blur) {
         shader->setUniform("blur", true);
@@ -48,6 +48,8 @@ void PostProcess::render(const float deltaTime, const float time) {
     } else {
         glBindTexture(GL_TEXTURE_2D, texture);
     }
+    shader->setUniform("screenTexture", 0);
+
     renderPlane.draw();
     frameBuffer->unbind();
     glEnable(GL_DEPTH_TEST);

@@ -21,11 +21,13 @@ out VS_OUT {
 void main()
 {
     gl_Position = projection * view * vec4(aPos, 1.0);
-
     vs_out.TexCoords = aTexCoords;
-    vs_out.Normal = aNormal;
+
     vs_out.FragPos = vec3(vec4(aPos, 1.0));
     vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
-    vs_out.Tangent = aTangent;
-    vs_out.Bitangent = aBitangent;
+    // transform normal vectors into world space
+    vs_out.Normal = mat3(transpose(inverse(view))) * aNormal;
+    vs_out.Tangent = mat3(transpose(inverse(view))) * aTangent;
+    vs_out.Bitangent = mat3(transpose(inverse(view))) * aBitangent;
+
 }

@@ -111,4 +111,5 @@ void Entity::rotate(const glm::vec3 &axis, const float angle) {
 }
 
 void Entity::collisionResponse() {
+    attributes.isColliding = true;
 }

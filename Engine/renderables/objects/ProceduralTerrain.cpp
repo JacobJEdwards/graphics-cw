@@ -14,6 +14,8 @@
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
+#include <memory>
+#include <print>
 #include <utility>
 #include <vector>
 #include "graphics/buffers/VertexBuffer.h"
@@ -60,14 +62,18 @@ void ProceduralTerrain::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
 
     shader->setUniform("model", glm::mat4(1.0F));
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, noiseTexture.id);
-    shader->setUniform("noiseTexture", 1);
-
     for (int i = startY; i < endY; i++) {
         for (int j = startX; j < endX; j++) {
             const std::size_t index = i * numChunksX + j;
             const auto &chunk = chunks[index];
+
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, chunks[0].normalMap.id);
+            shader->setUniform("normalMap", 1);
+
+            glActiveTexture(GL_TEXTURE2);
+            glBindTexture(GL_TEXTURE_2D, noiseTexture.id);
+            shader->setUniform("noiseTexture", 2);
 
             chunk.buffer->bind();
             chunk.buffer->draw();
@@ -80,6 +86,7 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
+    shader->setUniform("model", Config::IDENTITY_MATRIX);
 
     draw(shader);
 
@@ -122,11 +129,11 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     return getWorldCoordinates(glm::vec2(xPos, zPos));
 }
 
-[[nodiscard]] constexpr auto ProceduralTerrain::getTerrainHeight(const glm::vec3 &position) const -> float {
+[[nodiscard]] auto ProceduralTerrain::getTerrainHeight(const glm::vec3 &position) const -> float {
     return getTerrainHeight(position.x, position.z);
 }
 
-[[nodiscard]] constexpr auto ProceduralTerrain::getTerrainHeight(const float xPos, const float zPos) const -> float {
+[[nodiscard]] auto ProceduralTerrain::getTerrainHeight(const float xPos, const float zPos) const -> float {
     const float xCoord = xPos + static_cast<float>(worldSizeX) / 2.0F;
     const float zCoord = zPos + static_cast<float>(worldSizeY) / 2.0F;
 
@@ -137,7 +144,7 @@ void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection)
     // return 0.0F;
 
     // hills
-    return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 10.0F;
+    return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.05F, 2.0F) * 7.5F;
 
     // fairly flat terrain
     // return Noise::Simplex(glm::vec2(xCoord, zCoord), 0.1F, 8, 0.2F, 2.0F);
@@ -210,7 +217,7 @@ constexpr void ProceduralTerrain::generate() {
             continue;
         }
 
-        if (glm::distance(getWorldCoordinates(glm::vec3(0.0F)), getWorldCoordinates(glm::vec3(x, y, z))) < 100.0F) {
+        if (glm::distance(getWorldCoordinates(glm::vec3(0.0F)), getWorldCoordinates(glm::vec3(x, y, z))) < 125.0F) {
             continue;
         }
 
@@ -325,6 +332,37 @@ constexpr void ProceduralTerrain::generateChunk(const int chunkX, const int chun
         chunk.vertices[chunk.indices[i + 2]].bitangent += bitangent;
     }
 
+    // generate normal map
+    GLuint normalMap;
+    glGenTextures(1, &normalMap);
+    glBindTexture(GL_TEXTURE_2D, normalMap);
+
+    std::vector<glm::vec3> data;
+
+    for (auto &vertex: chunk.vertices) {
+        const glm::vec3 normal = vertex.normal;
+        const float r = normal.x * 0.5F + 0.5F;
+        const float g = normal.y * 0.5F + 0.5F;
+        const float b = normal.z * 0.5F + 0.5F;
+
+        // add random noise
+        const float noise = Random::Float(0.0F, 0.1F);
+        data.emplace_back(r + noise, g + noise, b + noise);
+
+
+        // add texture data
+    }
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, chunkSize - 1, chunkSize - 1, 0, GL_RGB, GL_UNSIGNED_BYTE, data.data());
+    glGenerateMipmap(GL_TEXTURE_2D);
+    // parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    chunk.normalMap.id = normalMap;
+
     chunk.init();
     chunks.push_back(std::move(chunk));
 }
@@ -359,3 +397,4 @@ void ProceduralTerrain::generateGrass() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
+

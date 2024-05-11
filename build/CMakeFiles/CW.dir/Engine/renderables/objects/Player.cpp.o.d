@@ -1126,14 +1126,28 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/concepts \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/common_with.h \
-  /opt/homebrew/include/glm/ext/vector_float4.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
-  /opt/homebrew/include/glm/geometric.hpp \
-  /opt/homebrew/include/glm/trigonometric.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/functional \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/binary_negate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/bind.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/bind_back.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/perfect_forward.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/bind_front.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/binder1st.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/binder2nd.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/boyer_moore_searcher.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/compose.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/default_searcher.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/builtin_new_allocator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/strip_signature.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/mem_fn.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/mem_fun_ref.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/not_fn.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_binary_function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_unary_function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/unary_negate.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__format/format_arg_store.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__format/format_args.h \
@@ -1156,6 +1170,20 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_select.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_uuid_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/gethostuuid.h \
+  /opt/homebrew/include/GLFW/glfw3.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imgui.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/external/imgui/imconfig.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/concepts \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/common_with.h \
+  /opt/homebrew/include/glm/ext/vector_float4.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/PostProcessor.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/buffers/FrameBuffer.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/shapes/Plane.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables//Renderable.h \
+  /opt/homebrew/include/glm/geometric.hpp \
+  /opt/homebrew/include/glm/trigonometric.hpp \
   /opt/homebrew/include/glm/ext/matrix_transform.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Particle.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/ShaderManager.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Particle.h

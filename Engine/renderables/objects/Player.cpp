@@ -4,6 +4,8 @@
 
 #include "Player.h"
 
+#include <App.h>
+
 #include "BumperCar.h"
 #include "Config.h"
 #include "graphics/Color.h"
@@ -17,6 +19,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/quaternion_trigonometric.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <utils/ShaderManager.h>
 
 #include "utils/Camera.h"
 #include "renderables/Entity.h"
@@ -24,6 +27,7 @@
 
 Player::Player(const Mode mode) : Entity("../Assets/objects/person/person2.obj") {
     this->mode = mode;
+    shader = ShaderManager::GetInstance().get("Untextured");
 
     auto carModelMat = Config::IDENTITY_MATRIX;
     carModelMat = glm::translate(carModelMat, glm::vec3(0.0F, 10.0F, 0.0F));
@@ -163,26 +167,6 @@ void Player::draw(const std::shared_ptr<Shader> shader) const {
 }
 
 void Player::update(const float dt) {
-    Entity::update(dt);
-
-    if (nitroActive) {
-        if (mode == Mode::DRIVE) {
-            car->attributes.applyForce(car->attributes.getFront() * nitroForce);
-        } else {
-            attributes.applyForce(camera.getFront() * nitroForce);
-        }
-
-        nitroDuration += dt;
-
-        if (nitroDuration >= nitroMaxDuration) {
-            nitroActive = false;
-            nitroDuration = 0.0F;
-        }
-
-        ParticleSystem &particleSystem = ParticleSystem::GetInstance();
-        particleSystem.generate(attributes, glm::vec3(0.0F), 20, Color::YELLOW);
-    }
-
     if (mode == Mode::PATH || mode == Mode::DRIVE || (mode == Mode::DUEL && isDriving)) {
         camera.update(dt);
 
@@ -195,7 +179,6 @@ void Player::update(const float dt) {
 
         const glm::vec3 backTranslation = thirdPersonMode ? -front * 30.0F : -front * 2.0F;
         const auto upTranslation = thirdPersonMode ? glm::vec3(0.0F, 12.0F, 0.0F) : up * 6.0F;
-
 
         attributes.position += backTranslation + upTranslation;
         camera.setPosition(attributes.position);
@@ -210,14 +193,12 @@ void Player::update(const float dt) {
         if (thirdPersonMode) {
             camera.setTarget(pos);
         }
-
-
-        attributes.force = car->attributes.force;
-        attributes.velocity = car->attributes.velocity;
-
+        attributes.update(dt);
 
         return;
     }
+
+    Entity::update(dt);
 
     if (mode == Mode::ORBIT) {
         camera.circleOrbit(dt);
@@ -260,7 +241,7 @@ void Player::startDriving(const bool should) {
         camera.setYawLimits(45.0F, 135.0F);
         camera.setYaw(90.0F);
         car = std::make_shared<BumperCar>();
-        car->setMode(BumperCar::Mode::NONE);
+        car->setMode(BumperCar::Mode::PLAYER);
         car->setIsPlayer(true);
         box = car->getBoundingBox();
         isDriving = true;
@@ -285,6 +266,20 @@ void Player::jump() {
 
 auto Player::isThirdPerson() const -> bool {
     return thirdPersonMode;
+}
+
+void Player::collisionResponse() {
+    if (car) {
+        car->collisionResponse();
+    }
+
+    if (mode == Mode::FPS || mode == Mode::DRIVE || mode == Mode::PATH || mode == Mode::DUEL) {
+        if (const auto force = glm::length(attributes.force); force > 100.0F) {
+            App::view.blurScreen();
+        }
+    }
+
+    Entity::collisionResponse();
 }
 
 
@@ -320,7 +315,7 @@ void Player::nitro() {
     if (mode != Mode::DRIVE) {
         attributes.applyForce(camera.getFront() * nitroForce);
     } else {
-        nitroActive = true;
+        car->setNitro(true);
     }
 }
 

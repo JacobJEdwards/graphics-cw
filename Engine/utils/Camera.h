@@ -54,6 +54,8 @@ public:
 
     void processMouseScroll(float yOffset);
 
+    [[nodiscard]] auto getProjectionDepthMatrix() const -> glm::mat4;
+
     void setMode(Mode value);
 
     void setOrbit(glm::vec3 target, float radius, float angle, float speed,
@@ -141,6 +143,9 @@ private:
 
     float renderDistance = FARPLANE;
     float nearPlane = NEARPLANE;
+
+    float renderDistanceDepth = FARPLANE;
+    float nearPlaneDepth = 10.0F;
 
     glm::vec3 target = glm::vec3(0.0F, 0.0F, 0.0F);
 

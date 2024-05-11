@@ -31,9 +31,10 @@ void main() {
     vec4 modelPos = instanceModelMatrix * vec4(pos, 1.0);
     gl_Position = projection * view * modelPos;
     vs_out.FragPos = vec3(modelPos);
+    vs_out.Normal = mat3(transpose(inverse(instanceModelMatrix))) * normal;
+    vs_out.Tangent = mat3(transpose(inverse(instanceModelMatrix))) * tangent;
+    vs_out.Bitangent = mat3(transpose(inverse(instanceModelMatrix))) * bitangent;
     vs_out.TexCoords = texCoords;
-    vs_out.Normal = normal;
-    vs_out.Tangent = tangent;
-    vs_out.Bitangent = bitangent;
+
 }
 

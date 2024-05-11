@@ -31,10 +31,17 @@ auto App::init() -> bool {
     glViewport(0, 0, static_cast<GLsizei>(view.getWidth()), static_cast<GLsizei>(view.getHeight()));
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
     glEnable(GL_BLEND);
+    // blend func options
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    // glBlendFunc(GL_ONE, GL_ONE);
+    // glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+
     glEnable(GL_FRAMEBUFFER_SRGB);
-    glEnable(GL_MULTISAMPLE);
+    // glEnable(GL_MULTISAMPLE);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glEnable(GL_PROGRAM_POINT_SIZE);
     glEnable(GL_DEBUG_OUTPUT);

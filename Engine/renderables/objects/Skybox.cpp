@@ -25,7 +25,6 @@ Skybox::Skybox() {
 
 void Skybox::update(const float deltaTime) {
     sun.update(deltaTime);
-    time += deltaTime;
 }
 
 void Skybox::draw(const std::shared_ptr<Shader> shader) const {
@@ -48,10 +47,6 @@ void Skybox::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     const auto newView = glm::mat4(glm::mat3(view));
 
     shader->use();
-    shader->setUniform("sunPos", sun.getPosition());
-
-    shader->setUniform("time", time);
-
     shader->setUniform("view", newView);
     shader->setUniform("projection", projection);
 

@@ -4,6 +4,7 @@ in vec2 TexCoords;
 
 struct Material {
     sampler2D texture_diffuse1;
+    sampler2D texture_diffuse2;
     sampler2D texture_specular1;
     sampler2D texture_normal1;
     sampler2D texture_height1;
@@ -11,23 +12,32 @@ struct Material {
     vec4 ambient;
     vec4 specular;
     vec4 emissive;
-    vec4 diffuse;
     float shininess;
+};
+
+struct Light {
+    vec4 position;
+    vec3 direction;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
 };
 
 const float glowIntensity = 0.8;
 
 uniform Material material;
+uniform Light sun;
 
 void main() {
     vec4 texColor = texture(material.texture_diffuse1, TexCoords);
 
     texColor.rgb *= 2.0;
 
-    vec4 glowColor = vec4(1.0, 0.8, 0.2, 1.0);
-    vec4 glow = glowIntensity * glowColor * smoothstep(0.2, 0.0, length(TexCoords - 0.5));
+    vec3 glow = glowIntensity * sun.diffuse * smoothstep(0.2, 0.0, length(TexCoords - 0.5));
 
-    texColor += glow;
+    texColor += vec4(glow, 1.0);
 
     FragColor = texColor;
+
+    FragColor.a = 0.8;
 }

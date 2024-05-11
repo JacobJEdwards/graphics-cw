@@ -26,6 +26,8 @@ public:
 
     [[nodiscard]] auto getTexture() const -> GLuint;
 
+    [[nodiscard]] auto getDepthTexture() const -> GLuint;
+
     void setHeight(unsigned int height);
 
     void setWidth(unsigned int width);
@@ -43,6 +45,7 @@ private:
     GLuint FBO = 0;
     GLuint RBO = 0;
     Texture::Data texture;
+    Texture::Data depthTexture;
 
     // multi sample
     GLuint MSFBO = 0;

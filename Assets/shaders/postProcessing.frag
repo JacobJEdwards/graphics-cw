@@ -1,10 +1,24 @@
 #version 410 core
 
-in vec2 TexCoords;
+in VS_OUT {
+    vec2 TexCoords;
+} fs_in;
+
 out vec4 FragColor;
 
+struct Light {
+    vec3 position;
+    vec3 direction;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+uniform Light sun;
+
 uniform sampler2D screenTexture;
-uniform vec3 sunPosition;
+uniform sampler2D depthTexture;
+
 uniform vec3 viewPos;
 uniform vec3 viewDir;
 
@@ -22,8 +36,6 @@ uniform float vignetteStrength = 0.3;
 uniform float blurAmount = 0.008;
 uniform bool blur = false;
 uniform float blurTime = 0.0;
-
-const vec3 orangeTint = vec3(1.0, 0.5, 0.2);
 
 vec3 applyGammaCorrection(vec3 color) {
     return pow(color, vec3(1.0 / gamma));
@@ -67,10 +79,23 @@ vec4 applyBlur(sampler2D tex, vec2 texCoords, vec2 direction, float blurAmount) 
     return color / 11.0;
 }
 
+vec3 applyGodrays(vec3 color, vec2 texCoords) {
+    vec3 sunDir = normalize(sun.position - vec3(texCoords, 0.0));
+    float sunDot = dot(sunDir, sun.direction);
+    float sunFactor = smoothstep(0.0, 0.5, sunDot);
+
+    return color + sunFactor * sun.diffuse;
+}
 
 
 void main() {
-    vec4 color = texture(screenTexture, TexCoords);
+    vec4 color = texture(screenTexture, fs_in.TexCoords);
+    float depthValue = texture(depthTexture, fs_in.TexCoords).r;
+
+    // fog based on depth
+    float fogFactor = smoothstep(10.0, 100.0, depthValue);
+    color.rgb = mix(color.rgb, vec3(0.8, 0.8, 0.8), fogFactor);
+
 
     color.rgb = applyGammaCorrection(color.rgb);
     color.rgb = applyExposure(color.rgb);
@@ -78,18 +103,18 @@ void main() {
     color.rgb = applySaturation(color.rgb);
     color.rgb = applyBrightness(color.rgb);
     color.rgb = applyBloom(color.rgb);
+    // color.rgb = applyGodrays(color.rgb, fs_in.TexCoords);
 
-    float sunsetFactor = max(dot(normalize(sunPosition), vec3(0, -1, 0)), 0.0);
-    color.rgb = mix(color.rgb, color.rgb * orangeTint, sunsetFactor);
+    float sunsetFactor = max(dot(normalize(sun.position), vec3(0, -1, 0)), 0.0);
+    color.rgb = mix(color.rgb, color.rgb * sun.diffuse, sunsetFactor);
 
-    float vignette = calculateVignette(TexCoords);
+    float vignette = calculateVignette(fs_in.TexCoords);
     color.rgb *= vignette;
 
     if (blur) {
-        vec4 blurredColorX = applyBlur(screenTexture, TexCoords, vec2(1.0, 0.0), blurAmount);
-        vec4 blurredColorY = applyBlur(screenTexture, TexCoords, vec2(0.0, 1.0), blurAmount);
+        vec4 blurredColorX = applyBlur(screenTexture, fs_in.TexCoords, vec2(1.0, 0.0), blurAmount);
+        vec4 blurredColorY = applyBlur(screenTexture, fs_in.TexCoords, vec2(0.0, 1.0), blurAmount);
         color = mix(color, (blurredColorX + blurredColorY), 0.8);
-
     }
 
     FragColor = color;

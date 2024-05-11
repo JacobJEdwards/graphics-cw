@@ -1124,4 +1124,5 @@ CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o: \
   /opt/homebrew/include/glm/gtc/epsilon.inl \
   /opt/homebrew/include/glm/gtc/../vector_relational.hpp \
   /opt/homebrew/include/glm/gtc/../common.hpp \
-  /opt/homebrew/include/glm/ext/matrix_transform.hpp
+  /opt/homebrew/include/glm/ext/matrix_transform.hpp \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h

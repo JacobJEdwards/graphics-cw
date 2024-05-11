@@ -57,6 +57,8 @@ public:
 
     [[nodiscard]] auto isThirdPerson() const -> bool;
 
+    void collisionResponse() override;
+
 private:
     Mode mode = Mode::FPS;
 
@@ -64,9 +66,6 @@ private:
     float jumpForce = 100.0F;
 
     float nitroForce = 250.0F;
-    float nitroDuration = 0.0F;
-    float nitroMaxDuration = 5.0F;
-    bool nitroActive = false;
 
     float speed = 10.0F;
 

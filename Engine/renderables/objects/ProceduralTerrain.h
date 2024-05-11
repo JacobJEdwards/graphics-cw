@@ -33,6 +33,9 @@ class ProceduralTerrain final : public Renderable {
         std::vector<GLuint> indices;
         glm::vec2 centre = glm::vec2(0.0F, 0.0F);
         int chunkSize = DEFAULT_CHUNK_SIZE;
+        Texture::Data noiseTexture;
+        Texture::Data normalMap;
+
 
         void init();
     };
@@ -63,9 +66,9 @@ public:
 
     [[nodiscard]] auto getWorldCoordinates(const glm::vec2 &position) const -> glm::vec2;
 
-    [[nodiscard]] constexpr auto getTerrainHeight(const glm::vec3 &position) const -> float;
+    [[nodiscard]] auto getTerrainHeight(const glm::vec3 &position) const -> float;
 
-    [[nodiscard]] constexpr auto getTerrainHeight(float xPos, float zPos) const -> float;
+    [[nodiscard]] auto getTerrainHeight(float xPos, float zPos) const -> float;
 
     [[nodiscard]] auto getIntersectionPoint(const glm::vec3 &rayStart, const glm::vec3 &rayEnd) const -> glm::vec3;
 
@@ -79,15 +82,15 @@ private:
     std::vector<Chunk> chunks;
     std::vector<Chunk> distantChunks;
 
-    glm::vec2 centre;
-    glm::vec2 worldCentre;
+    glm::vec2 centre = glm::vec2(0.0F, 0.0F);
+    glm::vec2 worldCentre = glm::vec2(0.0F, 0.0F);
 
     // grass
     Texture::Data noiseTexture;
 
-    int chunkSize;
-    int numChunksX;
-    int numChunksY;
+    int chunkSize = DEFAULT_CHUNK_SIZE;
+    int numChunksX = DEFAULT_NUM_CHUNKS_X;
+    int numChunksY = DEFAULT_NUM_CHUNKS_Y;
 
     float worldSizeX;
     float worldSizeY;

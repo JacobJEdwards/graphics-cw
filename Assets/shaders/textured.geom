@@ -15,6 +15,7 @@ in VS_OUT {
     vec3 Tangent;
     vec3 Bitangent;
     vec4 FragPosLightSpace;
+    vec3 UnalteredNormal;
 } gs_in[];
 
 out VS_OUT {
@@ -24,6 +25,7 @@ out VS_OUT {
     vec3 Tangent;
     vec3 Bitangent;
     vec4 FragPosLightSpace;
+    vec3 UnalteredNormal;
 } fs_in;
 
 const float magnitude = 50.0;
@@ -34,7 +36,7 @@ vec4 explode(vec4 position, vec3 normal) {
 }
 
 void main() {
-    vec3 normal = normalize(cross(gs_in[0].Normal, gs_in[1].Normal));
+    vec3 normal = normalize(cross(gs_in[0].UnalteredNormal, gs_in[1].UnalteredNormal));
 
     for (int i = 0; i < 3; i++) {
         gl_Position = explode(gl_in[i].gl_Position, normal);

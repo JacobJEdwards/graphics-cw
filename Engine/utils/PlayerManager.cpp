@@ -64,7 +64,7 @@ void PlayerManager::setCurrent(const std::string &name) {
         currentPlayer = it->second;
         if (currentPlayer) {
             if (currentPlayer->getMode() == Player::Mode::DRIVE) {
-                currentPlayer->getCar()->setMode(BumperCar::Mode::NONE);
+                currentPlayer->getCar()->setMode(BumperCar::Mode::PLAYER);
                 currentPlayer->getCar()->isCurrentPlayer(true);
             }
 

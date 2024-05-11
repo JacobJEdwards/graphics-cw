@@ -13,12 +13,17 @@ DepthBuffer::DepthBuffer(const unsigned int width, const unsigned int height) {
 
     glGenRenderbuffers(1, &RBO);
     glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, static_cast<GLsizei>(width),
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32F, static_cast<GLsizei>(width),
                           static_cast<GLsizei>(height));
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBO);
 
-    glDrawBuffer(GL_NONE);
-    glReadBuffer(GL_NONE);
+    glGenTextures(1, &texture.id);
+    glBindTexture(GL_TEXTURE_2D, texture.id);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, static_cast<GLsizei>(width),
+                 static_cast<GLsizei>(height), 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texture.id, 0);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         std::println(stderr, "Framebuffer is not complete!");
@@ -35,17 +40,24 @@ DepthBuffer::~DepthBuffer() {
 }
 
 void DepthBuffer::bind() {
-    GLint temp;
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &temp);
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, reinterpret_cast<GLint *>(&previousFBO));
+    glGetIntegerv(GL_VIEWPORT, reinterpret_cast<GLint *>(previousViewport));
+    glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint *>(&previousDepthFunc));
+
     glBindFramebuffer(GL_FRAMEBUFFER, DBO);
     glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
     glClear(GL_DEPTH_BUFFER_BIT);
-
-    previousFBO = static_cast<GLuint>(temp);
+    glDepthFunc(GL_LESS);
 }
 
 void DepthBuffer::unbind() const {
     glBindFramebuffer(GL_FRAMEBUFFER, previousFBO);
+    glViewport(previousViewport[0], previousViewport[1], previousViewport[2], previousViewport[3]);
+    glDepthFunc(previousDepthFunc);
+}
+
+auto DepthBuffer::getTexture() const -> GLuint {
+    return texture.id;
 }
 
 void DepthBuffer::Clear() {

@@ -45,6 +45,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CW.dir/Engine/renderables/Particle.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/Renderable.cpp.o"
   "CMakeFiles/CW.dir/Engine/renderables/Renderable.cpp.o.d"
+  "CMakeFiles/CW.dir/Engine/renderables/objects/Barriers.cpp.o"
+  "CMakeFiles/CW.dir/Engine/renderables/objects/Barriers.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o"
   "CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o.d"
   "CMakeFiles/CW.dir/Engine/renderables/objects/Clouds.cpp.o"

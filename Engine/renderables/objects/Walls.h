@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include <array>
 #include <glm/trigonometric.hpp>
+#include <graphics/Model.h>
 #include <utils/ShaderManager.h>
 
 #include "renderables/Renderable.h"

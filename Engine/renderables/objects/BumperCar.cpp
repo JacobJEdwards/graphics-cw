@@ -74,6 +74,7 @@ BumperCar::BumperCar(const glm::vec2 centre, const float radius, const float spe
     }
 
 
+    this->splineType = type;
     this->speed *= Random::Float(0.8F, 1.2F);
 
     spline = Physics::Spline(points, type, this->speed);
@@ -81,19 +82,9 @@ BumperCar::BumperCar(const glm::vec2 centre, const float radius, const float spe
 
     attributes.mass = 10.0F;
     generateTexture();
-}
 
-BumperCar::BumperCar(std::vector<glm::vec3> points, const float speed) : Entity(
-                                                                             "../Assets/objects/bumpercar1/bumper-car.obj"),
-                                                                         speed(speed),
-                                                                         spline(
-                                                                             points, Physics::Spline::Type::CATMULLROM,
-                                                                             speed), points(points), person(
-                                                                             "../Assets/objects/person-sitting/person.obj") {
-    spline.randomise();
-    this->speed *= Random::Float(0.8F, 1.2F);
-    attributes.mass = 10.0F;
-    generateTexture();
+    personShader = ShaderManager::GetInstance().get("Untextured");
+    shader = ShaderManager::GetInstance().get("Base");
 }
 
 auto BumperCar::getLaps() const -> std::size_t {
@@ -101,6 +92,10 @@ auto BumperCar::getLaps() const -> std::size_t {
 }
 
 void BumperCar::addTrackablePosition(const glm::vec3 position) {
+    if (std::ranges::find(trackablePositions, position) != trackablePositions.end()) {
+        return;
+    }
+
     trackablePositions.push_back(position);
 }
 
@@ -110,12 +105,15 @@ void BumperCar::setPersonShader(const std::shared_ptr<Shader> &shader) {
 }
 
 void BumperCar::reset() {
-    spline = Physics::Spline(points, Physics::Spline::Type::CATMULLROM, speed);
+    spline = Physics::Spline(points, splineType, speed);
     spline.randomise();
     isBroken = false;
     brokenTime = 0.0F;
     isExploding = false;
     explodeTime = 0.0F;
+    damageTaken = 0.0F;
+    nitroActive = false;
+    nitroDuration = 0.0F;
 
     attributes.position = points[0];
     attributes.velocity = glm::vec3(0.0F);
@@ -125,7 +123,6 @@ void BumperCar::reset() {
     attributes.angularAcceleration = glm::vec3(0.0F);
     attributes.isColliding = false;
     attributes.mass = 10.0F;
-    damageTaken = 0.0F;
 }
 
 void BumperCar::generateTexture() {
@@ -179,10 +176,27 @@ void BumperCar::update(const float deltaTime) {
             reset();
         } else if (!isExploding) {
             ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(1.0F, 10.0F, 1.0F), Color::ORANGE,
-                                                   25);
+                                                   25, 1.0F, 2.5F);
         }
         Entity::update(deltaTime);
         return;
+    }
+
+
+    if (nitroActive && mode != Mode::NONE) {
+        attributes.applyForce(attributes.getFront() * nitroForce);
+
+        nitroDuration += deltaTime;
+
+        if (nitroDuration >= nitroMaxDuration) {
+            nitroActive = false;
+            nitroDuration = 0.0F;
+        }
+
+        ParticleSystem &particleSystem = ParticleSystem::GetInstance();
+        particleSystem.generate(attributes.position, -attributes.velocity / 2.0F, Color::YELLOW, 20, 1.0F, 0.5F);
+    } else if (Random::Int(0, 10000) == 0 && mode != Mode::NONE && mode != Mode::PLAYER) {
+        nitroActive = true;
     }
 
     if (Random::Int(0, 150) == 0) {
@@ -191,10 +205,10 @@ void BumperCar::update(const float deltaTime) {
 
     // be slightly on fire if damaged
     if (damageTaken > 0.0F) {
-        ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(-attributes.velocity.x, 8.0F,
-                                                                              -attributes.velocity.y),
+        ParticleSystem::GetInstance().generate(attributes.position, glm::vec3(-attributes.velocity.x / 1.5F, 8.0F,
+                                                                              -attributes.velocity.z / 1.5F),
                                                Color::ORANGE,
-                                               static_cast<int>(damageTaken * 5.0F));
+                                               static_cast<int>(damageTaken * 5.0F), 1.0F, 2.0F);
     }
 
 
@@ -260,6 +274,16 @@ void BumperCar::update(const float deltaTime) {
         }
         case Mode::NONE:
             break;
+        case Mode::RANDOM:
+            if (Random::Int(0, 100) == 0) {
+                moveTo(glm::vec3(Random::Float(-100.0F, 100.0F), 0.0F, Random::Float(-100.0F, 100.0F)));
+            }
+            break;
+        case Mode::FOLLOW:
+            moveTo(PlayerManager::GetInstance().getCurrent()->getPosition());
+            break;
+        case Mode::PLAYER:
+            break;
     }
 
     Entity::update(deltaTime);
@@ -285,8 +309,21 @@ void BumperCar::addTrackableEntity(const std::shared_ptr<Entity> &entity) {
     trackableEntities.push_back(entity);
 }
 
+
 void BumperCar::clearTrackablePositions() {
     trackablePositions.clear();
+}
+
+void BumperCar::setNitro(const bool nitro) {
+    if (nitro && nitroActive) {
+        return;
+    }
+
+    this->nitroActive = nitro;
+}
+
+auto BumperCar::getMode() const -> Mode {
+    return mode;
 }
 
 
@@ -300,9 +337,9 @@ void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
     personShader->setUniform("model", mat);
 
     if (!isPlayer) {
-        personShader->setUniform("color", glm::vec4(1.0F, 1.0F, 1.0F, 1.0F));
+        personShader->setUniform("color", Color::YELLOW);
     } else {
-        personShader->setUniform("color", glm::vec4(1.0F, 0.0F, 0.0F, 1.0F));
+        personShader->setUniform("color", Color::RED);
     }
 
     if (drawPlayer && !isBroken) {
@@ -322,6 +359,7 @@ void BumperCar::draw(const std::shared_ptr<Shader> shader) const {
 
     model->draw(shader);
 
+    shader->setUniform("damage", 0.0F);
     if (App::debug) {
         spline.draw(shader);
     }
@@ -386,4 +424,16 @@ void BumperCar::isCurrentPlayer(const bool isCurrentPlayer) {
     } else {
         person = Model("../Assets/objects/person-sitting/person.obj");
     }
+}
+
+void BumperCar::collisionResponse() {
+    if (nitroActive) {
+        nitroActive = false;
+    }
+
+    if (const auto force = glm::length(attributes.force); force > 100.0F) {
+        takeDamage(force / 5000.0F);
+    }
+
+    Entity::collisionResponse();
 }

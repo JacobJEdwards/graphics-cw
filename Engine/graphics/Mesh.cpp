@@ -35,7 +35,7 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
     GLuint emissiveNr = 1;
 
     for (GLuint i = 0; i < textures.size(); i++) {
-        glActiveTexture(GL_TEXTURE0 + i);
+        glActiveTexture(GL_TEXTURE1 + i);
 
         std::string number;
 
@@ -73,7 +73,7 @@ void Mesh::draw(const std::shared_ptr<Shader> &shader) const {
 
         glBindTexture(GL_TEXTURE_2D, id);
         shader->setUniform("material.texture_" + toString(type) + number,
-                           static_cast<GLint>(i));
+                           static_cast<GLint>(i + 1));
     }
 
     // bind the material

@@ -12,7 +12,8 @@
 #include <memory>
 #include <glm/ext/matrix_transform.hpp>
 
-FerrisWheel::FerrisWheel() : staticPart("../Assets/objects/ferris/ferris-static.obj"),
+FerrisWheel::FerrisWheel() : Entity("../Assets/objects/ferris/ferris-static.obj"),
+                             staticPart("../Assets/objects/ferris/ferris-static.obj"),
                              rotatingPart("../Assets/objects/ferris/ferris-moving.obj"),
                              cabin("../Assets/objects/ferris/ferris-cart.obj"),
                              entrance("../Assets/objects/enterance/enterance.obj") {
@@ -27,6 +28,9 @@ FerrisWheel::FerrisWheel() : staticPart("../Assets/objects/ferris/ferris-static.
     cabinTransform = glm::translate(cabinTransform, translation);
 
     entranceTransform = glm::translate(entranceTransform, glm::vec3(-10.0F, 0.0F, 40.0F));
+
+    attributes.mass = 1000.0F;
+    attributes.gravityAffected = false;
 }
 
 void FerrisWheel::draw(const std::shared_ptr<Shader> shader) const {
@@ -40,6 +44,8 @@ void FerrisWheel::draw(const std::shared_ptr<Shader> shader) const {
 
     // shader->setUniform("model", cabinTransform);
     // cabin.draw(shader);
+
+    shader->setUniform("model", entranceTransform);
 }
 
 void FerrisWheel::update(const float deltaTime) {

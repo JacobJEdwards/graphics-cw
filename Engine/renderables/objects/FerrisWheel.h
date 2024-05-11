@@ -14,8 +14,9 @@
 #include "graphics/Model.h"
 #include <memory>
 #include <glm/ext/matrix_transform.hpp>
+#include <renderables/Entity.h>
 
-class FerrisWheel final : public Renderable {
+class FerrisWheel final : public Entity {
 public:
     using Renderable::draw;
 
@@ -23,7 +24,7 @@ public:
 
     void draw(std::shared_ptr<Shader> shader) const override;
 
-    void update(float deltaTime);
+    void update(float deltaTime) override;
 
 private:
     Model staticPart;

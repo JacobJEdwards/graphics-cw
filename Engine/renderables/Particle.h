@@ -28,13 +28,14 @@ struct Particle {
     glm::vec3 velocity = glm::vec3(0.0F);
     glm::vec4 color = glm::vec4(Color::WHITE, 0.8F);
     glm::mat4 model = Config::IDENTITY_MATRIX;
+    float scale = 1.0F;
     float life = 1.0F;
 
     Particle();
 
-    Particle(glm::vec3 position, glm::vec3 velocity, glm::vec4 color, float life);
+    Particle(glm::vec3 position, glm::vec3 velocity, glm::vec4 color, float life, float scale);
 
-    Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 color, float life);
+    Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 color, float life, float scale);
 };
 
 class ParticleSystem final : public Renderable, public Singleton<ParticleSystem> {
@@ -54,7 +55,7 @@ public:
                   const glm::vec3 &color = Color::WHITE);
 
     void generate(const glm::vec3 &position, const glm::vec3 &velocity = glm::vec3(0.0F),
-                  const glm::vec3 &color = Color::WHITE, int numParticles = 100);
+                  const glm::vec3 &color = Color::WHITE, int numParticles = 100, float life = 1.0F, float scale = 1.0F);
 
     void interface();
 

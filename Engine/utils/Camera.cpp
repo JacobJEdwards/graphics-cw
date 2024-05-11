@@ -24,7 +24,10 @@ Camera::Camera(const glm::vec3 position, const glm::vec3 worldUp, const float ya
 }
 
 [[nodiscard]] auto Camera::getOrthoMatrix() const -> glm::mat4 {
-    return glm::ortho(-aspect, aspect, -1.0F, 1.0F, -1.0F, 1.0F);
+    // match perspective matrix
+    const float fov = zoom;
+
+    return glm::ortho(-aspect * fov, aspect * fov, -fov, fov, nearPlane, renderDistance);
 }
 
 [[nodiscard]] auto Camera::getViewMatrix() const -> glm::mat4 {
@@ -85,6 +88,11 @@ void Camera::setTarget(const glm::vec3 target) {
 [[nodiscard]] auto Camera::getProjectionMatrix() const -> glm::mat4 {
     return glm::perspective(glm::radians(zoom), aspect, nearPlane, renderDistance);
 }
+
+[[nodiscard]] auto Camera::getProjectionDepthMatrix() const -> glm::mat4 {
+    return glm::perspective(glm::radians(zoom), aspect, nearPlaneDepth, renderDistanceDepth);
+}
+
 
 void Camera::circleOrbit(const float deltaTime) {
     orbitAngle += deltaTime * orbitSpeed;
@@ -240,8 +248,11 @@ void Camera::interface() {
     ImGui::SeparatorText("General");
     hasChanged |= ImGui::SliderFloat("Zoom", &zoom, MINZOOM, MAXZOOM);
     hasChanged |= ImGui::SliderFloat("Sensitivity", &mouseSensitivity, 0.0F, 2.5F);
-    hasChanged |= ImGui::SliderFloat("Render Distance", &renderDistance, 1.0F, 1000.0F);
+    hasChanged |= ImGui::SliderFloat("Render Distance", &renderDistance, 1.0F, 10000.0F);
     hasChanged |= ImGui::SliderFloat("Near Plane", &nearPlane, 0.1F, 2.5F);
+    hasChanged |= ImGui::SliderFloat("Render Distance Depth", &renderDistanceDepth, 1.0F, 1000000.0F);
+    hasChanged |= ImGui::SliderFloat("Near Plane Depth", &nearPlaneDepth, 0.1F, 200.0F);
+
 
     if (mode == Mode::ORBIT) {
         ImGui::SeparatorText("Orbit");

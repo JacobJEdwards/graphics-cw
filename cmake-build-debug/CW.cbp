@@ -222,6 +222,12 @@
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Renderable.h">
 			<Option target="CW"/>
 		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Barriers.cpp">
+			<Option target="CW"/>
+		</Unit>
+		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Barriers.h">
+			<Option target="CW"/>
+		</Unit>
 		<Unit filename="/Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/BumperCar.cpp">
 			<Option target="CW"/>
 		</Unit>

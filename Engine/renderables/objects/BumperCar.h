@@ -20,12 +20,13 @@ public:
         PATHED,
         TRACK,
         AUTO,
-        NONE
+        NONE,
+        FOLLOW,
+        RANDOM,
+        PLAYER
     };
 
     explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 60.0F, float speed = 2.0F);
-
-    explicit BumperCar(std::vector<glm::vec3> points, float speed = 2.0F);
 
     void update(float deltaTime) override;
 
@@ -67,10 +68,17 @@ public:
 
     void isCurrentPlayer(bool isCurrentPlayer);
 
+    void setNitro(bool nitro);
+
+    void collisionResponse() override;
+
+    [[nodiscard]] auto getMode() const -> Mode;
+
 private:
     Mode mode = Mode::AUTO;
 
     float speed = 1.0F;
+    Physics::Spline::Type splineType = Physics::Spline::Type::CATMULLROM;
 
     Physics::Spline spline;
     std::vector<glm::vec3> points;
@@ -100,6 +108,11 @@ private:
     bool drawPlayer = true;
 
     bool isPlayer = false;
+
+    float nitroDuration = 0.0F;
+    float nitroMaxDuration = 5.0F;
+    bool nitroActive = false;
+    float nitroForce = 250.0F;
 };
 
 #endif

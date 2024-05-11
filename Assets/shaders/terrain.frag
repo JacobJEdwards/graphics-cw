@@ -21,6 +21,7 @@ in VS_OUT {
 
 uniform sampler2D shadowMap;
 uniform sampler2D noiseTexture;
+uniform sampler2D normalMap;
 
 uniform vec3 viewPos;
 uniform Light sun;
@@ -33,6 +34,7 @@ uniform float pathDarkness = 0.5;
 
 const vec3 grassColor = vec3(0.2, 0.8, 0.2);
 const vec3 pathColor = vec3(0.2, 0.1, 0.0);
+
 
 // noise funcs
 float rand(vec2 co){
@@ -61,8 +63,7 @@ float fbm(vec2 p) {
     return f / 0.9375;
 }
 
-float ShadowCalculation(vec4 fragPosLightSpace)
-{
+float ShadowCalculation(vec4 fragPosLightSpace) {
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     projCoords = projCoords * 0.5 + 0.5;
 
@@ -71,8 +72,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     float currentDepth = projCoords.z;
 
     vec3 normal = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
-    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+    float bias = max(0.05 * (1.0 - dot(normal, sun.direction)), 0.005);
 
     float shadow = 0.0;
     float texelSize = 1.0 / textureSize(shadowMap, 0).x;
@@ -107,50 +107,42 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     return shadow;
 }
 
+bool isOnPath(vec3 fragPos, vec3 pathedPoint, vec3 nextPathedPoint) {
+    float distToSegment = distance(nextPathedPoint, pathedPoint);
+    float distToStart = distance(fragPos, pathedPoint);
+    float distToEnd = distance(fragPos, nextPathedPoint);
+
+    float dotProduct = dot(normalize(nextPathedPoint - pathedPoint), normalize(fragPos - pathedPoint));
+
+    return (dotProduct >= 0.0 && dotProduct <= distToSegment && distToStart <= distToSegment && distToEnd <= distToSegment);
+}
+
 const float PI = 3.14159265359;
 
 vec3 calculateAmbient(vec3 color) {
-    return 0.3 * color;
+    return 0.3 * color * sun.ambient;
 }
 
-vec3 calculateDiffuse(vec3 normal, vec3 color, vec3 fragPos) {
-    vec3 lightDir = normalize(sun.position - fragPos);
-    float diff = max(dot(normal, lightDir), 0.0);
-    return diff * color;
+vec3 calculateDiffuse(vec3 normal, vec3 color) {
+    float diff = max(dot(normal, sun.direction), 0.0);
+    return diff * color * sun.diffuse;
 }
 
 vec3 calculateSpecular(vec3 normal, vec3 viewPos, vec3 fragPos) {
-    vec3 lightDir = normalize(sun.position - fragPos);
     vec3 viewDir = normalize(viewPos - fragPos);
-    vec3 halfwayDir = normalize(lightDir + viewDir);
+    vec3 halfwayDir = normalize(sun.direction + viewDir);
 
-    float NdotH = max(dot(normal, halfwayDir), 0.0);
-    float NdotV = max(dot(normal, viewDir), 0.0);
-    float NdotL = max(dot(normal, lightDir), 0.0);
-
-    vec3 specular = vec3(0.0);
-    if (NdotH > 0.0 && NdotV > 0.0) {
-        float roughness = 0.3;
-        float F = 0.04 + (1.0 - 0.04) * pow(1.0 - NdotV, 5.0);
-        float D = exp(-pow((1.0 - NdotH) / (roughness * roughness * NdotH), 2.0)) /
-        (PI * roughness * roughness * pow(NdotH, 4.0));
-        float G = min(1.0, min(2.0 * NdotH * NdotV / NdotL, 2.0 * NdotH * NdotL / NdotV));
-        specular = vec3(F * D * G / (4.0 * NdotV * NdotL));
-    }
-    return specular * vec3(0.8);// Adjust specular intensity as needed
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    return spec * sun.specular;
 }
 
 
 vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, float shadow) {
     vec3 ambient = calculateAmbient(color);
-
-    vec3 lightDir = normalize(sun.position - fragPos);
-    float diff = max(dot(normal, lightDir), 0.0);
-    vec3 diffuse = diff * color;
-
+    vec3 diffuse = calculateDiffuse(normal, color);
 
     vec3 viewDir = normalize(viewPos - fragPos);
-    vec3 halfwayDir = normalize(lightDir + viewDir);
+    vec3 halfwayDir = normalize(sun.direction + viewDir);
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
     vec3 specular = spec * vec3(0.2);
 
@@ -163,35 +155,28 @@ vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, floa
     float sunHeightFactor = clamp(sunHeight, 0.3, 1.0);
     lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
 
-    return lighting;
-}
+    if (pathedPointsCount > 0) {
+        for (int i = 0; i < pathedPointsCount; i++) {
+            vec3 pathedPoint = pathedPoints[i];
+            vec3 nextPathedPoint = pathedPoints[(i + 1) % pathedPointsCount];
 
-bool isOnPath(vec3 fragPos, vec3 pathedPoint, vec3 nextPathedPoint) {
-    float distToSegment = distance(nextPathedPoint, pathedPoint);
-    float distToStart = distance(fragPos, pathedPoint);
-    float distToEnd = distance(fragPos, nextPathedPoint);
-
-    float dotProduct = dot(normalize(nextPathedPoint - pathedPoint), normalize(fragPos - pathedPoint));
-
-    return (dotProduct >= 0.0 && dotProduct <= distToSegment && distToStart <= distToSegment && distToEnd <= distToSegment);
-}
-
-void main() {
-    vec3 color = grassColor;
-    float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
-
-    for (int i = 0; i < pathedPointsCount - 1; i++) {
-        vec3 pathedPoint = pathedPoints[i];
-        vec3 nextPathedPoint = pathedPoints[i + 1];
-
-        if (isOnPath(fs_in.FragPos, pathedPoint, nextPathedPoint)) {
-            color = mix(color, pathColor, pathDarkness);
-            break;
+            if (isOnPath(fragPos, pathedPoint, nextPathedPoint)) {
+                lighting = pathColor;
+                break;
+            }
         }
     }
 
+    return lighting;
+}
 
-    vec3 lighting = calculateLighting(fs_in.FragPos, normalize(fs_in.Normal), viewPos, color, shadow);
+
+void main() {
+    vec3 color = grassColor;
+
+    float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+
+    vec3 lighting = calculateLighting(fs_in.FragPos, fs_in.Normal, viewPos, color, shadow);
 
     FragColor = vec4(lighting, 1.0);
 }

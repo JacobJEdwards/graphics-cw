@@ -28,7 +28,8 @@ in VS_OUT {
 uniform Material material;
 uniform Light sun;
 uniform vec3 viewPos;
-uniform vec4 color;
+uniform vec3 viewDir;
+uniform vec3 color;
 
 uniform sampler2D shadowMap;
 
@@ -82,40 +83,35 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 
 vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3
 surfaceColor, float shininess) {
-    // Normalize vectors
-    lightDirection = normalize(lightDirection);
-    viewDirection = normalize(viewDirection);
-    surfaceNormal = normalize(surfaceNormal);
-
     vec3 halfwayDir = normalize(lightDirection + viewDirection);
 
     float diffuseFactor = max(dot(lightDirection, surfaceNormal), 0.0);
 
-    float specularFactor = 0.0;
+    float specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
 
-    if (diffuseFactor > 0.0) {
-        specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
-    }
+    specularFactor *= diffuseFactor;
 
-    vec3 ambient = 0.1 * lightColor;
-    vec3 diffuse = diffuseFactor * lightColor * surfaceColor * color.rgb;
-    vec3 specular = specularFactor * lightColor;
+    vec3 ambient = 0.1 * sun.ambient * material.ambient.rgb;
+    vec3 diffuse = diffuseFactor * surfaceColor * color * sun.diffuse;
+    vec3 specular = specularFactor * lightColor * sun.specular;
 
-    // shadow calculation
+    // shadow
     float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
 
-    return (ambient + (1.0 - shadow) * (diffuse + specular));
-
-    // return (ambient + diffuse + specular);
-
+    return lighting;
 }
 
 void main() {
     vec3 normal = normalize(fs_in.Normal);
     vec3 lightDir = normalize(sun.position - fs_in.FragPos);
-    vec3 viewDir = normalize(viewPos - fs_in.FragPos);
 
-    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, normal, vec3(material.diffuse), vec3(material.specular), material.shininess);
+    vec3 result = calculateBlinnPhongLighting(sun.direction, viewDir, normal, sun.diffuse, vec3(material.diffuse), material
+    .shininess);
+
+    float sunHeight = sun.position.y;
+    float sunFactor = clamp(sunHeight, 0.3, 1.0);
+    result *= sunFactor;
 
     FragColor = vec4(result, 1.0);
 

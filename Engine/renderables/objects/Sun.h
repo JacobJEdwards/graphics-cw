@@ -25,13 +25,21 @@ public:
 
     [[nodiscard]] auto getPosition() const -> glm::vec3;
 
+    [[nodiscard]] auto getDiffuse() const -> glm::vec3;
+
+    [[nodiscard]] auto getSpecular() const -> glm::vec3;
+
+    [[nodiscard]] auto getAmbient() const -> glm::vec3;
+
     void interface();
 
 private:
-    float scale = 0.005F;
+    float scale = 0.05F;
     float angle = 0.0F;
     bool move = true;
     float speed = 1.0F;
+
+    float colorMixFactor = 0.0F;
 
     Entity moon;
 };

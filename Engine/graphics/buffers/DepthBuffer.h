@@ -6,6 +6,7 @@
 #define CW_DEPTHBUFFER_H
 
 #include <GL/glew.h>
+#include <graphics/Texture.h>
 
 class DepthBuffer {
 public:
@@ -21,13 +22,19 @@ public:
 
     void destroy() const;
 
+    [[nodiscard]] auto getTexture() const -> GLuint;
+
     [[nodiscard]] auto getDBO() const -> GLuint;
 
 private:
     GLuint DBO = 0;
     GLuint RBO = 0;
     GLuint previousFBO = 0;
+    GLint previousViewport[4] = {0, 0, 0, 0};
+    GLuint previousDepthFunc = 0;
+
     GLuint depthBuffer = 0;
+    Texture::Data texture;
     unsigned int width;
     unsigned int height;
 };

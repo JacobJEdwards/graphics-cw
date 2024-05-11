@@ -45,7 +45,7 @@ public:
     PostProcess(unsigned int width, unsigned int height,
                 bool multisampled = true);
 
-    void render(float deltaTime, float time);
+    void render(float deltaTime);
 
     void begin() const;
 

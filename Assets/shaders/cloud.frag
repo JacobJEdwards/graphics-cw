@@ -1,13 +1,5 @@
 #version 410 core
 
-struct Material {
-    vec4 ambient;
-    vec4 specular;
-    vec4 emmisive;
-    vec4 diffuse;
-    float shininess;
-};
-
 struct Light {
     vec3 position;
     vec3 direction;
@@ -25,64 +17,83 @@ in VS_OUT {
     vec3 Bitangent;
 } fs_in;
 
-uniform Material material;
+#define MAX_SAMPLES 100
+#define STEP_SIZE 0.1
+#define DECAY_FACTOR 0.95
+#define EXPOSURE 0.12
+#define MAX_DEPTH 100.0
+
 uniform Light sun;
 uniform vec3 viewPos;
+uniform vec3 viewDir;
 
 out vec4 FragColor;
 
-vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3
-surfaceColor, float shininess) {
-    // Normalize vectors
-    lightDirection = normalize(lightDirection);
-    viewDirection = normalize(viewDirection);
-    surfaceNormal = normalize(surfaceNormal);
+float hash(float n) {
+    return fract(sin(n) * 43758.5453123);
+}
 
-    vec3 halfwayDir = normalize(lightDirection + viewDirection);
+float noise(vec3 x) {
+    vec3 p = floor(x);
+    vec3 f = fract(x);
+    f = f * f * (3.0 - 2.0 * f);
 
-    float diffuseFactor = max(dot(lightDirection, surfaceNormal), 0.0);
+    float n = p.x + p.y * 157.0 + 113.0 * p.z;
+    return mix(mix(mix(hash(n + 0.0), hash(n + 1.0), f.x),
+    mix(hash(n + 157.0), hash(n + 158.0), f.x), f.y),
+    mix(mix(hash(n + 113.0), hash(n + 114.0), f.x),
+    mix(hash(n + 270.0), hash(n + 271.0), f.x), f.y), f.z);
+}
 
 
-    float specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
+float fade(float t) {
+    return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+}
 
-    specularFactor *= diffuseFactor;
 
-    vec3 ambient = 0.1 * lightColor;
-    vec3 diffuse = diffuseFactor * lightColor * surfaceColor;
-    vec3 specular = specularFactor * lightColor;
+float getDensity(vec3 samplePoint) {
+    return noise(samplePoint) * 0.5;
+}
 
-    // shadow
-    vec3 lighting = (ambient + diffuse + specular);
+float sampleCloudVolume(vec3 rayOrigin, vec3 rayDir) {
+    float sampleDepth = 0.0;
+    float visibility = 1.0;
 
-    return lighting;
+    for (int i = 0; i < MAX_SAMPLES; ++i) {
+        vec3 samplePoint = rayOrigin + rayDir * sampleDepth;
+        float density = getDensity(samplePoint);
+
+        visibility *= exp(-density * STEP_SIZE);
+
+        sampleDepth += STEP_SIZE;
+
+        if (visibility < 0.001 || sampleDepth > MAX_DEPTH) {
+            break;
+        }
+    }
+
+    return visibility;
 }
 
 void main() {
-    vec3 baseColor = vec3(1.0, 1.0, 1.0);
-    vec3 finalColor = baseColor;
-
-    /*
-    vec3 normal = normalize(fs_in.Normal);
+    vec3 baseColor = vec3(0.5, 0.6, 0.7);
+    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
 
-    vec3 lighting = calculateBlinnPhongLighting(sun.direction, viewDir, normal, sun.ambient, baseColor, material.shininess);
+    vec3 rayDir = normalize(viewPos - sun.position);
 
-    vec3 finalColor = lighting * 10.0;      // Scale output color
-    */
+    float visibility = sampleCloudVolume(fs_in.FragPos, rayDir);
 
-    // Apply sun factor to the final color
+    vec3 godrays = sun.diffuse * visibility * fade(1.0 - visibility) * 0.5;
+
+    vec3 finalColor = baseColor + godrays;
+
     float sunHeight = sun.position.y;
-    float sunFactor = clamp(sunHeight, 0.2, 1.0);
+    float sunFactor = clamp(sunHeight, 0.3, 1.0);
+
     finalColor *= sunFactor;
 
-    // Output final color
-    FragColor = vec4(finalColor, 1.0);
+    FragColor = vec4(finalColor, 0.8);
 
-    // Adjust alpha
-    FragColor.a /= 1.5;
 
-    // Discard fragments with low alpha
-    if (FragColor.a < 0.2) {
-        discard;
-    }
 }

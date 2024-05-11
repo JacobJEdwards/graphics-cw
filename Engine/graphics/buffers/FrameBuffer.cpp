@@ -99,6 +99,9 @@ void FrameBuffer::bind() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+auto FrameBuffer::getDepthTexture() const -> GLuint { return depthTexture.id; }
+
+
 void FrameBuffer::unbind() const {
     if (multisample) {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, MSFBO);
@@ -133,12 +136,15 @@ void FrameBuffer::resize(const unsigned int width, const unsigned int height) {
 void FrameBuffer::setup() {
     glGenFramebuffers(1, &FBO);
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+
     glGenRenderbuffers(1, &RBO);
     glBindRenderbuffer(GL_RENDERBUFFER, RBO);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(width),
                           static_cast<GLsizei>(height));
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
                               GL_RENDERBUFFER, RBO);
+
+    // color texture
     glGenTextures(1, &texture.id);
     glBindTexture(GL_TEXTURE_2D, texture.id);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, GL_RGB,
@@ -156,12 +162,14 @@ void FrameBuffer::setup() {
 
     glGenFramebuffers(1, &MSFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, MSFBO);
+
     glGenRenderbuffers(1, &MSRBO);
     glBindRenderbuffer(GL_RENDERBUFFER, MSRBO);
     glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_RGBA8, static_cast<GLsizei>(width),
                                      static_cast<GLsizei>(height));
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
                               GL_RENDERBUFFER, MSRBO);
+
     glGenRenderbuffers(1, &MSRBO_depth);
     glBindRenderbuffer(GL_RENDERBUFFER, MSRBO_depth);
     glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8,
@@ -171,7 +179,22 @@ void FrameBuffer::setup() {
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         std::println(stderr, "Framebuffer is not complete!");
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    glGenTextures(1, &depthTexture.id);
+    glBindTexture(GL_TEXTURE_2D, depthTexture.id);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0,
+                 GL_DEPTH_COMPONENT,
+                 GL_FLOAT, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
+                           depthTexture.id, 0);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        std::println(stderr, "Framebuffer is not complete!");
     }
 }
 
@@ -193,6 +216,11 @@ void FrameBuffer::resize() const {
     glBindTexture(GL_TEXTURE_2D, texture.id);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, GL_RGB,
                  GL_UNSIGNED_BYTE, nullptr);
+
+    glBindTexture(GL_TEXTURE_2D, depthTexture.id);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0,
+                 GL_DEPTH_COMPONENT,
+                 GL_FLOAT, nullptr);
 }
 
 void FrameBuffer::setMultisampled(const bool multisampled) {
