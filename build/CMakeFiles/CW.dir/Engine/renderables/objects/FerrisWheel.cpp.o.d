@@ -1125,4 +1125,8 @@ CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.o: \
   /opt/homebrew/include/glm/gtc/../vector_relational.hpp \
   /opt/homebrew/include/glm/gtc/../common.hpp \
   /opt/homebrew/include/glm/ext/matrix_transform.hpp \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/graphics/Color.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/concepts \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/common_with.h \
+  /opt/homebrew/include/glm/ext/vector_float4.hpp

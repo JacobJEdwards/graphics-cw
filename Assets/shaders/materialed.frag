@@ -109,9 +109,6 @@ void main() {
     vec3 result = calculateBlinnPhongLighting(sun.direction, viewDir, normal, sun.diffuse, vec3(material.diffuse), material
     .shininess);
 
-    float sunHeight = sun.position.y;
-    float sunFactor = clamp(sunHeight, 0.3, 1.0);
-    result *= sunFactor;
 
     FragColor = vec4(result, 1.0);
 

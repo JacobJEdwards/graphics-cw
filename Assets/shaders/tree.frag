@@ -82,44 +82,9 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     return shadow;
 }
 
-
-
-vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3
-surfaceColor, float shininess) {
-    // Normalize vectors
-    lightDirection = normalize(lightDirection);
-    viewDirection = normalize(viewDirection);
-    surfaceNormal = normalize(surfaceNormal);
-
-    vec3 halfwayDir = normalize(lightDirection + viewDirection);
-
-    float diffuseFactor = max(dot(lightDirection, surfaceNormal), 0.0);
-
-    float specularFactor = 0.0;
-
-    if (diffuseFactor > 0.0) {
-        specularFactor = pow(max(dot(surfaceNormal, halfwayDir), 0.0), shininess);
-    }
-
-    vec3 ambient = 0.1 * lightColor;
-    vec3 diffuse = diffuseFactor * lightColor * surfaceColor;
-    vec3 specular = specularFactor * lightColor;
-
-    // shadow
-    // float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
-    // vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
-    vec3 lighting = (ambient + diffuse + specular);
-
-    return lighting;
-}
-
-
 void main() {
+    vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec4 result = texture(material.texture_diffuse1, fs_in.TexCoords);
-
-    float sunHeight = sun.position.y;
-    float sunFactor = clamp(sunHeight, 0.3, 1.0);
-    result.rgb *= sunFactor;
 
     FragColor = result;
 

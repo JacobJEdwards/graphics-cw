@@ -27,9 +27,9 @@ uniform vec3 viewPos;
 uniform Light sun;
 
 // points that have been pathed
-uniform vec3 pathedPoints[256];
-uniform int pathedPointsCount = 0;
-uniform float pathedPointsRadius = 5.0;
+uniform vec3 pathedPoints[512];
+uniform int pathedPointsCount;
+uniform float pathedPointsRadius = 100.0;
 uniform float pathDarkness = 0.5;
 
 const vec3 grassColor = vec3(0.2, 0.8, 0.2);
@@ -141,10 +141,8 @@ vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, floa
     vec3 ambient = calculateAmbient(color);
     vec3 diffuse = calculateDiffuse(normal, color);
 
-    vec3 viewDir = normalize(viewPos - fragPos);
-    vec3 halfwayDir = normalize(sun.direction + viewDir);
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
-    vec3 specular = spec * vec3(0.2);
+    vec3 specular = calculateSpecular(normal, viewPos, fragPos);
+
 
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;
 
@@ -155,15 +153,13 @@ vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, floa
     float sunHeightFactor = clamp(sunHeight, 0.3, 1.0);
     lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
 
-    if (pathedPointsCount > 0) {
-        for (int i = 0; i < pathedPointsCount; i++) {
-            vec3 pathedPoint = pathedPoints[i];
-            vec3 nextPathedPoint = pathedPoints[(i + 1) % pathedPointsCount];
+    for (int i = 0; i < pathedPointsCount; i++) {
+        vec3 pathedPoint = pathedPoints[i];
+        vec3 nextPathedPoint = pathedPoints[(i + 1)];
 
-            if (isOnPath(fragPos, pathedPoint, nextPathedPoint)) {
-                lighting = pathColor;
-                break;
-            }
+        if (isOnPath(fragPos, pathedPoint, nextPathedPoint)) {
+            lighting = mix(lighting, pathColor, pathDarkness);
+            break;
         }
     }
 

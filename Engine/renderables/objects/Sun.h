@@ -40,6 +40,7 @@ private:
     float speed = 1.0F;
 
     float colorMixFactor = 0.0F;
+    float darknessFactor = 0.0F;
 
     Entity moon;
 };

@@ -60,6 +60,7 @@ namespace Color {
     constexpr auto MAUVE = glm::vec3(0.88F, 0.69F, 0.8F);
     constexpr auto LILAC = glm::vec3(0.78F, 0.64F, 0.78F);
     constexpr auto INDIGO = glm::vec3(0.29F, 0.0F, 0.51F);
+    constexpr auto DARKGREY = glm::vec3(0.2, 0.2, 0.2);
 
     template<typename T>
     constexpr auto fromRGB(T r, T g, T b) -> glm::vec3 requires std::integral<T> || std::floating_point<T> {

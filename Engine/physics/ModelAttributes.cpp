@@ -1,6 +1,7 @@
 #include "physics/ModelAttributes.h"
 
 #include <algorithm>
+#include <print>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/quaternion_trigonometric.hpp>
@@ -17,20 +18,6 @@
 
 void Physics::Attributes::update(const float dt) {
     previousTransform = transform;
-
-
-    const glm::quat interpolatedOrientation = glm::slerp(currentOrientation, targetOrientation, 0.1F);
-
-    const glm::mat4 interpolatedRotationMatrix = glm::mat4_cast(interpolatedOrientation);
-
-    const auto scale = glm::vec3(glm::length(transform[0]), glm::length(transform[1]),
-                                 glm::length(transform[2]));
-
-    transform[0] = glm::vec4(interpolatedRotationMatrix[0] * scale.x);
-    transform[1] = glm::vec4(interpolatedRotationMatrix[1] * scale.y);
-    transform[2] = glm::vec4(interpolatedRotationMatrix[2] * scale.z);
-    transform[3] = glm::vec4(position, 1.0F);
-
 
     velocity += acceleration * dt;
     position += velocity * dt;

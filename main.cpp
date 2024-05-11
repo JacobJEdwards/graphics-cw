@@ -145,13 +145,10 @@ auto main() -> int {
 
     auto shader = scene.getTerrain()->getShader();
     for (std::size_t i = 0; i < pathPoints.size(); i++) {
-        auto worldLoc = pathPoints[i];
-        worldLoc.y = scene.getTerrain()->getTerrainHeight(pathPoints[i].x, pathPoints[i].z);
-        shader->setUniform("pathedPoints[" + std::to_string(i) + "]", worldLoc);
+        shader->setUniform("pathedPoints[" + std::to_string(i) + "]", pathPoints[i]);
     }
 
-    shader->setUniform(
-        "pathedPointsCount", static_cast<int>(pathPoints.size()));
+    shader->setUniform("pathedPointsCount", static_cast<int>(pathPoints.size()));
 
 
     std::vector<std::shared_ptr<Entity> > entities;
@@ -234,7 +231,7 @@ auto main() -> int {
         View::clearTarget(Color::BLACK);
 
         auto texture = shadowBuffer.getTexture();
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE10);
         glBindTexture(GL_TEXTURE_2D, texture);
 
         for (const auto &[name, shader]: shaderManager.getAll()) {
@@ -250,7 +247,7 @@ auto main() -> int {
 
             shader->setUniform(
                 "lightSpaceMatrix", lightSpaceMatrix);
-            shader->setUniform("shadowMap", 0);
+            shader->setUniform("shadowMap", 10);
             if (!App::paused) {
                 shader->setUniform("time", App::view.getTime());
             }
@@ -266,7 +263,11 @@ auto main() -> int {
         shader = scene.getTerrain()->getShader();
         shader->use();
         shader->setUniform(
-            "pathDarkness", models[0]->getLaps() / 10.0F);
+            "pathDarkness", models[0]->getLaps() / 1000.0F);
+        for (std::size_t i = 0; i < pathPoints.size(); i++) {
+            shader->setUniform("pathedPoints[" + std::to_string(i) + "]", pathPoints[i]);
+        }
+        shader->setUniform("pathedPointsCount", static_cast<int>(pathPoints.size()));
 
         shader = shaderManager.get("Untextured");
         shader->use();

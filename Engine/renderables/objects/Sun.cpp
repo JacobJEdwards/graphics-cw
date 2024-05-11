@@ -77,19 +77,23 @@ void Sun::update(const float deltaTime) {
     moon.attributes.position.y = -y;
     moon.attributes.position.z = -z;
 
-    const float currentHeight = attributes.position.z;
-    constexpr float max = 20.0F;
-    constexpr float min = -20.0F;
+    const float currentHeight = attributes.position.y;
+    constexpr float max = 10.0F;
+    constexpr float min = -10.0F;
 
     const float t = (currentHeight - min) / (max - min);
 
     const float angleRad = glm::radians(angle);
 
-    const float tHorizontal = std::abs(std::cos(angleRad));
+    const float tHorizontal = std::abs(glm::cos(angleRad));
 
     float mixFactor = glm::clamp(t, 0.0F, 1.0F);
     mixFactor *= glm::clamp(tHorizontal, 0.0F, 1.0F);
     colorMixFactor = mixFactor;
+
+    // darkness factor -> if sun is below horizon, increase darkness
+    darknessFactor = glm::clamp(1.0F - t, 0.0F, 0.8F);
+
 
     moon.attributes.transform = glm::translate(Config::IDENTITY_MATRIX, moon.attributes.position);
     moon.attributes.transform = glm::scale(moon.attributes.transform, glm::vec3(2.5F));
@@ -122,15 +126,21 @@ void Sun::setScale(const float newScale) { scale = newScale; }
 
 
 auto Sun::getDiffuse() const -> glm::vec3 {
-    return glm::mix(Color::WHITE, Color::ORANGE, colorMixFactor * 0.9F);
+    const auto color = glm::mix(Color::WHITE, Color::ORANGE, colorMixFactor * 0.9F);
+
+    return glm::mix(color, Color::DARKGREY, darknessFactor);
 }
 
 auto Sun::getSpecular() const -> glm::vec3 {
-    return glm::mix(Color::WHITE, Color::ORANGE, colorMixFactor * 0.7F);
+    const auto color = glm::mix(Color::WHITE, Color::ORANGE, colorMixFactor * 0.7F);
+
+    return glm::mix(color, Color::DARKGREY, darknessFactor);
 }
 
 auto Sun::getAmbient() const -> glm::vec3 {
-    return glm::mix(Color::WHITE, Color::ORANGE, colorMixFactor * 0.5F);
+    const auto color = glm::mix(Color::WHITE, Color::ORANGE, colorMixFactor * 0.5F);
+
+    return glm::mix(color, Color::DARKGREY, darknessFactor);
 }
 
 

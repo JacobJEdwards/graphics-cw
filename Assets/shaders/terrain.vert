@@ -7,6 +7,7 @@ layout (location = 4) in vec3 aBitangent;
 
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 model;
 uniform mat4 lightSpaceMatrix;
 
 out VS_OUT {
@@ -23,7 +24,7 @@ void main()
     gl_Position = projection * view * vec4(aPos, 1.0);
     vs_out.TexCoords = aTexCoords;
 
-    vs_out.FragPos = vec3(vec4(aPos, 1.0));
+    vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
     vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
     // transform normal vectors into world space
     vs_out.Normal = mat3(transpose(inverse(view))) * aNormal;

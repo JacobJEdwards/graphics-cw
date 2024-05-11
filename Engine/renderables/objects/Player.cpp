@@ -162,7 +162,7 @@ void Player::draw(const std::shared_ptr<Shader> shader) const {
     }
 
     shader->use();
-    shader->setUniform("color", glm::vec4(1.0F, 0.0F, 0.0F, 1.0F));
+    shader->setUniform("color", Color::GREEN);
     Entity::draw(shader);
 }
 

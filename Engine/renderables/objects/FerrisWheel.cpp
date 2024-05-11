@@ -11,6 +11,7 @@
 #include "graphics/Model.h"
 #include <memory>
 #include <glm/ext/matrix_transform.hpp>
+#include <graphics/Color.h>
 
 FerrisWheel::FerrisWheel() : Entity("../Assets/objects/ferris/ferris-static.obj"),
                              staticPart("../Assets/objects/ferris/ferris-static.obj"),
@@ -35,7 +36,7 @@ FerrisWheel::FerrisWheel() : Entity("../Assets/objects/ferris/ferris-static.obj"
 
 void FerrisWheel::draw(const std::shared_ptr<Shader> shader) const {
     shader->use();
-    shader->setUniform("color", glm::vec4(1.0F, 1.0F, 1.0F, 1.0F));
+    shader->setUniform("color", Color::WHITE);
     shader->setUniform("model", staticPartTransform);
     staticPart.draw(shader);
 
@@ -44,8 +45,6 @@ void FerrisWheel::draw(const std::shared_ptr<Shader> shader) const {
 
     // shader->setUniform("model", cabinTransform);
     // cabin.draw(shader);
-
-    shader->setUniform("model", entranceTransform);
 }
 
 void FerrisWheel::update(const float deltaTime) {

@@ -85,6 +85,24 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     return shadow;
 }
 
+vec3 calculateAmbient(vec3 color) {
+    return 0.3 * color * sun.ambient;
+}
+
+vec3 calculateDiffuse(vec3 normal, vec3 color) {
+    float diff = max(dot(normal, sun.direction), 0.0);
+    return diff * color * sun.diffuse;
+}
+
+vec3 calculateSpecular(vec3 normal, vec3 viewPos, vec3 fragPos) {
+    vec3 viewDir = normalize(viewPos - fragPos);
+    vec3 halfwayDir = normalize(sun.direction + viewDir);
+
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    return spec * sun.specular;
+}
+
+
 
 vec3 calculateBlinnPhongLighting(vec3 lightDirection, vec3 viewDirection, vec3 surfaceNormal, vec3 lightColor, vec3
 surfaceColor, float shininess) {
@@ -113,9 +131,8 @@ void main() {
 
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec4 texColor = texture(material.texture_diffuse1, fs_in.TexCoords);
-    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
 
-    vec3 result = calculateBlinnPhongLighting(lightDir, viewDir, norm, sun.diffuse, texColor.xyz, material
+    vec3 result = calculateBlinnPhongLighting(sun.direction, viewDir, norm, sun.diffuse, texColor.xyz, material
     .shininess);
 
     float damageFactor = texture(damageTexture, fs_in.TexCoords).r;
