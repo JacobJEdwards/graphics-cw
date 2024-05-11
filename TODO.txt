@@ -1,0 +1,9 @@
+- pitch and roll terrain collisons - like 3 hours
+- interaction with a bumper car to start driving  - half hour
+- draw wallls or something - procastinate this 
+- few more theem park type stuff - and this 
+- at least one more light - probably 5 hours 
+  - use ubos for lights and maybe proj view 
+- rolling steering wheels 
+- no chance ill do bones 
+- body underneath fps would be nice
