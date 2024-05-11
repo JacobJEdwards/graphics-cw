@@ -34,7 +34,7 @@ Sun::Sun() : Entity("../Assets/objects/sun/sun.obj") {
 
     attributes.position.x = 0.0F;
     attributes.position.y = 0.0F;
-    attributes.position.z = -50.0F;
+    attributes.position.z = 0.0F;
     attributes.gravityAffected = false;
 
     moon.attributes.position.x = 0.0F;

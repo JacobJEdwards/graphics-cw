@@ -168,8 +168,6 @@ auto main() -> int {
                 getProjectionMatrix();
         const auto projectionMatrixDepth = player->getCamera().
                 getProjectionDepthMatrix();
-        // gen an ortho matrix for the view depth map
-        const auto orthoMatrix = glm::ortho(-15.0F, 15.0F, -15.0F, 15.0F, near_plane, far_plane);
 
         const auto viewMatrix = player->getCamera().getViewMatrix();
         const auto sunPos = scene.getSkybox()->getSun().getPosition();
@@ -200,7 +198,9 @@ auto main() -> int {
             model->draw(shader);
         }
 
-        playerManager.draw(shader);
+        for (const auto &[name, player]: playerManager.getAll()) {
+            player->draw(shader);
+        }
 
         scene.getTerrain()->getTrees().draw(lightView, lightProjection);
         scene.getTerrain()->getClouds().draw(lightView, lightProjection);

@@ -31,6 +31,7 @@ Player::Player(const Mode mode) : Entity("../Assets/objects/person/person2.obj")
 
     auto carModelMat = Config::IDENTITY_MATRIX;
     carModelMat = glm::translate(carModelMat, glm::vec3(0.0F, 10.0F, 0.0F));
+    scale(glm::vec3(1.5F));
 
     switch (mode) {
         case Mode::FPS:
