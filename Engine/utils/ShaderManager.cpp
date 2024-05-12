@@ -13,9 +13,9 @@
 #include <string>
 #include <unordered_map>
 
-void ShaderManager::add(const std::string &name, const std::filesystem::path &vertexPath,
-                        const std::filesystem::path &fragmentPath, const std::filesystem::path &geometryPath,
-                        const std::filesystem::path &tessControlPath, const std::filesystem::path &tessEvalPath) {
+void ShaderManager::add(const std::string &name, std::filesystem::path vertexPath,
+                        std::filesystem::path fragmentPath, std::filesystem::path geometryPath,
+                        std::filesystem::path tessControlPath, std::filesystem::path tessEvalPath) {
     shaders[name] = std::make_shared<Shader>(vertexPath, fragmentPath, geometryPath, tessControlPath, tessEvalPath);
 }
 

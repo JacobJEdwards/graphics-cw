@@ -25,9 +25,11 @@ public:
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    void draw(const std::shared_ptr<Shader> shader) const override;
+    void draw(std::shared_ptr<Shader> shader) const override;
 
-    void update(const float deltaTime) const;
+    void draw() const override;
+
+    void update(float deltaTime) const;
 
     auto getTerrain() -> std::shared_ptr<ProceduralTerrain>;
 

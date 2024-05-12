@@ -159,6 +159,13 @@ void VertexBuffer::setup() const {
     glVertexAttribPointer(
         Vertex::Layout::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
         reinterpret_cast<void *>(offsetof(Vertex::Data, bitangent)));
+
+    // tbn matrix
+    glEnableVertexAttribArray(Vertex::Layout::TBN);
+    glVertexAttribPointer(
+        Vertex::Layout::TBN, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::Data),
+        reinterpret_cast<void *>(offsetof(Vertex::Data, TBN)));
+
     unbind();
 }
 

@@ -9,11 +9,11 @@ out vec2 TexCoords;
 out vec3 FragPos;
 
 uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+
+#include "matrices.glsl"
 
 void main() {
     TexCoords = aTexCoords;
     FragPos = vec3(model * vec4(aPos, 1.0));
-    gl_Position = vec4(projection * view * vec4(FragPos, 1.0)).xyww;
+    gl_Position = vec4(matrices.projection * matrices.view * vec4(FragPos, 1.0)).xyww;
 }

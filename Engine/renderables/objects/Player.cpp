@@ -167,6 +167,10 @@ void Player::draw(const std::shared_ptr<Shader> shader) const {
     Entity::draw(shader);
 }
 
+void Player::draw() const {
+    draw(shader);
+}
+
 void Player::update(const float dt) {
     if (mode == Mode::PATH || mode == Mode::DRIVE || (mode == Mode::DUEL && isDriving)) {
         camera.update(dt);

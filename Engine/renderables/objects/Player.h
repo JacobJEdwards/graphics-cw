@@ -29,6 +29,8 @@ public:
 
     void draw(std::shared_ptr<Shader> shader) const override;
 
+    void draw() const override;
+
     void processKeyboard(Direction direction, float deltaTime);
 
     [[nodiscard]] auto getCamera() -> Camera &;

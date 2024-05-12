@@ -14,17 +14,18 @@ out VS_OUT {
     vec3 Normal;
     vec3 Tangent;
     vec3 Bitangent;
+    vec4 FragPosLightSpace;
 } vs_out;
 
-uniform mat4 projection;
-uniform mat4 view;
+#include "matrices.glsl"
 
 void main() {
-    gl_Position = projection * view * instanceModelMatrix * vec4(position, 1.0);;
+    gl_Position = matrices.projection * matrices.view * instanceModelMatrix * vec4(position, 1.0);;
     vs_out.TexCoords = texCoords;
     vs_out.FragPos = vec3(instanceModelMatrix * vec4(position, 1.0));
     vs_out.Normal = mat3(transpose(inverse(instanceModelMatrix))) * normal;
     vs_out.Tangent = mat3(transpose(inverse(instanceModelMatrix))) * tangent;
     vs_out.Bitangent = mat3(transpose(inverse(instanceModelMatrix))) * bitangent;
+    vs_out.FragPosLightSpace = matrices.lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
 }
 

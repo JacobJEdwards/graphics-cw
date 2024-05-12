@@ -22,6 +22,7 @@
 
 #include "App.h"
 #include "imgui/imgui.h"
+#include "renderables/Entity.h"
 #include "utils/Camera.h"
 #include "utils/PlayerManager.h"
 
@@ -55,6 +56,64 @@ void setupApp();
 void setupShaders();
 
 void setupPlayers();
+
+struct Matrices {
+    glm::mat4 view = Config::IDENTITY_MATRIX;
+    glm::mat4 projection = Config::IDENTITY_MATRIX;
+    glm::mat4 lightSpaceMatrix = Config::IDENTITY_MATRIX;
+};
+
+struct DirectionalLight {
+    glm::vec3 direction = glm::vec3(-0.2F, -1.0F, -0.3F);
+    glm::vec3 ambient = glm::vec3(0.05F, 0.05F, 0.05F);
+    glm::vec3 diffuse = glm::vec3(0.4F, 0.4F, 0.4F);
+    glm::vec3 specular = glm::vec3(0.5F, 0.5F, 0.5F);
+};
+
+struct PointLight {
+    glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 ambient = glm::vec3(0.05F, 0.05F, 0.05F);
+    glm::vec3 diffuse = glm::vec3(0.8F, 0.8F, 0.8F);
+    glm::vec3 specular = glm::vec3(1.0F, 1.0F, 1.0F);
+
+    float constant = 1.0F;
+    float linear = 0.09F;
+    float quadratic = 0.032F;
+};
+
+struct SpotLight {
+    glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 direction = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 ambient = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 diffuse = glm::vec3(1.0F, 1.0F, 1.0F);
+    glm::vec3 specular = glm::vec3(1.0F, 1.0F, 1.0F);
+
+    float constant = 1.0F;
+    float linear = 0.09F;
+    float quadratic = 0.032F;
+
+    float cutOff = glm::cos(glm::radians(12.5F));
+    float outerCutOff = glm::cos(glm::radians(15.0F));
+};
+
+struct Lights {
+    DirectionalLight sun = DirectionalLight();
+    /*
+    PointLight pointLight[4] = {
+        PointLight(),
+        PointLight(),
+        PointLight(),
+        PointLight()
+    };
+    int pointLightCount = 0;
+    SpotLight spotLight = SpotLight();
+    */
+};
+
+struct CameraInfo {
+    glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 direction = glm::vec3(0.0F, 0.0F, 0.0F);
+};
 
 auto main() -> int {
     setupApp();
@@ -161,6 +220,52 @@ auto main() -> int {
     entities.push_back(scene.getFerrisWheel());
 
 
+    // matrices ubo setup
+    GLuint matricesUBO;
+    glGenBuffers(1, &matricesUBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(Matrices), nullptr, GL_STATIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, matricesUBO);
+
+    Matrices matrices;
+    matrices.view = Config::IDENTITY_MATRIX;
+    matrices.projection = Config::IDENTITY_MATRIX;
+    matrices.lightSpaceMatrix = Config::IDENTITY_MATRIX;
+
+    // lights ubo setup
+    GLuint lightsUBO;
+    glGenBuffers(1, &lightsUBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(Lights), nullptr, GL_STATIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightsUBO);
+
+    Lights lights;
+    lights.sun.direction = glm::vec3(-0.2F, -1.0F, -0.3F);
+    lights.sun.ambient = glm::vec3(1.0F);
+    lights.sun.diffuse = glm::vec3(1.0F);
+    lights.sun.specular = glm::vec3(1.0F);
+
+    GLuint cameraUBO;
+    glGenBuffers(1, &cameraUBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(CameraInfo), nullptr, GL_STATIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 2, cameraUBO);
+
+    CameraInfo cameraInfo;
+
+    // set the block binding points
+    for (const auto &[name, shader]: shaderManager.getAll()) {
+        shader->use();
+        const auto matricesIndex = glGetUniformBlockIndex(shader->getProgramID(), "Matrices");
+        glUniformBlockBinding(shader->getProgramID(), matricesIndex, 0);
+
+        const auto lightsIndex = glGetUniformBlockIndex(shader->getProgramID(), "Lights");
+        glUniformBlockBinding(shader->getProgramID(), lightsIndex, 1);
+
+        const auto cameraIndex = glGetUniformBlockIndex(shader->getProgramID(), "Camera");
+        glUniformBlockBinding(shader->getProgramID(), cameraIndex, 2);
+    }
+
     App::view.setPipeline([&] {
         View::clearTarget(Color::BLACK);
         const auto player = playerManager.getCurrent();
@@ -171,13 +276,16 @@ auto main() -> int {
 
         const auto viewMatrix = player->getCamera().getViewMatrix();
         const auto sunPos = scene.getSkybox()->getSun().getPosition();
-        const auto sunDir = scene.getSkybox()->getSun().getDirection();
-        const auto sunDiffuse = scene.getSkybox()->getSun().getDiffuse();
-        const auto sunAmbient = scene.getSkybox()->getSun().getAmbient();
-        const auto sunSpecular = scene.getSkybox()->getSun().getSpecular();
 
         const auto viewPos = player->getCamera().getPosition();
         const auto viewDir = player->getCamera().getFront();
+
+        cameraInfo.position = viewPos;
+        cameraInfo.direction = viewDir;
+
+        glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(CameraInfo), &cameraInfo);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
         // shadow pass
         shadowBuffer.bind();
@@ -186,10 +294,27 @@ auto main() -> int {
         const auto lightView = lookAt(sunPos / 20.0F, glm::vec3(0.0F), glm::vec3(0.0F, 1.0F, 0.0F));
         const auto lightSpaceMatrix = lightProjection * lightView;
 
+        matrices.view = lightView;
+        matrices.projection = lightProjection;
+        matrices.lightSpaceMatrix = lightSpaceMatrix;
+
+        glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrices), &matrices);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+        // lights ubo
+        lights.sun.direction = scene.getSkybox()->getSun().getDirection();
+        lights.sun.ambient = scene.getSkybox()->getSun().getAmbient();
+        lights.sun.diffuse = scene.getSkybox()->getSun().getDiffuse();
+        lights.sun.specular = scene.getSkybox()->getSun().getSpecular();
+
+        glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Lights), &lights);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+
         shader = shaderManager.get("Shadow");
         shader->use();
-        shader->setUniform("view", lightView);
-        shader->setUniform("projection", lightProjection);
 
         for (const auto &model: models) {
             if (model->hasBroke()) {
@@ -202,8 +327,8 @@ auto main() -> int {
             player->draw(shader);
         }
 
-        scene.getTerrain()->getTrees().draw(lightView, lightProjection);
-        scene.getTerrain()->getClouds().draw(lightView, lightProjection);
+        scene.getTerrain()->getTrees().draw();
+        scene.getTerrain()->getClouds().draw();
         scene.draw(shader);
 
         shadowBuffer.unbind();
@@ -212,9 +337,14 @@ auto main() -> int {
 
         DepthBuffer::Clear();
 
+        matrices.view = viewMatrix;
+        matrices.projection = projectionMatrixDepth;
+
+        glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrices), &matrices);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
         shader->use();
-        shader->setUniform("view", viewMatrix);
-        shader->setUniform("projection", projectionMatrixDepth);
 
         for (const auto &model: models) {
             model->draw(shader);
@@ -222,11 +352,19 @@ auto main() -> int {
 
         playerManager.draw(shader);
 
-        scene.getTerrain()->getTrees().draw(viewMatrix, projectionMatrixDepth);
-        scene.getTerrain()->getClouds().draw(viewMatrix, projectionMatrixDepth);
+        scene.getTerrain()->getTrees().draw();
+        scene.getTerrain()->getClouds().draw();
         scene.draw(shader);
 
         viewBuffer.unbind();
+
+        matrices.view = viewMatrix;
+        matrices.projection = projectionMatrix;
+        matrices.lightSpaceMatrix = lightSpaceMatrix;
+
+        glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrices), &matrices);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
         View::clearTarget(Color::BLACK);
 
@@ -236,17 +374,6 @@ auto main() -> int {
 
         for (const auto &[name, shader]: shaderManager.getAll()) {
             shader->use();
-            shader->setUniform("sun.position", sunPos);
-            shader->setUniform("sun.direction", sunDir);
-            shader->setUniform("sun.diffuse", sunDiffuse);
-            shader->setUniform("sun.ambient", sunAmbient);
-            shader->setUniform("sun.specular", sunSpecular);
-
-            shader->setUniform("viewPos", viewPos);
-            shader->setUniform("viewDir", viewDir);
-
-            shader->setUniform(
-                "lightSpaceMatrix", lightSpaceMatrix);
             shader->setUniform("shadowMap", 10);
             if (!App::paused) {
                 shader->setUniform("time", App::view.getTime());
@@ -254,11 +381,11 @@ auto main() -> int {
         }
 
         for (const auto &model: models) {
-            model->draw(viewMatrix, projectionMatrix);
+            model->draw();
         }
 
-        particleSystem.draw(viewMatrix, projectionMatrix);
-        playerManager.draw(viewMatrix, projectionMatrix);
+        particleSystem.draw();
+        playerManager.draw();
 
         shader = scene.getTerrain()->getShader();
         shader->use();
@@ -272,24 +399,19 @@ auto main() -> int {
         shader = shaderManager.get("Untextured");
         shader->use();
         shader->setUniform("color", glm::vec3(1.0F, 1.0F, 1.0F));
-        scene.draw(viewMatrix, projectionMatrix);
-        walls.draw(viewMatrix, projectionMatrix);
+        scene.draw();
+        walls.draw();
+
 
         if (App::view.highQuality) {
             shader = shaderManager.get("Grass");
-            shader->use();
-
-            shader->setUniform("view", viewMatrix);
-            shader->setUniform("projection", projectionMatrix);
-
             scene.getTerrain()->draw(shader);
         }
+
 
         texture = viewBuffer.getTexture();
         shader = shaderManager.get("PostProcess");
         shader->use();
-        shader->setUniform("viewMatrix", viewMatrix);
-        shader->setUniform("projectionMatrix", projectionMatrix);
 
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture);

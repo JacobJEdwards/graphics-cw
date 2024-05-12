@@ -54,6 +54,14 @@ void Walls::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     shader->setUniform("projection", projection);
 }
 
+void Walls::draw() const {
+    std::ranges::for_each(walls, [](const auto &wall) {
+        if (App::debug) {
+            wall.box.draw();
+        }
+    });
+}
+
 [[nodiscard]] auto Walls::getWalls() const -> std::array<Wall, 4> {
     return walls;
 }

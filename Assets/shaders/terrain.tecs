@@ -1,0 +1,30 @@
+#version 410 core
+layout(vertices = 4) out;
+
+in VS_OUT {
+    vec2 TexCoords;
+    vec3 Normal;
+    vec3 Tangent;
+    vec3 Bitangent;
+    mat3 TBN;
+    vec3 FragPos;
+    vec4 FragPosLightSpace;
+} tc_in[];
+
+out TC_OUT {
+    vec2 TexCoords;
+    vec3 Normal;
+    vec3 Tangent;
+    vec3 Bitangent;
+    mat3 TBN;
+    vec3 FragPos;
+    vec4 FragPosLightSpace;
+} tc_out[];
+
+void main() {
+    for (int i = 0; i < 3; i++) {
+        gl_TessLevelOuter[i] = gl_in[i].gl_Position.w; // Set tessellation levels based on vertex distance
+        gl_TessLevelInner[i] = gl_in[i].gl_Position.w;
+        tc_out[i] = tc_in[i];
+    }
+}

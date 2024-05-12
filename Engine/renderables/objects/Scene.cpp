@@ -42,6 +42,14 @@ void Scene::draw(const std::shared_ptr<Shader> shader) const {
     skybox->draw(shader);
 }
 
+void Scene::draw() const {
+    terrain->draw();
+    ferrisWheel->draw();
+    rollerCoaster->draw();
+    barriers->draw();
+    skybox->draw();
+}
+
 void Scene::update(const float deltaTime) const {
     ferrisWheel->update(deltaTime);
     skybox->update(deltaTime);

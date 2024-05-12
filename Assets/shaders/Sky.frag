@@ -17,7 +17,9 @@ struct Light {
     vec3 specular;
 };
 
-uniform Light sun;
+#include "noise.frag"
+#include "lights.glsl"
+#include "camera.glsl"
 
 uniform vec3 horizonColor = vec3(0.5, 0.6, 0.7);
 uniform vec3 zenithColor = vec3(0.4, 0.7, 1.0);
@@ -48,50 +50,19 @@ uniform float starDensity = 0.00001;
 uniform float starSharpness = 1.0;
 uniform float starSize = 0.01;
 
-uniform vec3 viewPos;
-
-float hash(float n) {
-    return fract(sin(n) * 43758.5453123);
-}
-
-float noise(vec3 x) {
-    vec3 p = floor(x);
-    vec3 f = fract(x);
-    f = f * f * (3.0 - 2.0 * f);
-
-    float n = p.x + p.y * 157.0 + 113.0 * p.z;
-    return mix(mix(mix(hash(n + 0.0), hash(n + 1.0), f.x),
-    mix(hash(n + 157.0), hash(n + 158.0), f.x), f.y),
-    mix(mix(hash(n + 113.0), hash(n + 114.0), f.x),
-    mix(hash(n + 270.0), hash(n + 271.0), f.x), f.y), f.z);
-}
-
-float fbm(vec3 x) {
-    float v = 0.0;
-    float a = 0.5;
-    float frequency = 1.0;
-    float amplitude = 1.0;
-    for (int i = 0; i < 5; ++i) {
-        v += a * noise(x * frequency);
-        frequency *= 2.0;
-        amplitude *= 0.5;
-        x *= 2.0;
-    }
-    return v;
-}
-
 void main() {
     vec3 viewDir = normalize(fs_in.FragPos);
-    float sunHeightFactor = clamp(sun.direction.y, 0.0, 1.0);
+
+    float sunHeightFactor = clamp(lights.sun.direction.y, 0.0, 1.0);
 
     vec3 finalSkyColor = mix(zenithColor, horizonColor, sunHeightFactor);
     finalSkyColor += sunHeightFactor * vec3(1.0, 0.6, 0.3);
 
-    float sunAmount = pow(max(0.0, dot(sun.direction, viewDir)), sunSharpness);
-    vec3 finalSun = sun.diffuse * sunAmount * sunIntensity;
+    float sunAmount = pow(max(0.0, dot(lights.sun.direction, viewDir)), sunSharpness);
+    vec3 finalSun = lights.sun.diffuse * sunAmount * sunIntensity;
 
     float cloudAmount = pow(max(0.0, 1.0 - fs_in.FragPos.y), cloudSharpness);
-    float cloudNoise = fbm(fs_in.FragPos * cloudScale + vec3(0.0, time * cloudSpeed, 0.0));
+    float cloudNoise = fbm3d(fs_in.FragPos * cloudScale + vec3(0.0, time * cloudSpeed, 0.0));
     float cloudDensityFactor = cloudDensity * cloudCover;
     vec4 cloud = cloudColor * cloudAmount * cloudNoise * cloudDensityFactor;
 
@@ -112,7 +83,7 @@ void main() {
 
     finalSkyColor = mix(finalSkyColor, cloud.rgb, cloud.a);
 
-    if (sun.position.y < 0.0) finalSkyColor += stars;
+    // if (sun.position.y < 0.0) finalSkyColor += stars;
 
     FragColor = vec4(finalSkyColor, 1.0);
 }

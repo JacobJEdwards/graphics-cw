@@ -39,6 +39,7 @@ auto App::init() -> bool {
     // glBlendFunc(GL_ONE, GL_ONE);
     // glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
+    glPatchParameteri(GL_PATCH_VERTICES, 4);
 
     glEnable(GL_FRAMEBUFFER_SRGB);
     // glEnable(GL_MULTISAMPLE);

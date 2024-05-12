@@ -310,12 +310,16 @@ void BoundingBox::initBuffer() {
 
 void BoundingBox::draw(const glm::mat4 &view,
                        const glm::mat4 &projection) const {
-    const GLuint previousProgram = ShaderManager::GetActiveShader();
-
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
 
+    draw(shader);
+}
+
+void BoundingBox::draw(const std::shared_ptr<Shader> shader) const {
+    shader->use();
+    const GLuint previousProgram = ShaderManager::GetActiveShader();
     shader->setUniform("model", Config::IDENTITY_MATRIX);
     const auto buffer = std::make_unique<VertexBuffer>();
     buffer->drawMode = GL_LINES;
@@ -343,17 +347,12 @@ void BoundingBox::draw(const glm::mat4 &view,
     buffer->unbind();
 
     for (const auto &child: children) {
-        child->draw(view, projection);
+        child->draw();
     }
 
     glUseProgram(previousProgram);
 }
 
-void BoundingBox::draw() const {
-    buffer->bind();
-    buffer->draw();
-    buffer->unbind();
-}
 
 auto BoundingBox::getCollisionPoint(const BoundingBox &box) const -> glm::vec3 {
     const glm::vec3 overlap = glm::min(max, box.max) - glm::max(min, box.min);

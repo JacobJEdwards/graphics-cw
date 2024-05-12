@@ -11,6 +11,7 @@
 
 class Sun final : public Entity {
 public:
+    using Entity::draw;
     Sun();
 
     void update(float deltaTime) override;

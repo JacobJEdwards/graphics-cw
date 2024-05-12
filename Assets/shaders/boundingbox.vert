@@ -6,10 +6,10 @@ layout (location = 2) in vec2 texCoord;
 out vec3 FragPos;
 
 uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+
+#include "matrices.glsl"
 
 void main() {
     FragPos = vec3(model * vec4(position, 1.0));
-    gl_Position = projection * view * vec4(FragPos, 1.0);
+    gl_Position = matrices.projection * matrices.view * vec4(FragPos, 1.0);
 }

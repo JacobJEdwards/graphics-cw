@@ -31,6 +31,8 @@ public:
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
+    void draw() const override;
+
     [[nodiscard]] auto getWalls() const -> std::array<Wall, 4>;
 
 private:

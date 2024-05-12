@@ -9,11 +9,12 @@
 #include "renderables/objects/Player.h"
 #include "graphics/Shader.h"
 #include <memory>
+#include <print>
 #include <string>
 #include <ranges>
 
 
-void PlayerManager::draw(const glm::mat4 &view, const glm::mat4 &projection) {
+void PlayerManager::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     using namespace std::ranges;
 
     for_each(players | views::values | views::filter([&](const auto &player) {
@@ -23,13 +24,23 @@ void PlayerManager::draw(const glm::mat4 &view, const glm::mat4 &projection) {
              });
 }
 
-void PlayerManager::draw(std::shared_ptr<Shader> shader) {
+void PlayerManager::draw(std::shared_ptr<Shader> shader) const {
     using namespace std::ranges;
 
     for_each(players | views::values | views::filter([&](const auto &player) {
                  return player != currentPlayer;
              }), [&](const auto &player) {
                  player->draw(shader);
+             });
+}
+
+void PlayerManager::draw() const {
+    using namespace std::ranges;
+
+    for_each(players | views::values | views::filter([&](const auto &player) {
+                 return player != currentPlayer;
+             }), [&](const auto &player) {
+                 player->draw();
              });
 }
 

@@ -90,7 +90,7 @@ public:
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    void draw() const override;
+    void draw(std::shared_ptr<Shader> shader) const override;
 
     [[nodiscard]] auto getCollisionPoint(const BoundingBox &box) const -> glm::vec3;
 

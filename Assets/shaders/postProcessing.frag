@@ -6,24 +6,17 @@ in VS_OUT {
 
 out vec4 FragColor;
 
-struct Light {
-    vec3 position;
-    vec3 direction;
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-};
+layout(std140) uniform Matrices {
+    mat4 view;
+    mat4 projection;
+    mat4 lightSpaceMatrix;
+} matrices;
 
-uniform Light sun;
+#include "lights.glsl"
+#include "camera.glsl"
 
 uniform sampler2D screenTexture;
 uniform sampler2D depthTexture;
-
-uniform vec3 viewPos;
-uniform vec3 viewDir;
-
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
 
 uniform float gamma = 2.2;
 uniform float exposure = 1.0;
@@ -79,15 +72,6 @@ vec4 applyBlur(sampler2D tex, vec2 texCoords, vec2 direction, float blurAmount) 
     return color / 11.0;
 }
 
-vec3 applyGodrays(vec3 color, vec2 texCoords) {
-    vec3 sunDir = normalize(sun.position - vec3(texCoords, 0.0));
-    float sunDot = dot(sunDir, sun.direction);
-    float sunFactor = smoothstep(0.0, 0.5, sunDot);
-
-    return color + sunFactor * sun.diffuse;
-}
-
-
 void main() {
     vec4 color = texture(screenTexture, fs_in.TexCoords);
     float depthValue = texture(depthTexture, fs_in.TexCoords).r;
@@ -105,8 +89,8 @@ void main() {
     color.rgb = applyBloom(color.rgb);
     // color.rgb = applyGodrays(color.rgb, fs_in.TexCoords);
 
-    float sunsetFactor = max(dot(normalize(sun.position), vec3(0, -1, 0)), 0.0);
-    color.rgb = mix(color.rgb, color.rgb * sun.diffuse, sunsetFactor);
+    float sunsetFactor = clamp(lights.sun.direction.y, 0.0, 1.0);
+    color.rgb = mix(color.rgb, color.rgb * lights.sun.diffuse, sunsetFactor);
 
     float vignette = calculateVignette(fs_in.TexCoords);
     color.rgb *= vignette;

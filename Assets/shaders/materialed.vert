@@ -16,17 +16,15 @@ out VS_OUT {
 } vs_out;
 
 uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
-uniform mat4 lightSpaceMatrix;
 
+#include "matrices.glsl"
 
 void main() {
     vs_out.TexCoords = aTexCoords;
     vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
-    gl_Position = projection * view * model * vec4(aPos, 1.0);
+    gl_Position = matrices.projection * matrices.view * model * vec4(aPos, 1.0);
     vs_out.Normal = mat3(transpose(inverse(model))) * aNormal;
     vs_out.Tangent = mat3(transpose(inverse(model))) * aTangent;
     vs_out.Bitangent = mat3(transpose(inverse(model))) * aBitangent;
-    vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
+    vs_out.FragPosLightSpace = matrices.lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
 }

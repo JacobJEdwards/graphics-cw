@@ -28,10 +28,18 @@ void Skybox::update(const float deltaTime) {
 }
 
 void Skybox::draw(const std::shared_ptr<Shader> shader) const {
+    GLenum prevDepthFunc;
+    glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint *>(&prevDepthFunc));
+    glDepthFunc(GL_LEQUAL);
+
     shader->use();
     skyBuffer->bind();
     skyBuffer->draw();
     skyBuffer->unbind();
+
+    glDepthFunc(prevDepthFunc);
+
+    sun.draw();
 }
 
 [[nodiscard]] auto Skybox::getSun() -> Sun & {
@@ -40,10 +48,6 @@ void Skybox::draw(const std::shared_ptr<Shader> shader) const {
 
 
 void Skybox::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
-    GLenum prevDepthFunc;
-    glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint *>(&prevDepthFunc));
-    glDepthFunc(GL_LEQUAL);
-
     const auto newView = glm::mat4(glm::mat3(view));
 
     shader->use();
@@ -51,9 +55,5 @@ void Skybox::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     shader->setUniform("projection", projection);
 
     draw(shader);
-
-    glDepthFunc(prevDepthFunc);
-
-    sun.draw(view, projection);
 }
 

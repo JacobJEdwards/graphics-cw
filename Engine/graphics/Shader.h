@@ -73,15 +73,15 @@ private:
 
     static constexpr int BUFFER_SIZE = 1024;
 
-    static void checkCompileErrors(GLuint shader, bool isProgram);
+    void checkCompileErrors(GLuint shader, bool isProgram);
 
     void deleteProgram() const;
 
     void load();
 
-    static auto readShaderFile(const std::filesystem::path &path) -> std::string;
+    auto readShaderFile(const std::filesystem::path &path) -> std::string;
 
-    static auto compileShader(const std::string &shaderCode, GLenum shaderType)
+    auto compileShader(const std::string &shaderCode, GLenum shaderType)
         -> GLuint;
 };
 

@@ -18,6 +18,8 @@
 #include <print>
 #include <utility>
 #include <vector>
+#include <graphics/Color.h>
+
 #include "graphics/buffers/VertexBuffer.h"
 #include "graphics/Vertex.h"
 #include "graphics/Shader.h"
@@ -61,19 +63,13 @@ void ProceduralTerrain::draw(const std::shared_ptr<Shader> shader) const {
 
     shader->use();
 
-    shader->setUniform("model", glm::mat4(1.0F));
+    shader->setUniform("model", Config::IDENTITY_MATRIX);
+
+
     for (int i = startY; i < endY; i++) {
         for (int j = startX; j < endX; j++) {
             const std::size_t index = i * numChunksX + j;
             const auto &chunk = chunks[index];
-
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, chunks[0].normalMap.id);
-            shader->setUniform("normalMap", 1);
-
-            glActiveTexture(GL_TEXTURE2);
-            glBindTexture(GL_TEXTURE_2D, noiseTexture.id);
-            shader->setUniform("noiseTexture", 2);
 
             chunk.buffer->bind();
             chunk.buffer->draw();
@@ -82,14 +78,19 @@ void ProceduralTerrain::draw(const std::shared_ptr<Shader> shader) const {
     }
 }
 
+void ProceduralTerrain::draw() const {
+    draw(shader);
+
+    clouds.draw();
+    trees.draw();
+}
+
 void ProceduralTerrain::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     shader->use();
     shader->setUniform("view", view);
     shader->setUniform("projection", projection);
-    shader->setUniform("model", Config::IDENTITY_MATRIX);
 
     draw(shader);
-
 
     clouds.draw(view, projection);
     trees.draw(view, projection);
@@ -332,69 +333,34 @@ constexpr void ProceduralTerrain::generateChunk(const int chunkX, const int chun
         chunk.vertices[chunk.indices[i + 2]].bitangent += bitangent;
     }
 
-    // generate normal map
-    GLuint normalMap;
-    glGenTextures(1, &normalMap);
-    glBindTexture(GL_TEXTURE_2D, normalMap);
+    // height mapping for lod
+    for (std::size_t i = 0; i < chunk.indices.size(); i += 3) {
+        const glm::vec3 v0 = chunk.vertices[chunk.indices[i]].position;
+        const glm::vec3 v1 = chunk.vertices[chunk.indices[i + 1]].position;
+        const glm::vec3 v2 = chunk.vertices[chunk.indices[i + 2]].position;
 
-    std::vector<glm::vec3> data;
+        const glm::vec2 uv0 = chunk.vertices[chunk.indices[i]].texCoords;
+        const glm::vec2 uv1 = chunk.vertices[chunk.indices[i + 1]].texCoords;
+        const glm::vec2 uv2 = chunk.vertices[chunk.indices[i + 2]].texCoords;
 
-    for (auto &vertex: chunk.vertices) {
-        const glm::vec3 normal = vertex.normal;
-        const float r = normal.x * 0.5F + 0.5F;
-        const float g = normal.y * 0.5F + 0.5F;
-        const float b = normal.z * 0.5F + 0.5F;
+        const glm::vec3 edge1 = v1 - v0;
+        const glm::vec3 edge2 = v2 - v0;
 
-        // add random noise
-        const float noise = Random::Float(0.0F, 0.1F);
-        data.emplace_back(r + noise, g + noise, b + noise);
+        const glm::vec2 deltaUV1 = uv1 - uv0;
+        const glm::vec2 deltaUV2 = uv2 - uv0;
 
+        const float f = 1.0F / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
 
-        // add texture data
+        const glm::vec3 tangent = f * (deltaUV2.y * edge1 - deltaUV1.y * edge2);
+        const glm::vec3 bitangent = f * (deltaUV1.x * edge2 - deltaUV2.x * edge1);
+
+        const glm::mat3 TBN = glm::mat3(tangent, bitangent, chunk.vertices[chunk.indices[i]].normal);
+
+        chunk.vertices[chunk.indices[i]].TBN = TBN;
+        chunk.vertices[chunk.indices[i + 1]].TBN = TBN;
+        chunk.vertices[chunk.indices[i + 2]].TBN = TBN;
     }
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, chunkSize - 1, chunkSize - 1, 0, GL_RGB, GL_UNSIGNED_BYTE, data.data());
-    glGenerateMipmap(GL_TEXTURE_2D);
-    // parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    chunk.normalMap.id = normalMap;
 
     chunk.init();
     chunks.push_back(std::move(chunk));
 }
-
-
-void ProceduralTerrain::generateGrass() {
-    // use noise texture
-    // vec4 noiseVal = texture(noiseTexture, fs_in.TexCoords);
-    // lighting += vec3(noiseVal * 0.1);
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    noiseTexture.id = texture;
-
-    std::vector<unsigned char> data(4 * 512 * 512, 255);
-    for (int i = 0; i < 512; i++) {
-        for (int j = 0; j < 512; j++) {
-            // random noise
-            data[4 * (512 * i + j) + 0] = Random::Int(0, 255);
-            data[4 * (512 * i + j) + 1] = Random::Int(0, 255);
-            data[4 * (512 * i + j) + 2] = Random::Int(0, 255);
-            data[4 * (512 * i + j) + 3] = 255;
-        }
-    }
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
-    glGenerateMipmap(GL_TEXTURE_2D);
-    // parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-}
-

@@ -5,15 +5,26 @@ layout (location = 2) in vec2 aTexCoords;
 layout (location = 3) in vec3 aTangent;
 layout (location = 4) in vec3 aBitangent;
 
-out vec2 TexCoords;
-out vec3 FragPos;
-
 uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
 
-void main() {
-    TexCoords = aTexCoords;
-    FragPos = vec3(model * vec4(aPos, 1.0));
-    gl_Position = vec4(projection * view * vec4(FragPos, 1.0)).xyww;
+out VS_OUT {
+    vec2 TexCoords;
+    vec3 Normal;
+    vec3 Tangent;
+    vec3 Bitangent;
+    vec3 FragPos;
+    vec4 FragPosLightSpace;
+} vs_out;
+
+#include "matrices.glsl"
+
+void main()
+{
+    gl_Position = matrices.projection * matrices.view * model * vec4(aPos, 1.0);
+    vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
+    vs_out.TexCoords = aTexCoords;
+    vs_out.Normal = mat3(transpose(inverse(model))) * aNormal;
+    vs_out.Tangent = mat3(transpose(inverse(model))) * aTangent;
+    vs_out.Bitangent = mat3(transpose(inverse(model))) * aBitangent;
+    vs_out.FragPosLightSpace = matrices.lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
 }

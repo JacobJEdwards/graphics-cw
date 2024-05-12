@@ -5,10 +5,7 @@ layout (location = 2) in vec2 aTexCoords;
 layout (location = 3) in vec3 aTangent;
 layout (location = 4) in vec3 aBitangent;
 
-uniform mat4 view;
-uniform mat4 projection;
 uniform mat4 model;
-uniform mat4 lightSpaceMatrix;
 
 out VS_OUT {
     vec2 TexCoords;
@@ -19,16 +16,15 @@ out VS_OUT {
     vec4 FragPosLightSpace;
 } vs_out;
 
+#include "matrices.glsl"
+
 void main()
 {
-    gl_Position = projection * view * vec4(aPos, 1.0);
-    vs_out.TexCoords = aTexCoords;
-
+    gl_Position = matrices.projection * matrices.view * model * vec4(aPos, 1.0);
     vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
-    vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
-    // transform normal vectors into world space
-    vs_out.Normal = mat3(transpose(inverse(view))) * aNormal;
-    vs_out.Tangent = mat3(transpose(inverse(view))) * aTangent;
-    vs_out.Bitangent = mat3(transpose(inverse(view))) * aBitangent;
-
+    vs_out.TexCoords = aTexCoords;
+    vs_out.Normal = mat3(transpose(inverse(model))) * aNormal;
+    vs_out.Tangent = mat3(transpose(inverse(model))) * aTangent;
+    vs_out.Bitangent = mat3(transpose(inverse(model))) * aBitangent;
+    vs_out.FragPosLightSpace = matrices.lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
 }

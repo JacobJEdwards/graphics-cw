@@ -913,12 +913,14 @@ void Shader::checkCompileErrors(const GLuint shader, const bool isProgram) {
         if (success == 0) {
             glGetShaderInfoLog(shader, BUFFER_SIZE, nullptr, infoLog.data());
             std::println(stderr, "Shader compilation error {}", infoLog.data());
+            std::println(stderr, "Shader path: {}", vertexPath.string());
         }
     } else {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (success == 0) {
             glGetProgramInfoLog(shader, BUFFER_SIZE, nullptr, infoLog.data());
             std::println(stderr, "Shader linking error {}", infoLog.data());
+            std::println(stderr, "Shader path: {}", vertexPath.string());
         }
     }
 }

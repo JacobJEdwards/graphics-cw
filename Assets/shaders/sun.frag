@@ -1,6 +1,16 @@
 #version 410 core
 out vec4 FragColor;
-in vec2 TexCoords;
+
+in VS_OUT {
+    vec2 TexCoords;
+    vec3 Normal;
+    vec3 Tangent;
+    vec3 Bitangent;
+    vec3 FragPos;
+    vec4 FragPosLightSpace;
+} fs_in;
+
+#include "lighting.frag"
 
 struct Material {
     sampler2D texture_diffuse1;
@@ -15,25 +25,17 @@ struct Material {
     float shininess;
 };
 
-struct Light {
-    vec4 position;
-    vec3 direction;
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-};
 
 const float glowIntensity = 0.8;
 
 uniform Material material;
-uniform Light sun;
 
 void main() {
-    vec4 texColor = texture(material.texture_diffuse1, TexCoords);
+    vec4 texColor = texture(material.texture_diffuse1, fs_in.TexCoords);
 
     texColor.rgb *= 2.0;
 
-    vec3 glow = glowIntensity * sun.diffuse * smoothstep(0.2, 0.0, length(TexCoords - 0.5));
+    vec3 glow = glowIntensity * lights.sun.diffuse * smoothstep(0.2, 0.0, length(fs_in.TexCoords - 0.5));
 
     texColor += vec4(glow, 1.0);
 

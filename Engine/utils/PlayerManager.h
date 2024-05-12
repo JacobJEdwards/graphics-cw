@@ -2,6 +2,7 @@
 #define PLAYERHOLDER_H
 
 #include "graphics/Shader.h"
+#include "renderables/Renderable.h"
 #include "renderables/objects/Player.h"
 #include <glm/ext/matrix_float4x4.hpp>
 #include <memory.h>
@@ -10,16 +11,18 @@
 #include <unordered_map>
 #include "utils/Singleton.h"
 
-class PlayerManager final : public Singleton<PlayerManager> {
+class PlayerManager final : public Singleton<PlayerManager>, public Renderable {
     friend class Singleton;
 
 public:
     explicit PlayerManager(Token) {
     }
 
-    void draw(const glm::mat4 &view, const glm::mat4 &projection);
+    void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
 
-    void draw(std::shared_ptr<Shader> shader);
+    void draw(std::shared_ptr<Shader> shader) const override;
+
+    void draw() const override;
 
     void update(float deltaTime);
 

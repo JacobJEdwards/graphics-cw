@@ -8,6 +8,7 @@
 #include <GL/glew.h>
 #include <glm/ext/vector_float2.hpp>
 #include <glm/ext/vector_float3.hpp>
+#include <glm/ext/matrix_float3x3.hpp>
 
 namespace Vertex {
     struct Data {
@@ -16,6 +17,7 @@ namespace Vertex {
         glm::vec2 texCoords;
         glm::vec3 tangent;
         glm::vec3 bitangent;
+        glm::mat3 TBN;
 
         constexpr Data() = default;
 
@@ -65,6 +67,7 @@ namespace Vertex {
         static constexpr GLuint TEX_COORDS = 2U;
         static constexpr GLuint TANGENT = 3U;
         static constexpr GLuint BITANGENT = 4U;
+        static constexpr GLuint TBN = 5U;
     };
 
     struct Layout2D {

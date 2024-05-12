@@ -14,10 +14,10 @@ out VS_OUT {
     vec3 Normal;
     vec3 Tangent;
     vec3 Bitangent;
+    vec4 FragPosLightSpace;
 } vs_out;
 
-uniform mat4 projection;
-uniform mat4 view;
+#include "matrices.glsl"
 
 uniform float time;
 
@@ -29,12 +29,12 @@ void main() {
     pos.z += sin(time) * 10;
 
     vec4 modelPos = instanceModelMatrix * vec4(pos, 1.0);
-    gl_Position = projection * view * modelPos;
+    gl_Position = matrices.projection * matrices.view * modelPos;
     vs_out.FragPos = vec3(modelPos);
     vs_out.Normal = mat3(transpose(inverse(instanceModelMatrix))) * normal;
     vs_out.Tangent = mat3(transpose(inverse(instanceModelMatrix))) * tangent;
     vs_out.Bitangent = mat3(transpose(inverse(instanceModelMatrix))) * bitangent;
     vs_out.TexCoords = texCoords;
-
+    vs_out.FragPosLightSpace = matrices.lightSpaceMatrix * modelPos;
 }
 

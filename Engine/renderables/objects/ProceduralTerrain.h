@@ -33,14 +33,17 @@ class ProceduralTerrain final : public Renderable {
         std::vector<GLuint> indices;
         glm::vec2 centre = glm::vec2(0.0F, 0.0F);
         int chunkSize = DEFAULT_CHUNK_SIZE;
-        Texture::Data noiseTexture;
         Texture::Data normalMap;
+        Texture::Data heightMap;
+        Texture::Data grassTexture;
 
 
         void init();
     };
 
 public:
+    using Renderable::draw;
+
     explicit ProceduralTerrain(glm::vec2 center = DEFAULT_CENTRE, int chunkSize = DEFAULT_CHUNK_SIZE,
                                int numChunksX = DEFAULT_NUM_CHUNKS_X,
                                int numChunksY = DEFAULT_NUM_CHUNKS_Y);
@@ -48,6 +51,8 @@ public:
     void draw(std::shared_ptr<Shader> shader) const override;
 
     void draw(const glm::mat4 &view, const glm::mat4 &projection) const override;
+
+    void draw() const override;
 
     [[nodiscard]] auto getCentre() const -> glm::vec2;
 
@@ -85,9 +90,6 @@ private:
     glm::vec2 centre = glm::vec2(0.0F, 0.0F);
     glm::vec2 worldCentre = glm::vec2(0.0F, 0.0F);
 
-    // grass
-    Texture::Data noiseTexture;
-
     int chunkSize = DEFAULT_CHUNK_SIZE;
     int numChunksX = DEFAULT_NUM_CHUNKS_X;
     int numChunksY = DEFAULT_NUM_CHUNKS_Y;
@@ -101,8 +103,6 @@ private:
 
     Trees trees;
     Clouds clouds;
-
-    void generateGrass();
 };
 
 #endif //CW_PROCEDURALTERRAIN_H

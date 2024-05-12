@@ -1,9 +1,5 @@
 #version 410 core
 
-struct Light {
-    vec3 position;
-    vec3 color;
-};
 
 out vec4 FragColor;
 
@@ -13,8 +9,8 @@ in VS_OUT {
     vec2 TexCoords;
 } fs_in;
 
-uniform Light sun;
-uniform vec3 viewPos;
+#include "lights.glsl"
+#include "camera.glsl"
 
 const vec3 grassColor = vec3(0.2, 0.8, 0.2);
 
@@ -25,23 +21,18 @@ void main() {
 
     // diffuse
     vec3 norm = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(sun.position - fs_in.FragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
+    float diff = max(dot(norm, lights.sun.direction), 0.0);
     vec3 diffuse = diff * color;
 
     // specular
-    vec3 viewDir = normalize(viewPos - fs_in.FragPos);
-    vec3 halfwayDir = normalize(lightDir + viewDir);
+    vec3 viewDir = normalize(camera.position - fs_in.FragPos);
+    vec3 halfwayDir = normalize(lights.sun.direction + viewDir);
     float spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0);
     vec3 specular = spec * vec3(0.2) * (0.2);
 
     vec3 lighting = (ambient + diffuse + specular) * color;
 
     // if sun is below the horizon, make the grass darker, smooth
-    float sunHeight = sun.position.y;
-    float sunHeightFactor = clamp(sunHeight / 10.0, 0.0, 1.0);
-    lighting = mix(lighting, lighting * 0.5, sunHeightFactor);
-
 
     FragColor = vec4(lighting, 1.0);
 }

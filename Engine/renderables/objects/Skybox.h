@@ -21,6 +21,8 @@ constexpr unsigned int NUM_VERTEX = 36;
 
 class Skybox final : public Renderable {
 public:
+    using Renderable::draw;
+
     Skybox();
 
     void update(float deltaTime);
