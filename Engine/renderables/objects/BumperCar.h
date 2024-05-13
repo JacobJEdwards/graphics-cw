@@ -81,6 +81,8 @@ public:
 
     [[nodiscard]] auto isOnFire() const -> bool;
 
+    void isThirdPerson(bool thirdPerson);
+
 private:
     Mode mode = Mode::AUTO;
 
@@ -106,6 +108,8 @@ private:
     // between 0 and 1
     float damageTaken = 0.0F;
 
+    bool thirdPerson = false;
+
     bool isBroken = false;
     float brokenTime = 0.0F;
 
@@ -115,6 +119,7 @@ private:
     bool drawPlayer = true;
 
     bool isPlayer = false;
+    bool currentPlayer = false;
 
     float nitroDuration = 0.0F;
     float nitroMaxDuration = 5.0F;

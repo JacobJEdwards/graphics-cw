@@ -167,7 +167,7 @@ vec3 calculateTerrainLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 colo
 
     vec3 viewDir = normalize(viewPos - fragPos);
     vec3 halfwayDir = normalize(lights.sun.direction + viewDir);
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 16.0);
     vec3 specular = spec * lights.sun.specular;
 
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;

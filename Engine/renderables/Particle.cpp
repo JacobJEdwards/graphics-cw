@@ -58,6 +58,7 @@ void ParticleSystem::add(const Particle &particle) {
 
 void ParticleSystem::update(const float deltaTime) {
     const auto player = PlayerManager::GetInstance().getCurrent();
+
     const auto camera = player->getCamera();
 
     const auto forward = camera.getFront();

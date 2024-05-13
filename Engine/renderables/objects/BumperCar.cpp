@@ -420,7 +420,8 @@ void BumperCar::setIsPlayer(const bool isPlayer) {
 }
 
 void BumperCar::isCurrentPlayer(const bool isCurrentPlayer) {
-    if (isCurrentPlayer) {
+    this->currentPlayer = isCurrentPlayer;
+    if (isCurrentPlayer && !thirdPerson) {
         person = Model("../Assets/objects/person-sitting/bodyless.obj");
     } else {
         person = Model("../Assets/objects/person-sitting/person.obj");
@@ -468,3 +469,14 @@ auto BumperCar::getPointLight() const -> PointLight {
 auto BumperCar::isOnFire() const -> bool {
     return damageTaken > 0.25F;
 }
+
+void BumperCar::isThirdPerson(const bool thirdPerson) {
+    this->thirdPerson = thirdPerson;
+    if (thirdPerson && currentPlayer) {
+        person = Model("../Assets/objects/person-sitting/person.obj");
+    }
+    if (!thirdPerson && currentPlayer) {
+        person = Model("../Assets/objects/person-sitting/bodyless.obj");
+    }
+}
+

@@ -99,8 +99,7 @@ void Player::processKeyboard(const Direction direction, const float /*deltaTime*
         return;
     }
 
-    switch
-    (direction) {
+    switch (direction) {
         case Direction::FORWARD:
             if (mode == Mode::DRIVE) {
                 car->attributes.applyForce(front * 50.0F);
@@ -311,6 +310,7 @@ void Player::interface() {
     if (mode == Mode::DRIVE || mode == Mode::PATH) {
         if (ImGui::Checkbox("Third Person Mode", &thirdPersonMode)) {
             camera.isThirdPerson(thirdPersonMode);
+            car->isThirdPerson(thirdPersonMode);
         }
     }
     ImGui::End();

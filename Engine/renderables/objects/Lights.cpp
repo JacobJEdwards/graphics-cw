@@ -42,9 +42,9 @@ void LightObjects::update(const float deltaTime) {
 
 
     for (int i = 0; i < 4; i++) {
-        const float red = sin(time * 2.0F + i) / 2.0F + 0.5F;
-        const float green = sin(time * 2.0F + i + 2) / 2.0F + 0.5F;
-        const float blue = sin(time * 2.0F + i + 4) / 2.0F + 0.5F;
+        const float red = std::sin(time * 2.0F + i) / 2.0F + 0.5F;
+        const float green = std::sin(time * 2.0F + i + 2) / 2.0F + 0.5F;
+        const float blue = std::sin(time * 2.0F + i + 4) / 2.0F + 0.5F;
 
         pointLights[i].ambient = glm::vec3(red, green, blue);
         pointLights[i].diffuse = glm::vec3(red, green, blue);
@@ -73,7 +73,7 @@ void LightObjects::setupLights() {
         tranforms[i] = glm::rotate(tranforms[i], glm::radians(180.0F), glm::vec3(1.0F, 0.0F, 0.0F));
 
         tranforms[i] = glm::scale(tranforms[i], glm::vec3(10.0F));
-        pointLight.position.y = 9.0F;
+        pointLight.position.y = 9.2F;
         pointLights.push_back(pointLight);
     }
 }

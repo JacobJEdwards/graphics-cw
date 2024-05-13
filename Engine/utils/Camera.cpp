@@ -158,15 +158,24 @@ void Camera::setFixed(const glm::vec3 target, const glm::vec3 position) {
     if (mode == Mode::ORBIT || thirdPersonMode || mode == Mode::FIXED) {
         return normalize(target - position);
     }
+
+    if (mode == Mode::DRIVE || mode == Mode::PATH) {
+        // calculate front
+        const auto front = glm::normalize(glm::vec3(
+            std::cos(glm::radians(yaw)) * std::cos(glm::radians(pitch)),
+            std::sin(glm::radians(pitch)),
+            std::sin(glm::radians(yaw)) * std::cos(glm::radians(pitch))
+        ));
+        return front;
+    }
+
     return front;
 }
 
 [[nodiscard]] auto Camera::getUp() const -> glm::vec3 {
-    /*
-        if (thirdPersonMode) {
-            return worldUp;
-        }
-        */
+    if (thirdPersonMode) {
+        return worldUp;
+    }
 
     if (mode == Mode::FIXED) {
         return glm::normalize(cross(getRight(), getFront()));
@@ -177,6 +186,10 @@ void Camera::setFixed(const glm::vec3 target, const glm::vec3 position) {
 
 [[nodiscard]] auto Camera::getRight() const -> glm::vec3 {
     if (mode == Mode::ORBIT || thirdPersonMode) {
+        return normalize(cross(getFront(), getUp()));
+    }
+
+    if (mode == Mode::DRIVE || mode == Mode::PATH) {
         return normalize(cross(getFront(), getUp()));
     }
 
