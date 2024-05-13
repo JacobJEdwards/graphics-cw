@@ -1,6 +1,11 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
+/*
+ * https://learnopengl.com/In-Practice/2D-Game/Collisions/Collision-detection
+ * https://isaacphysics.org/concepts/cp_collisions?stage=all
+ */
+
 #include "physics/ModelAttributes.h"
 #include "utils/BoundingBox.h"
 #include "renderables/Entity.h"

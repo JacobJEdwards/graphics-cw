@@ -2,6 +2,10 @@
 // Created by Jacob Edwards on 21/02/2024.
 //
 
+/*
+ * https://learnopengl.com/Model-Loading/Mesh
+ */
+
 #ifndef CW_MESH_H
 #define CW_MESH_H
 

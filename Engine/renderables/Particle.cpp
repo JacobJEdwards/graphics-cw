@@ -11,6 +11,8 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/geometric.hpp>
 #include <memory>
+#include <print>
+
 #include "physics/ModelAttributes.h"
 #include "renderables/Entity.h"
 #include "graphics/Shader.h"
@@ -55,7 +57,8 @@ void ParticleSystem::add(const Particle &particle) {
 }
 
 void ParticleSystem::update(const float deltaTime) {
-    const auto camera = PlayerManager::GetInstance().getCurrent()->getCamera();
+    const auto player = PlayerManager::GetInstance().getCurrent();
+    const auto camera = player->getCamera();
 
     const auto forward = camera.getFront();
     const auto up = camera.getUp();

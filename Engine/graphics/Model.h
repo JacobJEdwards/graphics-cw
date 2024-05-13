@@ -2,6 +2,10 @@
 // Created by Jacob Edwards on 22/02/2024.
 //
 
+/*
+ * https://learnopengl.com/Model-Loading/Model
+ */
+
 #ifndef MODEL_H
 #define MODEL_H
 

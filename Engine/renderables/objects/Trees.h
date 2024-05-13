@@ -1,6 +1,9 @@
 //
 // Created by Jacob Edwards on 26/04/2024.
 //
+/*
+    * https://learnopengl.com/Advanced-OpenGL/Instancing
+ */
 
 #ifndef TREES_H
 #define TREES_H

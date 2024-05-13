@@ -18,6 +18,7 @@
 #include "graphics/Color.h"
 #include "graphics/Model.h"
 #include "physics/Spline.h"
+#include "utils/Lights.h"
 #include "utils/PlayerManager.h"
 #include "renderables/Entity.h"
 #include "App.h"
@@ -239,7 +240,7 @@ void BumperCar::update(const float deltaTime) {
                 break;
             }
 
-            const float adjustedConeRadius = coneRadius * Random::Float(0.8F, 1.2F);
+            const float adjustedConeRadius = coneRadius; // * Random::Float(0.8F, 1.2F);
 
             auto closest = glm::vec3(0.0F);
             auto closestDistance = std::numeric_limits<float>::max();
@@ -427,13 +428,43 @@ void BumperCar::isCurrentPlayer(const bool isCurrentPlayer) {
 }
 
 void BumperCar::collisionResponse() {
+    if (paused) {
+        return;
+    }
+
     if (nitroActive) {
         nitroActive = false;
     }
 
     if (const auto force = glm::length(attributes.force); force > 100.0F) {
-        takeDamage(force / 5000.0F);
+        takeDamage(force / 7500.0F);
     }
 
     Entity::collisionResponse();
+}
+
+auto BumperCar::hasExploded() const -> bool {
+    return isExploding;
+}
+
+auto BumperCar::getPointLight() const -> PointLight {
+    // point light based on fire
+    PointLight light{};
+    light.position = attributes.position;
+    light.position.y += 2.5F;
+    light.ambient = Color::ORANGE;
+    light.diffuse = Color::ORANGE;
+    light.specular = Color::ORANGE;
+
+    const float damageFactor = 1.0F - damageTaken;
+    light.linear = 0.09F + (damageFactor * 0.05F);
+    light.quadratic = 0.032F + (damageFactor * 0.02F);
+
+    light.constant = 1.0F - (damageFactor * 0.2F);
+
+    return light;
+}
+
+auto BumperCar::isOnFire() const -> bool {
+    return damageTaken > 0.25F;
 }

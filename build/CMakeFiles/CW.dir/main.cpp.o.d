@@ -1185,6 +1185,7 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Player.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/BumperCar.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Lights.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/memory.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Singleton.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Collisions.h \
@@ -1244,4 +1245,6 @@ CMakeFiles/CW.dir/main.cpp.o: \
   /opt/homebrew/include/glm/gtc/matrix_transform.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Scene.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Walls.h \
-  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Barriers.h
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Spotlight.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Barriers.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/objects/Lights.h

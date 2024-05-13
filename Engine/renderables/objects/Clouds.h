@@ -1,6 +1,9 @@
 //
 // Created by Jacob Edwards on 08/05/2024.
 //
+/*
+ * https://learnopengl.com/Advanced-OpenGL/Instancing
+ */
 
 #ifndef CLOUDS_H
 #define CLOUDS_H

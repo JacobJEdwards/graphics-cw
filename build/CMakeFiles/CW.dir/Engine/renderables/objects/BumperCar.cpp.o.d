@@ -1125,6 +1125,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/BumperCar.cpp.o: \
   /opt/homebrew/include/glm/gtc/../common.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Lights.h \
   /opt/homebrew/include/GLFW/glfw3.h \
   /opt/homebrew/include/glm/ext/matrix_transform.hpp \
   /opt/homebrew/include/glm/geometric.hpp \

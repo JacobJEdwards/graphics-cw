@@ -39,6 +39,5 @@ void main() {
     float damageFactor = texture(damageTexture, fs_in.TexCoords).r;
     result *= mix(1.0, damageFactor, damage);
 
-    FragColor = vec4(lights.sun.ambient, 1.0);
-
+    FragColor = vec4(result, texColor.a);
 }

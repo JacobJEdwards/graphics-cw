@@ -1,6 +1,9 @@
 //
 // Created by Jacob Edwards on 21/02/2024.
 //
+/*
+    * https://learnopengl.com/Getting-started/Camera
+ */
 
 #ifndef CW_CAMERA_H
 #define CW_CAMERA_H

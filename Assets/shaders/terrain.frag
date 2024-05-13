@@ -21,6 +21,7 @@ uniform float pathedPointsRadius = 100.0;
 uniform float pathDarkness = 0.5;
 
 const vec3 grassColor = vec3(0.2, 0.8, 0.2);
+// const vec3 grassColor = vec3(0.1, 0.4, 0.1);
 const vec3 pathColor = vec3(0.2, 0.1, 0.0);
 
 
@@ -39,10 +40,13 @@ void main() {
 
     float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
 
-    vec3 lighting = calculateLighting(fs_in.FragPos, fs_in.Normal, camera.position, color, 128.0) * 0.8;
+    vec3 lighting = calculateTerrainLighting(fs_in.FragPos, fs_in.Normal, camera.position, color, shadow);
 
     float noiseVal = fbm2d(fs_in.TexCoords * 10.0);
+    float lightFactor = max(dot(lights.sun.direction, vec3(0.0, 1.0, 0.0)), 0.4);
+    noiseVal *= lightFactor;
     lighting += vec3(noiseVal * 0.1);
+
 
     for (int i = 0; i < pathedPointsCount; i++) {
         vec3 pathedPoint = pathedPoints[i];
@@ -55,5 +59,4 @@ void main() {
     }
 
     FragColor = vec4(lighting, 1.0);
-    // FragColor = vec4(lights.sun.specular, 1.0);
 }

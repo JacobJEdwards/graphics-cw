@@ -8,7 +8,6 @@
 #include <GL/glew.h>
 #include <cmath>
 #include <glm/trigonometric.hpp>
-#include <print>
 #include <glm/common.hpp>
 #include <glm/ext/matrix_float3x3.hpp>
 #include <glm/ext/matrix_float4x4.hpp>

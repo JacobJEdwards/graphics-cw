@@ -777,6 +777,30 @@ Engine/renderables/objects/FerrisWheel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/FerrisWheel.cpp.s
 .PHONY : Engine/renderables/objects/FerrisWheel.cpp.s
 
+Engine/renderables/objects/Lights.o: Engine/renderables/objects/Lights.cpp.o
+.PHONY : Engine/renderables/objects/Lights.o
+
+# target to build an object file
+Engine/renderables/objects/Lights.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Lights.cpp.o
+.PHONY : Engine/renderables/objects/Lights.cpp.o
+
+Engine/renderables/objects/Lights.i: Engine/renderables/objects/Lights.cpp.i
+.PHONY : Engine/renderables/objects/Lights.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Lights.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Lights.cpp.i
+.PHONY : Engine/renderables/objects/Lights.cpp.i
+
+Engine/renderables/objects/Lights.s: Engine/renderables/objects/Lights.cpp.s
+.PHONY : Engine/renderables/objects/Lights.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Lights.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Lights.cpp.s
+.PHONY : Engine/renderables/objects/Lights.cpp.s
+
 Engine/renderables/objects/Player.o: Engine/renderables/objects/Player.cpp.o
 .PHONY : Engine/renderables/objects/Player.o
 
@@ -896,6 +920,30 @@ Engine/renderables/objects/Skybox.s: Engine/renderables/objects/Skybox.cpp.s
 Engine/renderables/objects/Skybox.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Skybox.cpp.s
 .PHONY : Engine/renderables/objects/Skybox.cpp.s
+
+Engine/renderables/objects/Spotlight.o: Engine/renderables/objects/Spotlight.cpp.o
+.PHONY : Engine/renderables/objects/Spotlight.o
+
+# target to build an object file
+Engine/renderables/objects/Spotlight.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Spotlight.cpp.o
+.PHONY : Engine/renderables/objects/Spotlight.cpp.o
+
+Engine/renderables/objects/Spotlight.i: Engine/renderables/objects/Spotlight.cpp.i
+.PHONY : Engine/renderables/objects/Spotlight.i
+
+# target to preprocess a source file
+Engine/renderables/objects/Spotlight.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Spotlight.cpp.i
+.PHONY : Engine/renderables/objects/Spotlight.cpp.i
+
+Engine/renderables/objects/Spotlight.s: Engine/renderables/objects/Spotlight.cpp.s
+.PHONY : Engine/renderables/objects/Spotlight.s
+
+# target to generate assembly for a file
+Engine/renderables/objects/Spotlight.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CW.dir/build.make CMakeFiles/CW.dir/Engine/renderables/objects/Spotlight.cpp.s
+.PHONY : Engine/renderables/objects/Spotlight.cpp.s
 
 Engine/renderables/objects/Sun.o: Engine/renderables/objects/Sun.cpp.o
 .PHONY : Engine/renderables/objects/Sun.o
@@ -1419,6 +1467,9 @@ help:
 	@echo "... Engine/renderables/objects/FerrisWheel.o"
 	@echo "... Engine/renderables/objects/FerrisWheel.i"
 	@echo "... Engine/renderables/objects/FerrisWheel.s"
+	@echo "... Engine/renderables/objects/Lights.o"
+	@echo "... Engine/renderables/objects/Lights.i"
+	@echo "... Engine/renderables/objects/Lights.s"
 	@echo "... Engine/renderables/objects/Player.o"
 	@echo "... Engine/renderables/objects/Player.i"
 	@echo "... Engine/renderables/objects/Player.s"
@@ -1434,6 +1485,9 @@ help:
 	@echo "... Engine/renderables/objects/Skybox.o"
 	@echo "... Engine/renderables/objects/Skybox.i"
 	@echo "... Engine/renderables/objects/Skybox.s"
+	@echo "... Engine/renderables/objects/Spotlight.o"
+	@echo "... Engine/renderables/objects/Spotlight.i"
+	@echo "... Engine/renderables/objects/Spotlight.s"
 	@echo "... Engine/renderables/objects/Sun.o"
 	@echo "... Engine/renderables/objects/Sun.i"
 	@echo "... Engine/renderables/objects/Sun.s"

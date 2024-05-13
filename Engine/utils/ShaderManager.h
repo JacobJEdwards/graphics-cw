@@ -13,7 +13,7 @@
 
 class ShaderManager final : public Singleton<ShaderManager> {
 public:
-    friend class Singleton<ShaderManager>;
+    friend class Singleton;
 
     void add(const std::string &name, std::filesystem::path vertexPath,
              std::filesystem::path fragmentPath, std::filesystem::path geometryPath = "",

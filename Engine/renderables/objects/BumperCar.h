@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include "renderables/Entity.h"
+#include "utils/Lights.h"
 
 class BumperCar final : public Entity {
 public:
@@ -26,7 +27,7 @@ public:
         PLAYER
     };
 
-    explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 60.0F, float speed = 2.0F);
+    explicit BumperCar(glm::vec2 centre = {0.0F, 0.0F}, float radius = 50.0F, float speed = 2.0F);
 
     void update(float deltaTime) override;
 
@@ -73,6 +74,12 @@ public:
     void collisionResponse() override;
 
     [[nodiscard]] auto getMode() const -> Mode;
+
+    [[nodiscard]] auto hasExploded() const -> bool;
+
+    [[nodiscard]] auto getPointLight() const -> PointLight;
+
+    [[nodiscard]] auto isOnFire() const -> bool;
 
 private:
     Mode mode = Mode::AUTO;

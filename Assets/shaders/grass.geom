@@ -2,6 +2,10 @@
 layout (triangles) in;
 layout (triangle_strip, max_vertices = 4) out;// Only need 4 vertices for a quad
 
+/*
+ * https://learnopengl.com/Advanced-OpenGL/Geometry-Shader
+ */
+
 in VS_OUT {
     vec3 FragPos;
     vec3 Normal;

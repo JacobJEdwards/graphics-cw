@@ -43,6 +43,7 @@
 #include "renderables/objects/RollerCoaster.h"
 #include "renderables/objects/Scene.h"
 #include "renderables/objects/Walls.h"
+#include "utils/Lights.h"
 
 // light projection parameters
 float near_plane = 1.0F;
@@ -63,56 +64,11 @@ struct Matrices {
     glm::mat4 lightSpaceMatrix = Config::IDENTITY_MATRIX;
 };
 
-struct DirectionalLight {
-    glm::vec3 direction = glm::vec3(-0.2F, -1.0F, -0.3F);
-    glm::vec3 ambient = glm::vec3(0.05F, 0.05F, 0.05F);
-    glm::vec3 diffuse = glm::vec3(0.4F, 0.4F, 0.4F);
-    glm::vec3 specular = glm::vec3(0.5F, 0.5F, 0.5F);
-};
-
-struct PointLight {
-    glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F);
-    glm::vec3 ambient = glm::vec3(0.05F, 0.05F, 0.05F);
-    glm::vec3 diffuse = glm::vec3(0.8F, 0.8F, 0.8F);
-    glm::vec3 specular = glm::vec3(1.0F, 1.0F, 1.0F);
-
-    float constant = 1.0F;
-    float linear = 0.09F;
-    float quadratic = 0.032F;
-};
-
-struct SpotLight {
-    glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F);
-    glm::vec3 direction = glm::vec3(0.0F, 0.0F, 0.0F);
-    glm::vec3 ambient = glm::vec3(0.0F, 0.0F, 0.0F);
-    glm::vec3 diffuse = glm::vec3(1.0F, 1.0F, 1.0F);
-    glm::vec3 specular = glm::vec3(1.0F, 1.0F, 1.0F);
-
-    float constant = 1.0F;
-    float linear = 0.09F;
-    float quadratic = 0.032F;
-
-    float cutOff = glm::cos(glm::radians(12.5F));
-    float outerCutOff = glm::cos(glm::radians(15.0F));
-};
-
-struct Lights {
-    DirectionalLight sun = DirectionalLight();
-    /*
-    PointLight pointLight[4] = {
-        PointLight(),
-        PointLight(),
-        PointLight(),
-        PointLight()
-    };
-    int pointLightCount = 0;
-    SpotLight spotLight = SpotLight();
-    */
-};
-
 struct CameraInfo {
-    glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F);
-    glm::vec3 direction = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 position = Config::ZERO_VECTOR;
+    glm::vec3 up = Config::ZERO_VECTOR;
+    glm::vec3 right = Config::ZERO_VECTOR;
+    glm::vec3 front = Config::ZERO_VECTOR;
 };
 
 auto main() -> int {
@@ -129,7 +85,10 @@ auto main() -> int {
 
     const auto pathedCar = playerManager.get("Path")->getCar();
     const auto driveable = playerManager.get("Drive")->getCar();
-    const auto duel = playerManager.get("Interactable")->getCar();
+
+    const auto nonDriveable = std::make_shared<BumperCar>();
+    nonDriveable->setMode(BumperCar::Mode::NONE);
+    nonDriveable->shouldDrawPlayer(false);
 
     const std::vector models = {
         std::make_shared<BumperCar>(),
@@ -143,7 +102,6 @@ auto main() -> int {
         std::make_shared<BumperCar>(),
         pathedCar,
         driveable,
-        duel
     };
 
     for (const auto &model: models) {
@@ -172,8 +130,12 @@ auto main() -> int {
 
         if (Random::Int(0, 50) == 0) {
             model->setMode(BumperCar::Mode::NONE);
+            model->shouldDrawPlayer(false);
         }
     }
+
+    models[0]->shouldDrawPlayer(false);
+    models[0]->setMode(BumperCar::Mode::NONE);
 
     float angle = 0.0F;
     const float angleIncrement = glm::radians(360.0F / static_cast<float>(models.size()));
@@ -187,6 +149,7 @@ auto main() -> int {
         glm::mat4 model = translate(Config::IDENTITY_MATRIX, translation);
         model = scale(model, glm::vec3(4.0F));
         i->transform(model);
+        i->attributes.scale = glm::vec3(4.0F);
 
         angle += angleIncrement;
     }
@@ -228,22 +191,8 @@ auto main() -> int {
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, matricesUBO);
 
     Matrices matrices;
-    matrices.view = Config::IDENTITY_MATRIX;
-    matrices.projection = Config::IDENTITY_MATRIX;
-    matrices.lightSpaceMatrix = Config::IDENTITY_MATRIX;
-
-    // lights ubo setup
-    GLuint lightsUBO;
-    glGenBuffers(1, &lightsUBO);
-    glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
-    glBufferData(GL_UNIFORM_BUFFER, sizeof(Lights), nullptr, GL_STATIC_DRAW);
-    glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightsUBO);
 
     Lights lights;
-    lights.sun.direction = glm::vec3(-0.2F, -1.0F, -0.3F);
-    lights.sun.ambient = glm::vec3(1.0F);
-    lights.sun.diffuse = glm::vec3(1.0F);
-    lights.sun.specular = glm::vec3(1.0F);
 
     GLuint cameraUBO;
     glGenBuffers(1, &cameraUBO);
@@ -258,9 +207,6 @@ auto main() -> int {
         shader->use();
         const auto matricesIndex = glGetUniformBlockIndex(shader->getProgramID(), "Matrices");
         glUniformBlockBinding(shader->getProgramID(), matricesIndex, 0);
-
-        const auto lightsIndex = glGetUniformBlockIndex(shader->getProgramID(), "Lights");
-        glUniformBlockBinding(shader->getProgramID(), lightsIndex, 1);
 
         const auto cameraIndex = glGetUniformBlockIndex(shader->getProgramID(), "Camera");
         glUniformBlockBinding(shader->getProgramID(), cameraIndex, 2);
@@ -279,9 +225,13 @@ auto main() -> int {
 
         const auto viewPos = player->getCamera().getPosition();
         const auto viewDir = player->getCamera().getFront();
+        const auto viewUp = player->getCamera().getUp();
+        const auto viewRight = player->getCamera().getRight();
 
         cameraInfo.position = viewPos;
-        cameraInfo.direction = viewDir;
+        cameraInfo.up = viewUp;
+        cameraInfo.right = viewRight;
+        cameraInfo.front = viewDir;
 
         glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(CameraInfo), &cameraInfo);
@@ -302,22 +252,12 @@ auto main() -> int {
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrices), &matrices);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-        // lights ubo
-        lights.sun.direction = scene.getSkybox()->getSun().getDirection();
-        lights.sun.ambient = scene.getSkybox()->getSun().getAmbient();
-        lights.sun.diffuse = scene.getSkybox()->getSun().getDiffuse();
-        lights.sun.specular = scene.getSkybox()->getSun().getSpecular();
-
-        glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
-        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Lights), &lights);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
 
         shader = shaderManager.get("Shadow");
         shader->use();
 
         for (const auto &model: models) {
-            if (model->hasBroke()) {
+            if (model->hasExploded()) {
                 continue;
             }
             model->draw(shader);
@@ -344,13 +284,32 @@ auto main() -> int {
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrices), &matrices);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
+        lights.sun.direction = scene.getSkybox()->getSun().getDirection();
+        lights.sun.ambient = scene.getSkybox()->getSun().getAmbient();
+        lights.sun.diffuse = scene.getSkybox()->getSun().getDiffuse();
+        lights.sun.specular = scene.getSkybox()->getSun().getSpecular();
+
+        auto pointLights = scene.getLightObjects()->getPointLights();
+
+
         shader->use();
 
         for (const auto &model: models) {
             model->draw(shader);
+
+            if (model->isOnFire() && pointLights.size() < MAX_POINT_LIGHTS) {
+                pointLights.push_back(model->getPointLight());
+            }
         }
 
+        for (int i = 0; i < pointLights.size(); i++) {
+            lights.pointLight[i] = pointLights[i];
+        }
+
+        lights.pointLightCount = static_cast<int>(pointLights.size());
+
         playerManager.draw(shader);
+
 
         scene.getTerrain()->getTrees().draw();
         scene.getTerrain()->getClouds().draw();
@@ -375,6 +334,29 @@ auto main() -> int {
         for (const auto &[name, shader]: shaderManager.getAll()) {
             shader->use();
             shader->setUniform("shadowMap", 10);
+            shader->setUniform("lights.sun.direction", lights.sun.direction);
+            shader->setUniform("lights.sun.ambient", lights.sun.ambient);
+            shader->setUniform("lights.sun.diffuse", lights.sun.diffuse);
+            shader->setUniform("lights.sun.specular", lights.sun.specular);
+            shader->setUniform("lights.pointLightsCount", lights.pointLightCount);
+
+            for (int i = 0; i < lights.pointLightCount; i++) {
+                shader->setUniform("lights.pointLights[" + std::to_string(i) + "].position",
+                                   lights.pointLight[i].position);
+                shader->setUniform("lights.pointLights[" + std::to_string(i) + "].ambient",
+                                   lights.pointLight[i].ambient);
+                shader->setUniform("lights.pointLights[" + std::to_string(i) + "].diffuse",
+                                   lights.pointLight[i].diffuse);
+                shader->setUniform("lights.pointLights[" + std::to_string(i) + "].specular",
+                                   lights.pointLight[i].specular);
+                shader->setUniform("lights.pointLights[" + std::to_string(i) + "].constant",
+                                   lights.pointLight[i].constant);
+                shader->setUniform("lights.pointLights[" + std::to_string(i) + "].linear",
+                                   lights.pointLight[i].linear);
+                shader->setUniform("lights.pointLights[" + std::to_string(i) + "].quadratic",
+                                   lights.pointLight[i].quadratic);
+            }
+
             if (!App::paused) {
                 shader->setUniform("time", App::view.getTime());
             }
@@ -384,13 +366,16 @@ auto main() -> int {
             model->draw();
         }
 
-        particleSystem.draw();
+        if (player->getMode() != Player::Mode::DRIVE && player->getMode() != Player::Mode::PATH) {
+            particleSystem.draw();
+        }
+
         playerManager.draw();
 
         shader = scene.getTerrain()->getShader();
         shader->use();
         shader->setUniform(
-            "pathDarkness", models[0]->getLaps() / 1000.0F);
+            "pathDarkness", models[1]->getLaps() / 1000.0F);
         for (std::size_t i = 0; i < pathPoints.size(); i++) {
             shader->setUniform("pathedPoints[" + std::to_string(i) + "]", pathPoints[i]);
         }
@@ -472,7 +457,9 @@ auto main() -> int {
                     Physics::Collisions::resolve(*player, *model, collisionPoint);
 
                     player->collisionResponse();
-                    model->collisionResponse();
+                    if (player->getMode() != Player::Mode::FREE) {
+                        model->collisionResponse();
+                    }
 
                     particleSystem.generate(player->attributes.position - collisionPoint,
                                             player->attributes.velocity, Color::SILVER);
@@ -657,13 +644,7 @@ void setupShaders() {
     const auto shader = shaderManager.get("PostProcess");
     shader->use();
     shader->setUniform("screenTexture", 0);
-
-    for (const auto &[name, shader]: shaderManager.getAll()) {
-        shader->use();
-        shader->setUniform("sun.ambient", Color::WHITE);
-        shader->setUniform("sun.diffuse", Color::ORANGE);
-        shader->setUniform("sun.specular", Color::WHITE);
-    }
+    shader->setUniform("depthTexture", 1);
 }
 
 void setupPlayers() {
@@ -671,7 +652,7 @@ void setupPlayers() {
 
     const auto orbit = std::make_shared<Player>(Player::Mode::ORBIT);
     orbit->shouldDraw(false);
-    orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 50.0F, 0.0F, 3.0F, 10.0F);
+    orbit->getCamera().setOrbit(glm::vec3(0.0F, 0.0F, 0.0F), 80.0F, 0.0F, 3.0F, 10.0F);
     playerManager.add("Orbit", orbit);
 
     const auto free = std::make_shared<Player>(Player::Mode::FREE);
@@ -679,12 +660,12 @@ void setupPlayers() {
     playerManager.add("Free", free);
 
     const auto fps = std::make_shared<Player>(Player::Mode::FPS);
-    fps->shouldDraw(true);
+    fps->shouldDraw(false);
     playerManager.add("FPS", fps);
 
     const auto fixed = std::make_shared<Player>(Player::Mode::FIXED);
     fixed->shouldDraw(false);
-    fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3(0.0F, 10.0F, 10.0F));
+    fixed->getCamera().setFixed(glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3(0.0F, 100.0F, 0.0F));
     playerManager.add("Fixed", fixed);
 
     const auto path = std::make_shared<Player>(Player::Mode::PATH);
@@ -696,8 +677,6 @@ void setupPlayers() {
     playerManager.add("Drive", drive);
 
     // TODO fix
-    const auto interactable = std::make_shared<Player>(Player::Mode::DUEL);
-    playerManager.add("Interactable", interactable);
 
 
     playerManager.setCurrent("Free");

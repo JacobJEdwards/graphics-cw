@@ -15,6 +15,8 @@
 #include "renderables/objects/Barriers.h"
 #include <glm/ext/matrix_float4x4.hpp>
 #include <memory>
+#include "renderables/objects/Spotlight.h"
+#include "renderables/objects/Lights.h"
 
 
 Scene::Scene() {
@@ -24,6 +26,7 @@ Scene::Scene() {
     skybox = std::make_shared<Skybox>();
     walls = std::make_shared<Walls>();
     barriers = std::make_shared<Barriers>();
+    lightObjects = std::make_shared<LightObjects>();
 }
 
 void Scene::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
@@ -32,6 +35,7 @@ void Scene::draw(const glm::mat4 &view, const glm::mat4 &projection) const {
     rollerCoaster->draw(view, projection);
     barriers->draw(view, projection);
     skybox->draw(view, projection);
+    lightObjects->draw(view, projection);
 }
 
 void Scene::draw(const std::shared_ptr<Shader> shader) const {
@@ -40,6 +44,7 @@ void Scene::draw(const std::shared_ptr<Shader> shader) const {
     rollerCoaster->draw(shader);
     barriers->draw(shader);
     skybox->draw(shader);
+    lightObjects->draw(shader);
 }
 
 void Scene::draw() const {
@@ -48,11 +53,13 @@ void Scene::draw() const {
     rollerCoaster->draw();
     barriers->draw();
     skybox->draw();
+    lightObjects->draw();
 }
 
 void Scene::update(const float deltaTime) const {
     ferrisWheel->update(deltaTime);
     skybox->update(deltaTime);
+    lightObjects->update(deltaTime);
 }
 
 auto Scene::getTerrain() -> std::shared_ptr<ProceduralTerrain> {
@@ -78,3 +85,8 @@ auto Scene::getWalls() -> std::shared_ptr<Walls> {
 auto Scene::getBarriers() -> std::shared_ptr<Barriers> {
     return barriers;
 }
+
+auto Scene::getLightObjects() -> std::shared_ptr<LightObjects> {
+    return lightObjects;
+}
+

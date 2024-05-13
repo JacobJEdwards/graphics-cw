@@ -61,12 +61,9 @@ namespace Physics::Collisions {
 
         const glm::mat4 interpolatedRotationMatrix = glm::mat4_cast(interpolatedOrientation);
 
-        const auto scale = glm::vec3(glm::length(a.transform[0]), glm::length(a.transform[1]),
-                                     glm::length(a.transform[2]));
-
-        a.transform[0] = glm::vec4(interpolatedRotationMatrix[0] * scale.x);
-        a.transform[1] = glm::vec4(interpolatedRotationMatrix[1] * scale.y);
-        a.transform[2] = glm::vec4(interpolatedRotationMatrix[2] * scale.z);
+        a.transform[0] = glm::vec4(interpolatedRotationMatrix[0] * a.scale.x);
+        a.transform[1] = glm::vec4(interpolatedRotationMatrix[1] * a.scale.y);
+        a.transform[2] = glm::vec4(interpolatedRotationMatrix[2] * a.scale.z);
         a.transform[3] = glm::vec4(a.position, 1.0F);
 
         a.applyImpulse(impulse);

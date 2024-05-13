@@ -83,7 +83,9 @@ void main() {
 
     finalSkyColor = mix(finalSkyColor, cloud.rgb, cloud.a);
 
-    // if (sun.position.y < 0.0) finalSkyColor += stars;
+    float lightFactor = max(dot(lights.sun.direction, vec3(0.0, 1.0, 0.0)), 0.0);
+    vec3 starsFinal = mix(stars, vec3(0.0, 0.0, 0.0), lightFactor * 2.0);
+    finalSkyColor += starsFinal;
 
     FragColor = vec4(finalSkyColor, 1.0);
 }

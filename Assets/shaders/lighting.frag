@@ -1,6 +1,14 @@
+#ifndef _lighting_h_
+#define _lighting_h_
+
 uniform sampler2D shadowMap;
 
 #include "lights.glsl"
+
+/*
+* https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+*/
+
 
 float ShadowCalculation(vec4 fragPosLightSpace) {
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -45,18 +53,25 @@ float ShadowCalculation(vec4 fragPosLightSpace) {
     return shadow;
 }
 
+/*
+* https://learnopengl.com/lighting/basic-lighting
+*/
 vec3 calculateDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 color, float shininess, float shadow) {
     vec3 halfwayDir = normalize(light.direction + viewDir);
+
     float diffuseFactor = max(dot(light.direction, normal), 0.0);
+
     float specularFactor = pow(max(dot(normal, halfwayDir), 0.0), shininess);
 
     specularFactor *= diffuseFactor;
 
-    vec3 ambient = 0.1 * light.ambient * color;
+    vec3 ambient = 0.1 * light.ambient;
     vec3 diffuse = diffuseFactor * color;
-    vec3 specular = specularFactor * light.specular * color * lights.sun.diffuse;
+    vec3 specular = specularFactor * light.specular * light.diffuse;
 
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
+
+    lighting = clamp(lighting, 0.0, 1.0);
 
     return lighting;
 }
@@ -77,13 +92,21 @@ vec3 calculatePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewD
 
     diffuse *= attenuation;
     specular *= attenuation;
+    ambient *= attenuation;
 
-    return (ambient + (1.0 - shadow) * (diffuse + specular));
+    vec3 lighting = (ambient + (diffuse + specular));
+
+    lighting = clamp(lighting, 0.0, 1.0);
+
+    return lighting;
 }
 
 vec3 calculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 color, float shininess, float shadow) {
     vec3 lightDir = normalize(light.position - fragPos);
-    vec3 ambient = light.ambient * color;
+    float diff = max(dot(normal, lightDir), 0.0);
+
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
 
     float distance = length(light.position - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
@@ -92,18 +115,16 @@ vec3 calculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     float epsilon = light.cutOff - light.outerCutOff;
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
 
-    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 ambient = light.ambient * color;
     vec3 diffuse = diff * light.diffuse * color;
-
-    vec3 halfwayDir = normalize(lightDir + viewDir);
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), shininess);
     vec3 specular = spec * light.specular * color;
 
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
+    ambient *= attenuation * intensity;
 
-    return (ambient + (1.0 - shadow) * (diffuse + specular));
-    // no shadow
+    return (ambient + (diffuse + specular));
+
 }
 
 vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, float shininess) {
@@ -113,13 +134,11 @@ vec3 calculateLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, floa
 
     vec3 lighting = calculateDirectionalLight(lights.sun, normal, viewDir, color, shininess, shadow);
 
-    /*
-    for (int i = 0; i < pointLightsCount; i++) {
-        lighting += calculatePointLight(lights.pointLights[i], normal, fragPos, viewDir, color, shininess);
+    for (int i = 0; i < lights.pointLightsCount; i++) {
+        lighting += calculatePointLight(lights.pointLights[i], normal, fragPos, viewDir, color, shininess, shadow);
     }
-    */
 
-    // lighting += calculateSpotLight(lights.spotLight, normal, fragPos, viewDir, color, shininess);
+    // lighting += calculateSpotLight(lights.spotLight, normal, fragPos, viewDir, color, shininess, shadow);
 
 
     return lighting;
@@ -132,5 +151,35 @@ vec3 calculateLightingBasic(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color,
 
     vec3 lighting = calculateDirectionalLight(lights.sun, normal, viewDir, color, shininess, 0.0);
 
+    for (int i = 0; i < lights.pointLightsCount; i++) {
+        lighting += calculatePointLight(lights.pointLights[i], normal, fragPos, viewDir, color, shininess, 0.0);
+    }
+
+    // lighting += calculateSpotLight(lights.spotLight, normal, fragPos, viewDir, color, shininess, 0.0);
+
     return lighting;
 }
+
+vec3 calculateTerrainLighting(vec3 fragPos, vec3 normal, vec3 viewPos, vec3 color, float shadow) {
+    vec3 ambient = 0.3 * color;
+    float diff = max(dot(normal, lights.sun.direction), 0.0);
+    vec3 diffuse = diff * color * lights.sun.diffuse;
+
+    vec3 viewDir = normalize(viewPos - fragPos);
+    vec3 halfwayDir = normalize(lights.sun.direction + viewDir);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    vec3 specular = spec * lights.sun.specular;
+
+    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;
+
+    float lightFactor = max(dot(lights.sun.direction, vec3(0.0, 1.0, 0.0)), 0.1);
+    lighting *= lightFactor;
+
+    for (int i = 0; i < lights.pointLightsCount; i++) {
+        lighting += calculatePointLight(lights.pointLights[i], normal, fragPos, viewDir, color, 32.0, shadow);
+    }
+
+    return lighting;
+}
+
+#endif

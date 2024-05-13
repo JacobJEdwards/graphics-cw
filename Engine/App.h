@@ -17,7 +17,6 @@ namespace App {
 
     extern bool debug;
 
-    // query retina display !!!!!!!
     auto init() -> bool;
 
     auto window(const std::string &title,

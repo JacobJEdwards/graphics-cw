@@ -1,6 +1,9 @@
 //
 // Created by Jacob Edwards on 20/03/2024.
 //
+/*
+ * https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+ */
 
 #ifndef CW_SHADOWBUFFER_H
 #define CW_SHADOWBUFFER_H

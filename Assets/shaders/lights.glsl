@@ -1,3 +1,6 @@
+#ifndef _lights_h_
+#define _lights_h_
+
 struct DirectionalLight {
     vec3 direction;
     vec3 ambient;
@@ -31,20 +34,15 @@ struct SpotLight {
     float outerCutOff;
 };
 
-#define NR_POINT_LIGHTS 4
+#define NR_POINT_LIGHTS 12
 
-layout(std140) uniform Lights {
-    vec3 direction;
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-
-
-// padding
-    vec3 padding;
-/*
+struct Lights {
+    DirectionalLight sun;
     PointLight pointLights[NR_POINT_LIGHTS];
     int pointLightsCount;
     SpotLight spotLight;
-*/
-} lights;
+};
+
+uniform Lights lights;
+
+#endif

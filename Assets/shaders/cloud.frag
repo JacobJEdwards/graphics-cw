@@ -11,6 +11,7 @@ in VS_OUT {
 
 #include "lighting.frag"
 #include "noise.frag"
+#include "camera.glsl"
 
 #define MAX_SAMPLES 100
 #define STEP_SIZE 0.1
@@ -46,7 +47,7 @@ float sampleCloudVolume(vec3 rayOrigin, vec3 rayDir) {
 
 void main() {
     vec3 baseColor = vec3(0.5, 0.6, 0.7);
-    // vec3 lighting = calculateDirectionalLight(sun, fs_in.Normal, viewPos, baseColor, 32.0, 0.0);
+    // vec3 lighting = calculateDirectionalLight(lights.sun, fs_in.Normal, camera.position, baseColor, 32.0, 0.0) * 2.0;
 
 
     float visibility = sampleCloudVolume(fs_in.FragPos, lights.sun.direction);
@@ -54,7 +55,11 @@ void main() {
     vec3 godrays = lights.sun.diffuse * visibility * fade(1.0 - visibility) * 0.5;
 
     vec3 finalColor = baseColor + godrays;
-    finalColor = mix(finalColor, lights.sun.diffuse, 0.2);
+    finalColor = mix(finalColor, lights.sun.ambient, 0.2);
+
+    // if direction of light is below horizon, make it darker
+    float lightFactor = max(dot(lights.sun.direction, vec3(0.0, 1.0, 0.0)), 0.1);
+    finalColor *= lightFactor;
 
     FragColor = vec4(finalColor, 0.8);
 

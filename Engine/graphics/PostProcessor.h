@@ -1,6 +1,13 @@
 #ifndef POSTPROCESS_H
 #define POSTPROCESS_H
 
+/*
+ * https://learnopengl.com/Advanced-Lighting/Bloom
+ * https://learnopengl.com/Advanced-Lighting/HDR
+ * https://learnopengl.com/Advanced-Lighting/Gamma-Correction
+ * https://learnopengl.com/Advanced-/in-Practice/Post-processing
+ */
+
 #include "graphics/buffers/FrameBuffer.h"
 #include "renderables/shapes/Plane.h"
 #include "graphics/Shader.h"

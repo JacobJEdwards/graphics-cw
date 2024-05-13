@@ -69,6 +69,11 @@ add_executable(CW main.cpp
         Engine/renderables/objects/Clouds.h
         Engine/renderables/objects/Barriers.cpp
         Engine/renderables/objects/Barriers.h
+        Engine/renderables/objects/Lights.cpp
+        Engine/renderables/objects/Lights.h
+        Engine/utils/Lights.h
+        Engine/renderables/objects/Spotlight.cpp
+        Engine/renderables/objects/Spotlight.h
 )
 
 # Link libraries

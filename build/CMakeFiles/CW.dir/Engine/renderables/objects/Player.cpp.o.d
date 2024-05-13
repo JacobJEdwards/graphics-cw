@@ -1126,6 +1126,7 @@ CMakeFiles/CW.dir/Engine/renderables/objects/Player.cpp.o: \
   /opt/homebrew/include/glm/gtc/../common.hpp \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/physics/Spline.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/renderables/Entity.h \
+  /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Lights.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/utils/Camera.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/App.h \
   /Users/jacobedwards/University/Year2/Graphics/graphics-cw/Engine/View.h \

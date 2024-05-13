@@ -24,13 +24,25 @@ in VS_OUT {
 uniform Material material;
 
 #include "lights.glsl"
+#include "camera.glsl"
 
 out vec4 FragColor;
 
 void main() {
     vec4 texColor = texture(material.texture_diffuse1, fs_in.TexCoords);
 
-    FragColor = texColor;
+    vec3 normal = normalize(fs_in.Normal);
+
+    // vec3 lighting = calculateLightingBasic(fs_in.FragPos, normal, camera.position, texColor.rgb, material.shininess);
+    vec3 finalColor = texColor.rgb;
+
+    finalColor = mix(finalColor, lights.sun.ambient, 0.2);
+
+    // if direction of light is below horizon, make it darker
+    float lightFactor = max(dot(lights.sun.direction, vec3(0.0, 1.0, 0.0)), 0.1);
+    finalColor *= lightFactor;
+
+    FragColor = vec4(finalColor, texColor.a);
 
     if (FragColor.a < 0.2) {
         discard;

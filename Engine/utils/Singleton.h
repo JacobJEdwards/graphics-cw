@@ -1,6 +1,9 @@
 //
 // Created by Jacob Edwards on 17/04/2024.
 //
+/*
+ * https://codereview.stackexchange.com/questions/173929/modern-c-singleton-template
+ */
 
 #ifndef SINGLETON_H
 #define SINGLETON_H

@@ -1,6 +1,10 @@
 #ifndef SPLINE_H
 #define SPLINE_H
 
+/*
+ * https://en.wikipedia.org/wiki/Cubic_Hermite_spline
+ */
+
 #include <cstddef>
 #include <glm/ext/vector_float3.hpp>
 

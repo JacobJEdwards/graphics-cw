@@ -12,6 +12,7 @@
 class Sun final : public Entity {
 public:
     using Entity::draw;
+
     Sun();
 
     void update(float deltaTime) override;
@@ -36,7 +37,7 @@ public:
 
 private:
     float scale = 0.05F;
-    float angle = 0.0F;
+    float angle = 2.0F;
     bool move = true;
     float speed = 1.0F;
 

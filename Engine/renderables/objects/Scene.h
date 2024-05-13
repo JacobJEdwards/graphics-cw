@@ -14,8 +14,10 @@
 #include "renderables/objects/RollerCoaster.h"
 #include <glm/ext/matrix_float4x4.hpp>
 #include <memory>
+#include "renderables/objects/Spotlight.h"
 
 #include "Barriers.h"
+#include "Lights.h"
 
 class Scene final : public Renderable {
 public:
@@ -43,6 +45,8 @@ public:
 
     auto getBarriers() -> std::shared_ptr<Barriers>;
 
+    auto getLightObjects() -> std::shared_ptr<LightObjects>;
+
 private:
     std::shared_ptr<ProceduralTerrain> terrain;
     std::shared_ptr<FerrisWheel> ferrisWheel;
@@ -50,6 +54,7 @@ private:
     std::shared_ptr<Skybox> skybox;
     std::shared_ptr<Walls> walls;
     std::shared_ptr<Barriers> barriers;
+    std::shared_ptr<LightObjects> lightObjects;
 };
 
 

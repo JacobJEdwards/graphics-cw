@@ -1,13 +1,19 @@
 //
 // Created by Jacob Edwards on 02/04/2024.
 //
+/*
+ *https://en.wikipedia.org/wiki/Perlin_noise
+ *https://en.wikipedia.org/wiki/Simplex_noise
+ */
 
 #ifndef CW_NOISE_H
 #define CW_NOISE_H
 
 #include <glm/gtc/noise.hpp>
 #include <glm/ext/vector_float2.hpp>
-#include <glm/trigonometric.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/ext/vector_float4.hpp>
+#include <glm/glm.hpp>
 
 namespace Noise {
     constexpr float SCALE = 0.1F;

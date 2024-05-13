@@ -1,6 +1,10 @@
 // geom shader to explode vertices
 #version 410 core
 
+/*
+ * https://learnopengl.com/Advanced-OpenGL/Geometry-Shader
+ */
+
 layout (triangles) in;
 layout (triangle_strip, max_vertices = 3) out;
 
